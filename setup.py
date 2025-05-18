@@ -5,16 +5,15 @@ extensions = [
     Extension(
         "kycli.kycore",
         ["kycli/kycore.pyx"],
-        # add extra compile/link args if needed
     )
 ]
 
 setup(
     name="kycli",
     version="0.1.0",
-    author="Your Name",
-    author_email="you@example.com",
-    description="Your KV store CLI tool",
+    author="Balakrishna Maduru",
+    author_email="balakrishnamaduru@gmail.com",
+    description="**kycli** is a high-performance Python CLI toolkit built with Cython for speed.",
     packages=["kycli"],
     ext_modules=cythonize(extensions),
     classifiers=[
@@ -22,10 +21,10 @@ setup(
         "Programming Language :: Cython",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.9',
     entry_points={
         "console_scripts": [
-            "kys=kycli.cli:main",  # adjust if your cli.py has a main() entry
+            "kys=kycli.cli:main",
             "kyg=kycli.cli:main",
             "kyl=kycli.cli:main",
             "kyd=kycli.cli:main",

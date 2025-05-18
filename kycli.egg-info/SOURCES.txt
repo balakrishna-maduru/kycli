@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+setup.py
+kycli/__init__.py
+kycli/cli.py
+kycli/kycore.c
+kycli.egg-info/PKG-INFO
+kycli.egg-info/SOURCES.txt
+kycli.egg-info/dependency_links.txt
+kycli.egg-info/entry_points.txt
+kycli.egg-info/top_level.txt

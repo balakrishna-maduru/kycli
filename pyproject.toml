@@ -1,13 +1,16 @@
 [tool.poetry]
 name = "kycli"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "**kycli** is a high-performance Python CLI toolkit built with Cython for speed."
+authors = ["Balakrishna maduru <balakrishnamaduru@gmail.com>"]
 packages = [{ include = "kycli" }]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 cython = "^3.1.0"
+build = "^1.2.2.post1"
+setuptools = "^80.7.1"
+wheel = "^0.45.1"
 
 [tool.poetry.scripts]
 kycli = "kycli.cli:main"

@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: kycli
+Version: 0.1.0
+Summary: **kycli** is a high-performance Python CLI toolkit built with Cython for speed.
+Author: Balakrishna Maduru
+Author-email: balakrishnamaduru@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Cython
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: requires-python
+Dynamic: summary
