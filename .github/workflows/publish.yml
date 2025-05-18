@@ -3,7 +3,11 @@ name: Build and Publish Python Package
 on:
   push:
     tags:
-      - 'v*'  # Triggers on version tags like v1.0.0
+      - 'v*'  # Trigger on version tags like v1.0.0
+
+permissions:
+  id-token: write   # Required for PyPI trusted publishing
+  contents: read    # Required to clone the repo
 
 jobs:
   build:
@@ -36,6 +40,3 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
