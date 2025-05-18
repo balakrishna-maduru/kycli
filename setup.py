@@ -10,7 +10,7 @@ extensions = [
 
 setup(
     name="kycli",
-    version="0.1.0",
+    version="0.1.3",
     author="Balakrishna Maduru",
     author_email="balakrishnamaduru@gmail.com",
     description="**kycli** is a high-performance Python CLI toolkit built with Cython for speed.",
