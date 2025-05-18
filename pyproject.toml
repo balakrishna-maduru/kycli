@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "kycli"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+packages = [{ include = "kycli" }]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+cython = "^3.1.0"
+
+[tool.poetry.scripts]
+kycli = "kycli.cli:main"
+kys = "kycli.cli:main"
+kyg = "kycli.cli:main"
+kyl = "kycli.cli:main"
+kyd = "kycli.cli:main"
+kyh = "kycli.cli:main"
+
+[tool.poetry.group.dev.dependencies]
+setuptools = "^80.7.1"
+
+[build-system]
+requires = ["setuptools", "wheel", "cython"]
+build-backend = "setuptools.build_meta"
