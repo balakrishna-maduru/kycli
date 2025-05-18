@@ -13,14 +13,17 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.11'  # Choose your version
+          python-version: '3.11' 
 
-      - name: Install dependencies
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+        
+      - name: Install dependencies from poetry.lock
         run: |
-          python -m pip install --upgrade pip
-          pip install build cython
+          export PATH="$HOME/.local/bin:$PATH"
+          poetry install --no-interaction --no-root
 
       - name: Build package
         run: |
