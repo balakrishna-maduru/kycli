@@ -1,0 +1,54 @@
+name: Build and Publish Python Package
+
+on:
+  push:
+    tags:
+      - '*'  # Match any tag
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Update version in setup.py and pyproject.toml
+        run: |
+          echo "Using version: $VERSION"
+          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+          sed -i "s/version='[^']*'/version='$VERSION'/" setup.py || true  # Skip if no version in setup.py
+
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Install dependencies
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          poetry install --no-interaction --no-root
+
+      - name: Install build dependencies
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          poetry run pip install --upgrade pip
+          poetry run pip install Cython setuptools wheel
+
+      - name: Build source distribution
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          poetry run python setup.py sdist
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

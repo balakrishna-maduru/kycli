@@ -1,0 +1,53 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Cython-generated C files
+*.c
+*.cpp
+*.so
+*.pyd
+*.dll
+
+# Build directories
+build/
+dist/
+dist/*
+
+# Packaging
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Pytest / coverage / profiling
+.coverage
+.cache/
+.pytest_cache/
+.prof
+
+# Logs
+*.log
+
+# Editor configs
+.vscode/
+.idea/
+
+# Temporary files
+*.swp
+*.bak
+*~
+
+# Ignore compiled extension files
+kycli/kycore.c
+kycli/kycore.html
+kycli/kycore.cpython-*.so

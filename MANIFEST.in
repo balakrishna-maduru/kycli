@@ -1,0 +1,2 @@
+include kycli/kycore.pyx
+recursive-include kycli *.pyx *.pxd *.c
