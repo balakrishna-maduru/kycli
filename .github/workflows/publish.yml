@@ -3,7 +3,7 @@ name: Build and Publish Python Package
 on:
   push:
     tags:
-      - 'v*'  # Trigger on version tags like v1.2.3
+      - '*'  # Match any tag
 
 permissions:
   id-token: write
