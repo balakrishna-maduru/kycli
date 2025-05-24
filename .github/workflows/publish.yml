@@ -3,11 +3,11 @@ name: Build and Publish Python Package
 on:
   push:
     tags:
-      - 'v*'  # Trigger on version tags like v1.0.0
+      - 'v*'  # Trigger on version tags like v1.2.3
 
 permissions:
-  id-token: write   # Required for PyPI trusted publishing
-  contents: read    # Required to clone the repo
+  id-token: write
+  contents: read
 
 jobs:
   build:
@@ -21,6 +21,16 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
+      - name: Update version in setup.py (or pyproject.toml)
+        run: |
+          sed -i "s/version='.*'/version='${VERSION}'/" setup.py
+          # For pyproject.toml:
+          # sed -i "s/^version = .*/version = \"${VERSION}\"/" pyproject.toml
+
       - name: Install Poetry
         run: curl -sSL https://install.python-poetry.org | python3 -
 
@@ -29,14 +39,8 @@ jobs:
           export PATH="$HOME/.local/bin:$PATH"
           poetry install --no-interaction --no-root
 
-      - name: Install build dependencies (Cython, setuptools, wheel)
-        run: |
-          export PATH="$HOME/.local/bin:$PATH"
-          pip install Cython setuptools wheel
-
-      - name: Build source distribution only
-        run: |
-          python setup.py sdist
+      - name: Build source distribution
+        run: python setup.py sdist
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
