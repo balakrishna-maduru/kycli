@@ -23,12 +23,12 @@ jobs:
 
       - name: Extract version from tag
         id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Update version in setup.py
         run: |
-          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-          sed -i "s|version='.*'|version='${VERSION}'|" setup.py
+          echo "Using version: $VERSION"
+          sed -i "s/version='[^']*'/version='$VERSION'/" setup.py
 
       - name: Install Poetry
         run: curl -sSL https://install.python-poetry.org | python3 -
@@ -41,6 +41,7 @@ jobs:
       - name: Install build dependencies
         run: |
           export PATH="$HOME/.local/bin:$PATH"
+          poetry run pip install --upgrade pip
           poetry run pip install Cython setuptools wheel
 
       - name: Build source distribution
