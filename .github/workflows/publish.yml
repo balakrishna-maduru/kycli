@@ -38,8 +38,15 @@ jobs:
           export PATH="$HOME/.local/bin:$PATH"
           poetry install --no-interaction --no-root
 
+      - name: Install build dependencies
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          poetry run pip install Cython setuptools wheel
+
       - name: Build source distribution
-        run: python setup.py sdist
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          poetry run python setup.py sdist
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
