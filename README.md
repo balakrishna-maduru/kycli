@@ -45,6 +45,15 @@ Output:
 ```
 Hello, World!
 ```
+```bash
+kyg "my.*"
+```
+Output:
+```
+{
+  "my_key": "Hello, World!"
+}
+```
 
 📃 List all keys
 ```bash
@@ -58,6 +67,13 @@ Output:
 ```
 Keys: my_key
 ```
+```bash
+kyl  "my_.*"
+```
+Output:
+```
+Keys: data
+``` 
 
 ❌ Delete a key
 ```bash
