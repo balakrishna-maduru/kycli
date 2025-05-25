@@ -38,6 +38,8 @@ Thumbs.db
 # Logs
 *.log
 
+*.csv
+
 # Editor configs
 .vscode/
 .idea/
