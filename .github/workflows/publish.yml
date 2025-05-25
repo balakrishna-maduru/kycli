@@ -25,12 +25,18 @@ jobs:
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      - name: Update version in setup.py and pyproject.toml
+      - name: Update version in pyproject.toml
         run: |
           echo "Using version: $VERSION"
-          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
-          sed -i "s/version='[^']*'/version='$VERSION'/" setup.py || true  # Skip if no version in setup.py
+          # Update version in pyproject.toml under [tool.poetry]
+          sed -i "/^\[tool.poetry\]/,/^\[/{s/^version = \".*\"/version = \"$VERSION\"/}" pyproject.toml
 
+      - name: Update version in setup.py (if it exists)
+        run: |
+          echo "Updating version in setup.py"
+          if [ -f setup.py ]; then
+            sed -i "s/version=['\"]\([^'\"]*\)['\"]/version='$VERSION'/" setup.py
+          fi
       - name: Install Poetry
         run: curl -sSL https://install.python-poetry.org | python3 -
 
