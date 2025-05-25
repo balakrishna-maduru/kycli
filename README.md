@@ -88,6 +88,34 @@ Available commands:
   kyl                   - List keys
   kyd <key>             - Delete key
   kyh                   - Help
+  kye <file> [format]   - Export data to file (default CSV; JSON if specified)
+  kyi <file>            - Import data (auto-detect CSV/JSON by file extension)
+```
+
+📂 Export
+```bash
+kye <file> [format]
+```
+Example:
+```bash
+kye data.csv
+```
+Output:
+```
+Exported to data.csv
+```
+
+📥 Import
+```bash
+kyi <file>
+```
+Example:
+```bash
+kyi data.csv
+```
+Output:
+``` bash
+Imported from data.csv
 ```
 
 Author
