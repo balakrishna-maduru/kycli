@@ -31,6 +31,7 @@ setup(
             "kye=kycli.cli:main",
             "kyi=kycli.cli:main",
             "kyh=kycli.cli:main",
+            "kyc=kycli.cli:main", # Add kyc to entry points if not already
         ],
     },
 )

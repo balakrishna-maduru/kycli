@@ -2,11 +2,14 @@
 from libc.string cimport strdup
 import os
 import sqlite3
+import re
+import json
+import csv
 
 cdef class Kycore:
     cdef object _conn
     cdef str _data_path
-    cdef set _dirty_keys
+    cdef set _dirty_keys # This looks like a potentially unused attribute
 
     def __cinit__(self):
         self._data_path = os.path.expanduser("~/kydata.db")
@@ -19,7 +22,7 @@ cdef class Kycore:
                 value TEXT
             )
         """)
-        self._dirty_keys = set()
+        self._dirty_keys = set() # Consider removing if not used for persistence/caching
 
     @property
     def data_path(self):
@@ -29,10 +32,9 @@ cdef class Kycore:
         key = key.lower()
         self._conn.execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", (key, value))
         self._conn.commit()
-        self._dirty_keys.add(key)
+        # self._dirty_keys.add(key) # Remove if not used for specific caching/sync
 
     def listkeys(self, pattern: str = None):
-        import re
         cursor = self._conn.execute("SELECT key FROM kvstore")
         keys = [row[0] for row in cursor.fetchall()]
 
@@ -45,13 +47,15 @@ cdef class Kycore:
         return keys
 
     def getkey(self, str key_pattern):
-        import re
+        # First, try exact match for performance
+        cursor = self._conn.execute("SELECT value FROM kvstore WHERE key=?", (key_pattern.lower(),))
+        exact_match = cursor.fetchone()
+        if exact_match:
+            return exact_match[0]
+
+        # If no exact match, try regex search over all keys
         cursor = self._conn.execute("SELECT key, value FROM kvstore")
         rows = cursor.fetchall()
-
-        for k, v in rows:
-            if k == key_pattern.lower():
-                return v
 
         try:
             regex = re.compile(key_pattern, re.IGNORECASE)
@@ -59,13 +63,17 @@ cdef class Kycore:
             return "Invalid regex"
 
         matches = {k: v for k, v in rows if regex.search(k)}
+        # Return the exact value if only one regex match, otherwise return the dict of matches
+        if len(matches) == 1:
+            return list(matches.values())[0]
         return matches if matches else "Key not found"
+
 
     def delete(self, str key):
         cursor = self._conn.execute("DELETE FROM kvstore WHERE key=?", (key.lower(),))
         self._conn.commit()
         if cursor.rowcount > 0:
-            self._dirty_keys.add(key.lower())
+            # self._dirty_keys.add(key.lower()) # Remove if not used
             return "Deleted"
         return "Key not found"
 
@@ -79,22 +87,12 @@ cdef class Kycore:
             self._conn.execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", (k.lower(), v))
         self._conn.commit()
 
-    def persist(self):
-        # Nothing to do here anymore — data is always in SQLite
-        self._dirty_keys.clear()
-
-    cdef void _load(self):
-        # No pickle to load, everything in SQLite
-        pass
-
     def export_data(self, str filepath, str file_format="csv"):
-        import csv, json
         data = self.store
-
         if file_format.lower() == "json":
             with open(filepath, "w") as f:
                 json.dump(data, f, indent=4)
-        else:
+        else: # Default to CSV
             with open(filepath, "w", newline="") as f:
                 writer = csv.writer(f)
                 writer.writerow(["key", "value"])
@@ -102,8 +100,7 @@ cdef class Kycore:
                     writer.writerow([k, v])
 
     def import_data(self, str filepath):
-        import csv, json
-
+        data = {}
         if filepath.endswith(".json"):
             with open(filepath, "r") as f:
                 data = json.load(f)
@@ -113,6 +110,5 @@ cdef class Kycore:
                 data = {row["key"].lower(): row["value"] for row in reader}
         else:
             raise ValueError("Unsupported file format: " + filepath)
-
         self.load_store(data)
-        self._dirty_keys.update(data.keys())
+        # self._dirty_keys.update(data.keys()) # Remove if not used

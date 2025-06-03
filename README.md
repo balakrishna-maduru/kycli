@@ -134,6 +134,36 @@ Output:
 Imported from data.csv
 ```
 
+kyc
+
+```bash
+  kys myls "ls -la"
+  kyc myls
+```
+Output:
+```
+Saved: myls
+kyc myls                           
+Executing: ls -la
+total 96
+drwxr-xr-x@ 15 user  staff    480 May 25 10:39 .
+drwxr-xr-x  11 user  staff    352 May 18 19:58 ..
+drwxr-xr-x  16 user  staff    512 May 25 10:48 .git
+drwxr-xr-x   3 user  staff     96 May 18 21:37 .github
+-rw-r--r--   1 user  staff    544 May 25 10:20 .gitignore
+```
+```bash
+kys greet "echo Hello, {0}"
+kyc greet "Krishna"
+```
+Output:
+```
+Saved: greet
+Hello, Krishna
+```
+
+
+
 Author
 ---
 👤 Balakrishna Maduru

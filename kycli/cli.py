@@ -1,53 +1,54 @@
 import sys
 import os
 from kycli.kycore import Kycore
+from kycli.commands import (
+    SaveCommand, GetCommand, ListCommand, DeleteCommand,
+    ExportCommand, ImportCommand, ExecCommand, HelpCommand
+)
 
-def print_help():
-    print("""
-Available commands:
-  kys <key> <value>             - Save key-value
-  kyg <key>                     - Get value by key
-  kyl                           - List keys
-  kyd <key>                     - Delete key
-  kye <file> [format]           - Export data to file (default CSV; JSON if specified)
-  kyi <file>                    - Import data (auto-detect CSV/JSON by file extension)
-  kyh                           - Help
-""")
+class KycliFactory:
+    def __init__(self):
+        self._kycore = Kycore()
+        self._commands = {
+            "kys": SaveCommand(self._kycore),
+            "kyg": GetCommand(self._kycore),
+            "kyl": ListCommand(self._kycore),
+            "kyd": DeleteCommand(self._kycore),
+            "kye": ExportCommand(self._kycore),
+            "kyi": ImportCommand(self._kycore),
+            "kyc": ExecCommand(self._kycore),
+            "kyh": HelpCommand(self._kycore)
+        }
+
+    def get_command(self, prog_name: str):
+        return self._commands.get(prog_name)
 
 def main():
-    kv = Kycore()
+    factory = KycliFactory()
     args = sys.argv[1:]
     prog = os.path.basename(sys.argv[0])
 
-    if prog in ["kys", "save"] and len(args) == 2:
-        kv.save(args[0], args[1])
-        print(f"Saved: {args[0]}")
+    # If the program name is explicitly 'kyh' or 'help', always show help.
+    if prog in ["kyh", "help"]:
+        help_command = factory.get_command(prog)
+        print(help_command.execute(args)) # Pass args in case help ever needs them
+        return
 
-    elif prog in ["kyg", "getkey"] and len(args) == 1:
-        print(kv.getkey(args[0]))
+    # If no arguments are provided and it's not a help command,
+    # we should still try to execute the command associated with 'prog'.
+    # For commands that require arguments (like kys, kyg, kyd, kyc),
+    # their respective execute methods will return a "Usage" message.
+    # For 'kyl' with no arguments, it should list all keys.
+    command_to_execute = factory.get_command(prog)
 
-    elif prog in ["kyd", "delete"] and len(args) == 1:
-        print(kv.delete(args[0]))
-
-    elif prog in ["kyl", "listkeys"]:
-        pattern = args[0] if args else None
-        keys = kv.listkeys(pattern)
-        print("Keys:", ", ".join(keys))
-
-    elif prog in ["kyh", "help"]:
-        print_help()
-    
-    elif prog in ["kye", "export"] and len(args) >= 1:
-        export_path = args[0]
-        export_format = args[1] if len(args) > 1 else "csv"
-        kv.export_data(export_path, export_format.lower())
-        print(f"Exported data to {export_path} as {export_format.upper()}")
-
-    elif prog in ["kyi", "import"] and len(args) == 1:
-        import_path = args[0]
-        kv.import_data(import_path)
-        print(f"Imported data from {import_path}")
-
+    if command_to_execute:
+        output = command_to_execute.execute(args)
+        print(output)
     else:
-        print("Invalid command or arguments.")
-        print_help()
+        # This case handles if the script name itself isn't a recognized command,
+        # or if the user just ran 'python -m kycli.cli' without any arguments.
+        # In such cases, we print the general help.
+        print(factory.get_command("kyh").execute([]))
+
+if __name__ == "__main__":
+    main()
