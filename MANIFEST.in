@@ -1,2 +1,7 @@
 include kycli/kycore.pyx
 recursive-include kycli *.pyx *.pxd *.c
+recursive-include tests *.py
+include README.md
+include TODO.md
+include enhancements.md
+include CHANGELOG.md

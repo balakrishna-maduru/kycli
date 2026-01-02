@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kycli"
-version = "0.0.4"
+version = "0.0.5"
 description = "**kycli** is a high-performance Python CLI toolkit built with Cython for speed."
 authors = ["Balakrishna maduru <balakrishnamaduru@gmail.com>"]
 packages = [{ include = "kycli" }]

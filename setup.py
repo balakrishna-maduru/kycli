@@ -8,12 +8,17 @@ extensions = [
     )
 ]
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
     name="kycli",
-    version="0.0.4",
+    version="0.0.5",
     author="Balakrishna Maduru",
     author_email="balakrishnamaduru@gmail.com",
     description="**kycli** is a high-performance Python CLI toolkit built with Cython for speed.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     packages=["kycli"],
     ext_modules=cythonize(extensions),
     classifiers=[
