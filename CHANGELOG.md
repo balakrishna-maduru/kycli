@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.1] - 2026-01-02
+### Fixed
+- Fixed PyPI upload issue caused by filename reuse.
+
 ## [0.1.0] - 2026-01-02
 ### Added
 - **Library API**: Enhanced `Kycore` with a Pythonic dictionary-like interface (`core['key'] = 'value'`).
