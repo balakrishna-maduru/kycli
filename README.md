@@ -1,6 +1,6 @@
-# 🔑 kycli — A Simple CLI Key-Value Store
+# 🔑 kycli — A Robust CLI Key-Value Store
 
-`kycli` is a lightweight Python CLI utility to save, get, list, and delete key-value pairs directly from your terminal.
+`kycli` is a lightweight, high-performance Python CLI utility to save, get, list, and audit key-value pairs directly from your terminal. Built with Cython and SQLite for speed and reliability.
 
 ---
 
@@ -11,128 +11,62 @@ pip install kycli
 ```
 Or, clone and install locally:
 ```bash
-git clone https://github.com/yourname/kycli.git
+git clone https://github.com/balakrishna-maduru/kycli.git
 cd kycli
-poetry install
+python3 -m pip install -e .
 ```
 
 🚀 Usage
+--
 
-You can access the CLI using the following commands:
-
-✅ Save a value
+### ✅ Save a value
 ```bash
 kys <key> <value>
 ```
-Example:
-```bash
-kys my_key "Hello, World!"
-```
-Output:
-```
-Saved: my_key
-```
+**Safety Features:**
+*   Automatically normalizes keys to lowercase and trims whitespace.
+*   **Overwrite Protection:** Asks for confirmation (Y/N) if the key already exists with a different value.
+*   **Integrity:** Prevents saving empty keys or values.
 
-📥 Get a value
+### 📥 Get current value
 ```bash
 kyg <key>
 ```
-Example:
+*   Supports exact key matching.
+*   Supports **Regex** patterns (e.g., `kyg "user_.*"`).
+
+### 📜 Audit & History
 ```bash
-kyg my_key
+kyv           # View full audit history (no arguments)
+kyv -h        # View full audit history (identical to kyv)
+kyv <key>     # View the latest historical value for a specific key
 ```
-Output:
-```
-Hello, World!
-```
+*   Every change is timestamped and logged in an audit trail.
+
+### 📃 List Keys
 ```bash
-kyg "my.*"
-```
-Output:
-```
-{
-  "my_key": "Hello, World!"
-}
+kyl           # List all keys
+kyl "pattern" # List keys matching a regex
 ```
 
-📃 List all keys
-```bash
-kyl
-```
-Example:
-```bash
-kyl
-```
-Output:
-```
-Keys: my_key
-```
-```bash
-kyl  "my_.*"
-```
-Output:
-```
-Keys: data
-``` 
-
-❌ Delete a key
+### ❌ Delete
 ```bash
 kyd <key>
 ```
-Example:
-```bash
-kyd my_key
-```
-Output:
-``` bash
-Deleted
-```
 
-ℹ️ Help
+### 📂 Portability
 ```bash
-kyh
+kye data.csv          # Export to CSV (default)
+kye data.json json    # Export to JSON
+kyi backup.csv        # Import from file (auto-detects format)
 ```
-Example:
-```bash
-kyh
-```
-Output:
-```
-Available commands:
-  kys <key> <value>     - Save key-value
-  kyg <key>             - Get value by key
-  kyl                   - List keys
-  kyd <key>             - Delete key
-  kyh                   - Help
-  kye <file> [format]   - Export data to file (default CSV; JSON if specified)
-  kyi <file>            - Import data (auto-detect CSV/JSON by file extension)
-```
+*   **Atomic Exports:** Uses temporary files and atomic moves to ensure your exports are never corrupted during a crash.
 
-📂 Export
-```bash
-kye <file> [format]
-```
-Example:
-```bash
-kye data.csv
-```
-Output:
-```
-Exported to data.csv
-```
-
-📥 Import
-```bash
-kyi <file>
-```
-Example:
-```bash
-kyi data.csv
-```
-Output:
-``` bash
-Imported from data.csv
-```
+---
+## 🛠 Advanced Features
+*   **Concurrency Support:** Built-in retry mechanism for SQLite database locks.
+*   **Persistence:** Data is stored in `~/kydata.db`.
+*   **Speed:** Core logic is compiled with **Cython** for maximum throughput.
 
 Author
 ---

@@ -28,6 +28,7 @@ setup(
             "kyg=kycli.cli:main",
             "kyl=kycli.cli:main",
             "kyd=kycli.cli:main",
+            "kyv=kycli.cli:main",
             "kye=kycli.cli:main",
             "kyi=kycli.cli:main",
             "kyh=kycli.cli:main",
