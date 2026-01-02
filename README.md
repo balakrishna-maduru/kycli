@@ -1,76 +1,110 @@
-# 🔑 kycli — A Robust CLI Key-Value Store
+# 🔑 kycli — High-Performance Key-Value Toolkit
 
-`kycli` is a lightweight, high-performance Python CLI utility to save, get, list, and audit key-value pairs directly from your terminal. Built with Cython and SQLite for speed and reliability.
+`kycli` is a lightweight, blazing-fast key-value storage engine built with **Cython** and **SQLite**. It offers both a robust Command Line Interface (CLI) for terminal productivity and a Pythonic library API for seamless integration into your applications.
+
+[![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
-## 📦 Installation
+## 🚀 Quick Start
 
+### Installation
 ```bash
 pip install kycli
 ```
-Or, clone and install locally:
-```bash
-git clone https://github.com/balakrishna-maduru/kycli.git
-cd kycli
-python3 -m pip install -e .
-```
 
-🚀 Usage
---
-
-### ✅ Save a value
+### Basic Terminal Flow
 ```bash
-kys <key> <value>
-```
-**Safety Features:**
-*   Automatically normalizes keys to lowercase and trims whitespace.
-*   **Overwrite Protection:** Asks for confirmation (Y/N) if the key already exists with a different value.
-*   **Integrity:** Prevents saving empty keys or values.
+# Save a secret
+kys my_api_key "sk-proj-12345"
 
-### 📥 Get current value
-```bash
-kyg <key>
-```
-*   Supports exact key matching.
-*   Supports **Regex** patterns (e.g., `kyg "user_.*"`).
+# Retrieve it
+kyg my_api_key
 
-### 📜 Audit & History
-```bash
-kyv           # View full audit history (no arguments)
-kyv -h        # View full audit history (identical to kyv)
-kyv <key>     # View the latest historical value for a specific key
+# List everything
+kyl
 ```
-*   Every change is timestamped and logged in an audit trail.
-
-### 📃 List Keys
-```bash
-kyl           # List all keys
-kyl "pattern" # List keys matching a regex
-```
-
-### ❌ Delete
-```bash
-kyd <key>
-```
-
-### 📂 Portability
-```bash
-kye data.csv          # Export to CSV (default)
-kye data.json json    # Export to JSON
-kyi backup.csv        # Import from file (auto-detects format)
-```
-*   **Atomic Exports:** Uses temporary files and atomic moves to ensure your exports are never corrupted during a crash.
 
 ---
-## 🛠 Advanced Features
-*   **Concurrency Support:** Built-in retry mechanism for SQLite database locks.
-*   **Persistence:** Data is stored in `~/kydata.db`.
-*   **Speed:** Core logic is compiled with **Cython** for maximum throughput.
 
-Author
+## 💻 CLI Usage
+
+The CLI is designed to be intuitive and safe, featuring **overwrite protection** and **atomic operations**.
+
+| Command | Action | Example |
+| :--- | :--- | :--- |
+| `kys` | **Save** a value | `kys username "balu"` |
+| `kyg` | **Get** a value (supports Regex) | `kyg "user.*"` |
+| `kyl` | **List** keys (supports Regex) | `kyl "prod_.*"` |
+| `kyv` | **View** history/audit logs | `kyv username` |
+| `kyd` | **Delete** a key | `kyd old_token` |
+| `kye` | **Export** data (CSV/JSON) | `kye data.json json` |
+| `kyi` | **Import** data | `kyi backup.csv` |
+
+### 🛡️ Safety Features
+- **Interactive Propts**: `kycli` will ask for confirmation (y/n) before overwriting an existing key.
+- **Normalization**: Keys are automatically lowercased and trimmed to prevent "hidden" duplicates.
+- **Atomic Exports**: Uses a temp-and-move strategy so your data is never left in a corrupted state if an export fails.
+
 ---
-👤 Balakrishna Maduru
-- [GitHub](https://github.com/balakrishna-maduru)
-- [LinkedIn](https://www.linkedin.com/in/balakrishna-maduru)
+
+## 🐍 Python Library API
+
+Use `kycli` programmatically in your Python projects. It provides a standard dictionary-like interface for maximum ease of use.
+
+### Basic Implementation
+```python
+from kycli import Kycore
+
+# Use as a context manager for safe DB closure
+with Kycore() as core:
+    # Set and Get (Dict-style)
+    core['app:mode'] = 'production'
+    print(core['app:mode'])  # Output: production
+
+    # Check for existence
+    if 'app:mode' in core:
+        print("Configuration found!")
+
+    # Bulk count
+    print(f"Total keys: {len(core)}")
+```
+
+### Advanced Library Features
+```python
+with Kycore() as core:
+    # 1. Regex Searching
+    # Returns a dict of all matching key-values
+    matches = core.getkey("app:.*") 
+    
+    # 2. Audit History
+    # Get all previous values and timestamps for a key
+    history = core.get_history("app:mode")
+    for key, value, timestamp in history:
+        print(f"[{timestamp}] {value}")
+
+    # 3. Import/Export Programmatically
+    core.import_data("config.json")
+    core.export_data("backup.csv", file_format="csv")
+```
+
+---
+
+## 🛠 Architecture & Performance
+
+- **Cython Core**: The heavy lifting is done in C-compiled Python for near-native performance.
+- **SQLite Engine**: Leverages the reliability of SQLite3 for persistence, ensuring your data survives crashes.
+- **Audit Trail**: Every single change is logged with a timestamp in a separate `audit_log` table, giving you a full "undo" history.
+
+---
+
+## 👤 Author
+
+**Balakrishna Maduru**  
+- [GitHub](https://github.com/balakrishna-maduru)  
+- [LinkedIn](https://www.linkedin.com/in/balakrishna-maduru)  
 - [Twitter](https://x.com/krishonlyyou)
+
+---
+*Generated by Antigravity*

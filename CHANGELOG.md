@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.0] - 2026-01-02
+### Added
+- **Library API**: Enhanced `Kycore` with a Pythonic dictionary-like interface (`core['key'] = 'value'`).
+- **Context Manager**: Added support for `with Kycore() as core:` for safe database operations.
+- **Top-level Export**: `Kycore` is now importable directly from `kycli`.
+- **Improved Metadata**: Added `__len__`, `__contains__`, and `__iter__` to `Kycore`.
+- **API Documentation**: Added comprehensive docstrings for library usage.
+
 ## [0.0.5] - 2026-01-02
 ### Changed
 - Improved PyPI project page with full README documentation.

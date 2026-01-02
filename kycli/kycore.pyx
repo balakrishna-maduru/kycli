@@ -9,12 +9,20 @@ cdef class Kycore:
     cdef set _dirty_keys
 
     def __init__(self, db_path=None):
+        """
+        Initialize the Kycore storage instance.
+        
+        Args:
+            db_path (str, optional): Path to the SQLite database. Defaults to ~/kydata.db.
+        """
         if db_path is None:
             self._data_path = os.path.expanduser("~/kydata.db")
         else:
             self._data_path = db_path
             
-        os.makedirs(os.path.dirname(self._data_path), exist_ok=True)
+        dir_name = os.path.dirname(self._data_path)
+        if dir_name:
+            os.makedirs(dir_name, exist_ok=True)
 
         try:
             self._conn = sqlite3.connect(self._data_path)
@@ -41,11 +49,29 @@ cdef class Kycore:
 
         self._dirty_keys = set()
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self._conn:
+            self._conn.close()
+
     @property
     def data_path(self):
+        """Returns the absolute path to the database file."""
         return self._data_path
 
     def save(self, str key, str value):
+        """
+        Save a key-value pair to the store.
+        
+        Args:
+            key (str): The unique identifier.
+            value (str): The value to store.
+            
+        Returns:
+            str: "created", "overwritten", or "nochange".
+        """
         if not key or not key.strip():
             raise ValueError("Key cannot be empty")
         if not value:
@@ -77,7 +103,43 @@ cdef class Kycore:
             print(f"Error saving to database: {e}")
             raise
 
+    def __setitem__(self, str key, str value):
+        self.save(key, value)
+
+    def __getitem__(self, str key):
+        val = self.getkey(key)
+        if val == "Key not found":
+            raise KeyError(key)
+        return val
+
+    def __delitem__(self, str key):
+        res = self.delete(key)
+        if res == "Key not found":
+            raise KeyError(key)
+
+    def __contains__(self, str key):
+        cursor = self._conn.execute("SELECT 1 FROM kvstore WHERE key = ?", (key.lower(),))
+        return cursor.fetchone() is not None
+
+    def __iter__(self):
+        cursor = self._conn.execute("SELECT key FROM kvstore")
+        for row in cursor:
+            yield row[0]
+
+    def __len__(self):
+        cursor = self._conn.execute("SELECT COUNT(*) FROM kvstore")
+        return cursor.fetchone()[0]
+
     def get_history(self, str key=None):
+        """
+        Retrieve change history for a specific key or all keys.
+        
+        Args:
+            key (str, optional): Key to filter history. Defaults to None (all keys).
+            
+        Returns:
+            list: List of (key, value, timestamp) tuples.
+        """
         if key is None or key == "-h":
             cursor = self._conn.execute("""
                 SELECT key, value, timestamp FROM audit_log 
@@ -93,6 +155,15 @@ cdef class Kycore:
         return cursor.fetchall()
 
     def listkeys(self, pattern: str = None):
+        """
+        List all keys or those matching a regex pattern.
+        
+        Args:
+            pattern (str, optional): Regex pattern to filter keys.
+            
+        Returns:
+            list: List of keys.
+        """
         import re
         cursor = self._conn.execute("SELECT key FROM kvstore")
         keys = [row[0] for row in cursor.fetchall()]
@@ -106,6 +177,15 @@ cdef class Kycore:
         return keys
 
     def getkey(self, str key_pattern):
+        """
+        Get value for a key or multiple values for a regex pattern.
+        
+        Args:
+            key_pattern (str): Exact key or regex pattern.
+            
+        Returns:
+            str or dict: Value if exact match, dict of matches if regex, or error message.
+        """
         import re
         cursor = self._conn.execute("SELECT key, value FROM kvstore")
         rows = cursor.fetchall()
@@ -123,6 +203,15 @@ cdef class Kycore:
         return matches if matches else "Key not found"
 
     def delete(self, str key):
+        """
+        Delete a key from the store.
+        
+        Args:
+            key (str): Key to delete.
+            
+        Returns:
+            str: "Deleted" or "Key not found".
+        """
         cursor = self._conn.execute("DELETE FROM kvstore WHERE key=?", (key.lower(),))
         self._conn.commit()
         if cursor.rowcount > 0:
@@ -132,23 +221,31 @@ cdef class Kycore:
 
     @property
     def store(self):
+        """Returns the entire store as a dictionary."""
         cursor = self._conn.execute("SELECT key, value FROM kvstore")
         return dict(cursor.fetchall())
 
     def load_store(self, dict store_data):
+        """Bulk load key-value pairs."""
         for k, v in store_data.items():
             self._conn.execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", (k.lower(), v))
         self._conn.commit()
 
     def persist(self):
-        # Nothing to do here anymore — data is always in SQLite
+        """Persist changes to disk (effectively a no-op as SQLite commits are immediate)."""
         self._dirty_keys.clear()
 
     cdef void _load(self):
-        # No pickle to load, everything in SQLite
         pass
 
     def export_data(self, str filepath, str file_format="csv"):
+        """
+        Export data to CSV or JSON.
+        
+        Args:
+            filepath (str): Target file path.
+            file_format (str): "csv" or "json".
+        """
         import csv, json, tempfile, shutil
         data = self.store
         
@@ -175,6 +272,12 @@ cdef class Kycore:
             raise
 
     def import_data(self, str filepath):
+        """
+        Import data from CSV or JSON.
+        
+        Args:
+            filepath (str): Source file path.
+        """
         import csv, json
         import time
 
