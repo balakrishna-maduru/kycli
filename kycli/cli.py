@@ -6,7 +6,8 @@ def print_help():
     print("""
 Available commands:
   kys <key> <value>             - Save key-value (asks before overwriting)
-  kyg <key>                     - Get current value by key
+  kyg <key>                     - Get current value (auto-deserializes JSON)
+  kyf <query>                   - Full-text search (fast Google-like search)
   kyl [pattern]                 - List keys (optional regex pattern)
   kyd <key>                     - Delete key (requires confirmation)
   kyr <key>                     - Restore a deleted key from history
@@ -29,7 +30,16 @@ def main():
                     return
                 
                 key, val = args[0], args[1]
-                existing = kv.getkey(key)
+                
+                # Attempt to parse as JSON if it looks like a complex type
+                if (val.startswith("{") and val.endswith("}")) or (val.startswith("[") and val.endswith("]")):
+                    try:
+                        import json
+                        val = json.loads(val)
+                    except:
+                        pass
+
+                existing = kv.getkey(key, deserialize=False)
                 
                 # If key exists and is not a regex result (dict), ask for confirmation
                 if existing != "Key not found" and not isinstance(existing, dict):
@@ -55,7 +65,22 @@ def main():
                     print("Usage: kyg <key>")
                     return
                 result = kv.getkey(args[0])
-                print(result)
+                if isinstance(result, (dict, list)):
+                    import json
+                    print(json.dumps(result, indent=2))
+                else:
+                    print(result)
+    
+            elif prog in ["kyf", "search"]:
+                if len(args) != 1:
+                    print("Usage: kyf <query>")
+                    return
+                result = kv.search(args[0])
+                if result:
+                    import json
+                    print(json.dumps(result, indent=2))
+                else:
+                    print("No matches found.")
     
             elif prog in ["kyv", "history"]:
                 # Default to all history if no key is provided

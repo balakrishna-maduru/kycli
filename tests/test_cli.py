@@ -202,7 +202,25 @@ def test_cli_save_aborted(clean_home_db, capsys):
             main()
     assert "Aborted" in capsys.readouterr().out
 
-def test_cli_import_not_found(clean_home_db, capsys):
-    with patch("sys.argv", ["kyi", "nonexistent.csv"]):
+def test_cli_search(clean_home_db, capsys):
+    with patch("sys.argv", ["kys", "doc", "hello world"]): main()
+    capsys.readouterr()
+    
+    with patch("sys.argv", ["kyf", "hello"]):
         main()
-    assert "Error: File not found" in capsys.readouterr().out
+    out = capsys.readouterr().out
+    assert "doc" in out
+    assert "hello world" in out
+
+def test_cli_json_save_and_get(clean_home_db, capsys):
+    # Save JSON object
+    with patch("sys.argv", ["kys", "user", '{"name": "balu", "age": 30}']):
+        main()
+    capsys.readouterr()
+    
+    # Get JSON object (should be indented)
+    with patch("sys.argv", ["kyg", "user"]):
+        main()
+    out = capsys.readouterr().out
+    assert '"name": "balu"' in out
+    assert '"age": 30' in out

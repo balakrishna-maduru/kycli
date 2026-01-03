@@ -6,6 +6,12 @@ import json
 import tempfile
 import shutil
 import asyncio
+try:
+    from pydantic import BaseModel, ValidationError
+except ImportError:
+    BaseModel = None
+    ValidationError = None
+
 # SQLite C API definitions
 cdef extern from "sqlite3.h":
     ctypedef struct sqlite3:
@@ -37,8 +43,18 @@ cdef class Kycore:
     cdef sqlite3* _db
     cdef str _data_path
     cdef set _dirty_keys
+    cdef object _schema
 
-    def __init__(self, db_path=None):
+    def __init__(self, db_path=None, schema=None):
+        """
+        Initialize Kycore.
+        :param db_path: Path to the SQLite database.
+        :param schema: An optional Pydantic BaseModel for data validation.
+        """
+        if schema and BaseModel and not issubclass(schema, BaseModel):
+            raise TypeError("Schema must be a Pydantic BaseModel class")
+        self._schema = schema
+
         if db_path is None:
             self._data_path = os.path.expanduser("~/kydata.db")
         else:
@@ -82,6 +98,21 @@ cdef class Kycore:
         """)
         self._execute_raw("CREATE INDEX IF NOT EXISTS idx_audit_key ON audit_log(key)")
         
+        # Initialize FTS5 for search
+        self._execute_raw("CREATE VIRTUAL TABLE IF NOT EXISTS fts_kvstore USING fts5(key, value, content='kvstore')")
+        self._execute_raw("""
+            CREATE TRIGGER IF NOT EXISTS trg_kv_ai AFTER INSERT ON kvstore BEGIN
+                INSERT INTO fts_kvstore(rowid, key, value) VALUES (new.rowid, new.key, new.value);
+            END;
+            CREATE TRIGGER IF NOT EXISTS trg_kv_ad AFTER DELETE ON kvstore BEGIN
+                INSERT INTO fts_kvstore(fts_kvstore, rowid, key, value) VALUES('delete', old.rowid, old.key, old.value);
+            END;
+            CREATE TRIGGER IF NOT EXISTS trg_kv_au AFTER UPDATE ON kvstore BEGIN
+                INSERT INTO fts_kvstore(fts_kvstore, rowid, key, value) VALUES('delete', old.rowid, old.key, old.value);
+                INSERT INTO fts_kvstore(rowid, key, value) VALUES (new.rowid, new.key, new.value);
+            END;
+        """)
+
         # Auto-cleanup: Delete archived items older than 15 days
         self._execute_raw("DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > 15")
         
@@ -103,16 +134,38 @@ cdef class Kycore:
             raise RuntimeError(f"SQLite error: {msg}")
         return 0
 
-    def save(self, str key, str value):
+    def save(self, str key, value):
         if not key or not key.strip():
             raise ValueError("Key cannot be empty")
-        if not value:
-            raise ValueError("Value cannot be empty")
+        if value is None:
+            raise ValueError("Value cannot be None")
             
         cdef str k = key.lower().strip()
-        cdef str existing = self.getkey(k)
+        cdef str string_val
         
-        if existing == value:
+        # 1. Pydantic Validation
+        if self._schema:
+            try:
+                if isinstance(value, dict):
+                    validated = self._schema(**value)
+                    value = validated.model_dump()
+                else:
+                    # Try to parse if it's a string that might be JSON
+                    if isinstance(value, str):
+                        validated = self._schema.model_validate_json(value)
+                        value = validated.model_dump()
+            except ValidationError as e:
+                raise ValueError(f"Schema Validation Error: {e}")
+
+        # 2. Structured Serialization
+        if isinstance(value, (dict, list)):
+            string_val = json.dumps(value)
+        else:
+            string_val = str(value)
+
+        cdef str existing = self.getkey(k, deserialize=False)
+        
+        if existing == string_val:
             return "nochange"
         
         status = "overwritten" if existing != "Key not found" else "created"
@@ -121,9 +174,9 @@ cdef class Kycore:
             self._execute_raw("BEGIN TRANSACTION")
             
             # Update kvstore
-            self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, value])
+            self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, string_val])
             # Update audit log
-            self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, value])
+            self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, string_val])
             
             self._execute_raw("COMMIT")
             self._dirty_keys.add(k)
@@ -163,13 +216,20 @@ cdef class Kycore:
         results = self._bind_and_fetch("SELECT COUNT(*) FROM kvstore", [])
         return int(results[0][0]) if results else 0
 
-    def getkey(self, str key_pattern):
+    def getkey(self, str key_pattern, deserialize=True):
         cdef str k = key_pattern.lower().strip()
         
         # 1. Try exact match
         cdef list results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])
+        cdef str raw_val
         if results:
-            return results[0][0]
+            raw_val = results[0][0]
+            if deserialize:
+                try:
+                    return json.loads(raw_val)
+                except:
+                    return raw_val
+            return raw_val
 
         # 2. Try regex
         results = self._bind_and_fetch("SELECT key, value FROM kvstore", [])
@@ -178,8 +238,32 @@ cdef class Kycore:
         except re.error:
             return "Key not found"
 
-        matches = {row[0]: row[1] for row in results if regex.search(row[0])}
+        matches = {}
+        for row in results:
+            if regex.search(row[0]):
+                if deserialize:
+                    try:
+                        matches[row[0]] = json.loads(row[1])
+                    except:
+                        matches[row[0]] = row[1]
+                else:
+                    matches[row[0]] = row[1]
+                    
         return matches if matches else "Key not found"
+
+    def search(self, str query, deserialize=True):
+        """Perform a full-text search using FTS5."""
+        results = self._bind_and_fetch("SELECT key, value FROM fts_kvstore WHERE fts_kvstore MATCH ?", [query])
+        matches = {}
+        for row in results:
+            if deserialize:
+                try:
+                    matches[row[0]] = json.loads(row[1])
+                except:
+                    matches[row[0]] = row[1]
+            else:
+                matches[row[0]] = row[1]
+        return matches
 
     async def getkey_async(self, str key_pattern):
         """Asynchronous version of getkey."""

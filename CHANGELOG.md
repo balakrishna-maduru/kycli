@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0] - 2026-01-03
+### Added
+- **Structured Types (JSON)**: Native support for Python dicts and lists. Values are automatically serialized to JSON on save and deserialized on retrieval.
+- **Full-Text Search (FTS5)**: Added `kyf` command and `.search()` method for ultra-fast Google-like searching across the entire store.
+- **Pydantic Integration**: Link a Pydantic model to `Kycore` for automatic schema validation on every `save` operation.
+- **Improved CLI**: Enhanced `kys` and `kyg` to handle JSON strings and pretty-print complex outputs.
+
 ## [0.1.7] - 2026-01-03
 ### Added
 - **Archiving & Auto-Purge**: Deleted keys are now moved to a secure `archive` table instead of being immediately wiped.

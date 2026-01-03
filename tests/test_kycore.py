@@ -14,8 +14,8 @@ def test_save_empty_key(kv_store):
         kv_store.save("   ", "value")
 
 def test_save_empty_value(kv_store):
-    with pytest.raises(ValueError, match="Value cannot be empty"):
-        kv_store.save("key", "")
+    with pytest.raises(ValueError, match="Value cannot be None"):
+        kv_store.save("key", None)
 
 def test_dict_interface(kv_store):
     # __setitem__ and __getitem__
@@ -120,3 +120,59 @@ def test_export_import_csv(kv_store, tmp_path):
     new_store = kv_store.__class__(db_path=str(tmp_path / "new.db"))
     new_store.import_data(export_file)
     assert new_store.getkey("csv_key") == "csv_val"
+
+def test_json_doc(kv_store):
+    # Test saving a dictionary
+    data = {"name": "Balu", "age": 30, "nested": {"key": "val"}}
+    kv_store.save("user:1", data)
+    
+    # Retrieve and check type
+    result = kv_store.getkey("user:1")
+    assert isinstance(result, dict)
+    assert result["name"] == "Balu"
+    assert result["nested"]["key"] == "val"
+    
+    # Test saving a list
+    list_data = [1, 2, 3, "four"]
+    kv_store.save("my_list", list_data)
+    res_list = kv_store.getkey("my_list")
+    assert isinstance(res_list, list)
+    assert res_list[3] == "four"
+
+def test_fts_search(kv_store):
+    kv_store.save("doc1", "The quick brown fox jumps over the lazy dog")
+    kv_store.save("doc2", "A fast movement of the brown animal")
+    kv_store.save("json_doc", {"title": "Structured Data", "content": "Searching inside JSON"})
+
+    # Search for "brown"
+    results = kv_store.search("brown")
+    assert "doc1" in results
+    assert "doc2" in results
+    assert len(results) == 2
+
+    # Search for "Structured"
+    results = kv_store.search("Structured")
+    assert "json_doc" in results
+    assert results["json_doc"]["title"] == "Structured Data"
+
+def test_pydantic_schema(kv_store):
+    from pydantic import BaseModel
+    
+    class User(BaseModel):
+        name: str
+        age: int
+
+    # Initialize with schema
+    kv_with_schema = kv_store.__class__(db_path=kv_store.data_path, schema=User)
+    
+    # Valid save
+    kv_with_schema.save("u1", {"name": "Balu", "age": 30})
+    assert kv_with_schema.getkey("u1")["name"] == "Balu"
+    
+    # Invalid save (missing age)
+    with pytest.raises(ValueError, match="Schema Validation Error"):
+        kv_with_schema.save("u2", {"name": "Invalid"})
+    
+    # Invalid type
+    with pytest.raises(ValueError, match="Schema Validation Error"):
+        kv_with_schema.save("u3", {"name": "Balu", "age": "thirty"})

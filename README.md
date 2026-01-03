@@ -38,8 +38,9 @@ pip install kycli
 
 | Command | Action | Example |
 | :--- | :--- | :--- |
-| `kys` | **Save** a value (with overwrite check) | `kys username "balu"` |
-| `kyg` | **Get** a value (supports Regex) | `kyg "user.*"` |
+| `kys` | **Save** a value (Supports JSON) | `kys user '{"id": 1}'` |
+| `kyg` | **Get** a value (Auto-deserializes) | `kyg user` |
+| `kyf` | **Search** (Full-Text Search) | `kyf "search terms"` |
 | `kyl` | **List** keys (supports Regex) | `kyl "prod_.*"` |
 | `kyv` | **View** history/audit logs | `kyv username` |
 | `kyd` | **Delete** (Double-confirmation) | `kyd old_token` |
@@ -69,12 +70,24 @@ kys username "maduru"
 
 ### `kyg <key_or_regex>` — Search & Get
 Retrieves a value. Supports exact matches and regex.
+- **Auto-Deserialization**: If the value is a JSON object or list, it is automatically returned as a Python-friendly structure.
 ```bash
 kyg username
 # Result: maduru
 
-kyg "user.*"
-# Result: {'username': 'maduru', 'user_id': '101'} (Matches found via regex)
+kyg user_profile
+# Result:
+# {
+#   "name": "balakrishna",
+#   "role": "admin"
+# }
+```
+
+### `kyf <query>` — Full-Text Search (FTS5)
+Perform blazing-fast Google-like searches across your entire database. Powered by SQLite's FTS5 engine.
+```bash
+kyf "searching terms"
+# Returns all keys and values where the terms appear.
 ```
 
 ### `kyl [pattern]` — List Keys
@@ -171,7 +184,26 @@ async def run_tasks():
 asyncio.run(run_tasks())
 ```
 
-### 3. Application / Class Integration
+### 3. Schema Validation (Pydantic)
+Enforce data integrity by attaching a Pydantic model to your store.
+```python
+from pydantic import BaseModel
+from kycli import Kycore
+
+class UserSchema(BaseModel):
+    name: str
+    age: int
+
+# Initialize with schema validation
+with Kycore(schema=UserSchema) as kv:
+    # This will succeed and auto-serialize
+    kv.save("user:101", {"name": "Balu", "age": 30})
+    
+    # This will raise a ValueError (Schema Validation Error)
+    kv.save("user:102", {"name": "Invalid"}) 
+```
+
+### 4. Application / Class Integration
 Wrap `Kycore` inside your classes for persistent state management.
 ```python
 class UserManager:
