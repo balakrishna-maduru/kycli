@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.6] - 2026-01-03
+### Added
+- **Safe Deletion**: `kyd` now requires re-entering the key name for confirmation.
+- **Accident Recovery**: Added `kyr` (restore) command to magically recover deleted keys from the audit history.
+- **Improved CLI UX**: Added helpful tips and clearer confirmation prompts for destructive operations.
+
 ## [0.1.5] - 2026-01-03
 ### Added
 - **Detailed Documentation**: Complete rewrite of `README.md` with deep-dive CLI examples, performance benchmarks, and architecture details.

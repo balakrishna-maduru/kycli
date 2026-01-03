@@ -36,6 +36,18 @@ pip install kycli
 
 `kycli` provides a set of ultra-short commands for maximum terminal productivity.
 
+| Command | Action | Example |
+| :--- | :--- | :--- |
+| `kys` | **Save** a value (with overwrite check) | `kys username "balu"` |
+| `kyg` | **Get** a value (supports Regex) | `kyg "user.*"` |
+| `kyl` | **List** keys (supports Regex) | `kyl "prod_.*"` |
+| `kyv` | **View** history/audit logs | `kyv username` |
+| `kyd` | **Delete** (Double-confirmation) | `kyd old_token` |
+| `kyr` | **Restore** (Recover from history) | `kyr old_token` |
+| `kye` | **Export** data (CSV/JSON) | `kye data.json json` |
+| `kyi` | **Import** data | `kyi backup.csv` |
+| `kyh` | **Help** library | `kyh` |
+
 ### `kyh` — The Help Center
 Shows the available commands and basic usage instructions.
 ```bash
@@ -89,10 +101,21 @@ kyv -h
 ```
 
 ### `kyd <key>` — Delete Key (Soft Delete)
-Removes a key from the active store (stays in history for audit).
+Removes a key from the active store.
+- **Double-Confirmation**: Requires you to re-type the key name to prevent accidental loss.
+- **Tip**: Deletion is "soft" in terms of data—it stays in history and can be recovered.
 ```bash
 kyd username
+# Result: ⚠️ DANGER: To delete 'username', please re-enter the key name: username
 # Result: Deleted
+# Result: 💡 Tip: If this was accidental, use 'kyr username' to restore it.
+```
+
+### `kyr <key>` — Restore Key
+Restores a key from its history back into the active store.
+```bash
+kyr username
+# Result: ✅ Key 'username' restored from history.
 ```
 
 ### `kye <file> [format]` — Export Data

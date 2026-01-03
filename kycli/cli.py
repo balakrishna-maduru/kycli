@@ -8,7 +8,8 @@ Available commands:
   kys <key> <value>             - Save key-value (asks before overwriting)
   kyg <key>                     - Get current value by key
   kyl [pattern]                 - List keys (optional regex pattern)
-  kyd <key>                     - Delete key
+  kyd <key>                     - Delete key (requires confirmation)
+  kyr <key>                     - Restore a deleted key from history
   kyv [-h]                      - View full audit history (no args or -h)
   kyv <key>                     - View latest value from history for a specific key
   kye <file> [format]           - Export data to file (default CSV; JSON if specified)
@@ -78,7 +79,21 @@ def main():
                 if len(args) != 1:
                     print("Usage: kyd <key>")
                     return
-                print(kv.delete(args[0]))
+                key = args[0]
+                # Confirmation: ask user to re-enter key name
+                confirm = input(f"⚠️ DANGER: To delete '{key}', please re-enter the key name: ").strip()
+                if confirm != key:
+                    print("❌ Confirmation failed. Aborted.")
+                    return
+                
+                print(kv.delete(key))
+                print(f"💡 Tip: If this was accidental, use 'kyr {key}' to restore it.")
+    
+            elif prog in ["kyr", "restore"]:
+                if len(args) != 1:
+                    print("Usage: kyr <key>")
+                    return
+                print(kv.restore(args[0]))
     
             elif prog in ["kyl", "listkeys"]:
                 pattern = args[0] if args else None

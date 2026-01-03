@@ -230,6 +230,26 @@ cdef class Kycore:
             return "Deleted"
         return "Key not found"
 
+    def restore(self, str key):
+        """Restore the latest value for a key from the audit_log."""
+        cdef str k = key.lower().strip()
+        cdef list history = self.get_history(k)
+        
+        if not history:
+            return "No history found for this key"
+            
+        # history is ordered by DESC timestamp, so index 0 is the latest
+        cdef str latest_value = history[0][1]
+        
+        # Check if it's already in kvstore with the same value
+        cdef str current = self.getkey(k)
+        if current == latest_value:
+            return "Already up to date"
+            
+        # Re-save it to kvstore and audit log (as a restoration event)
+        self.save(k, latest_value)
+        return f"Restored: {k} (Value: {latest_value})"
+
     def listkeys(self, pattern=None):
         results = self._bind_and_fetch("SELECT key FROM kvstore", [])
         keys = [row[0] for row in results]
