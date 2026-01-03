@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.7] - 2026-01-03
+### Added
+- **Archiving & Auto-Purge**: Deleted keys are now moved to a secure `archive` table instead of being immediately wiped.
+- **15-Day Data Retention**: Implemented a 15-day auto-purge policy. Archived keys are kept for 15 days, allowing for recovery via the `kyr` command before permanent deletion.
+
 ## [0.1.6] - 2026-01-03
 ### Added
 - **Safe Deletion**: `kyd` now requires re-entering the key name for confirmation.

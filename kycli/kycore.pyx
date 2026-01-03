@@ -72,7 +72,18 @@ cdef class Kycore:
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         """)
+        self._execute_raw("""
+            CREATE TABLE IF NOT EXISTS archive (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                key TEXT,
+                value TEXT,
+                deleted_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
         self._execute_raw("CREATE INDEX IF NOT EXISTS idx_audit_key ON audit_log(key)")
+        
+        # Auto-cleanup: Delete archived items older than 15 days
+        self._execute_raw("DELETE FROM archive WHERE deleted_at < datetime('now', '-15 days')")
         
         self._dirty_keys = set()
 
@@ -224,11 +235,27 @@ cdef class Kycore:
 
     def delete(self, str key):
         cdef str k = key.lower().strip()
-        self._bind_and_execute("DELETE FROM kvstore WHERE key=?", [k])
-        if sqlite3_changes(self._db) > 0:
+        
+        # Fetch value before deleting to move it to archive
+        cdef list results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])
+        if not results:
+            return "Key not found"
+            
+        cdef str val = results[0][0]
+        
+        try:
+            self._execute_raw("BEGIN TRANSACTION")
+            # Move to archive
+            self._bind_and_execute("INSERT INTO archive (key, value) VALUES (?, ?)", [k, val])
+            # Remove from active store
+            self._bind_and_execute("DELETE FROM kvstore WHERE key=?", [k])
+            self._execute_raw("COMMIT")
+            
             self._dirty_keys.add(k)
-            return "Deleted"
-        return "Key not found"
+            return "Deleted and moved to archive (Auto-permanently deleted after 15 days)"
+        except Exception as e:
+            self._execute_raw("ROLLBACK")
+            raise e
 
     def restore(self, str key):
         """Restore the latest value for a key from the audit_log."""

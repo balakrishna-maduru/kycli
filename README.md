@@ -113,6 +113,7 @@ kyd username
 
 ### `kyr <key>` — Restore Key
 Restores a key from its history back into the active store.
+- **Note**: This works for keys in the **Archive** table. KyCLI keeps deleted data for **15 days** before permanent removal.
 ```bash
 kyr username
 # Result: ✅ Key 'username' restored from history.
@@ -207,6 +208,7 @@ async def fetch_config(key: str, db: Kycore = Depends(get_db)):
 - **SQLite Engine**: Running in `WAL` (Write-Ahead Logging) mode for concurrent reads/writes.
 - **Atomic Operations**: Exports use a "temp-file then rename" strategy to prevent corruption.
 - **Data Integrity**: Keys are automatically lowercased and stripped to prevent duplicate-but-slightly-different keys.
+- **Auto-Purge Policy**: Deleted keys are moved to an **Archive** table and automatically purged after **15 days** to keep the database size optimized.
 - **Embedded C**: Core operations are written in Cython, binding directly to native library pointers.
 
 ---
