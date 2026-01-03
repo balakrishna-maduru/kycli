@@ -125,6 +125,33 @@ cdef class Kycore:
         """Asynchronous version of save using a thread pool."""
         return await asyncio.to_thread(self.save, key, value)
 
+    def __setitem__(self, str key, str value):
+        self.save(key, value)
+
+    def __getitem__(self, str key):
+        val = self.getkey(key)
+        if val == "Key not found" or isinstance(val, dict):
+            raise KeyError(key)
+        return val
+
+    def __delitem__(self, str key):
+        res = self.delete(key)
+        if res == "Key not found":
+            raise KeyError(key)
+
+    def __contains__(self, str key):
+        cdef list results = self._bind_and_fetch("SELECT 1 FROM kvstore WHERE key = ?", [key.lower().strip()])
+        return len(results) > 0
+
+    def __iter__(self):
+        results = self._bind_and_fetch("SELECT key FROM kvstore", [])
+        for row in results:
+            yield row[0]
+
+    def __len__(self):
+        results = self._bind_and_fetch("SELECT COUNT(*) FROM kvstore", [])
+        return int(results[0][0]) if results else 0
+
     def getkey(self, str key_pattern):
         cdef str k = key_pattern.lower().strip()
         

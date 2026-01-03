@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.5] - 2026-01-03
+### Added
+- **Detailed Documentation**: Complete rewrite of `README.md` with deep-dive CLI examples, performance benchmarks, and architecture details.
+- **Integration Guides**: Added step-by-step guides for class-based usage and FastAPI integration.
+- **Restored Interface**: Re-implemented Pythonic dictionary methods (`__getitem__`, etc.) in the new direct C API core.
+
 ## [0.1.4] - 2026-01-03
 ### Added
 - **Integration Documentation**: Added detailed examples for using `Kycore` in custom classes and FastAPI applications.
