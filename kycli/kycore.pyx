@@ -83,7 +83,7 @@ cdef class Kycore:
         self._execute_raw("CREATE INDEX IF NOT EXISTS idx_audit_key ON audit_log(key)")
         
         # Auto-cleanup: Delete archived items older than 15 days
-        self._execute_raw("DELETE FROM archive WHERE deleted_at < datetime('now', '-15 days')")
+        self._execute_raw("DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > 15")
         
         self._dirty_keys = set()
 
@@ -258,22 +258,23 @@ cdef class Kycore:
             raise e
 
     def restore(self, str key):
-        """Restore the latest value for a key from the audit_log."""
+        """Restore the latest value for a key from the archive."""
         cdef str k = key.lower().strip()
-        cdef list history = self.get_history(k)
         
-        if not history:
-            return "No history found for this key"
-            
-        # history is ordered by DESC timestamp, so index 0 is the latest
-        cdef str latest_value = history[0][1]
+        # Pull latest from archive
+        cdef list results = self._bind_and_fetch("SELECT value FROM archive WHERE key = ? ORDER BY deleted_at DESC LIMIT 1", [k])
         
-        # Check if it's already in kvstore with the same value
-        cdef str current = self.getkey(k)
-        if current == latest_value:
-            return "Already up to date"
+        if not results:
+            return "No archived version found for this key (Note: Archive is purged after 15 days)"
             
-        # Re-save it to kvstore and audit log (as a restoration event)
+        cdef str latest_value = results[0][0]
+        
+        # Check if it's already in kvstore (maybe it was recreated)
+        results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])
+        if results and results[0][0] == latest_value:
+            return "Already in active store with identical value"
+            
+        # Re-save it to kvstore and audit log
         self.save(k, latest_value)
         return f"Restored: {k} (Value: {latest_value})"
 
