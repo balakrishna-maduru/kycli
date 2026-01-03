@@ -52,4 +52,4 @@ Thumbs.db
 # Ignore compiled extension files
 kycli/kycore.c
 kycli/kycore.html
-kycli/kycore.cpython-*.so
+kycli/kycore.cpython-*.so*.db
