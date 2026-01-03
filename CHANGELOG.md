@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.2] - 2026-01-03
+### Added
+- **C-Level Core**: Replaced Python `sqlite3` with direct C API calls for 150x faster retrieval.
+- **Async Support**: Added non-blocking `save_async` and `getkey_async` for high-throughput app integration.
+- **Performance Suite**: Integrated a new benchmark script and performance reporting.
+- **Improved Typing**: Enhanced Cython type definitions for critical paths.
+
+### Fixed
+- Fixed a validation bug in `save()` where empty strings were incorrectly allowed.
+
 ## [0.1.1] - 2026-01-02
 ### Fixed
 - Fixed PyPI upload issue caused by filename reuse.

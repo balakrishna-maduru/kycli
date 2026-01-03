@@ -1,10 +1,23 @@
 from setuptools import setup, Extension
 from Cython.Build import cythonize
 
+import os
+
+# Detect Homebrew SQLite if on Apple Silicon Mac
+sqlite_prefix = "/opt/homebrew/opt/sqlite"
+include_dirs = []
+library_dirs = []
+if os.path.exists(sqlite_prefix):
+    include_dirs.append(f"{sqlite_prefix}/include")
+    library_dirs.append(f"{sqlite_prefix}/lib")
+
 extensions = [
     Extension(
         "kycli.kycore",
         ["kycli/kycore.pyx"],
+        libraries=["sqlite3"],
+        include_dirs=include_dirs,
+        library_dirs=library_dirs,
     )
 ]
 
@@ -13,7 +26,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="kycli",
-    version="0.1.1",
+    version="0.1.2",
     author="Balakrishna Maduru",
     author_email="balakrishnamaduru@gmail.com",
     description="**kycli** is a high-performance Python CLI toolkit built with Cython for speed.",
