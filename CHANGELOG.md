@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.4] - 2026-01-03
+### Added
+- **Integration Documentation**: Added detailed examples for using `Kycore` in custom classes and FastAPI applications.
+
 ## [0.1.3] - 2026-01-03
 ### Changed
 - **Metadata Update**: Refreshed README and PyPI documentation to accurately reflect Raw C API optimizations (direct `libsqlite3` binding).

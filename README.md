@@ -86,6 +86,63 @@ asyncio.run(main())
 
 ---
 
+## 🏗 Integration & Usage in Apps
+
+### Within a Class
+You can easily wrap `Kycore` within your own application logic to manage state or configuration.
+
+```python
+from kycli import Kycore
+
+class AppConfig:
+    def __init__(self):
+        self.db = Kycore()
+
+    def set_env(self, env: str):
+        self.db.save("env", env)
+
+    def get_env(self):
+        return self.db.getkey("env")
+
+    def __del__(self):
+        # Ensure connection is closed if not using context manager
+        if hasattr(self, 'db'):
+            # Close connection manually
+            self.db.__exit__(None, None, None)
+
+config = AppConfig()
+config.set_env("staging")
+print(f"Current Environment: {config.get_env()}")
+```
+
+### Dependency in FastAPI
+KyCLI's asynchronous methods make it a perfect fit for modern web frameworks.
+
+```python
+from fastapi import FastAPI, Depends
+from kycli import Kycore
+
+app = FastAPI()
+
+# Simple Dependency
+def get_kv():
+    with Kycore() as core:
+        yield core
+
+@app.get("/settings/{key}")
+async def get_setting(key: str, kv: Kycore = Depends(get_kv)):
+    # Use async method to prevent blocking the event loop
+    value = await kv.getkey_async(key)
+    return {"key": key, "value": value}
+
+@app.post("/settings/")
+async def save_setting(key: str, value: str, kv: Kycore = Depends(get_kv)):
+    status = await kv.save_async(key, value)
+    return {"status": status, "key": key}
+```
+
+---
+
 ## 🛡️ Key Features
 - **Raw C Integration**: Direct binding to `libsqlite3` for zero abstraction overhead.
 - **Asynchronous I/O**: Offloaded database tasks using thread-pools for non-blocking execution.
@@ -109,6 +166,3 @@ asyncio.run(main())
 - [GitHub](https://github.com/balakrishna-maduru)  
 - [LinkedIn](https://www.linkedin.com/in/balakrishna-maduru)  
 - [Twitter](https://x.com/krishonlyyou)
-
----
-*Optimized for Performance by Antigravity*
