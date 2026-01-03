@@ -158,7 +158,7 @@ cdef class Kycore:
                 raise ValueError(f"Schema Validation Error: {e}")
 
         # 2. Structured Serialization
-        if isinstance(value, (dict, list)):
+        if isinstance(value, (dict, list, bool, int, float)):
             string_val = json.dumps(value)
         else:
             string_val = str(value)

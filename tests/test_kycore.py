@@ -173,6 +173,39 @@ def test_pydantic_schema(kv_store):
     with pytest.raises(ValueError, match="Schema Validation Error"):
         kv_with_schema.save("u2", {"name": "Invalid"})
     
-    # Invalid type
     with pytest.raises(ValueError, match="Schema Validation Error"):
         kv_with_schema.save("u3", {"name": "Balu", "age": "thirty"})
+
+def test_schema_init_error(kv_store):
+    # Pass a non-model class
+    class NotAModel:
+        pass
+    
+    with pytest.raises(TypeError, match="Schema must be a Pydantic BaseModel class"):
+        kv_store.__class__(db_path=kv_store.data_path, schema=NotAModel)
+
+def test_save_mixed_types(kv_store):
+    # Integer as value
+    kv_store.save("int_key", 123)
+    assert kv_store.getkey("int_key") == 123 # Json loads will get int back
+    
+    # Boolean as value
+    kv_store.save("bool_key", True)
+    assert kv_store.getkey("bool_key") is True
+    
+    # Float as value
+    kv_store.save("float_key", 3.14)
+    assert kv_store.getkey("float_key") == 3.14
+
+def test_getkey_no_deserialize(kv_store):
+    kv_store.save("json_raw", {"a": 1})
+    # deserialize=False should return raw JSON string
+    res = kv_store.getkey("json_raw", deserialize=False)
+    assert isinstance(res, str)
+    assert '{"a": 1}' in res
+
+def test_search_no_deserialize(kv_store):
+    kv_store.save("search_raw", {"b": 2})
+    res = kv_store.search("b", deserialize=False)
+    assert "search_raw" in res
+    assert isinstance(res["search_raw"], str)
