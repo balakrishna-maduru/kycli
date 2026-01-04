@@ -47,7 +47,10 @@ pip install kycli
 | `kyr` | **Restore** (Recover from history) | `kyr old_token` |
 | `kye` | **Export** data (CSV/JSON) | `kye data.json json` |
 | `kyi` | **Import** data | `kyi backup.csv` |
+| `kyc` | **Execute** stored command | `kyc hello` |
+| `kyshell` | **Interactive TUI** (Real-time view) | `kycli kyshell` |
 | `kyh` | **Help** library | `kyh` |
+| `Env` | **KYCLI_DB_PATH** | `export KYCLI_DB_PATH="..."` |
 
 ### `kyh` — The Help Center
 Shows the available commands and basic usage instructions.
@@ -146,7 +149,54 @@ Bulk imports data from a CSV or JSON file.
 kyi backup.csv
 ```
 
+### `kyc <key> [args...]` — Execute Mode
+Run a stored value directly as a shell command.
+- **Static Execution**: Run the command exactly as stored.
+- **Dynamic Execution**: Pass additional arguments that get appended to the stored command.
+```bash
+# Store a command
+kys list_files "ls -la"
+
+# Execute it
+kyc list_files
+
+# Dynamic execution (appends /tmp)
+kyc list_files /tmp
+```
+
 ---
+
+### `kyshell` — Interactive TUI Shell
+Launch a multi-pane interactive shell to manage your data.
+- **Auto-completion**: Tab-completion for all commands.
+- **Split View**: Real-time audit trail in a separate pane as you execute commands.
+- **Syntax Highlighting**: Beautifully formatted input and output.
+```bash
+kycli kyshell
+```
+
+
+### ⚙️ Global Configuration & Env Vars
+`kycli` is highly configurable. You can change the database location, export formats, and UI themes via environment variables or configuration files.
+
+#### 🌍 Environment Variables (Highest Priority)
+The most direct way to configure `kycli` is via shell environment variables.
+
+- **`KYCLI_DB_PATH`**: Overrides the default database location (`~/kydata.db`).
+  ```bash
+  export KYCLI_DB_PATH="/custom/path/to/database.db"
+  ```
+
+#### 📁 Configuration Files
+`kycli` looks for configuration in `.kyclirc` or `.kyclirc.json`.
+
+**Example `.kyclirc` (JSON):**
+```json
+{
+  "db_path": "~/.kydata.db",
+  "export_format": "csv"
+}
+```
 
 ## 🐍 Python Library Interface
 
@@ -252,7 +302,7 @@ Want to test the speed on your own hardware?
 python3 benchmark.py
 ```
 
----
+ ---
 
 ## 👤 Author & Support
 
@@ -261,5 +311,3 @@ python3 benchmark.py
 - [LinkedIn](https://www.linkedin.com/in/balakrishna-maduru/in/balakrishna-maduru)  
 - [Twitter](https://x.com/krishonlyyou)
 
----
-*Optimized for Performance by Antigravity*

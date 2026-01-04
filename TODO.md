@@ -11,6 +11,7 @@ This list tracks the progress of implementing high-performance and robust enhanc
 - [x] **Error Handling**
 - [x] **Safe Deletion Flow**
 - [x] **Archiving & Auto-Purge** (15-day policy)
+- [x] **Environment Variable Configuration** (`KYCLI_DB_PATH`)
 
 ## Phase 3: Advanced Enhancements 🚀
 - [x] **Performance Overhaul** (Raw C API)

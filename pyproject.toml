@@ -1,27 +1,30 @@
-[tool.poetry]
+[project]
 name = "kycli"
-version = "0.0.5"
+version = "0.1.5"
+readme = "README.md"
 description = "**kycli** is a high-performance Python CLI toolkit built with Cython for speed."
-authors = ["Balakrishna maduru <balakrishnamaduru@gmail.com>"]
-packages = [{ include = "kycli" }]
+authors = [{name = "Balakrishna maduru", email = "balakrishnamaduru@gmail.com"}]
+dependencies = [
+    "prompt-toolkit >= 3.0.43",
+    "rich >= 13.7.0",
+    "tomli >= 2.0.1",
+]
+requires-python = ">=3.9"
 
-[tool.poetry.dependencies]
-python = "^3.9"
-cython = "^3.1.0"
-build = "^1.2.2.post1"
-setuptools = "^80.7.1"
-wheel = "^0.45.1"
-
-[tool.poetry.scripts]
+[project.scripts]
 kycli = "kycli.cli:main"
 kys = "kycli.cli:main"
 kyg = "kycli.cli:main"
+kyf = "kycli.cli:main"
 kyl = "kycli.cli:main"
+kyv = "kycli.cli:main"
 kyd = "kycli.cli:main"
+kyr = "kycli.cli:main"
+kye = "kycli.cli:main"
+kyi = "kycli.cli:main"
+kyc = "kycli.cli:main"
 kyh = "kycli.cli:main"
-
-[tool.poetry.group.dev.dependencies]
-setuptools = "^80.7.1"
+kyshell = "kycli.cli:main"
 
 [build-system]
 requires = ["setuptools", "wheel", "cython"]

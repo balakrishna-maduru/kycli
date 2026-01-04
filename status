@@ -1,0 +1,12 @@
+key,value
+data,data1
+me,me1
+myls,ls -la
+greet,"echo Hello, {0}"
+username,bala
+laduu,2
+laduu1,2
+laduu2,2
+asfsg,56781234567891234567
+ass,lfnjkrlgjrkgbnjkernbgjerbwngjrnbjgbjeirbguierbuigfbrwuibfguiwrbguiwruigbwruigbuierbvjbdfnuivbuierbvuibjdbvuierbuivyeruibgirbeiuvbruibgfuirwhbkbvuifbvuierhbuibhuirhbeuirhbfhuirheguihruihgfuirhguirwhuighrwuighuirwhguirwhguihrwuighuriwhguihrwuighrughuirwhguirwhuighrwuihg
+status,"""echo 'System is Up'"""

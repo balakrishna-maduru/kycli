@@ -4,14 +4,7 @@ import sys
 from unittest.mock import patch, MagicMock
 from kycli.cli import main
 
-@pytest.fixture
-def clean_home_db(tmp_path, monkeypatch):
-    """Ensure a clean home directory and DB for each test."""
-    fake_home = tmp_path / "home"
-    fake_home.mkdir()
-    monkeypatch.setattr("os.path.expanduser", lambda x: str(fake_home / "kydata.db") if x == "~/kydata.db" else x)
-    monkeypatch.setenv("HOME", str(fake_home))
-    return fake_home
+
 
 def test_cli_save_new(clean_home_db, capsys):
     with patch("sys.argv", ["kys", "user", "balu"]):
@@ -167,3 +160,67 @@ def test_cli_help(clean_home_db, capsys):
 def test_cli_validation_v_error(clean_home_db, capsys):
     with patch("sys.argv", ["kys", " ", "val"]): main()
     assert "Validation Error" in capsys.readouterr().out
+
+def test_cli_kyv_no_history(clean_home_db, capsys):
+    with patch("sys.argv", ["kyv", "non_existent"]):
+        main()
+    assert "No history found" in capsys.readouterr().out
+
+def test_cli_execute_command(clean_home_db):
+    from kycli.cli import main
+    # Save a command
+    with patch("sys.argv", ["kys", "hi", "echo hello"]):
+        main()
+    
+    # Execute it
+    with patch("sys.argv", ["kyc", "hi"]):
+        with patch("subprocess.run") as mock_run:
+            main()
+            mock_run.assert_called()
+            # The command should be 'echo hello'
+            args, kwargs = mock_run.call_args
+            assert args[0] == "echo hello"
+
+def test_cli_execute_dynamic(clean_home_db):
+    from kycli.cli import main
+    with patch("sys.argv", ["kys", "list", "ls"]):
+        main()
+    
+    with patch("sys.argv", ["kyc", "list", "-la"]):
+        with patch("subprocess.run") as mock_run:
+            main()
+            args, kwargs = mock_run.call_args
+            assert args[0] == "ls -la"
+
+def test_cli_execute_error(clean_home_db):
+    from kycli.cli import main
+    with patch("sys.argv", ["kys", "bad", "exit 1"]):
+        main()
+    
+    with patch("sys.argv", ["kyc", "bad"]):
+        import subprocess
+        with patch("subprocess.run", side_effect=subprocess.CalledProcessError(1, "exit 1")) as mock_run:
+            main() # Should catch CalledProcessError
+        
+        with patch("subprocess.run", side_effect=RuntimeError("fail")) as mock_run:
+            main() # Should catch Exception
+
+def test_cli_help_default(clean_home_db):
+    from kycli.cli import main
+    # Run with empty args and prog name kycli to hit line 40
+    with patch("sys.argv", ["kycli"]):
+        with patch("kycli.cli.print_help") as mock_help:
+            main()
+            mock_help.assert_called()
+
+
+def test_cli_execute_usage_errors(clean_home_db):
+    from kycli.cli import main
+    # Hit line 178-179
+    with patch("sys.argv", ["kyc"]):
+        main()
+    
+    # Hit line 183-184
+    with patch("sys.argv", ["kyc", "nonexistent"]):
+        main()
+

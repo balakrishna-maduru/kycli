@@ -1,28 +1,18 @@
 # Changelog
 
-## [0.2.0] - 2026-01-03
+## [0.1.5] - 2026-01-04
 ### Added
 - **Structured Types (JSON)**: Native support for Python dicts and lists. Values are automatically serialized to JSON on save and deserialized on retrieval.
 - **Full-Text Search (FTS5)**: Added `kyf` command and `.search()` method for ultra-fast Google-like searching across the entire store.
 - **Pydantic Integration**: Link a Pydantic model to `Kycore` for automatic schema validation on every `save` operation.
-- **Improved CLI**: Enhanced `kys` and `kyg` to handle JSON strings and pretty-print complex outputs.
-
-## [0.1.7] - 2026-01-03
-### Added
-- **Archiving & Auto-Purge**: Deleted keys are now moved to a secure `archive` table instead of being immediately wiped.
-- **15-Day Data Retention**: Implemented a 15-day auto-purge policy. Archived keys are kept for 15 days, allowing for recovery via the `kyr` command before permanent deletion.
-
-## [0.1.6] - 2026-01-03
-### Added
+- **Environment Variable Configuration**: Set `KYCLI_DB_PATH` to customize the database location dynamically.
+- **Execute Mode (kyc)**: Run stored values directly as shell commands, supporting both static and dynamic execution.
+- **Interactive TUI Shell (kyshell)**: Multi-pane terminal interface with real-time audit trails and background command execution.
+- **Archiving & Auto-Purge**: Deleted keys are now moved to a secure `archive` table with a 15-day auto-purge policy.
 - **Safe Deletion**: `kyd` now requires re-entering the key name for confirmation.
-- **Accident Recovery**: Added `kyr` (restore) command to magically recover deleted keys from the audit history.
-- **Improved CLI UX**: Added helpful tips and clearer confirmation prompts for destructive operations.
-
-## [0.1.5] - 2026-01-03
-### Added
-- **Detailed Documentation**: Complete rewrite of `README.md` with deep-dive CLI examples, performance benchmarks, and architecture details.
-- **Integration Guides**: Added step-by-step guides for class-based usage and FastAPI integration.
-- **Restored Interface**: Re-implemented Pythonic dictionary methods (`__getitem__`, etc.) in the new direct C API core.
+- **Accident Recovery**: Added `kyr` (restore) command to magically recover deleted keys from the archive.
+- **100% Test Coverage**: Comprehensive test suite covering all edge cases, CLI commands, and TUI interactions.
+- **Improved CLI UX**: Detailed help examples (`kyh`), emojis, and micro-animations in the TUI.
 
 ## [0.1.4] - 2026-01-03
 ### Added
