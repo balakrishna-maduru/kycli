@@ -1,3 +1,5 @@
+# Poetry configuration (for development workflow)
+# Note: Build system uses setuptools (see [build-system] below)
 [tool.poetry]
 name = "kycli"
 version = "0.1.6"
