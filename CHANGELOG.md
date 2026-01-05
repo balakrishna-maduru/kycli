@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6] - 2026-01-05
+### Fixed
+- **ModuleNotFoundError Fix**: Fixed critical installation issue where `kycli.kycore` module was not found after pip installation
+- **Build System**: Updated setup.py to properly handle Cython compilation with fallback to pre-generated C files
+- **Dependencies**: Added missing `install_requires` for prompt-toolkit, rich, and tomli
+- **Distribution**: Ensured generated C files are included in source distributions for users without Cython
+
 ## [0.1.5] - 2026-01-04
 ### Added
 - **Structured Types (JSON)**: Native support for Python dicts and lists. Values are automatically serialized to JSON on save and deserialized on retrieval.

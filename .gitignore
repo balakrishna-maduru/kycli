@@ -3,8 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Cython-generated C files
-*.c
+# Cython-generated C files (but keep kycore.c for distribution)
 *.cpp
 *.so
 *.pyd
@@ -49,7 +48,6 @@ Thumbs.db
 *.bak
 *~
 
-# Ignore compiled extension files
-kycli/kycore.c
+# Ignore compiled extension files (but keep kycore.c)
 kycli/kycore.html
 kycli/kycore.cpython-*.so*.db
