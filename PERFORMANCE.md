@@ -9,7 +9,7 @@ KyCLI has been pushed to the absolute limits of performance by integrating direc
     *   **Non-blocking API**: Added `save_async()` and `getkey_async()` methods.
     *   **Thread Pool Execution**: Uses `asyncio.to_thread` to offload database I/O, allowing high-throughput integrations in web servers (like FastAPI or Sanic) without blocking the event loop.
 
-## Benchmark Results (Avg task for 1000 calls)
+## Benchmark Results (Avg task for 1,000 calls)
 
 | Operation | Implementation | Avg Latency |
 | :--- | :--- | :--- |
@@ -19,6 +19,19 @@ KyCLI has been pushed to the absolute limits of performance by integrating direc
 | **Save Key** | **Async (Threadpool)** | 0.2547 ms |
 | **Get History** | **Sync (Raw C)** | 0.0050 ms |
 | **List Keys** | **Sync (Raw C)** | 0.1506 ms |
+
+## Scaling Performance (10,000 Classes/Records)
+
+To test the engine at scale, we simulated a database with **10,000 school class records**, each validated using a **Pydantic schema**.
+
+| Operation | Scale | Avg Latency | notes |
+| :--- | :--- | :--- | :--- |
+| **Save Class** | 10k Records | **1.8875 ms** | Includes Pydantic validation & JSON serialization |
+| **Get Class** | 10k Records | **0.0054 ms** | microsecond-fast retrieval at scale |
+| **List Keys** | 10k Records | 1.9397 ms | Near-instant listing of entire dataset |
+| **Search (FTS)** | 10k Records | 18.9714 ms | Full-text search across all records |
+| **Save Async** | 10k Records | 1.8699 ms | High-throughput background saves |
+| **Get Async** | 10k Records | 0.0471 ms | Non-blocking retrieval |
 
 ### Analysis
 *   **Sync Performance**: The raw C API provides the best latency for CLI usage. A simple key fetch is now performing at near-native hardware speeds (~2.8 microseconds).

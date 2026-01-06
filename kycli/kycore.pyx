@@ -401,23 +401,40 @@ cdef class Kycore:
                     
         return matches if matches else "Key not found"
 
-    def search(self, str query, deserialize=True):
-        """Perform a full-text search using FTS5."""
-        # FTS5 values are stored as they are in kvstore (potentially encrypted)
-        # However, FTS on encrypted data won't work well unless we decrypt before searching.
-        # SQLite FTS5 doesn't easily allow decrypting during search.
-        # If encryption is enabled, search will find matches in the ENCRYPTED text, which is likely useless.
-        # For now, we fetch all non-expired and then search manually IF encrypted, 
-        # OR we just warn/document.
-        # Actually, let's keep it simple: decrypt results from FTS.
+    def search(self, str query, limit=100, deserialize=True, keys_only=False):
+        """
+        Perform a high-performance full-text search using FTS5.
         
-        results = self._bind_and_fetch("""
-            SELECT kvstore.key, kvstore.value FROM kvstore 
-            JOIN fts_kvstore ON kvstore.key = fts_kvstore.key 
-            WHERE fts_kvstore MATCH ? 
-            AND (kvstore.expires_at IS NULL OR kvstore.expires_at > datetime('now'))
-        """, [query])
+        :param query: The FTS5 search query.
+        :param limit: Maximum number of results to return (default 100).
+        :param deserialize: Whether to auto-parse JSON values (default True).
+        :param keys_only: If True, only returns a list of keys (fastest).
+        """
+        cdef str sql
+        if keys_only:
+            sql = """
+                SELECT kvstore.key FROM kvstore 
+                JOIN fts_kvstore ON kvstore.rowid = fts_kvstore.rowid 
+                WHERE fts_kvstore MATCH ? 
+                AND (kvstore.expires_at IS NULL OR kvstore.expires_at > datetime('now'))
+                ORDER BY rank
+                LIMIT ?
+            """
+        else:
+            sql = """
+                SELECT kvstore.key, kvstore.value FROM kvstore 
+                JOIN fts_kvstore ON kvstore.rowid = fts_kvstore.rowid 
+                WHERE fts_kvstore MATCH ? 
+                AND (kvstore.expires_at IS NULL OR kvstore.expires_at > datetime('now'))
+                ORDER BY rank
+                LIMIT ?
+            """
         
+        results = self._bind_and_fetch(sql, [query, limit])
+        
+        if keys_only:
+            return [row[0] for row in results]
+
         matches = {}
         for row in results:
             decrypted_val = self._decrypt(row[1])
@@ -429,6 +446,10 @@ cdef class Kycore:
             else:
                 matches[row[0]] = decrypted_val
         return matches
+
+    def optimize_index(self):
+        """Optimize the FTS5 index for faster search performance."""
+        self._execute_raw("INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')")
 
     async def getkey_async(self, str key_pattern):
         """Asynchronous version of getkey."""
