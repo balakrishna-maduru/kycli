@@ -1,6 +1,7 @@
 import os
 import sys
 import threading
+import warnings
 from datetime import datetime
 from prompt_toolkit import Application
 from prompt_toolkit.layout import Layout, HSplit, VSplit, Window, FormattedTextControl
@@ -132,76 +133,132 @@ class KycliShell:
         args = parts[1:]
         
         result = ""
-        try:
-            if cmd in ["kys", "save"]:
-                if len(args) < 2: result = "Usage: kys <key> <value>"
-                else:
-                    self.kv.save(args[0], " ".join(args[1:]))
-                    result = f"Saved: {args[0]}"
-            elif cmd in ["kyg", "get"]:
-                if not args: result = "Usage: kyg <key>"
-                else: result = str(self.kv.getkey(args[0]))
-            elif cmd in ["kyl", "list", "ls"]:
-                pattern = args[0] if args else None
-                res = self.kv.listkeys(pattern)
-                result = f"Keys: {', '.join(res) if res else 'None'}"
-            elif cmd in ["kyf", "search"]:
-                if not args: result = "Usage: kyf <query>"
-                else:
-                    res = self.kv.search(" ".join(args))
-                    result = "\n".join([f"{r[0]}: {r[1]}" for r in res]) if res else "No matches."
-            elif cmd in ["kyv", "view", "history"]:
-                target = args[0] if args else "-h"
-                history = self.kv.get_history(target)
-                if not history: result = "No history found."
-                elif target == "-h":
-                    result = "\n".join([f"{h[2]}: {h[0]}={h[1]}" for h in history[:10]])
-                else:
-                    result = str(history[0][1])
-            elif cmd in ["kyr", "restore"]:
-                if not args: result = "Usage: kyr <key>"
-                else: result = self.kv.restore(args[0])
-            elif cmd in ["kye", "export"]:
-                if not args: result = "Usage: kye <file> [format]"
-                else:
-                    fmt = args[1] if len(args) > 1 else "csv"
-                    self.kv.export_data(args[0], fmt)
-                    result = f"Exported to {args[0]}"
-            elif cmd in ["kyi", "import"]:
-                if not args: result = "Usage: kyi <file>"
-                else:
-                    self.kv.import_data(args[0])
-                    result = f"Imported from {args[0]}"
-            elif cmd in ["kyc", "execute"]:
-                if not args: result = "Usage: kyc <key> [args...]"
-                else:
-                    val = self.kv.getkey(args[0], deserialize=False)
-                    if val == "Key not found": result = f"Key '{args[0]}' not found."
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            try:
+                if cmd in ["kys", "save"]:
+                    if len(args) < 2: 
+                        result = "Usage: kys <key> <value> [--ttl <sec>] [--key <k>]"
                     else:
-                        import subprocess
-                        full_cmd = val
-                        if len(args) > 1: full_cmd = f"{val} {' '.join(args[1:])}"
-                        try:
-                            # Run in background to not block TUI (simple way)
-                            threading.Thread(target=lambda: subprocess.run(full_cmd, shell=True)).start()
-                            result = f"Started: {full_cmd}"
-                        except Exception as e:
-                            result = f"Exec Error: {e}"
-            elif cmd in ["kyd", "delete"]:
-                if not args: result = "Usage: kyd <key>"
+                        ttl_val = None
+                        key_val = self.config.get("master_key")
+                        val_parts = []
+                        skip = False
+                        for i, a in enumerate(args[1:]):
+                            if skip:
+                                skip = False
+                                continue
+                            if a == "--ttl" and i + 1 < len(args):
+                                ttl_val = args[i+1]
+                                skip = True
+                            elif a == "--key" and i + 1 < len(args):
+                                key_val = args[i+1]
+                                skip = True
+                            else:
+                                val_parts.append(a)
+                        
+                        val = " ".join(val_parts)
+                        # Re-init if key provided
+                        kv_to_use = self.kv
+                        if key_val:
+                            kv_to_use = Kycore(db_path=self.db_path, master_key=key_val)
+                        kv_to_use.save(args[0], val, ttl=ttl_val)
+                        result = f"Saved: {args[0]}"
+
+                elif cmd in ["kyg", "get"]:
+                    if not args: 
+                        result = "Usage: kyg <key> [--key <k>]"
+                    else:
+                        query_key = args[0]
+                        master_key = self.config.get("master_key")
+                        if "--key" in args:
+                            idx = args.index("--key")
+                            if idx + 1 < len(args):
+                                master_key = args[idx+1]
+                        
+                        kv_to_use = self.kv
+                        if master_key:
+                            kv_to_use = Kycore(db_path=self.db_path, master_key=master_key)
+                        result = str(kv_to_use.getkey(query_key))
+
+                elif cmd in ["kyl", "list", "ls"]:
+                    pattern = args[0] if args else None
+                    res = self.kv.listkeys(pattern)
+                    result = f"🔑 Keys: {', '.join(res)}" if res else "No keys found"
+
+                elif cmd in ["kyf", "search", "find"]:
+                    if not args: result = "Usage: kyf <query>"
+                    else:
+                        res = self.kv.search(" ".join(args))
+                        result = "\n".join([f"{k}: {v}" for k, v in res.items()])
+                        if not result: result = "No matches found"
+
+                elif cmd in ["kyd", "delete", "rm"]:
+                    if not args: result = "Usage: kyd <key>"
+                    else:
+                        self.kv.delete(args[0])
+                        result = f"Deleted: {args[0]}"
+
+                elif cmd in ["kyv", "history", "log"]:
+                    if not args:
+                        history = self.kv.get_history()
+                        result = "📜 Full Audit History:\n" + "\n".join([str(h) for h in history[:10]])
+                    else:
+                        history = self.kv.get_history(args[0])
+                        if history:
+                            result = f"⏳ History for {args[0]}:\n" + "\n".join([str(h) for h in history])
+                        else:
+                            result = f"No history for {args[0]}"
+
+                elif cmd in ["kyr", "restore"]:
+                    if not args: result = "Usage: kyr <key>"
+                    else:
+                        result = self.kv.restore(args[0])
+
+                elif cmd in ["kye", "export"]:
+                    if len(args) < 1: result = "Usage: kye <file> [format]"
+                    else:
+                        fmt = args[1] if len(args) > 1 else "csv"
+                        self.kv.export_data(args[0], fmt)
+                        result = f"Exported to {args[0]}"
+
+                elif cmd in ["kyi", "import"]:
+                    if not args: result = "Usage: kyi <file>"
+                    else:
+                        self.kv.import_data(args[0])
+                        result = f"Imported from {args[0]}"
+
+                elif cmd in ["kyc", "execute"]:
+                    if not args: result = "Usage: kyc <key> [args...]"
+                    else:
+                        key = args[0]
+                        val = self.kv.getkey(key, deserialize=False)
+                        if val == "Key not found":
+                            result = f"Error: Key '{key}' not found."
+                        else:
+                            cmd_to_run = val
+                            if len(args) > 1:
+                                cmd_to_run = f"{val} {' '.join(args[1:])}"
+                            result = f"Started: {cmd_to_run}"
+                            threading.Thread(target=os.system, args=(cmd_to_run,), daemon=True).start()
+
+                elif cmd == "kyh":
+                    result = "Available commands: kys, kyg, kyl, kyf, kyd, kyv, kyr, kye, kyi, kyc, exit"
+                elif cmd == "kyshell":
+                    result = "⚡ You are already in the interactive shell."
                 else:
-                    self.kv.delete(args[0])
-                    result = f"Deleted: {args[0]}"
-            elif cmd == "kyh":
-                result = "Check the Advanced Help panel on the right! ->"
-            elif cmd == "kyshell":
-                result = "⚡ You are already in the interactive shell."
-            else:
-                result = f"Unknown command: {cmd}"
-        except Exception as e:
-            result = f"Error: {e}"
+                    result = f"Unknown command: {cmd}. Type 'kyh' for help."
+
+            except Exception as e:
+                result = f"Error: {e}"
+            
+            # Combine warnings and result
+            if w:
+                warn_msgs = [f"⚠️ {warn.message}" for warn in w]
+                result = "\n".join(warn_msgs) + ("\n" + result if result else "")
 
         self.output_area.text = result
+        buffer.text = ""
         self.update_history()
 
     def run(self):

@@ -98,7 +98,7 @@ def test_tui_shell_basic_dispatch(tmp_path):
         mock_buffer = MagicMock()
         mock_buffer.text = "kys mykey myval"
         shell.handle_command(mock_buffer)
-        mock_kv.save.assert_called_with("mykey", "myval")
+        mock_kv.save.assert_called_with("mykey", "myval", ttl=None)
         assert "Saved: mykey" in shell.output_area.text
         
         # Test Get
@@ -126,7 +126,7 @@ def test_tui_shell_more_dispatch(tmp_path):
         mock_buffer = MagicMock()
         
         # Test Search
-        mock_kv.search.return_value = [("k1", "v1")]
+        mock_kv.search.return_value = {"k1": "v1"}
         mock_buffer.text = "kyf myquery"
         shell.handle_command(mock_buffer)
         assert "k1: v1" in shell.output_area.text

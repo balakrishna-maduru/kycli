@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.7] - 2026-01-06
+### Added
+- **Encryption at Rest**: Implemented transparent **AES-256-GCM** encryption. All data is encrypted/decrypted in the Cython layer using a user-provided Master Key.
+- **Value-Level TTL (Time To Live)**: Keys can now have an expiration time (e.g., `kys session_id "data" --ttl 1h`). Supports human-readable suffixes: `s`, `m`, `h`, `d`, `w`, `M`, `y`.
+- **Global --key & --ttl Flags**: Added global CLI support for passing security keys and TTL values.
+- **Auto-Purge for TTL**: Expired keys are automatically filtered and purged on startup.
+- **Environment Variable Security**: Support for `KYCLI_MASTER_KEY` for seamless encrypted operations.
+- **Dependencies**: Added `cryptography` for secure AES operations.
+
 ## [0.1.6] - 2026-01-05
 ### Fixed
 - **ModuleNotFoundError Fix**: Fixed critical installation issue where `kycli.kycore` module was not found after pip installation

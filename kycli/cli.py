@@ -8,8 +8,8 @@ def print_help():
 🚀 kycli — The Microsecond-Fast Key-Value Toolkit
 
 Available commands:
-  kys <key> <value>             - Save key-value (asks before overwriting)
-                                  Ex: kys user '{"id": 1}'
+  kys <key> <value> [--ttl <sec>]  - Save key-value (optional TTL in seconds)
+                                  Ex: kys session_id "data" --ttl 3600
   kyg <key>                     - Get current value (auto-deserializes JSON)
                                   Ex: kyg user
   kyf <query>                   - Full-text search (fast Google-like search)
@@ -31,14 +31,22 @@ Available commands:
   kyc <key> [args...]           - Execute stored command (Static/Dynamic)
                                   Ex: kyc my_script
   kyshell                       - Open interactive TUI shell
-                                  Ex: kycli kyshell
   kyh                           - Help (This message)
+
+Global Options:
+  --key <master_key>            - Provide master key for encryption/decryption
+  --ttl <seconds>               - Set expiration time for specific operations
 
 💡 Tip: Use -h with any command or kyv -h for the full audit trail.
 🌍 Env: Set KYCLI_DB_PATH to customize the database file location.
 """)
 
+import warnings
+
 def main():
+    # Make warnings visible in CLI
+    warnings.simplefilter("always", UserWarning)
+    
     config = load_config()
     db_path = config.get("db_path")
     
@@ -58,13 +66,32 @@ def main():
         else:
             cmd = prog
 
+        # Extract --key and --ttl from args
+        master_key = os.environ.get("KYCLI_MASTER_KEY")
+        ttl = None
+        new_args = []
+        skip_next = False
+        for i, arg in enumerate(args):
+            if skip_next:
+                skip_next = False
+                continue
+            if arg == "--key" and i + 1 < len(args):
+                master_key = args[i+1]
+                skip_next = True
+            elif arg == "--ttl" and i + 1 < len(args):
+                ttl = args[i+1]
+                skip_next = True
+            else:
+                new_args.append(arg)
+        args = new_args
+
         if cmd in ["kyshell", "shell"]:
             from kycli.tui import start_shell
             start_shell(db_path=db_path)
             return
 
 
-        with Kycore(db_path=db_path) as kv:
+        with Kycore(db_path=db_path, master_key=master_key) as kv:
             if cmd in ["kys", "save"]:
                 if len(args) < 2:
                     print("Usage: kys <key> <value>")
@@ -94,7 +121,7 @@ def main():
                         print("❌ Aborted.")
                         return
     
-                status = kv.save(key, val)
+                status = kv.save(key, val, ttl=ttl)
                 if status == "created":
                     print(f"✅ Saved: {key} (New)")
                 elif status == "overwritten":

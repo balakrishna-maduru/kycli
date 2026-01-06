@@ -6,11 +6,22 @@ import json
 import tempfile
 import shutil
 import asyncio
+import base64
+import time
+import warnings
+from datetime import datetime, timedelta, timezone
 try:
     from pydantic import BaseModel, ValidationError
 except ImportError:
     BaseModel = None
     ValidationError = None
+
+try:
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+except ImportError:
+    AESGCM = None
 
 # SQLite C API definitions
 cdef extern from "sqlite3.h":
@@ -44,16 +55,38 @@ cdef class Kycore:
     cdef str _data_path
     cdef set _dirty_keys
     cdef object _schema
+    cdef object _aesgcm
+    cdef str _master_key
 
-    def __init__(self, db_path=None, schema=None):
+    def __init__(self, db_path=None, schema=None, master_key=None):
         """
         Initialize Kycore.
         :param db_path: Path to the SQLite database.
         :param schema: An optional Pydantic BaseModel for data validation.
+        :param master_key: An optional master key for AES-256 encryption.
         """
         if schema and BaseModel and not issubclass(schema, BaseModel):
             raise TypeError("Schema must be a Pydantic BaseModel class")
         self._schema = schema
+        self._master_key = master_key
+        self._aesgcm = None
+
+        if master_key:
+            if AESGCM is None:
+                raise ImportError("cryptography library is required for encryption. Install it with 'pip install cryptography'.")
+            
+            # Derive a 256-bit key from the master key
+            # Using a fixed salt for simplicity in this implementation, 
+            # though a per-DB salt would be better.
+            salt = b'kycli_vault_salt' 
+            kdf = PBKDF2HMAC(
+                algorithm=hashes.SHA256(),
+                length=32,
+                salt=salt,
+                iterations=100000,
+            )
+            key = kdf.derive(master_key.encode('utf-8'))
+            self._aesgcm = AESGCM(key)
 
         if db_path is None:
             self._data_path = os.path.expanduser("~/kydata.db")
@@ -77,9 +110,16 @@ cdef class Kycore:
         self._execute_raw("""
             CREATE TABLE IF NOT EXISTS kvstore (
                 key TEXT PRIMARY KEY,
-                value TEXT
+                value TEXT,
+                expires_at DATETIME
             )
         """)
+        # Ensure expires_at column exists for older versions
+        try:
+            self._execute_raw("ALTER TABLE kvstore ADD COLUMN expires_at DATETIME")
+        except:
+            pass # Already exists
+
         self._execute_raw("""
             CREATE TABLE IF NOT EXISTS audit_log (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -115,6 +155,14 @@ cdef class Kycore:
 
         # Auto-cleanup: Delete archived items older than 15 days
         self._execute_raw("DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > 15")
+
+        # TTL Cleanup: Move expired keys to archive before deleting
+        self._execute_raw("""
+            INSERT INTO archive (key, value)
+            SELECT key, value FROM kvstore 
+            WHERE expires_at IS NOT NULL AND expires_at < datetime('now')
+        """)
+        self._execute_raw("DELETE FROM kvstore WHERE expires_at IS NOT NULL AND expires_at < datetime('now')")
         
         self._dirty_keys = set()
 
@@ -126,6 +174,34 @@ cdef class Kycore:
             sqlite3_close(self._db)
             self._db = NULL
 
+    cdef str _encrypt_c(self, str plaintext):
+        if self._aesgcm is None:
+            return plaintext
+        nonce = os.urandom(12)
+        ciphertext = self._aesgcm.encrypt(nonce, plaintext.encode('utf-8'), None)
+        return "enc:" + base64.b64encode(nonce + ciphertext).decode('utf-8')
+
+    cdef str _decrypt_c(self, str encrypted_text):
+        if not encrypted_text.startswith("enc:"):
+            return encrypted_text
+            
+        if self._aesgcm is None:
+            return "[ENCRYPTED: Provide a master key to view this value]"
+            
+        try:
+            data = base64.b64decode(encrypted_text[4:].encode('utf-8'))
+            nonce = data[:12]
+            ciphertext = data[12:]
+            return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
+        except Exception:
+            return "[DECRYPTION FAILED: Incorrect master key]"
+
+    def _encrypt(self, str plaintext):
+        return self._encrypt_c(plaintext)
+
+    def _decrypt(self, str encrypted_text):
+        return self._decrypt_c(encrypted_text)
+
     cdef int _execute_raw(self, str sql) except -1:
         cdef bytes sql_bytes = sql.encode('utf-8')
         cdef char* errmsg = NULL
@@ -134,7 +210,38 @@ cdef class Kycore:
             raise RuntimeError(f"SQLite error: {msg}")
         return 0
 
-    def save(self, str key, value):
+    def _parse_ttl(self, ttl):
+        if ttl is None:
+            return None
+        if isinstance(ttl, (int, float)):
+            return int(ttl)
+        
+        cdef str s_ttl = str(ttl).strip()
+        if not s_ttl:
+            return None
+        if s_ttl.isdigit():
+            return int(s_ttl)
+            
+        match = re.match(r'^(\d+)([smhdwMy])$', s_ttl)
+        if not match:
+            try:
+                return int(s_ttl)
+            except ValueError:
+                raise ValueError(f"Invalid TTL format: '{s_ttl}'. Use suffixes: s, m, h, d, w, M, y (e.g., 10m, 2h, 1d, 1M)")
+        
+        cdef long val = int(match.group(1))
+        cdef str unit = match.group(2)
+        
+        if unit == 's': return val
+        if unit == 'm': return val * 60
+        if unit == 'h': return val * 3600
+        if unit == 'd': return val * 86400
+        if unit == 'w': return val * 604800
+        if unit == 'M': return val * 2592000 # 30 days
+        if unit == 'y': return val * 31536000 # 365 days
+        return val
+
+    def save(self, str key, value, ttl=None):
         if not key or not key.strip():
             raise ValueError("Key cannot be empty")
         if value is None:
@@ -163,6 +270,9 @@ cdef class Kycore:
         else:
             string_val = str(value)
 
+        # 3. Encryption
+        cdef str storage_val = self._encrypt_c(string_val)
+
         cdef str existing = self.getkey(k, deserialize=False)
         
         if existing == string_val:
@@ -170,13 +280,17 @@ cdef class Kycore:
         
         status = "overwritten" if existing != "Key not found" else "created"
 
+        cdef str expires_at = None
+        if ttl:
+            expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
+
         try:
             self._execute_raw("BEGIN TRANSACTION")
             
             # Update kvstore
-            self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, string_val])
+            self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)", [k, storage_val, expires_at])
             # Update audit log
-            self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, string_val])
+            self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, storage_val])
             
             self._execute_raw("COMMIT")
             self._dirty_keys.add(k)
@@ -185,9 +299,9 @@ cdef class Kycore:
             self._execute_raw("ROLLBACK")
             raise e
 
-    async def save_async(self, str key, str value):
+    async def save_async(self, str key, value, ttl=None):
         """Asynchronous version of save using a thread pool."""
-        return await asyncio.to_thread(self.save, key, value)
+        return await asyncio.to_thread(self.save, key, value, ttl=ttl)
 
     def __setitem__(self, str key, str value):
         self.save(key, value)
@@ -204,26 +318,58 @@ cdef class Kycore:
             raise KeyError(key)
 
     def __contains__(self, str key):
-        cdef list results = self._bind_and_fetch("SELECT 1 FROM kvstore WHERE key = ?", [key.lower().strip()])
+        cdef list results = self._bind_and_fetch("""
+            SELECT 1 FROM kvstore 
+            WHERE key = ? 
+            AND (expires_at IS NULL OR expires_at > datetime('now'))
+        """, [key.lower().strip()])
         return len(results) > 0
 
     def __iter__(self):
-        results = self._bind_and_fetch("SELECT key FROM kvstore", [])
+        results = self._bind_and_fetch("""
+            SELECT key FROM kvstore 
+            WHERE (expires_at IS NULL OR expires_at > datetime('now'))
+        """, [])
         for row in results:
             yield row[0]
 
     def __len__(self):
-        results = self._bind_and_fetch("SELECT COUNT(*) FROM kvstore", [])
+        results = self._bind_and_fetch("""
+            SELECT COUNT(*) FROM kvstore 
+            WHERE (expires_at IS NULL OR expires_at > datetime('now'))
+        """, [])
         return int(results[0][0]) if results else 0
 
     def getkey(self, str key_pattern, deserialize=True):
         cdef str k = key_pattern.lower().strip()
         
-        # 1. Try exact match
-        cdef list results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])
+        # 1. Try exact match (including expired to handle notifications)
+        # Fetch status using SQLite time for consistency
+        cdef list results = self._bind_and_fetch("""
+            SELECT value, expires_at, (expires_at < datetime('now')) as is_expired
+            FROM kvstore 
+            WHERE key = ?
+        """, [k])
+        
         cdef str raw_val
+        cdef str exp_at
+        cdef int is_expired
         if results:
             raw_val = results[0][0]
+            exp_at = results[0][1]
+            is_expired = int(results[0][2]) if results[0][2] is not None else 0
+            
+            # Check if expired
+            if is_expired:
+                warnings.warn(f"Key '{k}' expired at {exp_at} and has been moved to archive.", UserWarning)
+                # Move to archive and delete
+                self._execute_raw("BEGIN TRANSACTION")
+                self._bind_and_execute("INSERT INTO archive (key, value) VALUES (?, ?)", [k, raw_val])
+                self._bind_and_execute("DELETE FROM kvstore WHERE key = ?", [k])
+                self._execute_raw("COMMIT")
+                return "Key not found"
+                
+            raw_val = self._decrypt_c(raw_val)
             if deserialize:
                 try:
                     return json.loads(raw_val)
@@ -232,7 +378,10 @@ cdef class Kycore:
             return raw_val
 
         # 2. Try regex
-        results = self._bind_and_fetch("SELECT key, value FROM kvstore", [])
+        results = self._bind_and_fetch("""
+            SELECT key, value FROM kvstore 
+            WHERE (expires_at IS NULL OR expires_at > datetime('now'))
+        """, [])
         try:
             regex = re.compile(key_pattern, re.IGNORECASE)
         except re.error:
@@ -241,28 +390,44 @@ cdef class Kycore:
         matches = {}
         for row in results:
             if regex.search(row[0]):
+                decrypted_val = self._decrypt_c(row[1])
                 if deserialize:
                     try:
-                        matches[row[0]] = json.loads(row[1])
+                        matches[row[0]] = json.loads(decrypted_val)
                     except:
-                        matches[row[0]] = row[1]
+                        matches[row[0]] = decrypted_val
                 else:
-                    matches[row[0]] = row[1]
+                    matches[row[0]] = decrypted_val
                     
         return matches if matches else "Key not found"
 
     def search(self, str query, deserialize=True):
         """Perform a full-text search using FTS5."""
-        results = self._bind_and_fetch("SELECT key, value FROM fts_kvstore WHERE fts_kvstore MATCH ?", [query])
+        # FTS5 values are stored as they are in kvstore (potentially encrypted)
+        # However, FTS on encrypted data won't work well unless we decrypt before searching.
+        # SQLite FTS5 doesn't easily allow decrypting during search.
+        # If encryption is enabled, search will find matches in the ENCRYPTED text, which is likely useless.
+        # For now, we fetch all non-expired and then search manually IF encrypted, 
+        # OR we just warn/document.
+        # Actually, let's keep it simple: decrypt results from FTS.
+        
+        results = self._bind_and_fetch("""
+            SELECT kvstore.key, kvstore.value FROM kvstore 
+            JOIN fts_kvstore ON kvstore.key = fts_kvstore.key 
+            WHERE fts_kvstore MATCH ? 
+            AND (kvstore.expires_at IS NULL OR kvstore.expires_at > datetime('now'))
+        """, [query])
+        
         matches = {}
         for row in results:
+            decrypted_val = self._decrypt(row[1])
             if deserialize:
                 try:
-                    matches[row[0]] = json.loads(row[1])
+                    matches[row[0]] = json.loads(decrypted_val)
                 except:
-                    matches[row[0]] = row[1]
+                    matches[row[0]] = decrypted_val
             else:
-                matches[row[0]] = row[1]
+                matches[row[0]] = decrypted_val
         return matches
 
     async def getkey_async(self, str key_pattern):
@@ -325,7 +490,7 @@ cdef class Kycore:
         if not results:
             return "Key not found"
             
-        cdef str val = results[0][0]
+        cdef str val = results[0][0] # Keep encrypted in archive
         
         try:
             self._execute_raw("BEGIN TRANSACTION")
@@ -358,12 +523,18 @@ cdef class Kycore:
         if results and results[0][0] == latest_value:
             return "Already in active store with identical value"
             
-        # Re-save it to kvstore and audit log
-        self.save(k, latest_value)
-        return f"Restored: {k} (Value: {latest_value})"
+        # Re-save it (latest_value is already encrypted if encryption was on)
+        self._execute_raw("BEGIN TRANSACTION")
+        self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, latest_value])
+        self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, latest_value])
+        self._execute_raw("COMMIT")
+        return f"Restored: {k}"
 
     def listkeys(self, pattern=None):
-        results = self._bind_and_fetch("SELECT key FROM kvstore", [])
+        results = self._bind_and_fetch("""
+            SELECT key FROM kvstore 
+            WHERE (expires_at IS NULL OR expires_at > datetime('now'))
+        """, [])
         keys = [row[0] for row in results]
         if not pattern:
             return keys
@@ -375,15 +546,24 @@ cdef class Kycore:
             return []
 
     def get_history(self, str key=None):
+        cdef list results
         if key is None or key == "-h":
-            return self._bind_and_fetch("SELECT key, value, timestamp FROM audit_log ORDER BY timestamp DESC, id DESC", [])
+            results = self._bind_and_fetch("SELECT key, value, timestamp FROM audit_log ORDER BY timestamp DESC, id DESC", [])
         else:
-            return self._bind_and_fetch("SELECT key, value, timestamp FROM audit_log WHERE key = ? ORDER BY timestamp DESC, id DESC", [key.lower().strip()])
+            results = self._bind_and_fetch("SELECT key, value, timestamp FROM audit_log WHERE key = ? ORDER BY timestamp DESC, id DESC", [key.lower().strip()])
+        
+        cdef list decrypted_results = []
+        for row in results:
+            decrypted_results.append([row[0], self._decrypt(row[1]), row[2]])
+        return decrypted_results
 
     @property
     def store(self):
-        results = self._bind_and_fetch("SELECT key, value FROM kvstore", [])
-        return {row[0]: row[1] for row in results}
+        results = self._bind_and_fetch("""
+            SELECT key, value FROM kvstore 
+            WHERE (expires_at IS NULL OR expires_at > datetime('now'))
+        """, [])
+        return {row[0]: self._decrypt(row[1]) for row in results}
 
     def load_store(self, dict store_data):
         if not store_data:

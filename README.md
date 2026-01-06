@@ -59,17 +59,57 @@ kyh
 # Or use the -h flag on specific commands
 ```
 
-### `kys <key> <value>` — Save Data
+### `kys <key> <value> [--ttl <sec>]` — Save Data
 Saves a value to a key.
 - **Auto-Normalization**: Keys are lowercased and trimmed.
 - **Safety**: Asks `(y/n)` before overwriting an existing key.
+- **TTL (Time To Live)**: Set an expiration time in seconds.
 ```bash
 kys username "balakrishna"
 # Result: ✅ Saved: username (New)
 
 kys username "maduru"
 # Result: ⚠️ Key 'username' already exists. Overwrite? (y/n):
+
+kys session_id "data" --ttl 1h
+# Result: ✅ Saved: session_id (New) (Expires in 1 hour)
 ```
+
+### 🔐 Enterprise-Grade Security: Encryption at Rest
+`kycli` supports transparent **AES-256-GCM** encryption. When a master key is provided, all data is encrypted before being written to disk and decrypted on retrieval.
+
+#### Via CLI:
+```bash
+# Save with encryption
+kys secret_token "ghp_secure" --key "my-master-password"
+
+# Retrieve with encryption
+kyg secret_token --key "my-master-password"
+```
+
+#### Via Environment Variable:
+```bash
+export KYCLI_MASTER_KEY="my-master-password"
+kyg secret_token
+```
+
+> [!IMPORTANT]
+> If you attempt to retrieve an encrypted key without the correct `master_key`, `kycli` will return a masked message: `[ENCRYPTED: Provide a master key to view this value]` instead of raw ciphertext.
+
+### ⏳ Value-Level TTL (Time To Live)
+Like Redis, you can set keys to expire automatically. `kycli` implements **Soft Expiration**: when a key hits its TTL, it is moved to the **Archive** table (not deleted) and can be recovered within 15 days using the `kyr` command.
+```bash
+# Expire in 60 seconds
+kys temp_code "1234" --ttl 60
+
+# Expire in 1 day
+kys daily_report "data" --ttl 1d
+
+# Expire in 1 month (30 days)
+kys monthly_archive "data" --ttl 1M
+```
+
+---
 
 ### `kyg <key_or_regex>` — Search & Get
 Retrieves a value. Supports exact matches and regex.
@@ -183,8 +223,10 @@ kycli kyshell
 The most direct way to configure `kycli` is via shell environment variables.
 
 - **`KYCLI_DB_PATH`**: Overrides the default database location (`~/kydata.db`).
+- **`KYCLI_MASTER_KEY`**: Sets the default master key for AES-256 encryption.
   ```bash
   export KYCLI_DB_PATH="/custom/path/to/database.db"
+  export KYCLI_MASTER_KEY="your-secret-password"
   ```
 
 #### 📁 Configuration Files
@@ -217,6 +259,16 @@ with Kycore() as kv:
 
     # Bulk count
     print(f"Items stored: {len(kv)}")
+
+# 4. Encryption & TTL (Sync)
+with Kycore(master_key="secret-pass") as kv:
+    # Save with 10-minute expiration
+    kv.save("temp_password", "123456", ttl="10m")
+    
+    # Save with 1-month expiration
+    kv.save("persistent_secret", "data", ttl="1M")
+    
+    print(kv.getkey("temp_password")) # 123456
 ```
 
 ### 2. High-Throughput (Async)
@@ -226,10 +278,11 @@ import asyncio
 from kycli import Kycore
 
 async def run_tasks():
-    with Kycore() as kv:
-        await kv.save_async("status", "running")
-        current = await kv.getkey_async("status")
-        print(f"System is {current}")
+    # Use encryption and TTL in async environments
+    with Kycore(master_key="async-vault") as kv:
+        await kv.save_async("session:active", "true", ttl=3600)
+        current = await kv.getkey_async("session:active")
+        print(f"Session active: {current}")
 
 asyncio.run(run_tasks())
 ```
