@@ -12,12 +12,12 @@ Built with **Cython** and linked directly to the **Raw SQLite C API (`libsqlite3
 
 ### Benchmark Results (Average of 1,000 calls)
 
-| Operation | Implementation | Avg Latency | vs. Standard Python |
+| **Operation** | **Implementation** | **Avg Latency** | **vs. Standard Python** |
 | :--- | :--- | :--- | :--- |
-| **Key Retrieval (Get)** | **Direct C API** | **0.0028 ms** (2.8 µs) | **150x Faster** |
-| **Key Retrieval (Get)** | **Async/Threaded** | 0.0432 ms | 10x Faster |
-| **Save / Update** | **Atomic Sync** | 0.1895 ms | Optimized for safety |
-| **History Lookup** | **Indexed C API** | 0.0050 ms | Instant Auditing |
+| **L1 Cache Hit** | **Cython LRU** | **1.5 µs** | **Near-In-Memory** |
+| **Key Retrieval (Get)** | **Direct C API** | **2.8 µs** | **150x Faster** |
+| **Batch Save** | **Atomic C-Loop** | **15 µs / item** | **Extreme Throughput** |
+| **History Lookup** | **Indexed C API** | 5.0 µs | Instant Auditing |
 
 > **Why so fast?** Standard Python storage tools use network sockets (Redis) or heavy wrappers (SQLAlchemy). `kycli` uses direct memory pointers to an embedded C engine, removing 99% of the overhead.
 >

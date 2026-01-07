@@ -10,6 +10,7 @@ import base64
 import time
 import warnings
 from datetime import datetime, timedelta, timezone
+from collections import OrderedDict
 try:
     from pydantic import BaseModel, ValidationError
 except ImportError:
@@ -57,14 +58,19 @@ cdef class Kycore:
     cdef object _schema
     cdef object _aesgcm
     cdef str _master_key
+    cdef object _cache
+    cdef int _cache_limit
 
-    def __init__(self, db_path=None, schema=None, master_key=None):
+    def __init__(self, db_path=None, schema=None, master_key=None, cache_size=1000):
         """
         Initialize Kycore.
         :param db_path: Path to the SQLite database.
         :param schema: An optional Pydantic BaseModel for data validation.
         :param master_key: An optional master key for AES-256 encryption.
+        :param cache_size: Size of the L1 LRU cache.
         """
+        self._cache = OrderedDict()
+        self._cache_limit = cache_size
         if schema and BaseModel and not issubclass(schema, BaseModel):
             raise TypeError("Schema must be a Pydantic BaseModel class")
         self._schema = schema
@@ -294,7 +300,58 @@ cdef class Kycore:
             
             self._execute_raw("COMMIT")
             self._dirty_keys.add(k)
+            
+            # Update L1 Cache
+            self._cache[k] = value
+            self._cache.move_to_end(k)
+            if len(self._cache) > self._cache_limit:
+                self._cache.popitem(last=False)
+                
             return status
+        except Exception as e:
+            self._execute_raw("ROLLBACK")
+            raise e
+
+    def save_many(self, list items, ttl=None):
+        """
+        Batch save multiple key-value pairs in a single transaction.
+        :param items: List of tuples (key, value)
+        :param ttl: Optional global TTL for all items in the batch
+        """
+        if not items:
+            return
+            
+        cdef str expires_at = None
+        if ttl:
+            expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
+
+        try:
+            self._execute_raw("BEGIN TRANSACTION")
+            
+            for key, value in items:
+                k = key.lower().strip()
+                # Validation & Serialization
+                if self._schema:
+                    if isinstance(value, dict):
+                        value = self._schema(**value).model_dump()
+                
+                if isinstance(value, (dict, list, bool, int, float)):
+                    string_val = json.dumps(value)
+                else:
+                    string_val = str(value)
+                
+                storage_val = self._encrypt_c(string_val)
+                
+                self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)", [k, storage_val, expires_at])
+                self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, storage_val])
+                
+                # Update L1 Cache
+                self._cache[k] = value
+                self._cache.move_to_end(k)
+                if len(self._cache) > self._cache_limit:
+                    self._cache.popitem(last=False)
+                    
+            self._execute_raw("COMMIT")
         except Exception as e:
             self._execute_raw("ROLLBACK")
             raise e
@@ -369,13 +426,26 @@ cdef class Kycore:
                 self._execute_raw("COMMIT")
                 return "Key not found"
                 
+            # Check L1 Cache
+            if k in self._cache:
+                self._cache.move_to_end(k)
+                return self._cache[k]
+
             raw_val = self._decrypt_c(raw_val)
+            val = raw_val
             if deserialize:
                 try:
-                    return json.loads(raw_val)
+                    val = json.loads(raw_val)
                 except:
-                    return raw_val
-            return raw_val
+                    val = raw_val
+            
+            # Update L1 Cache
+            self._cache[k] = val
+            self._cache.move_to_end(k)
+            if len(self._cache) > self._cache_limit:
+                self._cache.popitem(last=False)
+                
+            return val
 
         # 2. Try regex
         results = self._bind_and_fetch("""
@@ -522,7 +592,34 @@ cdef class Kycore:
             self._execute_raw("COMMIT")
             
             self._dirty_keys.add(k)
+            
+            # Invalidate L1 Cache
+            if k in self._cache:
+                del self._cache[k]
+                
             return "Deleted and moved to archive (Auto-permanently deleted after 15 days)"
+        except Exception as e:
+            self._execute_raw("ROLLBACK")
+            raise e
+
+    def get_replication_stream(self, last_id=0):
+        """
+        Stream updates since a specific audit log ID for replication.
+        """
+        return self._bind_and_fetch("SELECT id, key, value, timestamp FROM audit_log WHERE id > ? ORDER BY id ASC", [last_id])
+
+    def sync_from_stream(self, list entries):
+        """
+        Apply replication entries from another instance.
+        """
+        try:
+            self._execute_raw("BEGIN TRANSACTION")
+            for entry in entries:
+                # entry is [id, key, value, timestamp]
+                k, v = entry[1], entry[2]
+                self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, v])
+                # We don't add to audit_log to avoid loops, but we might want a 'sync' flag
+            self._execute_raw("COMMIT")
         except Exception as e:
             self._execute_raw("ROLLBACK")
             raise e
