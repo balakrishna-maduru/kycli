@@ -1562,7 +1562,7 @@ struct __pyx_obj_5kycli_6kycore_Kycore {
 };
 
 
-/* "kycli/kycore.pyx":359
+/* "kycli/kycore.pyx":362
  *             raise e
  * 
  *     async def save_async(self, str key, value, ttl=None):             # <<<<<<<<<<<<<<
@@ -1578,7 +1578,7 @@ struct __pyx_obj_5kycli_6kycore___pyx_scope_struct__save_async {
 };
 
 
-/* "kycli/kycore.pyx":385
+/* "kycli/kycore.pyx":388
  *         return len(results) > 0
  * 
  *     def __iter__(self):             # <<<<<<<<<<<<<<
@@ -1595,7 +1595,7 @@ struct __pyx_obj_5kycli_6kycore___pyx_scope_struct_1___iter__ {
 };
 
 
-/* "kycli/kycore.pyx":524
+/* "kycli/kycore.pyx":527
  *         self._execute_raw("INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')")
  * 
  *     async def getkey_async(self, str key_pattern):             # <<<<<<<<<<<<<<
@@ -2847,17 +2847,19 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_38getkey_async(struct __pyx_obj
 static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_key); /* proto */
 static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_43get_replication_stream(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_last_id); /* proto */
 static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_entries); /* proto */
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_key); /* proto */
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_pattern); /* proto */
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_key); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore_to(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_timestamp); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49compact(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, int __pyx_v_retention_days); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51restore(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_key); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53listkeys(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_pattern); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55get_history(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_key); /* proto */
 static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_5store___get__(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_store_data); /* proto */
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_filepath, PyObject *__pyx_v_file_format); /* proto */
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_filepath); /* proto */
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_59persist(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57load_store(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_store_data); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_59export_data(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_filepath, PyObject *__pyx_v_file_format); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_61import_data(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_filepath); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_63persist(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_9data_path___get__(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_61__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_63__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_65__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_67__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_tp_new_5kycli_6kycore_Kycore(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_5kycli_6kycore___pyx_scope_struct__save_async(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_5kycli_6kycore___pyx_scope_struct_1___iter__(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -2896,10 +2898,10 @@ typedef struct {
   __Pyx_CachedCFunction __pyx_umethod_PyUnicode_Type__lower;
   __Pyx_CachedCFunction __pyx_umethod_PyUnicode_Type__strip;
   PyObject *__pyx_slice[2];
-  PyObject *__pyx_tuple[6];
-  PyObject *__pyx_codeobj_tab[25];
-  PyObject *__pyx_string_tab[330];
-  PyObject *__pyx_number_tab[9];
+  PyObject *__pyx_tuple[7];
+  PyObject *__pyx_codeobj_tab[27];
+  PyObject *__pyx_string_tab[350];
+  PyObject *__pyx_number_tab[10];
 /* #### Code section: module_state_contents ### */
 /* CommonTypesMetaclass.module_state_decls */
 PyTypeObject *__pyx_CommonTypesMetaclassType;
@@ -2982,335 +2984,356 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_kp_u_CREATE_TABLE_IF_NOT_EXISTS_kvst __pyx_string_tab[7]
 #define __pyx_kp_u_CREATE_TRIGGER_IF_NOT_EXISTS_tr __pyx_string_tab[8]
 #define __pyx_kp_u_CREATE_VIRTUAL_TABLE_IF_NOT_EXIS __pyx_string_tab[9]
-#define __pyx_kp_u_Could_not_open_database __pyx_string_tab[10]
-#define __pyx_kp_u_DECRYPTION_FAILED_Incorrect_mas __pyx_string_tab[11]
-#define __pyx_kp_u_DELETE_FROM_archive_WHERE_julian __pyx_string_tab[12]
-#define __pyx_kp_u_DELETE_FROM_kvstore_WHERE_expire __pyx_string_tab[13]
-#define __pyx_kp_u_DELETE_FROM_kvstore_WHERE_key __pyx_string_tab[14]
-#define __pyx_kp_u_DELETE_FROM_kvstore_WHERE_key_2 __pyx_string_tab[15]
-#define __pyx_kp_u_Deleted_and_moved_to_archive_Aut __pyx_string_tab[16]
-#define __pyx_kp_u_ENCRYPTED_Provide_a_master_key __pyx_string_tab[17]
-#define __pyx_kp_u_INSERT_INTO_archive_key_value_S __pyx_string_tab[18]
-#define __pyx_kp_u_INSERT_INTO_archive_key_value_VA __pyx_string_tab[19]
-#define __pyx_kp_u_INSERT_INTO_audit_log_key_value __pyx_string_tab[20]
-#define __pyx_kp_u_INSERT_INTO_fts_kvstore_fts_kvst __pyx_string_tab[21]
-#define __pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k __pyx_string_tab[22]
-#define __pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k_2 __pyx_string_tab[23]
-#define __pyx_kp_u_Import_file_not_found __pyx_string_tab[24]
-#define __pyx_kp_u_Invalid_TTL_format __pyx_string_tab[25]
-#define __pyx_kp_u_Key __pyx_string_tab[26]
-#define __pyx_kp_u_Key_cannot_be_empty __pyx_string_tab[27]
-#define __pyx_kp_u_Key_not_found __pyx_string_tab[28]
-#define __pyx_kp_u_No_archived_version_found_for_th __pyx_string_tab[29]
-#define __pyx_kp_u_None __pyx_string_tab[30]
-#define __pyx_kp_u_Note_that_Cython_is_deliberately __pyx_string_tab[31]
-#define __pyx_kp_u_PRAGMA_cache_size_64000 __pyx_string_tab[32]
-#define __pyx_kp_u_PRAGMA_journal_mode_WAL __pyx_string_tab[33]
-#define __pyx_kp_u_PRAGMA_synchronous_NORMAL __pyx_string_tab[34]
-#define __pyx_kp_u_PRAGMA_temp_store_MEMORY __pyx_string_tab[35]
-#define __pyx_kp_u_Prepare_error __pyx_string_tab[36]
-#define __pyx_kp_u_Restored __pyx_string_tab[37]
-#define __pyx_kp_u_SELECT_1_FROM_kvstore_WHERE_key __pyx_string_tab[38]
-#define __pyx_kp_u_SELECT_COUNT_FROM_kvstore_WHERE __pyx_string_tab[39]
-#define __pyx_kp_u_SELECT_id_key_value_timestamp_FR __pyx_string_tab[40]
-#define __pyx_kp_u_SELECT_key_FROM_kvstore_WHERE_e __pyx_string_tab[41]
-#define __pyx_kp_u_SELECT_key_value_FROM_kvstore_W __pyx_string_tab[42]
-#define __pyx_kp_u_SELECT_key_value_timestamp_FROM __pyx_string_tab[43]
-#define __pyx_kp_u_SELECT_key_value_timestamp_FROM_2 __pyx_string_tab[44]
-#define __pyx_kp_u_SELECT_kvstore_key_FROM_kvstore __pyx_string_tab[45]
-#define __pyx_kp_u_SELECT_kvstore_key_kvstore_valu __pyx_string_tab[46]
-#define __pyx_kp_u_SELECT_value_FROM_archive_WHERE __pyx_string_tab[47]
-#define __pyx_kp_u_SELECT_value_FROM_kvstore_WHERE __pyx_string_tab[48]
-#define __pyx_kp_u_SELECT_value_expires_at_expires __pyx_string_tab[49]
-#define __pyx_kp_u_SQLite_error __pyx_string_tab[50]
-#define __pyx_kp_u_Schema_Validation_Error __pyx_string_tab[51]
-#define __pyx_kp_u_Schema_must_be_a_Pydantic_BaseMo __pyx_string_tab[52]
-#define __pyx_kp_u_Step_error __pyx_string_tab[53]
-#define __pyx_kp_u_Unknown_error __pyx_string_tab[54]
-#define __pyx_kp_u_Use_suffixes_s_m_h_d_w_M_y_e_g __pyx_string_tab[55]
-#define __pyx_kp_u_Value_cannot_be_None __pyx_string_tab[56]
-#define __pyx_kp_u_Y_m_d_H_M_S __pyx_string_tab[57]
-#define __pyx_kp_u__2 __pyx_string_tab[58]
-#define __pyx_kp_u__3 __pyx_string_tab[59]
-#define __pyx_kp_u_add_note __pyx_string_tab[60]
-#define __pyx_kp_u_and_has_been_moved_to_archive __pyx_string_tab[61]
-#define __pyx_kp_u_cryptography_library_is_required __pyx_string_tab[62]
-#define __pyx_kp_u_csv_2 __pyx_string_tab[63]
-#define __pyx_kp_u_d_smhdwMy __pyx_string_tab[64]
-#define __pyx_kp_u_disable __pyx_string_tab[65]
-#define __pyx_kp_u_enable __pyx_string_tab[66]
-#define __pyx_kp_u_enc __pyx_string_tab[67]
-#define __pyx_kp_u_expired_at __pyx_string_tab[68]
-#define __pyx_kp_u_gc __pyx_string_tab[69]
-#define __pyx_kp_u_h_2 __pyx_string_tab[70]
-#define __pyx_kp_u_isenabled __pyx_string_tab[71]
-#define __pyx_kp_u_json_2 __pyx_string_tab[72]
-#define __pyx_kp_u_kycli_export __pyx_string_tab[73]
-#define __pyx_kp_u_kycli_kycore_pyx __pyx_string_tab[74]
-#define __pyx_kp_u_kydata_db __pyx_string_tab[75]
-#define __pyx_kp_u_self__db_cannot_be_converted_to __pyx_string_tab[76]
-#define __pyx_kp_u_stringsource __pyx_string_tab[77]
-#define __pyx_kp_u_utf_8 __pyx_string_tab[78]
-#define __pyx_n_u_AESGCM __pyx_string_tab[79]
-#define __pyx_n_u_BaseModel __pyx_string_tab[80]
-#define __pyx_n_u_COMMIT __pyx_string_tab[81]
-#define __pyx_n_u_DictReader __pyx_string_tab[82]
-#define __pyx_n_u_IGNORECASE __pyx_string_tab[83]
-#define __pyx_n_u_Kycore __pyx_string_tab[84]
-#define __pyx_n_u_Kycore___enter __pyx_string_tab[85]
-#define __pyx_n_u_Kycore___exit __pyx_string_tab[86]
-#define __pyx_n_u_Kycore___iter __pyx_string_tab[87]
-#define __pyx_n_u_Kycore___reduce_cython __pyx_string_tab[88]
-#define __pyx_n_u_Kycore___setstate_cython __pyx_string_tab[89]
-#define __pyx_n_u_Kycore__decrypt __pyx_string_tab[90]
-#define __pyx_n_u_Kycore__encrypt __pyx_string_tab[91]
-#define __pyx_n_u_Kycore__parse_ttl __pyx_string_tab[92]
-#define __pyx_n_u_Kycore_delete __pyx_string_tab[93]
-#define __pyx_n_u_Kycore_export_data __pyx_string_tab[94]
-#define __pyx_n_u_Kycore_get_history __pyx_string_tab[95]
-#define __pyx_n_u_Kycore_get_replication_stream __pyx_string_tab[96]
-#define __pyx_n_u_Kycore_getkey __pyx_string_tab[97]
-#define __pyx_n_u_Kycore_getkey_async __pyx_string_tab[98]
-#define __pyx_n_u_Kycore_import_data __pyx_string_tab[99]
-#define __pyx_n_u_Kycore_listkeys __pyx_string_tab[100]
-#define __pyx_n_u_Kycore_load_store __pyx_string_tab[101]
-#define __pyx_n_u_Kycore_optimize_index __pyx_string_tab[102]
-#define __pyx_n_u_Kycore_persist __pyx_string_tab[103]
-#define __pyx_n_u_Kycore_restore __pyx_string_tab[104]
-#define __pyx_n_u_Kycore_save __pyx_string_tab[105]
-#define __pyx_n_u_Kycore_save_async __pyx_string_tab[106]
-#define __pyx_n_u_Kycore_save_many __pyx_string_tab[107]
-#define __pyx_n_u_Kycore_search __pyx_string_tab[108]
-#define __pyx_n_u_Kycore_sync_from_stream __pyx_string_tab[109]
-#define __pyx_n_u_M __pyx_string_tab[110]
-#define __pyx_n_u_OrderedDict __pyx_string_tab[111]
-#define __pyx_n_u_PBKDF2HMAC __pyx_string_tab[112]
-#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[113]
-#define __pyx_n_u_ROLLBACK __pyx_string_tab[114]
-#define __pyx_n_u_SHA256 __pyx_string_tab[115]
-#define __pyx_n_u_ValidationError __pyx_string_tab[116]
-#define __pyx_n_u_abspath __pyx_string_tab[117]
-#define __pyx_n_u_algorithm __pyx_string_tab[118]
-#define __pyx_n_u_asyncio __pyx_string_tab[119]
-#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[120]
-#define __pyx_n_u_await __pyx_string_tab[121]
-#define __pyx_n_u_b64decode __pyx_string_tab[122]
-#define __pyx_n_u_b64encode __pyx_string_tab[123]
-#define __pyx_n_u_base64 __pyx_string_tab[124]
-#define __pyx_n_u_cache_size __pyx_string_tab[125]
-#define __pyx_n_u_cline_in_traceback __pyx_string_tab[126]
-#define __pyx_n_u_close __pyx_string_tab[127]
-#define __pyx_n_u_collections __pyx_string_tab[128]
-#define __pyx_n_u_compile __pyx_string_tab[129]
-#define __pyx_n_u_created __pyx_string_tab[130]
-#define __pyx_n_u_cryptography_hazmat_primitives __pyx_string_tab[131]
-#define __pyx_n_u_cryptography_hazmat_primitives_c __pyx_string_tab[132]
-#define __pyx_n_u_cryptography_hazmat_primitives_k __pyx_string_tab[133]
-#define __pyx_n_u_csv __pyx_string_tab[134]
-#define __pyx_n_u_d __pyx_string_tab[135]
-#define __pyx_n_u_data __pyx_string_tab[136]
-#define __pyx_n_u_datetime __pyx_string_tab[137]
-#define __pyx_n_u_db_path __pyx_string_tab[138]
-#define __pyx_n_u_decode __pyx_string_tab[139]
-#define __pyx_n_u_decrypt __pyx_string_tab[140]
-#define __pyx_n_u_decrypt_2 __pyx_string_tab[141]
-#define __pyx_n_u_decrypted_results __pyx_string_tab[142]
-#define __pyx_n_u_decrypted_val __pyx_string_tab[143]
-#define __pyx_n_u_delete __pyx_string_tab[144]
-#define __pyx_n_u_derive __pyx_string_tab[145]
-#define __pyx_n_u_deserialize __pyx_string_tab[146]
-#define __pyx_n_u_dir __pyx_string_tab[147]
-#define __pyx_n_u_dir_name __pyx_string_tab[148]
-#define __pyx_n_u_dirname __pyx_string_tab[149]
-#define __pyx_n_u_dump __pyx_string_tab[150]
-#define __pyx_n_u_dumps __pyx_string_tab[151]
-#define __pyx_n_u_e __pyx_string_tab[152]
-#define __pyx_n_u_encode __pyx_string_tab[153]
-#define __pyx_n_u_encrypt __pyx_string_tab[154]
-#define __pyx_n_u_encrypt_2 __pyx_string_tab[155]
-#define __pyx_n_u_encrypted_text __pyx_string_tab[156]
-#define __pyx_n_u_enter __pyx_string_tab[157]
-#define __pyx_n_u_entries __pyx_string_tab[158]
-#define __pyx_n_u_entry __pyx_string_tab[159]
-#define __pyx_n_u_enumerate __pyx_string_tab[160]
-#define __pyx_n_u_error __pyx_string_tab[161]
-#define __pyx_n_u_exc_tb __pyx_string_tab[162]
-#define __pyx_n_u_exc_type __pyx_string_tab[163]
-#define __pyx_n_u_exc_val __pyx_string_tab[164]
-#define __pyx_n_u_exist_ok __pyx_string_tab[165]
-#define __pyx_n_u_existing __pyx_string_tab[166]
-#define __pyx_n_u_exists __pyx_string_tab[167]
-#define __pyx_n_u_exit __pyx_string_tab[168]
-#define __pyx_n_u_exp_at __pyx_string_tab[169]
-#define __pyx_n_u_expanduser __pyx_string_tab[170]
-#define __pyx_n_u_expires_at __pyx_string_tab[171]
-#define __pyx_n_u_export_data __pyx_string_tab[172]
-#define __pyx_n_u_f __pyx_string_tab[173]
-#define __pyx_n_u_fd __pyx_string_tab[174]
-#define __pyx_n_u_fdopen __pyx_string_tab[175]
-#define __pyx_n_u_file_format __pyx_string_tab[176]
-#define __pyx_n_u_filepath __pyx_string_tab[177]
-#define __pyx_n_u_func __pyx_string_tab[178]
-#define __pyx_n_u_get_history __pyx_string_tab[179]
-#define __pyx_n_u_get_replication_stream __pyx_string_tab[180]
-#define __pyx_n_u_getkey __pyx_string_tab[181]
-#define __pyx_n_u_getkey_async __pyx_string_tab[182]
-#define __pyx_n_u_getstate __pyx_string_tab[183]
-#define __pyx_n_u_group __pyx_string_tab[184]
-#define __pyx_n_u_h __pyx_string_tab[185]
-#define __pyx_n_u_hashes __pyx_string_tab[186]
-#define __pyx_n_u_import_data __pyx_string_tab[187]
-#define __pyx_n_u_indent __pyx_string_tab[188]
-#define __pyx_n_u_is_coroutine __pyx_string_tab[189]
-#define __pyx_n_u_is_expired __pyx_string_tab[190]
-#define __pyx_n_u_isdigit __pyx_string_tab[191]
-#define __pyx_n_u_items __pyx_string_tab[192]
-#define __pyx_n_u_iter __pyx_string_tab[193]
-#define __pyx_n_u_iterations __pyx_string_tab[194]
-#define __pyx_n_u_json __pyx_string_tab[195]
-#define __pyx_n_u_k __pyx_string_tab[196]
-#define __pyx_n_u_key __pyx_string_tab[197]
-#define __pyx_n_u_key_pattern __pyx_string_tab[198]
-#define __pyx_n_u_keys __pyx_string_tab[199]
-#define __pyx_n_u_keys_only __pyx_string_tab[200]
-#define __pyx_n_u_kycli_kycore __pyx_string_tab[201]
-#define __pyx_n_u_last __pyx_string_tab[202]
-#define __pyx_n_u_last_id __pyx_string_tab[203]
-#define __pyx_n_u_latest_value __pyx_string_tab[204]
-#define __pyx_n_u_length __pyx_string_tab[205]
-#define __pyx_n_u_limit __pyx_string_tab[206]
-#define __pyx_n_u_listkeys __pyx_string_tab[207]
-#define __pyx_n_u_load __pyx_string_tab[208]
-#define __pyx_n_u_load_store __pyx_string_tab[209]
-#define __pyx_n_u_loads __pyx_string_tab[210]
-#define __pyx_n_u_lower __pyx_string_tab[211]
-#define __pyx_n_u_m __pyx_string_tab[212]
-#define __pyx_n_u_main __pyx_string_tab[213]
-#define __pyx_n_u_makedirs __pyx_string_tab[214]
-#define __pyx_n_u_master_key __pyx_string_tab[215]
-#define __pyx_n_u_match __pyx_string_tab[216]
-#define __pyx_n_u_matches __pyx_string_tab[217]
-#define __pyx_n_u_mkstemp __pyx_string_tab[218]
-#define __pyx_n_u_model_dump __pyx_string_tab[219]
-#define __pyx_n_u_model_validate_json __pyx_string_tab[220]
-#define __pyx_n_u_module __pyx_string_tab[221]
-#define __pyx_n_u_move __pyx_string_tab[222]
-#define __pyx_n_u_move_to_end __pyx_string_tab[223]
-#define __pyx_n_u_name __pyx_string_tab[224]
-#define __pyx_n_u_newline __pyx_string_tab[225]
-#define __pyx_n_u_next __pyx_string_tab[226]
-#define __pyx_n_u_nochange __pyx_string_tab[227]
-#define __pyx_n_u_now __pyx_string_tab[228]
-#define __pyx_n_u_open __pyx_string_tab[229]
-#define __pyx_n_u_optimize_index __pyx_string_tab[230]
-#define __pyx_n_u_os __pyx_string_tab[231]
-#define __pyx_n_u_overwritten __pyx_string_tab[232]
-#define __pyx_n_u_parse_ttl __pyx_string_tab[233]
-#define __pyx_n_u_path __pyx_string_tab[234]
-#define __pyx_n_u_pattern __pyx_string_tab[235]
-#define __pyx_n_u_persist __pyx_string_tab[236]
-#define __pyx_n_u_plaintext __pyx_string_tab[237]
-#define __pyx_n_u_pop __pyx_string_tab[238]
-#define __pyx_n_u_popitem __pyx_string_tab[239]
-#define __pyx_n_u_prefix __pyx_string_tab[240]
-#define __pyx_n_u_pydantic __pyx_string_tab[241]
-#define __pyx_n_u_pyx_state __pyx_string_tab[242]
-#define __pyx_n_u_pyx_vtable __pyx_string_tab[243]
-#define __pyx_n_u_qualname __pyx_string_tab[244]
-#define __pyx_n_u_query __pyx_string_tab[245]
-#define __pyx_n_u_r __pyx_string_tab[246]
-#define __pyx_n_u_raw_val __pyx_string_tab[247]
-#define __pyx_n_u_re __pyx_string_tab[248]
-#define __pyx_n_u_reader __pyx_string_tab[249]
-#define __pyx_n_u_reduce __pyx_string_tab[250]
-#define __pyx_n_u_reduce_cython __pyx_string_tab[251]
-#define __pyx_n_u_reduce_ex __pyx_string_tab[252]
-#define __pyx_n_u_regex __pyx_string_tab[253]
-#define __pyx_n_u_remove __pyx_string_tab[254]
-#define __pyx_n_u_restore __pyx_string_tab[255]
-#define __pyx_n_u_results __pyx_string_tab[256]
-#define __pyx_n_u_row __pyx_string_tab[257]
-#define __pyx_n_u_s __pyx_string_tab[258]
-#define __pyx_n_u_s_ttl __pyx_string_tab[259]
-#define __pyx_n_u_salt __pyx_string_tab[260]
-#define __pyx_n_u_save __pyx_string_tab[261]
-#define __pyx_n_u_save_async __pyx_string_tab[262]
-#define __pyx_n_u_save_many __pyx_string_tab[263]
-#define __pyx_n_u_schema __pyx_string_tab[264]
-#define __pyx_n_u_search __pyx_string_tab[265]
-#define __pyx_n_u_seconds __pyx_string_tab[266]
-#define __pyx_n_u_self __pyx_string_tab[267]
-#define __pyx_n_u_send __pyx_string_tab[268]
-#define __pyx_n_u_set_name __pyx_string_tab[269]
-#define __pyx_n_u_setdefault __pyx_string_tab[270]
-#define __pyx_n_u_setstate __pyx_string_tab[271]
-#define __pyx_n_u_setstate_cython __pyx_string_tab[272]
-#define __pyx_n_u_shutil __pyx_string_tab[273]
-#define __pyx_n_u_sql __pyx_string_tab[274]
-#define __pyx_n_u_status __pyx_string_tab[275]
-#define __pyx_n_u_storage_val __pyx_string_tab[276]
-#define __pyx_n_u_store __pyx_string_tab[277]
-#define __pyx_n_u_store_data __pyx_string_tab[278]
-#define __pyx_n_u_strftime __pyx_string_tab[279]
-#define __pyx_n_u_string_val __pyx_string_tab[280]
-#define __pyx_n_u_strip __pyx_string_tab[281]
-#define __pyx_n_u_sync_from_stream __pyx_string_tab[282]
-#define __pyx_n_u_temp_path __pyx_string_tab[283]
-#define __pyx_n_u_tempfile __pyx_string_tab[284]
-#define __pyx_n_u_test __pyx_string_tab[285]
-#define __pyx_n_u_throw __pyx_string_tab[286]
-#define __pyx_n_u_time __pyx_string_tab[287]
-#define __pyx_n_u_timedelta __pyx_string_tab[288]
-#define __pyx_n_u_timezone __pyx_string_tab[289]
-#define __pyx_n_u_to_thread __pyx_string_tab[290]
-#define __pyx_n_u_ttl __pyx_string_tab[291]
-#define __pyx_n_u_unit __pyx_string_tab[292]
-#define __pyx_n_u_urandom __pyx_string_tab[293]
-#define __pyx_n_u_utc __pyx_string_tab[294]
-#define __pyx_n_u_v __pyx_string_tab[295]
-#define __pyx_n_u_val __pyx_string_tab[296]
-#define __pyx_n_u_validated __pyx_string_tab[297]
-#define __pyx_n_u_value __pyx_string_tab[298]
-#define __pyx_n_u_values __pyx_string_tab[299]
-#define __pyx_n_u_w __pyx_string_tab[300]
-#define __pyx_n_u_warn __pyx_string_tab[301]
-#define __pyx_n_u_warnings __pyx_string_tab[302]
-#define __pyx_n_u_writer __pyx_string_tab[303]
-#define __pyx_n_u_writerow __pyx_string_tab[304]
-#define __pyx_n_u_y __pyx_string_tab[305]
-#define __pyx_kp_b_iso88591_2_b_a_D_0_a_1_gQb_WARq_AWARq_wa __pyx_string_tab[306]
-#define __pyx_kp_b_iso88591_31 __pyx_string_tab[307]
-#define __pyx_kp_b_iso88591_4q_a_1_axvRy_XYY__hhiij_Qa_Ya_C __pyx_string_tab[308]
-#define __pyx_kp_b_iso88591_4s_s_c_d_d_J_J_K_K_N_N_T_T_V_V __pyx_string_tab[309]
-#define __pyx_kp_b_iso88591_77Gq_1_auAWA_1_1Cq_4wa_G1_D_Qa __pyx_string_tab[310]
-#define __pyx_kp_b_iso88591_8_t1_2U_2U_1_Ry_9A_L_Zwa_7_4uHG __pyx_string_tab[311]
-#define __pyx_kp_b_iso88591_A __pyx_string_tab[312]
-#define __pyx_kp_b_iso88591_A_4q_Qa_5_a_ddeeffllppq_a_ccggh __pyx_string_tab[313]
-#define __pyx_kp_b_iso88591_A_4q_a_q __pyx_string_tab[314]
-#define __pyx_kp_b_iso88591_A_4r_gQa_1_Qa_q_89AQ_Qj_7_e1A_Ya __pyx_string_tab[315]
-#define __pyx_kp_b_iso88591_A_4s_1_QfE_3aq_AT_q_4q_1_5_3aq_0 __pyx_string_tab[316]
-#define __pyx_kp_b_iso88591_A_L_a __pyx_string_tab[317]
-#define __pyx_kp_b_iso88591_A_M __pyx_string_tab[318]
-#define __pyx_kp_b_iso88591_A_Qa_4uAT_aq_a_ddeehhi_Qa_A_Qa __pyx_string_tab[319]
-#define __pyx_kp_b_iso88591_A_S_b_a_D_0_1_4q_1_q_1_a_RRSST_8 __pyx_string_tab[320]
-#define __pyx_kp_b_iso88591_A_S_b_a_D_0_1_4q_1_war_Qa_UUVVYY __pyx_string_tab[321]
-#define __pyx_kp_b_iso88591_A_q __pyx_string_tab[322]
-#define __pyx_kp_b_iso88591_A_t_aq __pyx_string_tab[323]
-#define __pyx_kp_b_iso88591_Q __pyx_string_tab[324]
-#define __pyx_kp_b_iso88591_Q_t_1_ttuuv __pyx_string_tab[325]
-#define __pyx_kp_b_iso88591__4 __pyx_string_tab[326]
-#define __pyx_kp_b_iso88591_q_4t3d_V1_AQ_6_A_AQ_S_b_a_4q_Qg __pyx_string_tab[327]
-#define __pyx_kp_b_iso88591_q_aq_q_1Ct7_4q_1_Bhay_1Bd_uCuG1 __pyx_string_tab[328]
-#define __pyx_n_b_kycli_vault_salt __pyx_string_tab[329]
+#define __pyx_kp_u_Compaction_complete_Space_reclai __pyx_string_tab[10]
+#define __pyx_kp_u_Compaction_failed __pyx_string_tab[11]
+#define __pyx_kp_u_Could_not_open_database __pyx_string_tab[12]
+#define __pyx_kp_u_DECRYPTION_FAILED_Incorrect_mas __pyx_string_tab[13]
+#define __pyx_kp_u_DELETED __pyx_string_tab[14]
+#define __pyx_kp_u_DELETE_FROM_archive_WHERE_julian __pyx_string_tab[15]
+#define __pyx_kp_u_DELETE_FROM_archive_WHERE_julian_2 __pyx_string_tab[16]
+#define __pyx_kp_u_DELETE_FROM_audit_log_WHERE_juli __pyx_string_tab[17]
+#define __pyx_kp_u_DELETE_FROM_kvstore __pyx_string_tab[18]
+#define __pyx_kp_u_DELETE_FROM_kvstore_WHERE_expire __pyx_string_tab[19]
+#define __pyx_kp_u_DELETE_FROM_kvstore_WHERE_key __pyx_string_tab[20]
+#define __pyx_kp_u_DELETE_FROM_kvstore_WHERE_key_2 __pyx_string_tab[21]
+#define __pyx_kp_u_Database_restored_to_state_at __pyx_string_tab[22]
+#define __pyx_kp_u_Deleted_and_moved_to_archive_Aut __pyx_string_tab[23]
+#define __pyx_kp_u_ENCRYPTED_Provide_a_master_key __pyx_string_tab[24]
+#define __pyx_kp_u_INSERT_INTO_archive_key_value_S __pyx_string_tab[25]
+#define __pyx_kp_u_INSERT_INTO_archive_key_value_VA __pyx_string_tab[26]
+#define __pyx_kp_u_INSERT_INTO_audit_log_key_value __pyx_string_tab[27]
+#define __pyx_kp_u_INSERT_INTO_audit_log_key_value_2 __pyx_string_tab[28]
+#define __pyx_kp_u_INSERT_INTO_fts_kvstore_fts_kvst __pyx_string_tab[29]
+#define __pyx_kp_u_INSERT_INTO_kvstore_key_value_S __pyx_string_tab[30]
+#define __pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k __pyx_string_tab[31]
+#define __pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k_2 __pyx_string_tab[32]
+#define __pyx_kp_u_Import_file_not_found __pyx_string_tab[33]
+#define __pyx_kp_u_Invalid_TTL_format __pyx_string_tab[34]
+#define __pyx_kp_u_Key __pyx_string_tab[35]
+#define __pyx_kp_u_Key_cannot_be_empty __pyx_string_tab[36]
+#define __pyx_kp_u_Key_not_found __pyx_string_tab[37]
+#define __pyx_kp_u_No_archived_version_found_for_th __pyx_string_tab[38]
+#define __pyx_kp_u_None __pyx_string_tab[39]
+#define __pyx_kp_u_Note_that_Cython_is_deliberately __pyx_string_tab[40]
+#define __pyx_kp_u_PRAGMA_cache_size_64000 __pyx_string_tab[41]
+#define __pyx_kp_u_PRAGMA_journal_mode_WAL __pyx_string_tab[42]
+#define __pyx_kp_u_PRAGMA_synchronous_NORMAL __pyx_string_tab[43]
+#define __pyx_kp_u_PRAGMA_temp_store_MEMORY __pyx_string_tab[44]
+#define __pyx_kp_u_Prepare_error __pyx_string_tab[45]
+#define __pyx_kp_u_Restored __pyx_string_tab[46]
+#define __pyx_kp_u_SELECT_1_FROM_kvstore_WHERE_key __pyx_string_tab[47]
+#define __pyx_kp_u_SELECT_COUNT_FROM_kvstore_WHERE __pyx_string_tab[48]
+#define __pyx_kp_u_SELECT_id_key_value_timestamp_FR __pyx_string_tab[49]
+#define __pyx_kp_u_SELECT_key_FROM_kvstore_WHERE_e __pyx_string_tab[50]
+#define __pyx_kp_u_SELECT_key_value_FROM_kvstore_W __pyx_string_tab[51]
+#define __pyx_kp_u_SELECT_key_value_timestamp_FROM __pyx_string_tab[52]
+#define __pyx_kp_u_SELECT_key_value_timestamp_FROM_2 __pyx_string_tab[53]
+#define __pyx_kp_u_SELECT_kvstore_key_FROM_kvstore __pyx_string_tab[54]
+#define __pyx_kp_u_SELECT_kvstore_key_kvstore_valu __pyx_string_tab[55]
+#define __pyx_kp_u_SELECT_value_FROM_archive_WHERE __pyx_string_tab[56]
+#define __pyx_kp_u_SELECT_value_FROM_kvstore_WHERE __pyx_string_tab[57]
+#define __pyx_kp_u_SELECT_value_expires_at_expires __pyx_string_tab[58]
+#define __pyx_kp_u_SQLite_error __pyx_string_tab[59]
+#define __pyx_kp_u_Schema_Validation_Error __pyx_string_tab[60]
+#define __pyx_kp_u_Schema_must_be_a_Pydantic_BaseMo __pyx_string_tab[61]
+#define __pyx_kp_u_Step_error __pyx_string_tab[62]
+#define __pyx_kp_u_Unknown_error __pyx_string_tab[63]
+#define __pyx_kp_u_Use_suffixes_s_m_h_d_w_M_y_e_g __pyx_string_tab[64]
+#define __pyx_kp_u_Value_cannot_be_None __pyx_string_tab[65]
+#define __pyx_kp_u_Y_m_d_H_M_S __pyx_string_tab[66]
+#define __pyx_kp_u__2 __pyx_string_tab[67]
+#define __pyx_kp_u__3 __pyx_string_tab[68]
+#define __pyx_kp_u_add_note __pyx_string_tab[69]
+#define __pyx_kp_u_and_has_been_moved_to_archive __pyx_string_tab[70]
+#define __pyx_kp_u_cryptography_library_is_required __pyx_string_tab[71]
+#define __pyx_kp_u_csv_2 __pyx_string_tab[72]
+#define __pyx_kp_u_d_smhdwMy __pyx_string_tab[73]
+#define __pyx_kp_u_disable __pyx_string_tab[74]
+#define __pyx_kp_u_enable __pyx_string_tab[75]
+#define __pyx_kp_u_enc __pyx_string_tab[76]
+#define __pyx_kp_u_expired_at __pyx_string_tab[77]
+#define __pyx_kp_u_gc __pyx_string_tab[78]
+#define __pyx_kp_u_h_2 __pyx_string_tab[79]
+#define __pyx_kp_u_isenabled __pyx_string_tab[80]
+#define __pyx_kp_u_json_2 __pyx_string_tab[81]
+#define __pyx_kp_u_kycli_export __pyx_string_tab[82]
+#define __pyx_kp_u_kycli_kycore_pyx __pyx_string_tab[83]
+#define __pyx_kp_u_kydata_db __pyx_string_tab[84]
+#define __pyx_kp_u_self__db_cannot_be_converted_to __pyx_string_tab[85]
+#define __pyx_kp_u_stringsource __pyx_string_tab[86]
+#define __pyx_kp_u_utf_8 __pyx_string_tab[87]
+#define __pyx_n_u_AESGCM __pyx_string_tab[88]
+#define __pyx_n_u_ANALYZE __pyx_string_tab[89]
+#define __pyx_n_u_BaseModel __pyx_string_tab[90]
+#define __pyx_n_u_COMMIT __pyx_string_tab[91]
+#define __pyx_n_u_DictReader __pyx_string_tab[92]
+#define __pyx_n_u_IGNORECASE __pyx_string_tab[93]
+#define __pyx_n_u_Kycore __pyx_string_tab[94]
+#define __pyx_n_u_Kycore___enter __pyx_string_tab[95]
+#define __pyx_n_u_Kycore___exit __pyx_string_tab[96]
+#define __pyx_n_u_Kycore___iter __pyx_string_tab[97]
+#define __pyx_n_u_Kycore___reduce_cython __pyx_string_tab[98]
+#define __pyx_n_u_Kycore___setstate_cython __pyx_string_tab[99]
+#define __pyx_n_u_Kycore__decrypt __pyx_string_tab[100]
+#define __pyx_n_u_Kycore__encrypt __pyx_string_tab[101]
+#define __pyx_n_u_Kycore__parse_ttl __pyx_string_tab[102]
+#define __pyx_n_u_Kycore_compact __pyx_string_tab[103]
+#define __pyx_n_u_Kycore_delete __pyx_string_tab[104]
+#define __pyx_n_u_Kycore_export_data __pyx_string_tab[105]
+#define __pyx_n_u_Kycore_get_history __pyx_string_tab[106]
+#define __pyx_n_u_Kycore_get_replication_stream __pyx_string_tab[107]
+#define __pyx_n_u_Kycore_getkey __pyx_string_tab[108]
+#define __pyx_n_u_Kycore_getkey_async __pyx_string_tab[109]
+#define __pyx_n_u_Kycore_import_data __pyx_string_tab[110]
+#define __pyx_n_u_Kycore_listkeys __pyx_string_tab[111]
+#define __pyx_n_u_Kycore_load_store __pyx_string_tab[112]
+#define __pyx_n_u_Kycore_optimize_index __pyx_string_tab[113]
+#define __pyx_n_u_Kycore_persist __pyx_string_tab[114]
+#define __pyx_n_u_Kycore_restore __pyx_string_tab[115]
+#define __pyx_n_u_Kycore_restore_to __pyx_string_tab[116]
+#define __pyx_n_u_Kycore_save __pyx_string_tab[117]
+#define __pyx_n_u_Kycore_save_async __pyx_string_tab[118]
+#define __pyx_n_u_Kycore_save_many __pyx_string_tab[119]
+#define __pyx_n_u_Kycore_search __pyx_string_tab[120]
+#define __pyx_n_u_Kycore_sync_from_stream __pyx_string_tab[121]
+#define __pyx_n_u_M __pyx_string_tab[122]
+#define __pyx_n_u_OrderedDict __pyx_string_tab[123]
+#define __pyx_n_u_PBKDF2HMAC __pyx_string_tab[124]
+#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[125]
+#define __pyx_n_u_ROLLBACK __pyx_string_tab[126]
+#define __pyx_n_u_SHA256 __pyx_string_tab[127]
+#define __pyx_n_u_VACUUM __pyx_string_tab[128]
+#define __pyx_n_u_ValidationError __pyx_string_tab[129]
+#define __pyx_n_u_abspath __pyx_string_tab[130]
+#define __pyx_n_u_algorithm __pyx_string_tab[131]
+#define __pyx_n_u_asyncio __pyx_string_tab[132]
+#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[133]
+#define __pyx_n_u_await __pyx_string_tab[134]
+#define __pyx_n_u_b64decode __pyx_string_tab[135]
+#define __pyx_n_u_b64encode __pyx_string_tab[136]
+#define __pyx_n_u_base64 __pyx_string_tab[137]
+#define __pyx_n_u_cache_size __pyx_string_tab[138]
+#define __pyx_n_u_clear __pyx_string_tab[139]
+#define __pyx_n_u_cline_in_traceback __pyx_string_tab[140]
+#define __pyx_n_u_close __pyx_string_tab[141]
+#define __pyx_n_u_collections __pyx_string_tab[142]
+#define __pyx_n_u_compact __pyx_string_tab[143]
+#define __pyx_n_u_compile __pyx_string_tab[144]
+#define __pyx_n_u_created __pyx_string_tab[145]
+#define __pyx_n_u_cryptography_hazmat_primitives __pyx_string_tab[146]
+#define __pyx_n_u_cryptography_hazmat_primitives_c __pyx_string_tab[147]
+#define __pyx_n_u_cryptography_hazmat_primitives_k __pyx_string_tab[148]
+#define __pyx_n_u_csv __pyx_string_tab[149]
+#define __pyx_n_u_d __pyx_string_tab[150]
+#define __pyx_n_u_data __pyx_string_tab[151]
+#define __pyx_n_u_datetime __pyx_string_tab[152]
+#define __pyx_n_u_db_path __pyx_string_tab[153]
+#define __pyx_n_u_decode __pyx_string_tab[154]
+#define __pyx_n_u_decrypt __pyx_string_tab[155]
+#define __pyx_n_u_decrypt_2 __pyx_string_tab[156]
+#define __pyx_n_u_decrypted_results __pyx_string_tab[157]
+#define __pyx_n_u_decrypted_val __pyx_string_tab[158]
+#define __pyx_n_u_delete __pyx_string_tab[159]
+#define __pyx_n_u_derive __pyx_string_tab[160]
+#define __pyx_n_u_deserialize __pyx_string_tab[161]
+#define __pyx_n_u_dir __pyx_string_tab[162]
+#define __pyx_n_u_dir_name __pyx_string_tab[163]
+#define __pyx_n_u_dirname __pyx_string_tab[164]
+#define __pyx_n_u_dump __pyx_string_tab[165]
+#define __pyx_n_u_dumps __pyx_string_tab[166]
+#define __pyx_n_u_e __pyx_string_tab[167]
+#define __pyx_n_u_encode __pyx_string_tab[168]
+#define __pyx_n_u_encrypt __pyx_string_tab[169]
+#define __pyx_n_u_encrypt_2 __pyx_string_tab[170]
+#define __pyx_n_u_encrypted_text __pyx_string_tab[171]
+#define __pyx_n_u_enter __pyx_string_tab[172]
+#define __pyx_n_u_entries __pyx_string_tab[173]
+#define __pyx_n_u_entry __pyx_string_tab[174]
+#define __pyx_n_u_enumerate __pyx_string_tab[175]
+#define __pyx_n_u_error __pyx_string_tab[176]
+#define __pyx_n_u_exc_tb __pyx_string_tab[177]
+#define __pyx_n_u_exc_type __pyx_string_tab[178]
+#define __pyx_n_u_exc_val __pyx_string_tab[179]
+#define __pyx_n_u_exist_ok __pyx_string_tab[180]
+#define __pyx_n_u_existing __pyx_string_tab[181]
+#define __pyx_n_u_exists __pyx_string_tab[182]
+#define __pyx_n_u_exit __pyx_string_tab[183]
+#define __pyx_n_u_exp_at __pyx_string_tab[184]
+#define __pyx_n_u_expanduser __pyx_string_tab[185]
+#define __pyx_n_u_expires_at __pyx_string_tab[186]
+#define __pyx_n_u_export_data __pyx_string_tab[187]
+#define __pyx_n_u_f __pyx_string_tab[188]
+#define __pyx_n_u_fd __pyx_string_tab[189]
+#define __pyx_n_u_fdopen __pyx_string_tab[190]
+#define __pyx_n_u_file_format __pyx_string_tab[191]
+#define __pyx_n_u_filepath __pyx_string_tab[192]
+#define __pyx_n_u_func __pyx_string_tab[193]
+#define __pyx_n_u_get_history __pyx_string_tab[194]
+#define __pyx_n_u_get_replication_stream __pyx_string_tab[195]
+#define __pyx_n_u_getkey __pyx_string_tab[196]
+#define __pyx_n_u_getkey_async __pyx_string_tab[197]
+#define __pyx_n_u_getstate __pyx_string_tab[198]
+#define __pyx_n_u_group __pyx_string_tab[199]
+#define __pyx_n_u_h __pyx_string_tab[200]
+#define __pyx_n_u_hashes __pyx_string_tab[201]
+#define __pyx_n_u_import_data __pyx_string_tab[202]
+#define __pyx_n_u_indent __pyx_string_tab[203]
+#define __pyx_n_u_is_coroutine __pyx_string_tab[204]
+#define __pyx_n_u_is_expired __pyx_string_tab[205]
+#define __pyx_n_u_isdigit __pyx_string_tab[206]
+#define __pyx_n_u_items __pyx_string_tab[207]
+#define __pyx_n_u_iter __pyx_string_tab[208]
+#define __pyx_n_u_iterations __pyx_string_tab[209]
+#define __pyx_n_u_json __pyx_string_tab[210]
+#define __pyx_n_u_k __pyx_string_tab[211]
+#define __pyx_n_u_key __pyx_string_tab[212]
+#define __pyx_n_u_key_pattern __pyx_string_tab[213]
+#define __pyx_n_u_keys __pyx_string_tab[214]
+#define __pyx_n_u_keys_only __pyx_string_tab[215]
+#define __pyx_n_u_kycli_kycore __pyx_string_tab[216]
+#define __pyx_n_u_last __pyx_string_tab[217]
+#define __pyx_n_u_last_id __pyx_string_tab[218]
+#define __pyx_n_u_latest_value __pyx_string_tab[219]
+#define __pyx_n_u_length __pyx_string_tab[220]
+#define __pyx_n_u_limit __pyx_string_tab[221]
+#define __pyx_n_u_listkeys __pyx_string_tab[222]
+#define __pyx_n_u_load __pyx_string_tab[223]
+#define __pyx_n_u_load_store __pyx_string_tab[224]
+#define __pyx_n_u_loads __pyx_string_tab[225]
+#define __pyx_n_u_lower __pyx_string_tab[226]
+#define __pyx_n_u_m __pyx_string_tab[227]
+#define __pyx_n_u_main __pyx_string_tab[228]
+#define __pyx_n_u_makedirs __pyx_string_tab[229]
+#define __pyx_n_u_master_key __pyx_string_tab[230]
+#define __pyx_n_u_match __pyx_string_tab[231]
+#define __pyx_n_u_matches __pyx_string_tab[232]
+#define __pyx_n_u_mkstemp __pyx_string_tab[233]
+#define __pyx_n_u_model_dump __pyx_string_tab[234]
+#define __pyx_n_u_model_validate_json __pyx_string_tab[235]
+#define __pyx_n_u_module __pyx_string_tab[236]
+#define __pyx_n_u_move __pyx_string_tab[237]
+#define __pyx_n_u_move_to_end __pyx_string_tab[238]
+#define __pyx_n_u_name __pyx_string_tab[239]
+#define __pyx_n_u_newline __pyx_string_tab[240]
+#define __pyx_n_u_next __pyx_string_tab[241]
+#define __pyx_n_u_nochange __pyx_string_tab[242]
+#define __pyx_n_u_now __pyx_string_tab[243]
+#define __pyx_n_u_open __pyx_string_tab[244]
+#define __pyx_n_u_optimize_index __pyx_string_tab[245]
+#define __pyx_n_u_os __pyx_string_tab[246]
+#define __pyx_n_u_overwritten __pyx_string_tab[247]
+#define __pyx_n_u_parse_ttl __pyx_string_tab[248]
+#define __pyx_n_u_path __pyx_string_tab[249]
+#define __pyx_n_u_pattern __pyx_string_tab[250]
+#define __pyx_n_u_persist __pyx_string_tab[251]
+#define __pyx_n_u_plaintext __pyx_string_tab[252]
+#define __pyx_n_u_pop __pyx_string_tab[253]
+#define __pyx_n_u_popitem __pyx_string_tab[254]
+#define __pyx_n_u_prefix __pyx_string_tab[255]
+#define __pyx_n_u_pydantic __pyx_string_tab[256]
+#define __pyx_n_u_pyx_state __pyx_string_tab[257]
+#define __pyx_n_u_pyx_vtable __pyx_string_tab[258]
+#define __pyx_n_u_qualname __pyx_string_tab[259]
+#define __pyx_n_u_query __pyx_string_tab[260]
+#define __pyx_n_u_r __pyx_string_tab[261]
+#define __pyx_n_u_raw_val __pyx_string_tab[262]
+#define __pyx_n_u_re __pyx_string_tab[263]
+#define __pyx_n_u_reader __pyx_string_tab[264]
+#define __pyx_n_u_reduce __pyx_string_tab[265]
+#define __pyx_n_u_reduce_cython __pyx_string_tab[266]
+#define __pyx_n_u_reduce_ex __pyx_string_tab[267]
+#define __pyx_n_u_regex __pyx_string_tab[268]
+#define __pyx_n_u_remove __pyx_string_tab[269]
+#define __pyx_n_u_restore __pyx_string_tab[270]
+#define __pyx_n_u_restore_to __pyx_string_tab[271]
+#define __pyx_n_u_results __pyx_string_tab[272]
+#define __pyx_n_u_retention_days __pyx_string_tab[273]
+#define __pyx_n_u_row __pyx_string_tab[274]
+#define __pyx_n_u_s __pyx_string_tab[275]
+#define __pyx_n_u_s_ttl __pyx_string_tab[276]
+#define __pyx_n_u_salt __pyx_string_tab[277]
+#define __pyx_n_u_save __pyx_string_tab[278]
+#define __pyx_n_u_save_async __pyx_string_tab[279]
+#define __pyx_n_u_save_many __pyx_string_tab[280]
+#define __pyx_n_u_schema __pyx_string_tab[281]
+#define __pyx_n_u_search __pyx_string_tab[282]
+#define __pyx_n_u_seconds __pyx_string_tab[283]
+#define __pyx_n_u_self __pyx_string_tab[284]
+#define __pyx_n_u_send __pyx_string_tab[285]
+#define __pyx_n_u_set_name __pyx_string_tab[286]
+#define __pyx_n_u_setdefault __pyx_string_tab[287]
+#define __pyx_n_u_setstate __pyx_string_tab[288]
+#define __pyx_n_u_setstate_cython __pyx_string_tab[289]
+#define __pyx_n_u_shutil __pyx_string_tab[290]
+#define __pyx_n_u_sql __pyx_string_tab[291]
+#define __pyx_n_u_status __pyx_string_tab[292]
+#define __pyx_n_u_storage_val __pyx_string_tab[293]
+#define __pyx_n_u_store __pyx_string_tab[294]
+#define __pyx_n_u_store_data __pyx_string_tab[295]
+#define __pyx_n_u_strftime __pyx_string_tab[296]
+#define __pyx_n_u_string_val __pyx_string_tab[297]
+#define __pyx_n_u_strip __pyx_string_tab[298]
+#define __pyx_n_u_sync_from_stream __pyx_string_tab[299]
+#define __pyx_n_u_temp_path __pyx_string_tab[300]
+#define __pyx_n_u_tempfile __pyx_string_tab[301]
+#define __pyx_n_u_test __pyx_string_tab[302]
+#define __pyx_n_u_throw __pyx_string_tab[303]
+#define __pyx_n_u_time __pyx_string_tab[304]
+#define __pyx_n_u_timedelta __pyx_string_tab[305]
+#define __pyx_n_u_timestamp __pyx_string_tab[306]
+#define __pyx_n_u_timezone __pyx_string_tab[307]
+#define __pyx_n_u_to_thread __pyx_string_tab[308]
+#define __pyx_n_u_ttl __pyx_string_tab[309]
+#define __pyx_n_u_unit __pyx_string_tab[310]
+#define __pyx_n_u_urandom __pyx_string_tab[311]
+#define __pyx_n_u_utc __pyx_string_tab[312]
+#define __pyx_n_u_v __pyx_string_tab[313]
+#define __pyx_n_u_val __pyx_string_tab[314]
+#define __pyx_n_u_validated __pyx_string_tab[315]
+#define __pyx_n_u_value __pyx_string_tab[316]
+#define __pyx_n_u_values __pyx_string_tab[317]
+#define __pyx_n_u_w __pyx_string_tab[318]
+#define __pyx_n_u_warn __pyx_string_tab[319]
+#define __pyx_n_u_warnings __pyx_string_tab[320]
+#define __pyx_n_u_writer __pyx_string_tab[321]
+#define __pyx_n_u_writerow __pyx_string_tab[322]
+#define __pyx_n_u_y __pyx_string_tab[323]
+#define __pyx_kp_b_iso88591_2_b_a_D_0_a_1_gQb_WARq_AWARq_wa __pyx_string_tab[324]
+#define __pyx_kp_b_iso88591_31 __pyx_string_tab[325]
+#define __pyx_kp_b_iso88591_4q_a_1_axvRy_XYY__hhiij_Qa_Ya_C __pyx_string_tab[326]
+#define __pyx_kp_b_iso88591_4s_s_c_d_d_J_J_K_K_N_N_T_T_V_V __pyx_string_tab[327]
+#define __pyx_kp_b_iso88591_77Gq_1_auAWA_1_1Cq_4wa_G1_D_Qa __pyx_string_tab[328]
+#define __pyx_kp_b_iso88591_8_t1_2U_2U_1_Ry_9A_L_Zwa_7_4uHG __pyx_string_tab[329]
+#define __pyx_kp_b_iso88591_A __pyx_string_tab[330]
+#define __pyx_kp_b_iso88591_A_4q_Qa_5_a_ddeeffllppq_a_ccggh __pyx_string_tab[331]
+#define __pyx_kp_b_iso88591_A_4q_a_q __pyx_string_tab[332]
+#define __pyx_kp_b_iso88591_A_4r_gQa_1_Qa_q_89AQ_Qj_7_e1A_Ya __pyx_string_tab[333]
+#define __pyx_kp_b_iso88591_A_4s_1_QfE_3aq_AT_q_4q_1_5_3aq_0 __pyx_string_tab[334]
+#define __pyx_kp_b_iso88591_A_L_a __pyx_string_tab[335]
+#define __pyx_kp_b_iso88591_A_M __pyx_string_tab[336]
+#define __pyx_kp_b_iso88591_A_Qa_4uAT_aq_a_ddeehhi_Qa_A_Qa __pyx_string_tab[337]
+#define __pyx_kp_b_iso88591_A_Qa_Qa_5_Qa_vQ_31A_A_Qa __pyx_string_tab[338]
+#define __pyx_kp_b_iso88591_A_S_b_a_D_0_1_4q_1_q_1_a_RRSST_8 __pyx_string_tab[339]
+#define __pyx_kp_b_iso88591_A_S_b_a_D_0_1_4q_1_war_Qa_UUVVYY __pyx_string_tab[340]
+#define __pyx_kp_b_iso88591_A_q __pyx_string_tab[341]
+#define __pyx_kp_b_iso88591_A_t_aq __pyx_string_tab[342]
+#define __pyx_kp_b_iso88591_Q __pyx_string_tab[343]
+#define __pyx_kp_b_iso88591_Q_t_1_ttuuv __pyx_string_tab[344]
+#define __pyx_kp_b_iso88591__4 __pyx_string_tab[345]
+#define __pyx_kp_b_iso88591_ppqqr_ooppq_Qa_Qa_1_A_a_4AQ __pyx_string_tab[346]
+#define __pyx_kp_b_iso88591_q_4t3d_V1_AQ_6_A_AQ_S_b_a_4q_Qg __pyx_string_tab[347]
+#define __pyx_kp_b_iso88591_q_aq_q_1Ct7_4q_1_Bhay_1Bd_uCuG1 __pyx_string_tab[348]
+#define __pyx_n_b_kycli_vault_salt __pyx_string_tab[349]
 #define __pyx_int_0 __pyx_number_tab[0]
 #define __pyx_int_1 __pyx_number_tab[1]
 #define __pyx_int_2 __pyx_number_tab[2]
 #define __pyx_int_4 __pyx_number_tab[3]
 #define __pyx_int_12 __pyx_number_tab[4]
-#define __pyx_int_32 __pyx_number_tab[5]
-#define __pyx_int_100 __pyx_number_tab[6]
-#define __pyx_int_1000 __pyx_number_tab[7]
-#define __pyx_int_100000 __pyx_number_tab[8]
+#define __pyx_int_15 __pyx_number_tab[5]
+#define __pyx_int_32 __pyx_number_tab[6]
+#define __pyx_int_100 __pyx_number_tab[7]
+#define __pyx_int_1000 __pyx_number_tab[8]
+#define __pyx_int_100000 __pyx_number_tab[9]
 /* #### Code section: module_state_clear ### */
 #if CYTHON_USE_MODULE_STATE
 static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
@@ -3334,10 +3357,10 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async);
   Py_CLEAR(clear_module_state->__pyx_type_5kycli_6kycore___pyx_scope_struct_2_getkey_async);
   for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_slice[i]); }
-  for (int i=0; i<6; ++i) { Py_CLEAR(clear_module_state->__pyx_tuple[i]); }
-  for (int i=0; i<25; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<330; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
-  for (int i=0; i<9; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
+  for (int i=0; i<7; ++i) { Py_CLEAR(clear_module_state->__pyx_tuple[i]); }
+  for (int i=0; i<27; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<350; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<10; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_clear_contents ### */
 /* CommonTypesMetaclass.module_state_clear */
 Py_CLEAR(clear_module_state->__pyx_CommonTypesMetaclassType);
@@ -3376,10 +3399,10 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   Py_VISIT(traverse_module_state->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async);
   Py_VISIT(traverse_module_state->__pyx_type_5kycli_6kycore___pyx_scope_struct_2_getkey_async);
   for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_slice[i]); }
-  for (int i=0; i<6; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_tuple[i]); }
-  for (int i=0; i<25; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<330; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
-  for (int i=0; i<9; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
+  for (int i=0; i<7; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_tuple[i]); }
+  for (int i=0; i<27; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<350; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<10; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_traverse_contents ### */
 /* CommonTypesMetaclass.module_state_traverse */
 Py_VISIT(traverse_module_state->__pyx_CommonTypesMetaclassType);
@@ -4818,8 +4841,8 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__encrypt_c(struct __pyx_obj_5kyc
  *         return "enc:" + base64.b64encode(nonce + ciphertext).decode('utf-8')
  * 
  *     cdef str _decrypt_c(self, str encrypted_text):             # <<<<<<<<<<<<<<
- *         if not encrypted_text.startswith("enc:"):
- *             return encrypted_text
+ *         if encrypted_text is None:
+ *             return "[DELETED]"
 */
 
 static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_encrypted_text) {
@@ -4848,20 +4871,51 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
   /* "kycli/kycore.pyx":191
  * 
  *     cdef str _decrypt_c(self, str encrypted_text):
+ *         if encrypted_text is None:             # <<<<<<<<<<<<<<
+ *             return "[DELETED]"
+ * 
+*/
+  __pyx_t_1 = (__pyx_v_encrypted_text == ((PyObject*)Py_None));
+  if (__pyx_t_1) {
+
+    /* "kycli/kycore.pyx":192
+ *     cdef str _decrypt_c(self, str encrypted_text):
+ *         if encrypted_text is None:
+ *             return "[DELETED]"             # <<<<<<<<<<<<<<
+ * 
+ *         if not encrypted_text.startswith("enc:"):
+*/
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_DELETED);
+    __pyx_r = __pyx_mstate_global->__pyx_kp_u_DELETED;
+    goto __pyx_L0;
+
+    /* "kycli/kycore.pyx":191
+ * 
+ *     cdef str _decrypt_c(self, str encrypted_text):
+ *         if encrypted_text is None:             # <<<<<<<<<<<<<<
+ *             return "[DELETED]"
+ * 
+*/
+  }
+
+  /* "kycli/kycore.pyx":194
+ *             return "[DELETED]"
+ * 
  *         if not encrypted_text.startswith("enc:"):             # <<<<<<<<<<<<<<
  *             return encrypted_text
  * 
 */
   if (unlikely(__pyx_v_encrypted_text == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "startswith");
-    __PYX_ERR(0, 191, __pyx_L1_error)
+    __PYX_ERR(0, 194, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_PyUnicode_Tailmatch(__pyx_v_encrypted_text, __pyx_mstate_global->__pyx_kp_u_enc, 0, PY_SSIZE_T_MAX, -1); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 191, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyUnicode_Tailmatch(__pyx_v_encrypted_text, __pyx_mstate_global->__pyx_kp_u_enc, 0, PY_SSIZE_T_MAX, -1); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 194, __pyx_L1_error)
   __pyx_t_2 = (!__pyx_t_1);
   if (__pyx_t_2) {
 
-    /* "kycli/kycore.pyx":192
- *     cdef str _decrypt_c(self, str encrypted_text):
+    /* "kycli/kycore.pyx":195
+ * 
  *         if not encrypted_text.startswith("enc:"):
  *             return encrypted_text             # <<<<<<<<<<<<<<
  * 
@@ -4872,16 +4926,16 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
     __pyx_r = __pyx_v_encrypted_text;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":191
+    /* "kycli/kycore.pyx":194
+ *             return "[DELETED]"
  * 
- *     cdef str _decrypt_c(self, str encrypted_text):
  *         if not encrypted_text.startswith("enc:"):             # <<<<<<<<<<<<<<
  *             return encrypted_text
  * 
 */
   }
 
-  /* "kycli/kycore.pyx":194
+  /* "kycli/kycore.pyx":197
  *             return encrypted_text
  * 
  *         if self._aesgcm is None:             # <<<<<<<<<<<<<<
@@ -4891,7 +4945,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
   __pyx_t_2 = (__pyx_v_self->_aesgcm == Py_None);
   if (__pyx_t_2) {
 
-    /* "kycli/kycore.pyx":195
+    /* "kycli/kycore.pyx":198
  * 
  *         if self._aesgcm is None:
  *             return "[ENCRYPTED: Provide a master key to view this value]"             # <<<<<<<<<<<<<<
@@ -4903,7 +4957,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
     __pyx_r = __pyx_mstate_global->__pyx_kp_u_ENCRYPTED_Provide_a_master_key;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":194
+    /* "kycli/kycore.pyx":197
  *             return encrypted_text
  * 
  *         if self._aesgcm is None:             # <<<<<<<<<<<<<<
@@ -4912,7 +4966,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
 */
   }
 
-  /* "kycli/kycore.pyx":197
+  /* "kycli/kycore.pyx":200
  *             return "[ENCRYPTED: Provide a master key to view this value]"
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -4928,7 +4982,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
     __Pyx_XGOTREF(__pyx_t_5);
     /*try:*/ {
 
-      /* "kycli/kycore.pyx":198
+      /* "kycli/kycore.pyx":201
  * 
  *         try:
  *             data = base64.b64decode(encrypted_text[4:].encode('utf-8'))             # <<<<<<<<<<<<<<
@@ -4936,18 +4990,18 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
  *             ciphertext = data[12:]
 */
       __pyx_t_7 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_base64); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 198, __pyx_L5_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_base64); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 201, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_b64decode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 198, __pyx_L5_error)
+      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_b64decode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 201, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       if (unlikely(__pyx_v_encrypted_text == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 198, __pyx_L5_error)
+        __PYX_ERR(0, 201, __pyx_L6_error)
       }
-      __pyx_t_8 = __Pyx_PyUnicode_Substring(__pyx_v_encrypted_text, 4, PY_SSIZE_T_MAX); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 198, __pyx_L5_error)
+      __pyx_t_8 = __Pyx_PyUnicode_Substring(__pyx_v_encrypted_text, 4, PY_SSIZE_T_MAX); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 201, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_10 = PyUnicode_AsUTF8String(((PyObject*)__pyx_t_8)); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 198, __pyx_L5_error)
+      __pyx_t_10 = PyUnicode_AsUTF8String(((PyObject*)__pyx_t_8)); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 201, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __pyx_t_11 = 1;
@@ -4968,37 +5022,37 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 198, __pyx_L5_error)
+        if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 201, __pyx_L6_error)
         __Pyx_GOTREF(__pyx_t_6);
       }
       __pyx_v_data = __pyx_t_6;
       __pyx_t_6 = 0;
 
-      /* "kycli/kycore.pyx":199
+      /* "kycli/kycore.pyx":202
  *         try:
  *             data = base64.b64decode(encrypted_text[4:].encode('utf-8'))
  *             nonce = data[:12]             # <<<<<<<<<<<<<<
  *             ciphertext = data[12:]
  *             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
 */
-      __pyx_t_6 = __Pyx_PyObject_GetSlice(__pyx_v_data, 0, 12, NULL, NULL, &__pyx_mstate_global->__pyx_slice[0], 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 199, __pyx_L5_error)
+      __pyx_t_6 = __Pyx_PyObject_GetSlice(__pyx_v_data, 0, 12, NULL, NULL, &__pyx_mstate_global->__pyx_slice[0], 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 202, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_6);
       __pyx_v_nonce = __pyx_t_6;
       __pyx_t_6 = 0;
 
-      /* "kycli/kycore.pyx":200
+      /* "kycli/kycore.pyx":203
  *             data = base64.b64decode(encrypted_text[4:].encode('utf-8'))
  *             nonce = data[:12]
  *             ciphertext = data[12:]             # <<<<<<<<<<<<<<
  *             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
  *         except Exception:
 */
-      __pyx_t_6 = __Pyx_PyObject_GetSlice(__pyx_v_data, 12, 0, NULL, NULL, &__pyx_mstate_global->__pyx_slice[1], 1, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 200, __pyx_L5_error)
+      __pyx_t_6 = __Pyx_PyObject_GetSlice(__pyx_v_data, 12, 0, NULL, NULL, &__pyx_mstate_global->__pyx_slice[1], 1, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 203, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_6);
       __pyx_v_ciphertext = __pyx_t_6;
       __pyx_t_6 = 0;
 
-      /* "kycli/kycore.pyx":201
+      /* "kycli/kycore.pyx":204
  *             nonce = data[:12]
  *             ciphertext = data[12:]
  *             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')             # <<<<<<<<<<<<<<
@@ -5013,7 +5067,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
         PyObject *__pyx_callargs[4] = {__pyx_t_7, __pyx_v_nonce, __pyx_v_ciphertext, Py_None};
         __pyx_t_10 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_decrypt, __pyx_callargs+__pyx_t_11, (4-__pyx_t_11) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-        if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 201, __pyx_L5_error)
+        if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 204, __pyx_L6_error)
         __Pyx_GOTREF(__pyx_t_10);
       }
       __pyx_t_9 = __pyx_t_10;
@@ -5024,15 +5078,15 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
         __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_decode, __pyx_callargs+__pyx_t_11, (2-__pyx_t_11) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 201, __pyx_L5_error)
+        if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 204, __pyx_L6_error)
         __Pyx_GOTREF(__pyx_t_6);
       }
-      if (!(likely(PyUnicode_CheckExact(__pyx_t_6))||((__pyx_t_6) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_6))) __PYX_ERR(0, 201, __pyx_L5_error)
+      if (!(likely(PyUnicode_CheckExact(__pyx_t_6))||((__pyx_t_6) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_6))) __PYX_ERR(0, 204, __pyx_L6_error)
       __pyx_r = ((PyObject*)__pyx_t_6);
       __pyx_t_6 = 0;
-      goto __pyx_L9_try_return;
+      goto __pyx_L10_try_return;
 
-      /* "kycli/kycore.pyx":197
+      /* "kycli/kycore.pyx":200
  *             return "[ENCRYPTED: Provide a master key to view this value]"
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -5040,14 +5094,14 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
  *             nonce = data[:12]
 */
     }
-    __pyx_L5_error:;
+    __pyx_L6_error:;
     __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-    /* "kycli/kycore.pyx":202
+    /* "kycli/kycore.pyx":205
  *             ciphertext = data[12:]
  *             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
  *         except Exception:             # <<<<<<<<<<<<<<
@@ -5058,7 +5112,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
     if (__pyx_t_12) {
       __Pyx_ErrRestore(0,0,0);
 
-      /* "kycli/kycore.pyx":203
+      /* "kycli/kycore.pyx":206
  *             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
  *         except Exception:
  *             return "[DECRYPTION FAILED: Incorrect master key]"             # <<<<<<<<<<<<<<
@@ -5068,30 +5122,30 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_DECRYPTION_FAILED_Incorrect_mas);
       __pyx_r = __pyx_mstate_global->__pyx_kp_u_DECRYPTION_FAILED_Incorrect_mas;
-      goto __pyx_L8_except_return;
+      goto __pyx_L9_except_return;
     }
-    goto __pyx_L7_except_error;
+    goto __pyx_L8_except_error;
 
-    /* "kycli/kycore.pyx":197
+    /* "kycli/kycore.pyx":200
  *             return "[ENCRYPTED: Provide a master key to view this value]"
  * 
  *         try:             # <<<<<<<<<<<<<<
  *             data = base64.b64decode(encrypted_text[4:].encode('utf-8'))
  *             nonce = data[:12]
 */
-    __pyx_L7_except_error:;
+    __pyx_L8_except_error:;
     __Pyx_XGIVEREF(__pyx_t_3);
     __Pyx_XGIVEREF(__pyx_t_4);
     __Pyx_XGIVEREF(__pyx_t_5);
     __Pyx_ExceptionReset(__pyx_t_3, __pyx_t_4, __pyx_t_5);
     goto __pyx_L1_error;
-    __pyx_L9_try_return:;
+    __pyx_L10_try_return:;
     __Pyx_XGIVEREF(__pyx_t_3);
     __Pyx_XGIVEREF(__pyx_t_4);
     __Pyx_XGIVEREF(__pyx_t_5);
     __Pyx_ExceptionReset(__pyx_t_3, __pyx_t_4, __pyx_t_5);
     goto __pyx_L0;
-    __pyx_L8_except_return:;
+    __pyx_L9_except_return:;
     __Pyx_XGIVEREF(__pyx_t_3);
     __Pyx_XGIVEREF(__pyx_t_4);
     __Pyx_XGIVEREF(__pyx_t_5);
@@ -5103,8 +5157,8 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
  *         return "enc:" + base64.b64encode(nonce + ciphertext).decode('utf-8')
  * 
  *     cdef str _decrypt_c(self, str encrypted_text):             # <<<<<<<<<<<<<<
- *         if not encrypted_text.startswith("enc:"):
- *             return encrypted_text
+ *         if encrypted_text is None:
+ *             return "[DELETED]"
 */
 
   /* function exit code */
@@ -5125,7 +5179,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__decrypt_c(struct __pyx_obj_5kyc
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":205
+/* "kycli/kycore.pyx":208
  *             return "[DECRYPTION FAILED: Incorrect master key]"
  * 
  *     def _encrypt(self, str plaintext):             # <<<<<<<<<<<<<<
@@ -5172,32 +5226,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_plaintext,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 205, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 208, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 205, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 208, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "_encrypt", 0) < (0)) __PYX_ERR(0, 205, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "_encrypt", 0) < (0)) __PYX_ERR(0, 208, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("_encrypt", 1, 1, 1, i); __PYX_ERR(0, 205, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("_encrypt", 1, 1, 1, i); __PYX_ERR(0, 208, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 205, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 208, __pyx_L3_error)
     }
     __pyx_v_plaintext = ((PyObject*)values[0]);
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_encrypt", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 205, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_encrypt", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 208, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5208,7 +5262,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_plaintext), (&PyUnicode_Type), 1, "plaintext", 1))) __PYX_ERR(0, 205, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_plaintext), (&PyUnicode_Type), 1, "plaintext", 1))) __PYX_ERR(0, 208, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_6_encrypt(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_plaintext);
 
   /* function exit code */
@@ -5237,7 +5291,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_6_encrypt(struct __pyx_obj_5kyc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_encrypt", 0);
 
-  /* "kycli/kycore.pyx":206
+  /* "kycli/kycore.pyx":209
  * 
  *     def _encrypt(self, str plaintext):
  *         return self._encrypt_c(plaintext)             # <<<<<<<<<<<<<<
@@ -5245,13 +5299,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_6_encrypt(struct __pyx_obj_5kyc
  *     def _decrypt(self, str encrypted_text):
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_encrypt_c(__pyx_v_self, __pyx_v_plaintext); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_encrypt_c(__pyx_v_self, __pyx_v_plaintext); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 209, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":205
+  /* "kycli/kycore.pyx":208
  *             return "[DECRYPTION FAILED: Incorrect master key]"
  * 
  *     def _encrypt(self, str plaintext):             # <<<<<<<<<<<<<<
@@ -5270,7 +5324,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_6_encrypt(struct __pyx_obj_5kyc
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":208
+/* "kycli/kycore.pyx":211
  *         return self._encrypt_c(plaintext)
  * 
  *     def _decrypt(self, str encrypted_text):             # <<<<<<<<<<<<<<
@@ -5317,32 +5371,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_encrypted_text,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 208, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 211, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 208, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 211, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "_decrypt", 0) < (0)) __PYX_ERR(0, 208, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "_decrypt", 0) < (0)) __PYX_ERR(0, 211, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("_decrypt", 1, 1, 1, i); __PYX_ERR(0, 208, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("_decrypt", 1, 1, 1, i); __PYX_ERR(0, 211, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 208, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 211, __pyx_L3_error)
     }
     __pyx_v_encrypted_text = ((PyObject*)values[0]);
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_decrypt", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 208, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_decrypt", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 211, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5353,7 +5407,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_encrypted_text), (&PyUnicode_Type), 1, "encrypted_text", 1))) __PYX_ERR(0, 208, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_encrypted_text), (&PyUnicode_Type), 1, "encrypted_text", 1))) __PYX_ERR(0, 211, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_8_decrypt(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_encrypted_text);
 
   /* function exit code */
@@ -5382,7 +5436,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_8_decrypt(struct __pyx_obj_5kyc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_decrypt", 0);
 
-  /* "kycli/kycore.pyx":209
+  /* "kycli/kycore.pyx":212
  * 
  *     def _decrypt(self, str encrypted_text):
  *         return self._decrypt_c(encrypted_text)             # <<<<<<<<<<<<<<
@@ -5390,13 +5444,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_8_decrypt(struct __pyx_obj_5kyc
  *     cdef int _execute_raw(self, str sql) except -1:
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_decrypt_c(__pyx_v_self, __pyx_v_encrypted_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_decrypt_c(__pyx_v_self, __pyx_v_encrypted_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 212, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":208
+  /* "kycli/kycore.pyx":211
  *         return self._encrypt_c(plaintext)
  * 
  *     def _decrypt(self, str encrypted_text):             # <<<<<<<<<<<<<<
@@ -5415,7 +5469,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_8_decrypt(struct __pyx_obj_5kyc
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":211
+/* "kycli/kycore.pyx":214
  *         return self._decrypt_c(encrypted_text)
  * 
  *     cdef int _execute_raw(self, str sql) except -1:             # <<<<<<<<<<<<<<
@@ -5442,7 +5496,7 @@ static int __pyx_f_5kycli_6kycore_6Kycore__execute_raw(struct __pyx_obj_5kycli_6
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_execute_raw", 0);
 
-  /* "kycli/kycore.pyx":212
+  /* "kycli/kycore.pyx":215
  * 
  *     cdef int _execute_raw(self, str sql) except -1:
  *         cdef bytes sql_bytes = sql.encode('utf-8')             # <<<<<<<<<<<<<<
@@ -5451,14 +5505,14 @@ static int __pyx_f_5kycli_6kycore_6Kycore__execute_raw(struct __pyx_obj_5kycli_6
 */
   if (unlikely(__pyx_v_sql == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "encode");
-    __PYX_ERR(0, 212, __pyx_L1_error)
+    __PYX_ERR(0, 215, __pyx_L1_error)
   }
-  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 212, __pyx_L1_error)
+  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sql_bytes = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":213
+  /* "kycli/kycore.pyx":216
  *     cdef int _execute_raw(self, str sql) except -1:
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         cdef char* errmsg = NULL             # <<<<<<<<<<<<<<
@@ -5467,18 +5521,18 @@ static int __pyx_f_5kycli_6kycore_6Kycore__execute_raw(struct __pyx_obj_5kycli_6
 */
   __pyx_v_errmsg = NULL;
 
-  /* "kycli/kycore.pyx":214
+  /* "kycli/kycore.pyx":217
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         cdef char* errmsg = NULL
  *         if sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg) != SQLITE_OK:             # <<<<<<<<<<<<<<
  *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
  *             raise RuntimeError(f"SQLite error: {msg}")
 */
-  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 214, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 217, __pyx_L1_error)
   __pyx_t_3 = (sqlite3_exec(__pyx_v_self->_db, __pyx_t_2, NULL, NULL, (&__pyx_v_errmsg)) != SQLITE_OK);
   if (unlikely(__pyx_t_3)) {
 
-    /* "kycli/kycore.pyx":215
+    /* "kycli/kycore.pyx":218
  *         cdef char* errmsg = NULL
  *         if sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg) != SQLITE_OK:
  *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"             # <<<<<<<<<<<<<<
@@ -5487,8 +5541,8 @@ static int __pyx_f_5kycli_6kycore_6Kycore__execute_raw(struct __pyx_obj_5kycli_6
 */
     __pyx_t_3 = (__pyx_v_errmsg != 0);
     if (__pyx_t_3) {
-      __pyx_t_4 = __Pyx_ssize_strlen(__pyx_v_errmsg); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 215, __pyx_L1_error)
-      __pyx_t_5 = __Pyx_decode_c_string(__pyx_v_errmsg, 0, __pyx_t_4, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 215, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_ssize_strlen(__pyx_v_errmsg); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 218, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_decode_c_string(__pyx_v_errmsg, 0, __pyx_t_4, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 218, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __pyx_t_1 = __pyx_t_5;
       __pyx_t_5 = 0;
@@ -5499,7 +5553,7 @@ static int __pyx_f_5kycli_6kycore_6Kycore__execute_raw(struct __pyx_obj_5kycli_6
     __pyx_v_msg = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "kycli/kycore.pyx":216
+    /* "kycli/kycore.pyx":219
  *         if sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg) != SQLITE_OK:
  *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
  *             raise RuntimeError(f"SQLite error: {msg}")             # <<<<<<<<<<<<<<
@@ -5507,9 +5561,9 @@ static int __pyx_f_5kycli_6kycore_6Kycore__execute_raw(struct __pyx_obj_5kycli_6
  * 
 */
     __pyx_t_5 = NULL;
-    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_msg, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 216, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_msg, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 219, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_SQLite_error, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 216, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_SQLite_error, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 219, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_t_8 = 1;
@@ -5518,14 +5572,14 @@ static int __pyx_f_5kycli_6kycore_6Kycore__execute_raw(struct __pyx_obj_5kycli_6
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 219, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 216, __pyx_L1_error)
+    __PYX_ERR(0, 219, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":214
+    /* "kycli/kycore.pyx":217
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         cdef char* errmsg = NULL
  *         if sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg) != SQLITE_OK:             # <<<<<<<<<<<<<<
@@ -5534,7 +5588,7 @@ static int __pyx_f_5kycli_6kycore_6Kycore__execute_raw(struct __pyx_obj_5kycli_6
 */
   }
 
-  /* "kycli/kycore.pyx":217
+  /* "kycli/kycore.pyx":220
  *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
  *             raise RuntimeError(f"SQLite error: {msg}")
  *         return 0             # <<<<<<<<<<<<<<
@@ -5544,7 +5598,7 @@ static int __pyx_f_5kycli_6kycore_6Kycore__execute_raw(struct __pyx_obj_5kycli_6
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":211
+  /* "kycli/kycore.pyx":214
  *         return self._decrypt_c(encrypted_text)
  * 
  *     cdef int _execute_raw(self, str sql) except -1:             # <<<<<<<<<<<<<<
@@ -5567,7 +5621,7 @@ static int __pyx_f_5kycli_6kycore_6Kycore__execute_raw(struct __pyx_obj_5kycli_6
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":219
+/* "kycli/kycore.pyx":222
  *         return 0
  * 
  *     def _parse_ttl(self, ttl):             # <<<<<<<<<<<<<<
@@ -5614,32 +5668,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_ttl,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 219, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 222, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 219, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 222, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "_parse_ttl", 0) < (0)) __PYX_ERR(0, 219, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "_parse_ttl", 0) < (0)) __PYX_ERR(0, 222, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("_parse_ttl", 1, 1, 1, i); __PYX_ERR(0, 219, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("_parse_ttl", 1, 1, 1, i); __PYX_ERR(0, 222, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 219, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 222, __pyx_L3_error)
     }
     __pyx_v_ttl = values[0];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_parse_ttl", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 219, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_parse_ttl", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 222, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5687,7 +5741,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_parse_ttl", 0);
 
-  /* "kycli/kycore.pyx":220
+  /* "kycli/kycore.pyx":223
  * 
  *     def _parse_ttl(self, ttl):
  *         if ttl is None:             # <<<<<<<<<<<<<<
@@ -5697,7 +5751,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
   __pyx_t_1 = (__pyx_v_ttl == Py_None);
   if (__pyx_t_1) {
 
-    /* "kycli/kycore.pyx":221
+    /* "kycli/kycore.pyx":224
  *     def _parse_ttl(self, ttl):
  *         if ttl is None:
  *             return None             # <<<<<<<<<<<<<<
@@ -5708,7 +5762,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":220
+    /* "kycli/kycore.pyx":223
  * 
  *     def _parse_ttl(self, ttl):
  *         if ttl is None:             # <<<<<<<<<<<<<<
@@ -5717,7 +5771,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
 */
   }
 
-  /* "kycli/kycore.pyx":222
+  /* "kycli/kycore.pyx":225
  *         if ttl is None:
  *             return None
  *         if isinstance(ttl, (int, float)):             # <<<<<<<<<<<<<<
@@ -5735,7 +5789,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
   __pyx_L5_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "kycli/kycore.pyx":223
+    /* "kycli/kycore.pyx":226
  *             return None
  *         if isinstance(ttl, (int, float)):
  *             return int(ttl)             # <<<<<<<<<<<<<<
@@ -5743,13 +5797,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
  *         cdef str s_ttl = str(ttl).strip()
 */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_PyNumber_Int(__pyx_v_ttl); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 223, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyNumber_Int(__pyx_v_ttl); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 226, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":222
+    /* "kycli/kycore.pyx":225
  *         if ttl is None:
  *             return None
  *         if isinstance(ttl, (int, float)):             # <<<<<<<<<<<<<<
@@ -5758,14 +5812,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
 */
   }
 
-  /* "kycli/kycore.pyx":225
+  /* "kycli/kycore.pyx":228
  *             return int(ttl)
  * 
  *         cdef str s_ttl = str(ttl).strip()             # <<<<<<<<<<<<<<
  *         if not s_ttl:
  *             return None
 */
-  __pyx_t_5 = __Pyx_PyObject_Unicode(__pyx_v_ttl); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 225, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Unicode(__pyx_v_ttl); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 228, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_4 = __pyx_t_5;
   __Pyx_INCREF(__pyx_t_4);
@@ -5775,13 +5829,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
     __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_6, (1-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 225, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 228, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
   }
   __pyx_v_s_ttl = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":226
+  /* "kycli/kycore.pyx":229
  * 
  *         cdef str s_ttl = str(ttl).strip()
  *         if not s_ttl:             # <<<<<<<<<<<<<<
@@ -5790,14 +5844,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
 */
   {
     Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_s_ttl);
-    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 226, __pyx_L1_error)
+    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 229, __pyx_L1_error)
     __pyx_t_1 = (__pyx_temp != 0);
   }
 
   __pyx_t_2 = (!__pyx_t_1);
   if (__pyx_t_2) {
 
-    /* "kycli/kycore.pyx":227
+    /* "kycli/kycore.pyx":230
  *         cdef str s_ttl = str(ttl).strip()
  *         if not s_ttl:
  *             return None             # <<<<<<<<<<<<<<
@@ -5808,7 +5862,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":226
+    /* "kycli/kycore.pyx":229
  * 
  *         cdef str s_ttl = str(ttl).strip()
  *         if not s_ttl:             # <<<<<<<<<<<<<<
@@ -5817,7 +5871,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
 */
   }
 
-  /* "kycli/kycore.pyx":228
+  /* "kycli/kycore.pyx":231
  *         if not s_ttl:
  *             return None
  *         if s_ttl.isdigit():             # <<<<<<<<<<<<<<
@@ -5831,14 +5885,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
     PyObject *__pyx_callargs[2] = {__pyx_t_5, NULL};
     __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_isdigit, __pyx_callargs+__pyx_t_6, (1-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 228, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 231, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
   }
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 228, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 231, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_2) {
 
-    /* "kycli/kycore.pyx":229
+    /* "kycli/kycore.pyx":232
  *             return None
  *         if s_ttl.isdigit():
  *             return int(s_ttl)             # <<<<<<<<<<<<<<
@@ -5846,13 +5900,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
  *         match = re.match(r'^(\d+)([smhdwMy])$', s_ttl)
 */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_PyNumber_Int(__pyx_v_s_ttl); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 229, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyNumber_Int(__pyx_v_s_ttl); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 232, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":228
+    /* "kycli/kycore.pyx":231
  *         if not s_ttl:
  *             return None
  *         if s_ttl.isdigit():             # <<<<<<<<<<<<<<
@@ -5861,7 +5915,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
 */
   }
 
-  /* "kycli/kycore.pyx":231
+  /* "kycli/kycore.pyx":234
  *             return int(s_ttl)
  * 
  *         match = re.match(r'^(\d+)([smhdwMy])$', s_ttl)             # <<<<<<<<<<<<<<
@@ -5869,9 +5923,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
  *             try:
 */
   __pyx_t_5 = NULL;
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 231, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_match); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 231, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_match); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_6 = 1;
@@ -5891,24 +5945,24 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
     __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_7, __pyx_callargs+__pyx_t_6, (3-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 231, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 234, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
   }
   __pyx_v_match = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":232
+  /* "kycli/kycore.pyx":235
  * 
  *         match = re.match(r'^(\d+)([smhdwMy])$', s_ttl)
  *         if not match:             # <<<<<<<<<<<<<<
  *             try:
  *                 return int(s_ttl)
 */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_match); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 232, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_match); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 235, __pyx_L1_error)
   __pyx_t_1 = (!__pyx_t_2);
   if (__pyx_t_1) {
 
-    /* "kycli/kycore.pyx":233
+    /* "kycli/kycore.pyx":236
  *         match = re.match(r'^(\d+)([smhdwMy])$', s_ttl)
  *         if not match:
  *             try:             # <<<<<<<<<<<<<<
@@ -5924,7 +5978,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
       __Pyx_XGOTREF(__pyx_t_10);
       /*try:*/ {
 
-        /* "kycli/kycore.pyx":234
+        /* "kycli/kycore.pyx":237
  *         if not match:
  *             try:
  *                 return int(s_ttl)             # <<<<<<<<<<<<<<
@@ -5932,13 +5986,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
  *                 raise ValueError(f"Invalid TTL format: '{s_ttl}'. Use suffixes: s, m, h, d, w, M, y (e.g., 10m, 2h, 1d, 1M)")
 */
         __Pyx_XDECREF(__pyx_r);
-        __pyx_t_3 = __Pyx_PyNumber_Int(__pyx_v_s_ttl); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 234, __pyx_L10_error)
+        __pyx_t_3 = __Pyx_PyNumber_Int(__pyx_v_s_ttl); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 237, __pyx_L10_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_r = __pyx_t_3;
         __pyx_t_3 = 0;
         goto __pyx_L14_try_return;
 
-        /* "kycli/kycore.pyx":233
+        /* "kycli/kycore.pyx":236
  *         match = re.match(r'^(\d+)([smhdwMy])$', s_ttl)
  *         if not match:
  *             try:             # <<<<<<<<<<<<<<
@@ -5952,7 +6006,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "kycli/kycore.pyx":235
+      /* "kycli/kycore.pyx":238
  *             try:
  *                 return int(s_ttl)
  *             except ValueError:             # <<<<<<<<<<<<<<
@@ -5962,12 +6016,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
       __pyx_t_11 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_ValueError))));
       if (__pyx_t_11) {
         __Pyx_AddTraceback("kycli.kycore.Kycore._parse_ttl", __pyx_clineno, __pyx_lineno, __pyx_filename);
-        if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_7, &__pyx_t_5) < 0) __PYX_ERR(0, 235, __pyx_L12_except_error)
+        if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_7, &__pyx_t_5) < 0) __PYX_ERR(0, 238, __pyx_L12_except_error)
         __Pyx_XGOTREF(__pyx_t_3);
         __Pyx_XGOTREF(__pyx_t_7);
         __Pyx_XGOTREF(__pyx_t_5);
 
-        /* "kycli/kycore.pyx":236
+        /* "kycli/kycore.pyx":239
  *                 return int(s_ttl)
  *             except ValueError:
  *                 raise ValueError(f"Invalid TTL format: '{s_ttl}'. Use suffixes: s, m, h, d, w, M, y (e.g., 10m, 2h, 1d, 1M)")             # <<<<<<<<<<<<<<
@@ -5979,7 +6033,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
         __pyx_t_13[1] = __pyx_v_s_ttl;
         __pyx_t_13[2] = __pyx_mstate_global->__pyx_kp_u_Use_suffixes_s_m_h_d_w_M_y_e_g;
         __pyx_t_14 = __Pyx_PyUnicode_Join(__pyx_t_13, 3, 21 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_s_ttl) + 60, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_s_ttl));
-        if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 236, __pyx_L12_except_error)
+        if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 239, __pyx_L12_except_error)
         __Pyx_GOTREF(__pyx_t_14);
         __pyx_t_6 = 1;
         {
@@ -5987,16 +6041,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
           __pyx_t_4 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_ValueError)), __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
           __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
           __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-          if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 236, __pyx_L12_except_error)
+          if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 239, __pyx_L12_except_error)
           __Pyx_GOTREF(__pyx_t_4);
         }
         __Pyx_Raise(__pyx_t_4, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __PYX_ERR(0, 236, __pyx_L12_except_error)
+        __PYX_ERR(0, 239, __pyx_L12_except_error)
       }
       goto __pyx_L12_except_error;
 
-      /* "kycli/kycore.pyx":233
+      /* "kycli/kycore.pyx":236
  *         match = re.match(r'^(\d+)([smhdwMy])$', s_ttl)
  *         if not match:
  *             try:             # <<<<<<<<<<<<<<
@@ -6017,7 +6071,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
       goto __pyx_L0;
     }
 
-    /* "kycli/kycore.pyx":232
+    /* "kycli/kycore.pyx":235
  * 
  *         match = re.match(r'^(\d+)([smhdwMy])$', s_ttl)
  *         if not match:             # <<<<<<<<<<<<<<
@@ -6026,7 +6080,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
 */
   }
 
-  /* "kycli/kycore.pyx":238
+  /* "kycli/kycore.pyx":241
  *                 raise ValueError(f"Invalid TTL format: '{s_ttl}'. Use suffixes: s, m, h, d, w, M, y (e.g., 10m, 2h, 1d, 1M)")
  * 
  *         cdef long val = int(match.group(1))             # <<<<<<<<<<<<<<
@@ -6040,17 +6094,17 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
     PyObject *__pyx_callargs[2] = {__pyx_t_7, __pyx_mstate_global->__pyx_int_1};
     __pyx_t_5 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_group, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 238, __pyx_L1_error)
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 241, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
   }
-  __pyx_t_7 = __Pyx_PyNumber_Int(__pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 238, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyNumber_Int(__pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_15 = __Pyx_PyLong_As_long(__pyx_t_7); if (unlikely((__pyx_t_15 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 238, __pyx_L1_error)
+  __pyx_t_15 = __Pyx_PyLong_As_long(__pyx_t_7); if (unlikely((__pyx_t_15 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_v_val = __pyx_t_15;
 
-  /* "kycli/kycore.pyx":239
+  /* "kycli/kycore.pyx":242
  * 
  *         cdef long val = int(match.group(1))
  *         cdef str unit = match.group(2)             # <<<<<<<<<<<<<<
@@ -6064,75 +6118,24 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
     PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_int_2};
     __pyx_t_7 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_group, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 239, __pyx_L1_error)
+    if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 242, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
   }
-  if (!(likely(PyUnicode_CheckExact(__pyx_t_7))||((__pyx_t_7) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_7))) __PYX_ERR(0, 239, __pyx_L1_error)
+  if (!(likely(PyUnicode_CheckExact(__pyx_t_7))||((__pyx_t_7) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_7))) __PYX_ERR(0, 242, __pyx_L1_error)
   __pyx_v_unit = ((PyObject*)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "kycli/kycore.pyx":241
+  /* "kycli/kycore.pyx":244
  *         cdef str unit = match.group(2)
  * 
  *         if unit == 's': return val             # <<<<<<<<<<<<<<
  *         if unit == 'm': return val * 60
  *         if unit == 'h': return val * 3600
 */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_s, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 241, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_s, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 244, __pyx_L1_error)
   if (__pyx_t_1) {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_7 = __Pyx_PyLong_From_long(__pyx_v_val); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 241, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
-    __pyx_r = __pyx_t_7;
-    __pyx_t_7 = 0;
-    goto __pyx_L0;
-  }
-
-  /* "kycli/kycore.pyx":242
- * 
- *         if unit == 's': return val
- *         if unit == 'm': return val * 60             # <<<<<<<<<<<<<<
- *         if unit == 'h': return val * 3600
- *         if unit == 'd': return val * 86400
-*/
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_m, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 242, __pyx_L1_error)
-  if (__pyx_t_1) {
-    __Pyx_XDECREF(__pyx_r);
-    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 60)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 242, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
-    __pyx_r = __pyx_t_7;
-    __pyx_t_7 = 0;
-    goto __pyx_L0;
-  }
-
-  /* "kycli/kycore.pyx":243
- *         if unit == 's': return val
- *         if unit == 'm': return val * 60
- *         if unit == 'h': return val * 3600             # <<<<<<<<<<<<<<
- *         if unit == 'd': return val * 86400
- *         if unit == 'w': return val * 604800
-*/
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_h, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 243, __pyx_L1_error)
-  if (__pyx_t_1) {
-    __Pyx_XDECREF(__pyx_r);
-    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 0xE10)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 243, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
-    __pyx_r = __pyx_t_7;
-    __pyx_t_7 = 0;
-    goto __pyx_L0;
-  }
-
-  /* "kycli/kycore.pyx":244
- *         if unit == 'm': return val * 60
- *         if unit == 'h': return val * 3600
- *         if unit == 'd': return val * 86400             # <<<<<<<<<<<<<<
- *         if unit == 'w': return val * 604800
- *         if unit == 'M': return val * 2592000 # 30 days
-*/
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_d, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 244, __pyx_L1_error)
-  if (__pyx_t_1) {
-    __Pyx_XDECREF(__pyx_r);
-    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 0x15180)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 244, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyLong_From_long(__pyx_v_val); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 244, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_r = __pyx_t_7;
     __pyx_t_7 = 0;
@@ -6140,16 +6143,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
   }
 
   /* "kycli/kycore.pyx":245
+ * 
+ *         if unit == 's': return val
+ *         if unit == 'm': return val * 60             # <<<<<<<<<<<<<<
  *         if unit == 'h': return val * 3600
  *         if unit == 'd': return val * 86400
- *         if unit == 'w': return val * 604800             # <<<<<<<<<<<<<<
- *         if unit == 'M': return val * 2592000 # 30 days
- *         if unit == 'y': return val * 31536000 # 365 days
 */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_w, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 245, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_m, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 245, __pyx_L1_error)
   if (__pyx_t_1) {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 0x93A80)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 245, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 60)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 245, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_r = __pyx_t_7;
     __pyx_t_7 = 0;
@@ -6157,16 +6160,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
   }
 
   /* "kycli/kycore.pyx":246
+ *         if unit == 's': return val
+ *         if unit == 'm': return val * 60
+ *         if unit == 'h': return val * 3600             # <<<<<<<<<<<<<<
  *         if unit == 'd': return val * 86400
  *         if unit == 'w': return val * 604800
- *         if unit == 'M': return val * 2592000 # 30 days             # <<<<<<<<<<<<<<
- *         if unit == 'y': return val * 31536000 # 365 days
- *         return val
 */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_M, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 246, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_h, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 246, __pyx_L1_error)
   if (__pyx_t_1) {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 0x278D00)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 246, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 0xE10)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_r = __pyx_t_7;
     __pyx_t_7 = 0;
@@ -6174,16 +6177,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
   }
 
   /* "kycli/kycore.pyx":247
+ *         if unit == 'm': return val * 60
+ *         if unit == 'h': return val * 3600
+ *         if unit == 'd': return val * 86400             # <<<<<<<<<<<<<<
  *         if unit == 'w': return val * 604800
  *         if unit == 'M': return val * 2592000 # 30 days
- *         if unit == 'y': return val * 31536000 # 365 days             # <<<<<<<<<<<<<<
- *         return val
- * 
 */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_y, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 247, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_d, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 247, __pyx_L1_error)
   if (__pyx_t_1) {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 0x1E13380)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 247, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 0x15180)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 247, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_r = __pyx_t_7;
     __pyx_t_7 = 0;
@@ -6191,6 +6194,57 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
   }
 
   /* "kycli/kycore.pyx":248
+ *         if unit == 'h': return val * 3600
+ *         if unit == 'd': return val * 86400
+ *         if unit == 'w': return val * 604800             # <<<<<<<<<<<<<<
+ *         if unit == 'M': return val * 2592000 # 30 days
+ *         if unit == 'y': return val * 31536000 # 365 days
+*/
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_w, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 248, __pyx_L1_error)
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 0x93A80)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 248, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_r = __pyx_t_7;
+    __pyx_t_7 = 0;
+    goto __pyx_L0;
+  }
+
+  /* "kycli/kycore.pyx":249
+ *         if unit == 'd': return val * 86400
+ *         if unit == 'w': return val * 604800
+ *         if unit == 'M': return val * 2592000 # 30 days             # <<<<<<<<<<<<<<
+ *         if unit == 'y': return val * 31536000 # 365 days
+ *         return val
+*/
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_M, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 249, __pyx_L1_error)
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 0x278D00)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 249, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_r = __pyx_t_7;
+    __pyx_t_7 = 0;
+    goto __pyx_L0;
+  }
+
+  /* "kycli/kycore.pyx":250
+ *         if unit == 'w': return val * 604800
+ *         if unit == 'M': return val * 2592000 # 30 days
+ *         if unit == 'y': return val * 31536000 # 365 days             # <<<<<<<<<<<<<<
+ *         return val
+ * 
+*/
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_unit, __pyx_mstate_global->__pyx_n_u_y, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 250, __pyx_L1_error)
+  if (__pyx_t_1) {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_7 = __Pyx_PyLong_From_long((__pyx_v_val * 0x1E13380)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 250, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_r = __pyx_t_7;
+    __pyx_t_7 = 0;
+    goto __pyx_L0;
+  }
+
+  /* "kycli/kycore.pyx":251
  *         if unit == 'M': return val * 2592000 # 30 days
  *         if unit == 'y': return val * 31536000 # 365 days
  *         return val             # <<<<<<<<<<<<<<
@@ -6198,13 +6252,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
  *     def save(self, str key, value, ttl=None):
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_7 = __Pyx_PyLong_From_long(__pyx_v_val); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 248, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyLong_From_long(__pyx_v_val); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 251, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_r = __pyx_t_7;
   __pyx_t_7 = 0;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":219
+  /* "kycli/kycore.pyx":222
  *         return 0
  * 
  *     def _parse_ttl(self, ttl):             # <<<<<<<<<<<<<<
@@ -6231,7 +6285,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_10_parse_ttl(CYTHON_UNUSED stru
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":250
+/* "kycli/kycore.pyx":253
  *         return val
  * 
  *     def save(self, str key, value, ttl=None):             # <<<<<<<<<<<<<<
@@ -6280,41 +6334,41 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_key,&__pyx_mstate_global->__pyx_n_u_value,&__pyx_mstate_global->__pyx_n_u_ttl,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 250, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 253, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 250, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 253, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 250, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 253, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 250, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 253, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "save", 0) < (0)) __PYX_ERR(0, 250, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "save", 0) < (0)) __PYX_ERR(0, 253, __pyx_L3_error)
       if (!values[2]) values[2] = __Pyx_NewRef(((PyObject *)Py_None));
       for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("save", 0, 2, 3, i); __PYX_ERR(0, 250, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("save", 0, 2, 3, i); __PYX_ERR(0, 253, __pyx_L3_error) }
       }
     } else {
       switch (__pyx_nargs) {
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 250, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 253, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 250, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 253, __pyx_L3_error)
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 250, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 253, __pyx_L3_error)
         break;
         default: goto __pyx_L5_argtuple_error;
       }
@@ -6326,7 +6380,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("save", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 250, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("save", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 253, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6337,7 +6391,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 250, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 253, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_12save(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_key, __pyx_v_value, __pyx_v_ttl);
 
   /* function exit code */
@@ -6401,7 +6455,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
   __Pyx_RefNannySetupContext("save", 0);
   __Pyx_INCREF(__pyx_v_value);
 
-  /* "kycli/kycore.pyx":251
+  /* "kycli/kycore.pyx":254
  * 
  *     def save(self, str key, value, ttl=None):
  *         if not key or not key.strip():             # <<<<<<<<<<<<<<
@@ -6412,7 +6466,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
   else
   {
     Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_key);
-    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 251, __pyx_L1_error)
+    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 254, __pyx_L1_error)
     __pyx_t_2 = (__pyx_temp != 0);
   }
 
@@ -6422,11 +6476,11 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
     __pyx_t_1 = __pyx_t_3;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_4 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__strip, __pyx_v_key); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 251, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__strip, __pyx_v_key); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   {
     Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_t_4);
-    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 251, __pyx_L1_error)
+    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 254, __pyx_L1_error)
     __pyx_t_3 = (__pyx_temp != 0);
   }
 
@@ -6436,7 +6490,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
   __pyx_L4_bool_binop_done:;
   if (unlikely(__pyx_t_1)) {
 
-    /* "kycli/kycore.pyx":252
+    /* "kycli/kycore.pyx":255
  *     def save(self, str key, value, ttl=None):
  *         if not key or not key.strip():
  *             raise ValueError("Key cannot be empty")             # <<<<<<<<<<<<<<
@@ -6449,14 +6503,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_Key_cannot_be_empty};
       __pyx_t_4 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_ValueError)), __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 252, __pyx_L1_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 255, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
     }
     __Pyx_Raise(__pyx_t_4, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 252, __pyx_L1_error)
+    __PYX_ERR(0, 255, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":251
+    /* "kycli/kycore.pyx":254
  * 
  *     def save(self, str key, value, ttl=None):
  *         if not key or not key.strip():             # <<<<<<<<<<<<<<
@@ -6465,7 +6519,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
 */
   }
 
-  /* "kycli/kycore.pyx":253
+  /* "kycli/kycore.pyx":256
  *         if not key or not key.strip():
  *             raise ValueError("Key cannot be empty")
  *         if value is None:             # <<<<<<<<<<<<<<
@@ -6475,7 +6529,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
   __pyx_t_1 = (__pyx_v_value == Py_None);
   if (unlikely(__pyx_t_1)) {
 
-    /* "kycli/kycore.pyx":254
+    /* "kycli/kycore.pyx":257
  *             raise ValueError("Key cannot be empty")
  *         if value is None:
  *             raise ValueError("Value cannot be None")             # <<<<<<<<<<<<<<
@@ -6488,14 +6542,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_Value_cannot_be_None};
       __pyx_t_4 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_ValueError)), __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 257, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
     }
     __Pyx_Raise(__pyx_t_4, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 254, __pyx_L1_error)
+    __PYX_ERR(0, 257, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":253
+    /* "kycli/kycore.pyx":256
  *         if not key or not key.strip():
  *             raise ValueError("Key cannot be empty")
  *         if value is None:             # <<<<<<<<<<<<<<
@@ -6504,14 +6558,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
 */
   }
 
-  /* "kycli/kycore.pyx":256
+  /* "kycli/kycore.pyx":259
  *             raise ValueError("Value cannot be None")
  * 
  *         cdef str k = key.lower().strip()             # <<<<<<<<<<<<<<
  *         cdef str string_val
  * 
 */
-  __pyx_t_7 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 256, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_t_5 = __pyx_t_7;
   __Pyx_INCREF(__pyx_t_5);
@@ -6521,23 +6575,23 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
     __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_6, (1-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 256, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 259, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
   }
   __pyx_v_k = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "kycli/kycore.pyx":260
+  /* "kycli/kycore.pyx":263
  * 
  *         # 1. Pydantic Validation
  *         if self._schema:             # <<<<<<<<<<<<<<
  *             try:
  *                 if isinstance(value, dict):
 */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_self->_schema); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_self->_schema); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 263, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "kycli/kycore.pyx":261
+    /* "kycli/kycore.pyx":264
  *         # 1. Pydantic Validation
  *         if self._schema:
  *             try:             # <<<<<<<<<<<<<<
@@ -6553,7 +6607,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       __Pyx_XGOTREF(__pyx_t_10);
       /*try:*/ {
 
-        /* "kycli/kycore.pyx":262
+        /* "kycli/kycore.pyx":265
  *         if self._schema:
  *             try:
  *                 if isinstance(value, dict):             # <<<<<<<<<<<<<<
@@ -6563,7 +6617,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
         __pyx_t_1 = PyDict_Check(__pyx_v_value); 
         if (__pyx_t_1) {
 
-          /* "kycli/kycore.pyx":263
+          /* "kycli/kycore.pyx":266
  *             try:
  *                 if isinstance(value, dict):
  *                     validated = self._schema(**value)             # <<<<<<<<<<<<<<
@@ -6572,22 +6626,22 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
 */
           if (unlikely(__pyx_v_value == Py_None)) {
             PyErr_SetString(PyExc_TypeError, "argument after ** must be a mapping, not NoneType");
-            __PYX_ERR(0, 263, __pyx_L8_error)
+            __PYX_ERR(0, 266, __pyx_L8_error)
           }
           if (likely(PyDict_CheckExact(__pyx_v_value))) {
-            __pyx_t_4 = PyDict_Copy(__pyx_v_value); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 263, __pyx_L8_error)
+            __pyx_t_4 = PyDict_Copy(__pyx_v_value); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 266, __pyx_L8_error)
             __Pyx_GOTREF(__pyx_t_4);
           } else {
-            __pyx_t_4 = __Pyx_PyObject_CallOneArg((PyObject*)&PyDict_Type, __pyx_v_value); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 263, __pyx_L8_error)
+            __pyx_t_4 = __Pyx_PyObject_CallOneArg((PyObject*)&PyDict_Type, __pyx_v_value); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 266, __pyx_L8_error)
             __Pyx_GOTREF(__pyx_t_4);
           }
-          __pyx_t_7 = __Pyx_PyObject_Call(__pyx_v_self->_schema, __pyx_mstate_global->__pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 263, __pyx_L8_error)
+          __pyx_t_7 = __Pyx_PyObject_Call(__pyx_v_self->_schema, __pyx_mstate_global->__pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 266, __pyx_L8_error)
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           __pyx_v_validated = __pyx_t_7;
           __pyx_t_7 = 0;
 
-          /* "kycli/kycore.pyx":264
+          /* "kycli/kycore.pyx":267
  *                 if isinstance(value, dict):
  *                     validated = self._schema(**value)
  *                     value = validated.model_dump()             # <<<<<<<<<<<<<<
@@ -6601,13 +6655,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
             PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
             __pyx_t_7 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_model_dump, __pyx_callargs+__pyx_t_6, (1-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-            if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 264, __pyx_L8_error)
+            if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 267, __pyx_L8_error)
             __Pyx_GOTREF(__pyx_t_7);
           }
           __Pyx_DECREF_SET(__pyx_v_value, __pyx_t_7);
           __pyx_t_7 = 0;
 
-          /* "kycli/kycore.pyx":262
+          /* "kycli/kycore.pyx":265
  *         if self._schema:
  *             try:
  *                 if isinstance(value, dict):             # <<<<<<<<<<<<<<
@@ -6617,7 +6671,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
           goto __pyx_L14;
         }
 
-        /* "kycli/kycore.pyx":267
+        /* "kycli/kycore.pyx":270
  *                 else:
  *                     # Try to parse if it's a string that might be JSON
  *                     if isinstance(value, str):             # <<<<<<<<<<<<<<
@@ -6628,7 +6682,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
           __pyx_t_1 = PyUnicode_Check(__pyx_v_value); 
           if (__pyx_t_1) {
 
-            /* "kycli/kycore.pyx":268
+            /* "kycli/kycore.pyx":271
  *                     # Try to parse if it's a string that might be JSON
  *                     if isinstance(value, str):
  *                         validated = self._schema.model_validate_json(value)             # <<<<<<<<<<<<<<
@@ -6642,13 +6696,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
               PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_v_value};
               __pyx_t_7 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_model_validate_json, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
               __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-              if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 268, __pyx_L8_error)
+              if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 271, __pyx_L8_error)
               __Pyx_GOTREF(__pyx_t_7);
             }
             __pyx_v_validated = __pyx_t_7;
             __pyx_t_7 = 0;
 
-            /* "kycli/kycore.pyx":269
+            /* "kycli/kycore.pyx":272
  *                     if isinstance(value, str):
  *                         validated = self._schema.model_validate_json(value)
  *                         value = validated.model_dump()             # <<<<<<<<<<<<<<
@@ -6662,13 +6716,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
               PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
               __pyx_t_7 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_model_dump, __pyx_callargs+__pyx_t_6, (1-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
               __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-              if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 269, __pyx_L8_error)
+              if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 272, __pyx_L8_error)
               __Pyx_GOTREF(__pyx_t_7);
             }
             __Pyx_DECREF_SET(__pyx_v_value, __pyx_t_7);
             __pyx_t_7 = 0;
 
-            /* "kycli/kycore.pyx":267
+            /* "kycli/kycore.pyx":270
  *                 else:
  *                     # Try to parse if it's a string that might be JSON
  *                     if isinstance(value, str):             # <<<<<<<<<<<<<<
@@ -6679,7 +6733,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
         }
         __pyx_L14:;
 
-        /* "kycli/kycore.pyx":261
+        /* "kycli/kycore.pyx":264
  *         # 1. Pydantic Validation
  *         if self._schema:
  *             try:             # <<<<<<<<<<<<<<
@@ -6696,7 +6750,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "kycli/kycore.pyx":270
+      /* "kycli/kycore.pyx":273
  *                         validated = self._schema.model_validate_json(value)
  *                         value = validated.model_dump()
  *             except ValidationError as e:             # <<<<<<<<<<<<<<
@@ -6704,7 +6758,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
  * 
 */
       __Pyx_ErrFetch(&__pyx_t_7, &__pyx_t_4, &__pyx_t_5);
-      __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_mstate_global->__pyx_n_u_ValidationError); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 270, __pyx_L10_except_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_mstate_global->__pyx_n_u_ValidationError); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 273, __pyx_L10_except_error)
       __Pyx_GOTREF(__pyx_t_11);
       __pyx_t_12 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_7, __pyx_t_11);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -6712,7 +6766,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       __pyx_t_7 = 0; __pyx_t_4 = 0; __pyx_t_5 = 0;
       if (__pyx_t_12) {
         __Pyx_AddTraceback("kycli.kycore.Kycore.save", __pyx_clineno, __pyx_lineno, __pyx_filename);
-        if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_4, &__pyx_t_7) < 0) __PYX_ERR(0, 270, __pyx_L10_except_error)
+        if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_4, &__pyx_t_7) < 0) __PYX_ERR(0, 273, __pyx_L10_except_error)
         __Pyx_XGOTREF(__pyx_t_5);
         __Pyx_XGOTREF(__pyx_t_4);
         __Pyx_XGOTREF(__pyx_t_7);
@@ -6720,7 +6774,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
         __pyx_v_e = __pyx_t_4;
         /*try:*/ {
 
-          /* "kycli/kycore.pyx":271
+          /* "kycli/kycore.pyx":274
  *                         value = validated.model_dump()
  *             except ValidationError as e:
  *                 raise ValueError(f"Schema Validation Error: {e}")             # <<<<<<<<<<<<<<
@@ -6728,9 +6782,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
  *         # 2. Structured Serialization
 */
           __pyx_t_13 = NULL;
-          __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_v_e, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 271, __pyx_L21_error)
+          __pyx_t_14 = __Pyx_PyObject_FormatSimple(__pyx_v_e, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 274, __pyx_L21_error)
           __Pyx_GOTREF(__pyx_t_14);
-          __pyx_t_15 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Schema_Validation_Error, __pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 271, __pyx_L21_error)
+          __pyx_t_15 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Schema_Validation_Error, __pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 274, __pyx_L21_error)
           __Pyx_GOTREF(__pyx_t_15);
           __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
           __pyx_t_6 = 1;
@@ -6739,15 +6793,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
             __pyx_t_11 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_ValueError)), __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
             __Pyx_XDECREF(__pyx_t_13); __pyx_t_13 = 0;
             __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-            if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 271, __pyx_L21_error)
+            if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 274, __pyx_L21_error)
             __Pyx_GOTREF(__pyx_t_11);
           }
           __Pyx_Raise(__pyx_t_11, 0, 0, 0);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-          __PYX_ERR(0, 271, __pyx_L21_error)
+          __PYX_ERR(0, 274, __pyx_L21_error)
         }
 
-        /* "kycli/kycore.pyx":270
+        /* "kycli/kycore.pyx":273
  *                         validated = self._schema.model_validate_json(value)
  *                         value = validated.model_dump()
  *             except ValidationError as e:             # <<<<<<<<<<<<<<
@@ -6792,7 +6846,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       }
       goto __pyx_L10_except_error;
 
-      /* "kycli/kycore.pyx":261
+      /* "kycli/kycore.pyx":264
  *         # 1. Pydantic Validation
  *         if self._schema:
  *             try:             # <<<<<<<<<<<<<<
@@ -6808,7 +6862,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       __pyx_L13_try_end:;
     }
 
-    /* "kycli/kycore.pyx":260
+    /* "kycli/kycore.pyx":263
  * 
  *         # 1. Pydantic Validation
  *         if self._schema:             # <<<<<<<<<<<<<<
@@ -6817,7 +6871,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
 */
   }
 
-  /* "kycli/kycore.pyx":274
+  /* "kycli/kycore.pyx":277
  * 
  *         # 2. Structured Serialization
  *         if isinstance(value, (dict, list, bool, int, float)):             # <<<<<<<<<<<<<<
@@ -6853,7 +6907,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
   __pyx_L28_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "kycli/kycore.pyx":275
+    /* "kycli/kycore.pyx":278
  *         # 2. Structured Serialization
  *         if isinstance(value, (dict, list, bool, int, float)):
  *             string_val = json.dumps(value)             # <<<<<<<<<<<<<<
@@ -6861,9 +6915,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
  *             string_val = str(value)
 */
     __pyx_t_4 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 275, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 278, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_dumps); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 275, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_dumps); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 278, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_6 = 1;
@@ -6883,14 +6937,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       __pyx_t_7 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_11, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 275, __pyx_L1_error)
+      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 278, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
     }
-    if (!(likely(PyUnicode_CheckExact(__pyx_t_7))||((__pyx_t_7) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_7))) __PYX_ERR(0, 275, __pyx_L1_error)
+    if (!(likely(PyUnicode_CheckExact(__pyx_t_7))||((__pyx_t_7) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_7))) __PYX_ERR(0, 278, __pyx_L1_error)
     __pyx_v_string_val = ((PyObject*)__pyx_t_7);
     __pyx_t_7 = 0;
 
-    /* "kycli/kycore.pyx":274
+    /* "kycli/kycore.pyx":277
  * 
  *         # 2. Structured Serialization
  *         if isinstance(value, (dict, list, bool, int, float)):             # <<<<<<<<<<<<<<
@@ -6900,7 +6954,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
     goto __pyx_L27;
   }
 
-  /* "kycli/kycore.pyx":277
+  /* "kycli/kycore.pyx":280
  *             string_val = json.dumps(value)
  *         else:
  *             string_val = str(value)             # <<<<<<<<<<<<<<
@@ -6908,26 +6962,26 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
  *         # 3. Encryption
 */
   /*else*/ {
-    __pyx_t_7 = __Pyx_PyObject_Unicode(__pyx_v_value); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_Unicode(__pyx_v_value); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 280, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_v_string_val = ((PyObject*)__pyx_t_7);
     __pyx_t_7 = 0;
   }
   __pyx_L27:;
 
-  /* "kycli/kycore.pyx":280
+  /* "kycli/kycore.pyx":283
  * 
  *         # 3. Encryption
  *         cdef str storage_val = self._encrypt_c(string_val)             # <<<<<<<<<<<<<<
  * 
  *         cdef str existing = self.getkey(k, deserialize=False)
 */
-  __pyx_t_7 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_encrypt_c(__pyx_v_self, __pyx_v_string_val); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 280, __pyx_L1_error)
+  __pyx_t_7 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_encrypt_c(__pyx_v_self, __pyx_v_string_val); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_v_storage_val = ((PyObject*)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "kycli/kycore.pyx":282
+  /* "kycli/kycore.pyx":285
  *         cdef str storage_val = self._encrypt_c(string_val)
  * 
  *         cdef str existing = self.getkey(k, deserialize=False)             # <<<<<<<<<<<<<<
@@ -6939,30 +6993,30 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
   __pyx_t_6 = 0;
   {
     PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_11, __pyx_v_k};
-    __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 282, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 285, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_deserialize, Py_False, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 282, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_deserialize, Py_False, __pyx_t_4, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 285, __pyx_L1_error)
     __pyx_t_7 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_getkey, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
     __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 282, __pyx_L1_error)
+    if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 285, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
   }
-  if (!(likely(PyUnicode_CheckExact(__pyx_t_7))||((__pyx_t_7) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_7))) __PYX_ERR(0, 282, __pyx_L1_error)
+  if (!(likely(PyUnicode_CheckExact(__pyx_t_7))||((__pyx_t_7) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_7))) __PYX_ERR(0, 285, __pyx_L1_error)
   __pyx_v_existing = ((PyObject*)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "kycli/kycore.pyx":284
+  /* "kycli/kycore.pyx":287
  *         cdef str existing = self.getkey(k, deserialize=False)
  * 
  *         if existing == string_val:             # <<<<<<<<<<<<<<
  *             return "nochange"
  * 
 */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_existing, __pyx_v_string_val, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 284, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_existing, __pyx_v_string_val, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 287, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "kycli/kycore.pyx":285
+    /* "kycli/kycore.pyx":288
  * 
  *         if existing == string_val:
  *             return "nochange"             # <<<<<<<<<<<<<<
@@ -6974,7 +7028,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
     __pyx_r = __pyx_mstate_global->__pyx_n_u_nochange;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":284
+    /* "kycli/kycore.pyx":287
  *         cdef str existing = self.getkey(k, deserialize=False)
  * 
  *         if existing == string_val:             # <<<<<<<<<<<<<<
@@ -6983,14 +7037,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
 */
   }
 
-  /* "kycli/kycore.pyx":287
+  /* "kycli/kycore.pyx":290
  *             return "nochange"
  * 
  *         status = "overwritten" if existing != "Key not found" else "created"             # <<<<<<<<<<<<<<
  * 
  *         cdef str expires_at = None
 */
-  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_existing, __pyx_mstate_global->__pyx_kp_u_Key_not_found, Py_NE)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 287, __pyx_L1_error)
+  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_existing, __pyx_mstate_global->__pyx_kp_u_Key_not_found, Py_NE)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 290, __pyx_L1_error)
   if (__pyx_t_1) {
     __Pyx_INCREF(__pyx_mstate_global->__pyx_n_u_overwritten);
     __pyx_t_7 = __pyx_mstate_global->__pyx_n_u_overwritten;
@@ -7001,7 +7055,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
   __pyx_v_status = ((PyObject*)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "kycli/kycore.pyx":289
+  /* "kycli/kycore.pyx":292
  *         status = "overwritten" if existing != "Key not found" else "created"
  * 
  *         cdef str expires_at = None             # <<<<<<<<<<<<<<
@@ -7011,17 +7065,17 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
   __Pyx_INCREF(Py_None);
   __pyx_v_expires_at = ((PyObject*)Py_None);
 
-  /* "kycli/kycore.pyx":290
+  /* "kycli/kycore.pyx":293
  * 
  *         cdef str expires_at = None
  *         if ttl:             # <<<<<<<<<<<<<<
  *             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
  * 
 */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_ttl); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 290, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_ttl); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 293, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "kycli/kycore.pyx":291
+    /* "kycli/kycore.pyx":294
  *         cdef str expires_at = None
  *         if ttl:
  *             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')             # <<<<<<<<<<<<<<
@@ -7029,14 +7083,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
  *         try:
 */
     __pyx_t_5 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_datetime); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 291, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_datetime); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
-    __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_now); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 291, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_now); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_13);
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_timezone); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 291, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_timezone); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
-    __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_utc); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 291, __pyx_L1_error)
+    __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_mstate_global->__pyx_n_u_utc); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_14);
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     __pyx_t_6 = 1;
@@ -7057,11 +7111,11 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
       __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 291, __pyx_L1_error)
+      if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 294, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
     }
     __pyx_t_14 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_timedelta); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 291, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_timedelta); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_24 = ((PyObject *)__pyx_v_self);
     __Pyx_INCREF(__pyx_t_24);
@@ -7070,7 +7124,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       PyObject *__pyx_callargs[2] = {__pyx_t_24, __pyx_v_ttl};
       __pyx_t_15 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_parse_ttl, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_24); __pyx_t_24 = 0;
-      if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 291, __pyx_L1_error)
+      if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 294, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
     }
     __pyx_t_6 = 1;
@@ -7087,18 +7141,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
     #endif
     {
       PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_14, NULL};
-      __pyx_t_24 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 291, __pyx_L1_error)
+      __pyx_t_24 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 294, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_24);
-      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_seconds, __pyx_t_15, __pyx_t_24, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 291, __pyx_L1_error)
+      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_seconds, __pyx_t_15, __pyx_t_24, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 294, __pyx_L1_error)
       __pyx_t_13 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_6, (1-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_24);
       __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 291, __pyx_L1_error)
+      if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 294, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_13);
     }
-    __pyx_t_5 = PyNumber_Add(__pyx_t_11, __pyx_t_13); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 291, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Add(__pyx_t_11, __pyx_t_13); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
@@ -7110,14 +7164,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       __pyx_t_7 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strftime, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 291, __pyx_L1_error)
+      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 294, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
     }
-    if (!(likely(PyUnicode_CheckExact(__pyx_t_7))||((__pyx_t_7) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_7))) __PYX_ERR(0, 291, __pyx_L1_error)
+    if (!(likely(PyUnicode_CheckExact(__pyx_t_7))||((__pyx_t_7) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_7))) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_DECREF_SET(__pyx_v_expires_at, ((PyObject*)__pyx_t_7));
     __pyx_t_7 = 0;
 
-    /* "kycli/kycore.pyx":290
+    /* "kycli/kycore.pyx":293
  * 
  *         cdef str expires_at = None
  *         if ttl:             # <<<<<<<<<<<<<<
@@ -7126,7 +7180,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
 */
   }
 
-  /* "kycli/kycore.pyx":293
+  /* "kycli/kycore.pyx":296
  *             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -7142,68 +7196,68 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
     __Pyx_XGOTREF(__pyx_t_8);
     /*try:*/ {
 
-      /* "kycli/kycore.pyx":294
+      /* "kycli/kycore.pyx":297
  * 
  *         try:
  *             self._execute_raw("BEGIN TRANSACTION")             # <<<<<<<<<<<<<<
  * 
  *             # Update kvstore
 */
-      __pyx_t_16 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_16 == ((int)-1))) __PYX_ERR(0, 294, __pyx_L35_error)
+      __pyx_t_16 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_16 == ((int)-1))) __PYX_ERR(0, 297, __pyx_L35_error)
 
-      /* "kycli/kycore.pyx":297
+      /* "kycli/kycore.pyx":300
  * 
  *             # Update kvstore
  *             self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)", [k, storage_val, expires_at])             # <<<<<<<<<<<<<<
  *             # Update audit log
  *             self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, storage_val])
 */
-      __pyx_t_7 = PyList_New(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 297, __pyx_L35_error)
+      __pyx_t_7 = PyList_New(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 300, __pyx_L35_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_INCREF(__pyx_v_k);
       __Pyx_GIVEREF(__pyx_v_k);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_7, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 297, __pyx_L35_error);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_7, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 300, __pyx_L35_error);
       __Pyx_INCREF(__pyx_v_storage_val);
       __Pyx_GIVEREF(__pyx_v_storage_val);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_7, 1, __pyx_v_storage_val) != (0)) __PYX_ERR(0, 297, __pyx_L35_error);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_7, 1, __pyx_v_storage_val) != (0)) __PYX_ERR(0, 300, __pyx_L35_error);
       __Pyx_INCREF(__pyx_v_expires_at);
       __Pyx_GIVEREF(__pyx_v_expires_at);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_7, 2, __pyx_v_expires_at) != (0)) __PYX_ERR(0, 297, __pyx_L35_error);
-      __pyx_t_5 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k, ((PyObject*)__pyx_t_7)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 297, __pyx_L35_error)
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_7, 2, __pyx_v_expires_at) != (0)) __PYX_ERR(0, 300, __pyx_L35_error);
+      __pyx_t_5 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k, ((PyObject*)__pyx_t_7)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 300, __pyx_L35_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-      /* "kycli/kycore.pyx":299
+      /* "kycli/kycore.pyx":302
  *             self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)", [k, storage_val, expires_at])
  *             # Update audit log
  *             self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, storage_val])             # <<<<<<<<<<<<<<
  * 
  *             self._execute_raw("COMMIT")
 */
-      __pyx_t_5 = PyList_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 299, __pyx_L35_error)
+      __pyx_t_5 = PyList_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 302, __pyx_L35_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_INCREF(__pyx_v_k);
       __Pyx_GIVEREF(__pyx_v_k);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 299, __pyx_L35_error);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 302, __pyx_L35_error);
       __Pyx_INCREF(__pyx_v_storage_val);
       __Pyx_GIVEREF(__pyx_v_storage_val);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 1, __pyx_v_storage_val) != (0)) __PYX_ERR(0, 299, __pyx_L35_error);
-      __pyx_t_7 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_audit_log_key_value, ((PyObject*)__pyx_t_5)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 299, __pyx_L35_error)
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 1, __pyx_v_storage_val) != (0)) __PYX_ERR(0, 302, __pyx_L35_error);
+      __pyx_t_7 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_audit_log_key_value, ((PyObject*)__pyx_t_5)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 302, __pyx_L35_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "kycli/kycore.pyx":301
+      /* "kycli/kycore.pyx":304
  *             self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, storage_val])
  * 
  *             self._execute_raw("COMMIT")             # <<<<<<<<<<<<<<
  *             self._dirty_keys.add(k)
  * 
 */
-      __pyx_t_16 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_16 == ((int)-1))) __PYX_ERR(0, 301, __pyx_L35_error)
+      __pyx_t_16 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_16 == ((int)-1))) __PYX_ERR(0, 304, __pyx_L35_error)
 
-      /* "kycli/kycore.pyx":302
+      /* "kycli/kycore.pyx":305
  * 
  *             self._execute_raw("COMMIT")
  *             self._dirty_keys.add(k)             # <<<<<<<<<<<<<<
@@ -7212,20 +7266,20 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
 */
       if (unlikely(__pyx_v_self->_dirty_keys == Py_None)) {
         PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "add");
-        __PYX_ERR(0, 302, __pyx_L35_error)
+        __PYX_ERR(0, 305, __pyx_L35_error)
       }
-      __pyx_t_25 = PySet_Add(__pyx_v_self->_dirty_keys, __pyx_v_k); if (unlikely(__pyx_t_25 == ((int)-1))) __PYX_ERR(0, 302, __pyx_L35_error)
+      __pyx_t_25 = PySet_Add(__pyx_v_self->_dirty_keys, __pyx_v_k); if (unlikely(__pyx_t_25 == ((int)-1))) __PYX_ERR(0, 305, __pyx_L35_error)
 
-      /* "kycli/kycore.pyx":305
+      /* "kycli/kycore.pyx":308
  * 
  *             # Update L1 Cache
  *             self._cache[k] = value             # <<<<<<<<<<<<<<
  *             self._cache.move_to_end(k)
  *             if len(self._cache) > self._cache_limit:
 */
-      if (unlikely((PyObject_SetItem(__pyx_v_self->_cache, __pyx_v_k, __pyx_v_value) < 0))) __PYX_ERR(0, 305, __pyx_L35_error)
+      if (unlikely((PyObject_SetItem(__pyx_v_self->_cache, __pyx_v_k, __pyx_v_value) < 0))) __PYX_ERR(0, 308, __pyx_L35_error)
 
-      /* "kycli/kycore.pyx":306
+      /* "kycli/kycore.pyx":309
  *             # Update L1 Cache
  *             self._cache[k] = value
  *             self._cache.move_to_end(k)             # <<<<<<<<<<<<<<
@@ -7239,12 +7293,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
         PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_v_k};
         __pyx_t_7 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_move_to_end, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-        if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 306, __pyx_L35_error)
+        if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 309, __pyx_L35_error)
         __Pyx_GOTREF(__pyx_t_7);
       }
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "kycli/kycore.pyx":307
+      /* "kycli/kycore.pyx":310
  *             self._cache[k] = value
  *             self._cache.move_to_end(k)
  *             if len(self._cache) > self._cache_limit:             # <<<<<<<<<<<<<<
@@ -7253,12 +7307,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
 */
       __pyx_t_7 = __pyx_v_self->_cache;
       __Pyx_INCREF(__pyx_t_7);
-      __pyx_t_26 = PyObject_Length(__pyx_t_7); if (unlikely(__pyx_t_26 == ((Py_ssize_t)-1))) __PYX_ERR(0, 307, __pyx_L35_error)
+      __pyx_t_26 = PyObject_Length(__pyx_t_7); if (unlikely(__pyx_t_26 == ((Py_ssize_t)-1))) __PYX_ERR(0, 310, __pyx_L35_error)
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_t_1 = (__pyx_t_26 > __pyx_v_self->_cache_limit);
       if (__pyx_t_1) {
 
-        /* "kycli/kycore.pyx":308
+        /* "kycli/kycore.pyx":311
  *             self._cache.move_to_end(k)
  *             if len(self._cache) > self._cache_limit:
  *                 self._cache.popitem(last=False)             # <<<<<<<<<<<<<<
@@ -7270,18 +7324,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
         __pyx_t_6 = 0;
         {
           PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_5, NULL};
-          __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 308, __pyx_L35_error)
+          __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 311, __pyx_L35_error)
           __Pyx_GOTREF(__pyx_t_4);
-          if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_last, Py_False, __pyx_t_4, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 308, __pyx_L35_error)
+          if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_last, Py_False, __pyx_t_4, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 311, __pyx_L35_error)
           __pyx_t_7 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_popitem, __pyx_callargs+__pyx_t_6, (1-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 308, __pyx_L35_error)
+          if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 311, __pyx_L35_error)
           __Pyx_GOTREF(__pyx_t_7);
         }
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-        /* "kycli/kycore.pyx":307
+        /* "kycli/kycore.pyx":310
  *             self._cache[k] = value
  *             self._cache.move_to_end(k)
  *             if len(self._cache) > self._cache_limit:             # <<<<<<<<<<<<<<
@@ -7290,7 +7344,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
 */
       }
 
-      /* "kycli/kycore.pyx":310
+      /* "kycli/kycore.pyx":313
  *                 self._cache.popitem(last=False)
  * 
  *             return status             # <<<<<<<<<<<<<<
@@ -7302,7 +7356,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       __pyx_r = __pyx_v_status;
       goto __pyx_L39_try_return;
 
-      /* "kycli/kycore.pyx":293
+      /* "kycli/kycore.pyx":296
  *             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -7320,7 +7374,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "kycli/kycore.pyx":311
+    /* "kycli/kycore.pyx":314
  * 
  *             return status
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -7330,7 +7384,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
     __pyx_t_16 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
     if (__pyx_t_16) {
       __Pyx_AddTraceback("kycli.kycore.Kycore.save", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_4, &__pyx_t_5) < 0) __PYX_ERR(0, 311, __pyx_L37_except_error)
+      if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_4, &__pyx_t_5) < 0) __PYX_ERR(0, 314, __pyx_L37_except_error)
       __Pyx_XGOTREF(__pyx_t_7);
       __Pyx_XGOTREF(__pyx_t_4);
       __Pyx_XGOTREF(__pyx_t_5);
@@ -7338,16 +7392,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
       __pyx_v_e = __pyx_t_4;
       /*try:*/ {
 
-        /* "kycli/kycore.pyx":312
+        /* "kycli/kycore.pyx":315
  *             return status
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")             # <<<<<<<<<<<<<<
  *             raise e
  * 
 */
-        __pyx_t_16 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_16 == ((int)-1))) __PYX_ERR(0, 312, __pyx_L47_error)
+        __pyx_t_16 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_16 == ((int)-1))) __PYX_ERR(0, 315, __pyx_L47_error)
 
-        /* "kycli/kycore.pyx":313
+        /* "kycli/kycore.pyx":316
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")
  *             raise e             # <<<<<<<<<<<<<<
@@ -7355,10 +7409,10 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
  *     def save_many(self, list items, ttl=None):
 */
         __Pyx_Raise(__pyx_v_e, 0, 0, 0);
-        __PYX_ERR(0, 313, __pyx_L47_error)
+        __PYX_ERR(0, 316, __pyx_L47_error)
       }
 
-      /* "kycli/kycore.pyx":311
+      /* "kycli/kycore.pyx":314
  * 
  *             return status
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -7404,7 +7458,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
     }
     goto __pyx_L37_except_error;
 
-    /* "kycli/kycore.pyx":293
+    /* "kycli/kycore.pyx":296
  *             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -7425,7 +7479,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
     goto __pyx_L0;
   }
 
-  /* "kycli/kycore.pyx":250
+  /* "kycli/kycore.pyx":253
  *         return val
  * 
  *     def save(self, str key, value, ttl=None):             # <<<<<<<<<<<<<<
@@ -7460,7 +7514,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_12save(struct __pyx_obj_5kycli_
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":315
+/* "kycli/kycore.pyx":318
  *             raise e
  * 
  *     def save_many(self, list items, ttl=None):             # <<<<<<<<<<<<<<
@@ -7509,35 +7563,35 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_items,&__pyx_mstate_global->__pyx_n_u_ttl,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 315, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 318, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 315, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 318, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 315, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 318, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "save_many", 0) < (0)) __PYX_ERR(0, 315, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "save_many", 0) < (0)) __PYX_ERR(0, 318, __pyx_L3_error)
       if (!values[1]) values[1] = __Pyx_NewRef(((PyObject *)Py_None));
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("save_many", 0, 1, 2, i); __PYX_ERR(0, 315, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("save_many", 0, 1, 2, i); __PYX_ERR(0, 318, __pyx_L3_error) }
       }
     } else {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 315, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 318, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 315, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 318, __pyx_L3_error)
         break;
         default: goto __pyx_L5_argtuple_error;
       }
@@ -7548,7 +7602,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("save_many", 0, 1, 2, __pyx_nargs); __PYX_ERR(0, 315, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("save_many", 0, 1, 2, __pyx_nargs); __PYX_ERR(0, 318, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -7559,7 +7613,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_items), (&PyList_Type), 1, "items", 1))) __PYX_ERR(0, 315, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_items), (&PyList_Type), 1, "items", 1))) __PYX_ERR(0, 318, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_14save_many(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_items, __pyx_v_ttl);
 
   /* function exit code */
@@ -7620,7 +7674,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("save_many", 0);
 
-  /* "kycli/kycore.pyx":321
+  /* "kycli/kycore.pyx":324
  *         :param ttl: Optional global TTL for all items in the batch
  *         """
  *         if not items:             # <<<<<<<<<<<<<<
@@ -7631,14 +7685,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
   else
   {
     Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_v_items);
-    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 321, __pyx_L1_error)
+    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 324, __pyx_L1_error)
     __pyx_t_1 = (__pyx_temp != 0);
   }
 
   __pyx_t_2 = (!__pyx_t_1);
   if (__pyx_t_2) {
 
-    /* "kycli/kycore.pyx":322
+    /* "kycli/kycore.pyx":325
  *         """
  *         if not items:
  *             return             # <<<<<<<<<<<<<<
@@ -7649,7 +7703,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":321
+    /* "kycli/kycore.pyx":324
  *         :param ttl: Optional global TTL for all items in the batch
  *         """
  *         if not items:             # <<<<<<<<<<<<<<
@@ -7658,7 +7712,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
 */
   }
 
-  /* "kycli/kycore.pyx":324
+  /* "kycli/kycore.pyx":327
  *             return
  * 
  *         cdef str expires_at = None             # <<<<<<<<<<<<<<
@@ -7668,17 +7722,17 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
   __Pyx_INCREF(Py_None);
   __pyx_v_expires_at = ((PyObject*)Py_None);
 
-  /* "kycli/kycore.pyx":325
+  /* "kycli/kycore.pyx":328
  * 
  *         cdef str expires_at = None
  *         if ttl:             # <<<<<<<<<<<<<<
  *             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
  * 
 */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_ttl); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 325, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_ttl); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 328, __pyx_L1_error)
   if (__pyx_t_2) {
 
-    /* "kycli/kycore.pyx":326
+    /* "kycli/kycore.pyx":329
  *         cdef str expires_at = None
  *         if ttl:
  *             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')             # <<<<<<<<<<<<<<
@@ -7686,14 +7740,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
  *         try:
 */
     __pyx_t_6 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_datetime); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_datetime); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 329, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_now); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_now); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 329, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_timezone); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_timezone); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 329, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_utc); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_utc); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 329, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_t_10 = 1;
@@ -7714,11 +7768,11 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 326, __pyx_L1_error)
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 329, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
     }
     __pyx_t_9 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_timedelta); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_timedelta); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 329, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_11 = ((PyObject *)__pyx_v_self);
     __Pyx_INCREF(__pyx_t_11);
@@ -7727,7 +7781,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
       PyObject *__pyx_callargs[2] = {__pyx_t_11, __pyx_v_ttl};
       __pyx_t_7 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_parse_ttl, __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 326, __pyx_L1_error)
+      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 329, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
     }
     __pyx_t_10 = 1;
@@ -7744,18 +7798,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
     #endif
     {
       PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_9, NULL};
-      __pyx_t_11 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 326, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 329, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
-      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_seconds, __pyx_t_7, __pyx_t_11, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 326, __pyx_L1_error)
+      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_seconds, __pyx_t_7, __pyx_t_11, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 329, __pyx_L1_error)
       __pyx_t_8 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_6, __pyx_callargs+__pyx_t_10, (1-__pyx_t_10) | (__pyx_t_10*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_11);
       __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 326, __pyx_L1_error)
+      if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 329, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
     }
-    __pyx_t_6 = PyNumber_Add(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __pyx_t_6 = PyNumber_Add(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 329, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -7767,14 +7821,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
       __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strftime, __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 326, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 329, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
     }
-    if (!(likely(PyUnicode_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_3))) __PYX_ERR(0, 326, __pyx_L1_error)
+    if (!(likely(PyUnicode_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_3))) __PYX_ERR(0, 329, __pyx_L1_error)
     __Pyx_DECREF_SET(__pyx_v_expires_at, ((PyObject*)__pyx_t_3));
     __pyx_t_3 = 0;
 
-    /* "kycli/kycore.pyx":325
+    /* "kycli/kycore.pyx":328
  * 
  *         cdef str expires_at = None
  *         if ttl:             # <<<<<<<<<<<<<<
@@ -7783,7 +7837,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
 */
   }
 
-  /* "kycli/kycore.pyx":328
+  /* "kycli/kycore.pyx":331
  *             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -7799,16 +7853,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
     __Pyx_XGOTREF(__pyx_t_14);
     /*try:*/ {
 
-      /* "kycli/kycore.pyx":329
+      /* "kycli/kycore.pyx":332
  * 
  *         try:
  *             self._execute_raw("BEGIN TRANSACTION")             # <<<<<<<<<<<<<<
  * 
  *             for key, value in items:
 */
-      __pyx_t_15 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_15 == ((int)-1))) __PYX_ERR(0, 329, __pyx_L5_error)
+      __pyx_t_15 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_15 == ((int)-1))) __PYX_ERR(0, 332, __pyx_L5_error)
 
-      /* "kycli/kycore.pyx":331
+      /* "kycli/kycore.pyx":334
  *             self._execute_raw("BEGIN TRANSACTION")
  * 
  *             for key, value in items:             # <<<<<<<<<<<<<<
@@ -7817,7 +7871,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
 */
       if (unlikely(__pyx_v_items == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-        __PYX_ERR(0, 331, __pyx_L5_error)
+        __PYX_ERR(0, 334, __pyx_L5_error)
       }
       __pyx_t_3 = __pyx_v_items; __Pyx_INCREF(__pyx_t_3);
       __pyx_t_16 = 0;
@@ -7825,13 +7879,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
         {
           Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_3);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 331, __pyx_L5_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 334, __pyx_L5_error)
           #endif
           if (__pyx_t_16 >= __pyx_temp) break;
         }
         __pyx_t_6 = __Pyx_PyList_GetItemRefFast(__pyx_t_3, __pyx_t_16, __Pyx_ReferenceSharing_OwnStrongReference);
         ++__pyx_t_16;
-        if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 331, __pyx_L5_error)
+        if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 334, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_6);
         if ((likely(PyTuple_CheckExact(__pyx_t_6))) || (PyList_CheckExact(__pyx_t_6))) {
           PyObject* sequence = __pyx_t_6;
@@ -7839,7 +7893,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
           if (unlikely(size != 2)) {
             if (size > 2) __Pyx_RaiseTooManyValuesError(2);
             else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-            __PYX_ERR(0, 331, __pyx_L5_error)
+            __PYX_ERR(0, 334, __pyx_L5_error)
           }
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
           if (likely(PyTuple_CheckExact(sequence))) {
@@ -7849,22 +7903,22 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
             __Pyx_INCREF(__pyx_t_8);
           } else {
             __pyx_t_4 = __Pyx_PyList_GetItemRefFast(sequence, 0, __Pyx_ReferenceSharing_SharedReference);
-            if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 331, __pyx_L5_error)
+            if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 334, __pyx_L5_error)
             __Pyx_XGOTREF(__pyx_t_4);
             __pyx_t_8 = __Pyx_PyList_GetItemRefFast(sequence, 1, __Pyx_ReferenceSharing_SharedReference);
-            if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 331, __pyx_L5_error)
+            if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 334, __pyx_L5_error)
             __Pyx_XGOTREF(__pyx_t_8);
           }
           #else
-          __pyx_t_4 = __Pyx_PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 331, __pyx_L5_error)
+          __pyx_t_4 = __Pyx_PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 334, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_8 = __Pyx_PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 331, __pyx_L5_error)
+          __pyx_t_8 = __Pyx_PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 334, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_8);
           #endif
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         } else {
           Py_ssize_t index = -1;
-          __pyx_t_5 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 331, __pyx_L5_error)
+          __pyx_t_5 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 334, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __pyx_t_17 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_5);
@@ -7872,7 +7926,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
           __Pyx_GOTREF(__pyx_t_4);
           index = 1; __pyx_t_8 = __pyx_t_17(__pyx_t_5); if (unlikely(!__pyx_t_8)) goto __pyx_L13_unpacking_failed;
           __Pyx_GOTREF(__pyx_t_8);
-          if (__Pyx_IternextUnpackEndCheck(__pyx_t_17(__pyx_t_5), 2) < (0)) __PYX_ERR(0, 331, __pyx_L5_error)
+          if (__Pyx_IternextUnpackEndCheck(__pyx_t_17(__pyx_t_5), 2) < (0)) __PYX_ERR(0, 334, __pyx_L5_error)
           __pyx_t_17 = NULL;
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           goto __pyx_L14_unpacking_done;
@@ -7880,7 +7934,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           __pyx_t_17 = NULL;
           if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-          __PYX_ERR(0, 331, __pyx_L5_error)
+          __PYX_ERR(0, 334, __pyx_L5_error)
           __pyx_L14_unpacking_done:;
         }
         __Pyx_XDECREF_SET(__pyx_v_key, __pyx_t_4);
@@ -7888,7 +7942,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
         __Pyx_XDECREF_SET(__pyx_v_value, __pyx_t_8);
         __pyx_t_8 = 0;
 
-        /* "kycli/kycore.pyx":332
+        /* "kycli/kycore.pyx":335
  * 
  *             for key, value in items:
  *                 k = key.lower().strip()             # <<<<<<<<<<<<<<
@@ -7902,7 +7956,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
           PyObject *__pyx_callargs[2] = {__pyx_t_5, NULL};
           __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_lower, __pyx_callargs+__pyx_t_10, (1-__pyx_t_10) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-          if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 332, __pyx_L5_error)
+          if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 335, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_4);
         }
         __pyx_t_8 = __pyx_t_4;
@@ -7913,23 +7967,23 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
           __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_10, (1-__pyx_t_10) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 332, __pyx_L5_error)
+          if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 335, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_6);
         }
         __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_6);
         __pyx_t_6 = 0;
 
-        /* "kycli/kycore.pyx":334
+        /* "kycli/kycore.pyx":337
  *                 k = key.lower().strip()
  *                 # Validation & Serialization
  *                 if self._schema:             # <<<<<<<<<<<<<<
  *                     if isinstance(value, dict):
  *                         value = self._schema(**value).model_dump()
 */
-        __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_self->_schema); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 334, __pyx_L5_error)
+        __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_self->_schema); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 337, __pyx_L5_error)
         if (__pyx_t_2) {
 
-          /* "kycli/kycore.pyx":335
+          /* "kycli/kycore.pyx":338
  *                 # Validation & Serialization
  *                 if self._schema:
  *                     if isinstance(value, dict):             # <<<<<<<<<<<<<<
@@ -7939,7 +7993,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
           __pyx_t_2 = PyDict_Check(__pyx_v_value); 
           if (__pyx_t_2) {
 
-            /* "kycli/kycore.pyx":336
+            /* "kycli/kycore.pyx":339
  *                 if self._schema:
  *                     if isinstance(value, dict):
  *                         value = self._schema(**value).model_dump()             # <<<<<<<<<<<<<<
@@ -7948,16 +8002,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
 */
             if (unlikely(__pyx_v_value == Py_None)) {
               PyErr_SetString(PyExc_TypeError, "argument after ** must be a mapping, not NoneType");
-              __PYX_ERR(0, 336, __pyx_L5_error)
+              __PYX_ERR(0, 339, __pyx_L5_error)
             }
             if (likely(PyDict_CheckExact(__pyx_v_value))) {
-              __pyx_t_8 = PyDict_Copy(__pyx_v_value); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 336, __pyx_L5_error)
+              __pyx_t_8 = PyDict_Copy(__pyx_v_value); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 339, __pyx_L5_error)
               __Pyx_GOTREF(__pyx_t_8);
             } else {
-              __pyx_t_8 = __Pyx_PyObject_CallOneArg((PyObject*)&PyDict_Type, __pyx_v_value); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 336, __pyx_L5_error)
+              __pyx_t_8 = __Pyx_PyObject_CallOneArg((PyObject*)&PyDict_Type, __pyx_v_value); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 339, __pyx_L5_error)
               __Pyx_GOTREF(__pyx_t_8);
             }
-            __pyx_t_5 = __Pyx_PyObject_Call(__pyx_v_self->_schema, __pyx_mstate_global->__pyx_empty_tuple, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 336, __pyx_L5_error)
+            __pyx_t_5 = __Pyx_PyObject_Call(__pyx_v_self->_schema, __pyx_mstate_global->__pyx_empty_tuple, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 339, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_5);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __pyx_t_4 = __pyx_t_5;
@@ -7968,13 +8022,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
               __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_model_dump, __pyx_callargs+__pyx_t_10, (1-__pyx_t_10) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
               __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
               __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-              if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 336, __pyx_L5_error)
+              if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 339, __pyx_L5_error)
               __Pyx_GOTREF(__pyx_t_6);
             }
             __Pyx_DECREF_SET(__pyx_v_value, __pyx_t_6);
             __pyx_t_6 = 0;
 
-            /* "kycli/kycore.pyx":335
+            /* "kycli/kycore.pyx":338
  *                 # Validation & Serialization
  *                 if self._schema:
  *                     if isinstance(value, dict):             # <<<<<<<<<<<<<<
@@ -7983,7 +8037,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
 */
           }
 
-          /* "kycli/kycore.pyx":334
+          /* "kycli/kycore.pyx":337
  *                 k = key.lower().strip()
  *                 # Validation & Serialization
  *                 if self._schema:             # <<<<<<<<<<<<<<
@@ -7992,7 +8046,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
 */
         }
 
-        /* "kycli/kycore.pyx":338
+        /* "kycli/kycore.pyx":341
  *                         value = self._schema(**value).model_dump()
  * 
  *                 if isinstance(value, (dict, list, bool, int, float)):             # <<<<<<<<<<<<<<
@@ -8028,7 +8082,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
         __pyx_L18_bool_binop_done:;
         if (__pyx_t_2) {
 
-          /* "kycli/kycore.pyx":339
+          /* "kycli/kycore.pyx":342
  * 
  *                 if isinstance(value, (dict, list, bool, int, float)):
  *                     string_val = json.dumps(value)             # <<<<<<<<<<<<<<
@@ -8036,9 +8090,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
  *                     string_val = str(value)
 */
           __pyx_t_5 = NULL;
-          __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 339, __pyx_L5_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 342, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_dumps); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 339, __pyx_L5_error)
+          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_dumps); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 342, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           __pyx_t_10 = 1;
@@ -8058,13 +8112,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
             __pyx_t_6 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_8, __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (__pyx_t_10*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
             __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 339, __pyx_L5_error)
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 342, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_6);
           }
           __Pyx_XDECREF_SET(__pyx_v_string_val, __pyx_t_6);
           __pyx_t_6 = 0;
 
-          /* "kycli/kycore.pyx":338
+          /* "kycli/kycore.pyx":341
  *                         value = self._schema(**value).model_dump()
  * 
  *                 if isinstance(value, (dict, list, bool, int, float)):             # <<<<<<<<<<<<<<
@@ -8074,7 +8128,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
           goto __pyx_L17;
         }
 
-        /* "kycli/kycore.pyx":341
+        /* "kycli/kycore.pyx":344
  *                     string_val = json.dumps(value)
  *                 else:
  *                     string_val = str(value)             # <<<<<<<<<<<<<<
@@ -8082,14 +8136,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
  *                 storage_val = self._encrypt_c(string_val)
 */
         /*else*/ {
-          __pyx_t_6 = __Pyx_PyObject_Unicode(__pyx_v_value); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 341, __pyx_L5_error)
+          __pyx_t_6 = __Pyx_PyObject_Unicode(__pyx_v_value); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 344, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_XDECREF_SET(__pyx_v_string_val, __pyx_t_6);
           __pyx_t_6 = 0;
         }
         __pyx_L17:;
 
-        /* "kycli/kycore.pyx":343
+        /* "kycli/kycore.pyx":346
  *                     string_val = str(value)
  * 
  *                 storage_val = self._encrypt_c(string_val)             # <<<<<<<<<<<<<<
@@ -8098,66 +8152,66 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
 */
         __pyx_t_6 = __pyx_v_string_val;
         __Pyx_INCREF(__pyx_t_6);
-        if (!(likely(PyUnicode_CheckExact(__pyx_t_6))||((__pyx_t_6) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_6))) __PYX_ERR(0, 343, __pyx_L5_error)
-        __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_encrypt_c(__pyx_v_self, ((PyObject*)__pyx_t_6)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 343, __pyx_L5_error)
+        if (!(likely(PyUnicode_CheckExact(__pyx_t_6))||((__pyx_t_6) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_6))) __PYX_ERR(0, 346, __pyx_L5_error)
+        __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_encrypt_c(__pyx_v_self, ((PyObject*)__pyx_t_6)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 346, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_XDECREF_SET(__pyx_v_storage_val, ((PyObject*)__pyx_t_8));
         __pyx_t_8 = 0;
 
-        /* "kycli/kycore.pyx":345
+        /* "kycli/kycore.pyx":348
  *                 storage_val = self._encrypt_c(string_val)
  * 
  *                 self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)", [k, storage_val, expires_at])             # <<<<<<<<<<<<<<
  *                 self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, storage_val])
  * 
 */
-        __pyx_t_8 = PyList_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 345, __pyx_L5_error)
+        __pyx_t_8 = PyList_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 348, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_INCREF(__pyx_v_k);
         __Pyx_GIVEREF(__pyx_v_k);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 345, __pyx_L5_error);
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 348, __pyx_L5_error);
         __Pyx_INCREF(__pyx_v_storage_val);
         __Pyx_GIVEREF(__pyx_v_storage_val);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 1, __pyx_v_storage_val) != (0)) __PYX_ERR(0, 345, __pyx_L5_error);
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 1, __pyx_v_storage_val) != (0)) __PYX_ERR(0, 348, __pyx_L5_error);
         __Pyx_INCREF(__pyx_v_expires_at);
         __Pyx_GIVEREF(__pyx_v_expires_at);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 2, __pyx_v_expires_at) != (0)) __PYX_ERR(0, 345, __pyx_L5_error);
-        __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k, ((PyObject*)__pyx_t_8)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 345, __pyx_L5_error)
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 2, __pyx_v_expires_at) != (0)) __PYX_ERR(0, 348, __pyx_L5_error);
+        __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k, ((PyObject*)__pyx_t_8)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 348, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-        /* "kycli/kycore.pyx":346
+        /* "kycli/kycore.pyx":349
  * 
  *                 self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)", [k, storage_val, expires_at])
  *                 self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, storage_val])             # <<<<<<<<<<<<<<
  * 
  *                 # Update L1 Cache
 */
-        __pyx_t_6 = PyList_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 346, __pyx_L5_error)
+        __pyx_t_6 = PyList_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 349, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_INCREF(__pyx_v_k);
         __Pyx_GIVEREF(__pyx_v_k);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 346, __pyx_L5_error);
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 349, __pyx_L5_error);
         __Pyx_INCREF(__pyx_v_storage_val);
         __Pyx_GIVEREF(__pyx_v_storage_val);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 1, __pyx_v_storage_val) != (0)) __PYX_ERR(0, 346, __pyx_L5_error);
-        __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_audit_log_key_value, ((PyObject*)__pyx_t_6)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 346, __pyx_L5_error)
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 1, __pyx_v_storage_val) != (0)) __PYX_ERR(0, 349, __pyx_L5_error);
+        __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_audit_log_key_value, ((PyObject*)__pyx_t_6)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 349, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "kycli/kycore.pyx":349
+        /* "kycli/kycore.pyx":352
  * 
  *                 # Update L1 Cache
  *                 self._cache[k] = value             # <<<<<<<<<<<<<<
  *                 self._cache.move_to_end(k)
  *                 if len(self._cache) > self._cache_limit:
 */
-        if (unlikely((PyObject_SetItem(__pyx_v_self->_cache, __pyx_v_k, __pyx_v_value) < 0))) __PYX_ERR(0, 349, __pyx_L5_error)
+        if (unlikely((PyObject_SetItem(__pyx_v_self->_cache, __pyx_v_k, __pyx_v_value) < 0))) __PYX_ERR(0, 352, __pyx_L5_error)
 
-        /* "kycli/kycore.pyx":350
+        /* "kycli/kycore.pyx":353
  *                 # Update L1 Cache
  *                 self._cache[k] = value
  *                 self._cache.move_to_end(k)             # <<<<<<<<<<<<<<
@@ -8171,12 +8225,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
           PyObject *__pyx_callargs[2] = {__pyx_t_6, __pyx_v_k};
           __pyx_t_8 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_move_to_end, __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
           __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 350, __pyx_L5_error)
+          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 353, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_8);
         }
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "kycli/kycore.pyx":351
+        /* "kycli/kycore.pyx":354
  *                 self._cache[k] = value
  *                 self._cache.move_to_end(k)
  *                 if len(self._cache) > self._cache_limit:             # <<<<<<<<<<<<<<
@@ -8185,12 +8239,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
 */
         __pyx_t_8 = __pyx_v_self->_cache;
         __Pyx_INCREF(__pyx_t_8);
-        __pyx_t_18 = PyObject_Length(__pyx_t_8); if (unlikely(__pyx_t_18 == ((Py_ssize_t)-1))) __PYX_ERR(0, 351, __pyx_L5_error)
+        __pyx_t_18 = PyObject_Length(__pyx_t_8); if (unlikely(__pyx_t_18 == ((Py_ssize_t)-1))) __PYX_ERR(0, 354, __pyx_L5_error)
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __pyx_t_2 = (__pyx_t_18 > __pyx_v_self->_cache_limit);
         if (__pyx_t_2) {
 
-          /* "kycli/kycore.pyx":352
+          /* "kycli/kycore.pyx":355
  *                 self._cache.move_to_end(k)
  *                 if len(self._cache) > self._cache_limit:
  *                     self._cache.popitem(last=False)             # <<<<<<<<<<<<<<
@@ -8202,18 +8256,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
           __pyx_t_10 = 0;
           {
             PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_6, NULL};
-            __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 352, __pyx_L5_error)
+            __pyx_t_5 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 355, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_5);
-            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_last, Py_False, __pyx_t_5, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 352, __pyx_L5_error)
+            if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_last, Py_False, __pyx_t_5, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 355, __pyx_L5_error)
             __pyx_t_8 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_popitem, __pyx_callargs+__pyx_t_10, (1-__pyx_t_10) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_5);
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-            if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 352, __pyx_L5_error)
+            if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 355, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_8);
           }
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-          /* "kycli/kycore.pyx":351
+          /* "kycli/kycore.pyx":354
  *                 self._cache[k] = value
  *                 self._cache.move_to_end(k)
  *                 if len(self._cache) > self._cache_limit:             # <<<<<<<<<<<<<<
@@ -8222,7 +8276,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
 */
         }
 
-        /* "kycli/kycore.pyx":331
+        /* "kycli/kycore.pyx":334
  *             self._execute_raw("BEGIN TRANSACTION")
  * 
  *             for key, value in items:             # <<<<<<<<<<<<<<
@@ -8232,16 +8286,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "kycli/kycore.pyx":354
+      /* "kycli/kycore.pyx":357
  *                     self._cache.popitem(last=False)
  * 
  *             self._execute_raw("COMMIT")             # <<<<<<<<<<<<<<
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")
 */
-      __pyx_t_15 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_15 == ((int)-1))) __PYX_ERR(0, 354, __pyx_L5_error)
+      __pyx_t_15 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_15 == ((int)-1))) __PYX_ERR(0, 357, __pyx_L5_error)
 
-      /* "kycli/kycore.pyx":328
+      /* "kycli/kycore.pyx":331
  *             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -8263,7 +8317,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-    /* "kycli/kycore.pyx":355
+    /* "kycli/kycore.pyx":358
  * 
  *             self._execute_raw("COMMIT")
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -8273,7 +8327,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
     __pyx_t_15 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
     if (__pyx_t_15) {
       __Pyx_AddTraceback("kycli.kycore.Kycore.save_many", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_8, &__pyx_t_5) < 0) __PYX_ERR(0, 355, __pyx_L7_except_error)
+      if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_8, &__pyx_t_5) < 0) __PYX_ERR(0, 358, __pyx_L7_except_error)
       __Pyx_XGOTREF(__pyx_t_3);
       __Pyx_XGOTREF(__pyx_t_8);
       __Pyx_XGOTREF(__pyx_t_5);
@@ -8281,16 +8335,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
       __pyx_v_e = __pyx_t_8;
       /*try:*/ {
 
-        /* "kycli/kycore.pyx":356
+        /* "kycli/kycore.pyx":359
  *             self._execute_raw("COMMIT")
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")             # <<<<<<<<<<<<<<
  *             raise e
  * 
 */
-        __pyx_t_15 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_15 == ((int)-1))) __PYX_ERR(0, 356, __pyx_L30_error)
+        __pyx_t_15 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_15 == ((int)-1))) __PYX_ERR(0, 359, __pyx_L30_error)
 
-        /* "kycli/kycore.pyx":357
+        /* "kycli/kycore.pyx":360
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")
  *             raise e             # <<<<<<<<<<<<<<
@@ -8298,10 +8352,10 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
  *     async def save_async(self, str key, value, ttl=None):
 */
         __Pyx_Raise(__pyx_v_e, 0, 0, 0);
-        __PYX_ERR(0, 357, __pyx_L30_error)
+        __PYX_ERR(0, 360, __pyx_L30_error)
       }
 
-      /* "kycli/kycore.pyx":355
+      /* "kycli/kycore.pyx":358
  * 
  *             self._execute_raw("COMMIT")
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -8347,7 +8401,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
     }
     goto __pyx_L7_except_error;
 
-    /* "kycli/kycore.pyx":328
+    /* "kycli/kycore.pyx":331
  *             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -8363,7 +8417,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
     __pyx_L10_try_end:;
   }
 
-  /* "kycli/kycore.pyx":315
+  /* "kycli/kycore.pyx":318
  *             raise e
  * 
  *     def save_many(self, list items, ttl=None):             # <<<<<<<<<<<<<<
@@ -8399,7 +8453,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_14save_many(struct __pyx_obj_5k
 }
 static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_18generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
-/* "kycli/kycore.pyx":359
+/* "kycli/kycore.pyx":362
  *             raise e
  * 
  *     async def save_async(self, str key, value, ttl=None):             # <<<<<<<<<<<<<<
@@ -8449,41 +8503,41 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_key,&__pyx_mstate_global->__pyx_n_u_value,&__pyx_mstate_global->__pyx_n_u_ttl,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 359, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 362, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 359, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 362, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 359, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 362, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 359, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 362, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "save_async", 0) < (0)) __PYX_ERR(0, 359, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "save_async", 0) < (0)) __PYX_ERR(0, 362, __pyx_L3_error)
       if (!values[2]) values[2] = __Pyx_NewRef(((PyObject *)Py_None));
       for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("save_async", 0, 2, 3, i); __PYX_ERR(0, 359, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("save_async", 0, 2, 3, i); __PYX_ERR(0, 362, __pyx_L3_error) }
       }
     } else {
       switch (__pyx_nargs) {
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 359, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 362, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 359, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 362, __pyx_L3_error)
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 359, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 362, __pyx_L3_error)
         break;
         default: goto __pyx_L5_argtuple_error;
       }
@@ -8495,7 +8549,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("save_async", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 359, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("save_async", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 362, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8506,7 +8560,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 359, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 362, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_16save_async(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_key, __pyx_v_value, __pyx_v_ttl);
 
   /* function exit code */
@@ -8538,7 +8592,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_16save_async(struct __pyx_obj_5
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_5kycli_6kycore___pyx_scope_struct__save_async *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 359, __pyx_L1_error)
+    __PYX_ERR(0, 362, __pyx_L1_error)
   } else {
     __Pyx_GOTREF((PyObject *)__pyx_cur_scope);
   }
@@ -8555,7 +8609,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_16save_async(struct __pyx_obj_5
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_ttl);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_ttl);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Coroutine_New((__pyx_coroutine_body_t) __pyx_gb_5kycli_6kycore_6Kycore_18generator, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0]), (PyObject *) __pyx_cur_scope, __pyx_mstate_global->__pyx_n_u_save_async, __pyx_mstate_global->__pyx_n_u_Kycore_save_async, __pyx_mstate_global->__pyx_n_u_kycli_kycore); if (unlikely(!gen)) __PYX_ERR(0, 359, __pyx_L1_error)
+    __pyx_CoroutineObject *gen = __Pyx_Coroutine_New((__pyx_coroutine_body_t) __pyx_gb_5kycli_6kycore_6Kycore_18generator, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0]), (PyObject *) __pyx_cur_scope, __pyx_mstate_global->__pyx_n_u_save_async, __pyx_mstate_global->__pyx_n_u_Kycore_save_async, __pyx_mstate_global->__pyx_n_u_kycli_kycore); if (unlikely(!gen)) __PYX_ERR(0, 362, __pyx_L1_error)
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -8597,10 +8651,10 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_18generator(__pyx_CoroutineObje
   __pyx_L3_first_run:;
   if (unlikely(__pyx_sent_value != Py_None)) {
     if (unlikely(__pyx_sent_value)) PyErr_SetString(PyExc_TypeError, "can't send non-None value to a just-started coroutine");
-    __PYX_ERR(0, 359, __pyx_L1_error)
+    __PYX_ERR(0, 362, __pyx_L1_error)
   }
 
-  /* "kycli/kycore.pyx":361
+  /* "kycli/kycore.pyx":364
  *     async def save_async(self, str key, value, ttl=None):
  *         """Asynchronous version of save using a thread pool."""
  *         return await asyncio.to_thread(self.save, key, value, ttl=ttl)             # <<<<<<<<<<<<<<
@@ -8609,12 +8663,12 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_18generator(__pyx_CoroutineObje
 */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2 = NULL;
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_asyncio); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 361, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_asyncio); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 364, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_to_thread); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 361, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_to_thread); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 364, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_cur_scope->__pyx_v_self), __pyx_mstate_global->__pyx_n_u_save); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 361, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_cur_scope->__pyx_v_self), __pyx_mstate_global->__pyx_n_u_save); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 364, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_5 = 1;
   #if CYTHON_UNPACK_METHODS
@@ -8630,15 +8684,15 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_18generator(__pyx_CoroutineObje
   #endif
   {
     PyObject *__pyx_callargs[4 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_2, __pyx_t_3, __pyx_cur_scope->__pyx_v_key, __pyx_cur_scope->__pyx_v_value};
-    __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 361, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_ttl, __pyx_cur_scope->__pyx_v_ttl, __pyx_t_6, __pyx_callargs+4, 0) < (0)) __PYX_ERR(0, 361, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_ttl, __pyx_cur_scope->__pyx_v_ttl, __pyx_t_6, __pyx_callargs+4, 0) < (0)) __PYX_ERR(0, 364, __pyx_L1_error)
     __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_5, (4-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_6);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 361, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_t_7 = __Pyx_Coroutine_Yield_From(__pyx_generator, __pyx_t_1, &__pyx_r);
@@ -8652,21 +8706,21 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_18generator(__pyx_CoroutineObje
     __pyx_generator->resume_label = 1;
     return __pyx_r;
     __pyx_L4_resume_from_await:;
-    if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 361, __pyx_L1_error)
+    if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 364, __pyx_L1_error)
     __pyx_t_1 = __pyx_sent_value; __Pyx_INCREF(__pyx_t_1);
   } else if (likely(__pyx_t_7 == PYGEN_RETURN)) {
     __Pyx_GOTREF(__pyx_r);
     __pyx_t_1 = __pyx_r; __pyx_r = NULL;
   } else {
     __Pyx_XGOTREF(__pyx_r);
-    __PYX_ERR(0, 361, __pyx_L1_error)
+    __PYX_ERR(0, 364, __pyx_L1_error)
   }
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
   CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
 
-  /* "kycli/kycore.pyx":359
+  /* "kycli/kycore.pyx":362
  *             raise e
  * 
  *     async def save_async(self, str key, value, ttl=None):             # <<<<<<<<<<<<<<
@@ -8696,7 +8750,7 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_18generator(__pyx_CoroutineObje
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":363
+/* "kycli/kycore.pyx":366
  *         return await asyncio.to_thread(self.save, key, value, ttl=ttl)
  * 
  *     def __setitem__(self, str key, str value):             # <<<<<<<<<<<<<<
@@ -8715,8 +8769,8 @@ static int __pyx_pw_5kycli_6kycore_6Kycore_20__setitem__(PyObject *__pyx_v_self,
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setitem__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 363, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_value), (&PyUnicode_Type), 1, "value", 1))) __PYX_ERR(0, 363, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 366, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_value), (&PyUnicode_Type), 1, "value", 1))) __PYX_ERR(0, 366, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_19__setitem__(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), ((PyObject*)__pyx_v_key), ((PyObject*)__pyx_v_value));
 
   /* function exit code */
@@ -8741,7 +8795,7 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_19__setitem__(struct __pyx_obj_5kycli
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__setitem__", 0);
 
-  /* "kycli/kycore.pyx":364
+  /* "kycli/kycore.pyx":367
  * 
  *     def __setitem__(self, str key, str value):
  *         self.save(key, value)             # <<<<<<<<<<<<<<
@@ -8755,12 +8809,12 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_19__setitem__(struct __pyx_obj_5kycli
     PyObject *__pyx_callargs[3] = {__pyx_t_2, __pyx_v_key, __pyx_v_value};
     __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_save, __pyx_callargs+__pyx_t_3, (3-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 364, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 367, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":363
+  /* "kycli/kycore.pyx":366
  *         return await asyncio.to_thread(self.save, key, value, ttl=ttl)
  * 
  *     def __setitem__(self, str key, str value):             # <<<<<<<<<<<<<<
@@ -8781,7 +8835,7 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_19__setitem__(struct __pyx_obj_5kycli
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":366
+/* "kycli/kycore.pyx":369
  *         self.save(key, value)
  * 
  *     def __getitem__(self, str key):             # <<<<<<<<<<<<<<
@@ -8800,7 +8854,7 @@ static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_22__getitem__(PyObject *__pyx_v
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__getitem__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 366, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 369, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_21__getitem__(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), ((PyObject*)__pyx_v_key));
 
   /* function exit code */
@@ -8828,7 +8882,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_21__getitem__(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__getitem__", 0);
 
-  /* "kycli/kycore.pyx":367
+  /* "kycli/kycore.pyx":370
  * 
  *     def __getitem__(self, str key):
  *         val = self.getkey(key)             # <<<<<<<<<<<<<<
@@ -8842,20 +8896,20 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_21__getitem__(struct __pyx_obj_
     PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_key};
     __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_getkey, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 367, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 370, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_v_val = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":368
+  /* "kycli/kycore.pyx":371
  *     def __getitem__(self, str key):
  *         val = self.getkey(key)
  *         if val == "Key not found" or isinstance(val, dict):             # <<<<<<<<<<<<<<
  *             raise KeyError(key)
  *         return val
 */
-  __pyx_t_5 = (__Pyx_PyUnicode_Equals(__pyx_v_val, __pyx_mstate_global->__pyx_kp_u_Key_not_found, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 368, __pyx_L1_error)
+  __pyx_t_5 = (__Pyx_PyUnicode_Equals(__pyx_v_val, __pyx_mstate_global->__pyx_kp_u_Key_not_found, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 371, __pyx_L1_error)
   if (!__pyx_t_5) {
   } else {
     __pyx_t_4 = __pyx_t_5;
@@ -8866,7 +8920,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_21__getitem__(struct __pyx_obj_
   __pyx_L4_bool_binop_done:;
   if (unlikely(__pyx_t_4)) {
 
-    /* "kycli/kycore.pyx":369
+    /* "kycli/kycore.pyx":372
  *         val = self.getkey(key)
  *         if val == "Key not found" or isinstance(val, dict):
  *             raise KeyError(key)             # <<<<<<<<<<<<<<
@@ -8879,14 +8933,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_21__getitem__(struct __pyx_obj_
       PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_key};
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_KeyError)), __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 369, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 372, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 369, __pyx_L1_error)
+    __PYX_ERR(0, 372, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":368
+    /* "kycli/kycore.pyx":371
  *     def __getitem__(self, str key):
  *         val = self.getkey(key)
  *         if val == "Key not found" or isinstance(val, dict):             # <<<<<<<<<<<<<<
@@ -8895,7 +8949,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_21__getitem__(struct __pyx_obj_
 */
   }
 
-  /* "kycli/kycore.pyx":370
+  /* "kycli/kycore.pyx":373
  *         if val == "Key not found" or isinstance(val, dict):
  *             raise KeyError(key)
  *         return val             # <<<<<<<<<<<<<<
@@ -8907,7 +8961,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_21__getitem__(struct __pyx_obj_
   __pyx_r = __pyx_v_val;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":366
+  /* "kycli/kycore.pyx":369
  *         self.save(key, value)
  * 
  *     def __getitem__(self, str key):             # <<<<<<<<<<<<<<
@@ -8928,7 +8982,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_21__getitem__(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":372
+/* "kycli/kycore.pyx":375
  *         return val
  * 
  *     def __delitem__(self, str key):             # <<<<<<<<<<<<<<
@@ -8947,7 +9001,7 @@ static int __pyx_pw_5kycli_6kycore_6Kycore_24__delitem__(PyObject *__pyx_v_self,
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__delitem__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 372, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 375, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_23__delitem__(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), ((PyObject*)__pyx_v_key));
 
   /* function exit code */
@@ -8974,7 +9028,7 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_23__delitem__(struct __pyx_obj_5kycli
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__delitem__", 0);
 
-  /* "kycli/kycore.pyx":373
+  /* "kycli/kycore.pyx":376
  * 
  *     def __delitem__(self, str key):
  *         res = self.delete(key)             # <<<<<<<<<<<<<<
@@ -8988,23 +9042,23 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_23__delitem__(struct __pyx_obj_5kycli
     PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_key};
     __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_delete, __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 373, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 376, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_v_res = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":374
+  /* "kycli/kycore.pyx":377
  *     def __delitem__(self, str key):
  *         res = self.delete(key)
  *         if res == "Key not found":             # <<<<<<<<<<<<<<
  *             raise KeyError(key)
  * 
 */
-  __pyx_t_4 = (__Pyx_PyUnicode_Equals(__pyx_v_res, __pyx_mstate_global->__pyx_kp_u_Key_not_found, Py_EQ)); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 374, __pyx_L1_error)
+  __pyx_t_4 = (__Pyx_PyUnicode_Equals(__pyx_v_res, __pyx_mstate_global->__pyx_kp_u_Key_not_found, Py_EQ)); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 377, __pyx_L1_error)
   if (unlikely(__pyx_t_4)) {
 
-    /* "kycli/kycore.pyx":375
+    /* "kycli/kycore.pyx":378
  *         res = self.delete(key)
  *         if res == "Key not found":
  *             raise KeyError(key)             # <<<<<<<<<<<<<<
@@ -9017,14 +9071,14 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_23__delitem__(struct __pyx_obj_5kycli
       PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_key};
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_KeyError)), __pyx_callargs+__pyx_t_3, (2-__pyx_t_3) | (__pyx_t_3*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 375, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 378, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 375, __pyx_L1_error)
+    __PYX_ERR(0, 378, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":374
+    /* "kycli/kycore.pyx":377
  *     def __delitem__(self, str key):
  *         res = self.delete(key)
  *         if res == "Key not found":             # <<<<<<<<<<<<<<
@@ -9033,7 +9087,7 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_23__delitem__(struct __pyx_obj_5kycli
 */
   }
 
-  /* "kycli/kycore.pyx":372
+  /* "kycli/kycore.pyx":375
  *         return val
  * 
  *     def __delitem__(self, str key):             # <<<<<<<<<<<<<<
@@ -9055,7 +9109,7 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_23__delitem__(struct __pyx_obj_5kycli
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":377
+/* "kycli/kycore.pyx":380
  *             raise KeyError(key)
  * 
  *     def __contains__(self, str key):             # <<<<<<<<<<<<<<
@@ -9074,7 +9128,7 @@ static int __pyx_pw_5kycli_6kycore_6Kycore_26__contains__(PyObject *__pyx_v_self
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__contains__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 377, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 380, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_25__contains__(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), ((PyObject*)__pyx_v_key));
 
   /* function exit code */
@@ -9102,14 +9156,14 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_25__contains__(struct __pyx_obj_5kycl
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__contains__", 0);
 
-  /* "kycli/kycore.pyx":382
+  /* "kycli/kycore.pyx":385
  *             WHERE key = ?
  *             AND (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [key.lower().strip()])             # <<<<<<<<<<<<<<
  *         return len(results) > 0
  * 
 */
-  __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 382, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 385, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_2 = __pyx_t_3;
   __Pyx_INCREF(__pyx_t_2);
@@ -9119,29 +9173,29 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_25__contains__(struct __pyx_obj_5kycl
     __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 382, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 385, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
-  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 382, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 385, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1) != (0)) __PYX_ERR(0, 382, __pyx_L1_error);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1) != (0)) __PYX_ERR(0, 385, __pyx_L1_error);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":378
+  /* "kycli/kycore.pyx":381
  * 
  *     def __contains__(self, str key):
  *         cdef list results = self._bind_and_fetch("""             # <<<<<<<<<<<<<<
  *             SELECT 1 FROM kvstore
  *             WHERE key = ?
 */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_1_FROM_kvstore_WHERE_key, ((PyObject*)__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 378, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_1_FROM_kvstore_WHERE_key, ((PyObject*)__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 381, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_results = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":383
+  /* "kycli/kycore.pyx":386
  *             AND (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [key.lower().strip()])
  *         return len(results) > 0             # <<<<<<<<<<<<<<
@@ -9150,13 +9204,13 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_25__contains__(struct __pyx_obj_5kycl
 */
   if (unlikely(__pyx_v_results == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 383, __pyx_L1_error)
+    __PYX_ERR(0, 386, __pyx_L1_error)
   }
-  __pyx_t_5 = __Pyx_PyList_GET_SIZE(__pyx_v_results); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 383, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyList_GET_SIZE(__pyx_v_results); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 386, __pyx_L1_error)
   __pyx_r = (__pyx_t_5 > 0);
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":377
+  /* "kycli/kycore.pyx":380
  *             raise KeyError(key)
  * 
  *     def __contains__(self, str key):             # <<<<<<<<<<<<<<
@@ -9178,7 +9232,7 @@ static int __pyx_pf_5kycli_6kycore_6Kycore_25__contains__(struct __pyx_obj_5kycl
 }
 static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_29generator1(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
-/* "kycli/kycore.pyx":385
+/* "kycli/kycore.pyx":388
  *         return len(results) > 0
  * 
  *     def __iter__(self):             # <<<<<<<<<<<<<<
@@ -9213,7 +9267,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_27__iter__(struct __pyx_obj_5ky
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_5kycli_6kycore___pyx_scope_struct_1___iter__ *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 385, __pyx_L1_error)
+    __PYX_ERR(0, 388, __pyx_L1_error)
   } else {
     __Pyx_GOTREF((PyObject *)__pyx_cur_scope);
   }
@@ -9221,7 +9275,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_27__iter__(struct __pyx_obj_5ky
   __Pyx_INCREF((PyObject *)__pyx_cur_scope->__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_cur_scope->__pyx_v_self);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5kycli_6kycore_6Kycore_29generator1, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1]), (PyObject *) __pyx_cur_scope, __pyx_mstate_global->__pyx_n_u_iter, __pyx_mstate_global->__pyx_n_u_Kycore___iter, __pyx_mstate_global->__pyx_n_u_kycli_kycore); if (unlikely(!gen)) __PYX_ERR(0, 385, __pyx_L1_error)
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5kycli_6kycore_6Kycore_29generator1, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1]), (PyObject *) __pyx_cur_scope, __pyx_mstate_global->__pyx_n_u_iter, __pyx_mstate_global->__pyx_n_u_Kycore___iter, __pyx_mstate_global->__pyx_n_u_kycli_kycore); if (unlikely(!gen)) __PYX_ERR(0, 388, __pyx_L1_error)
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -9259,34 +9313,34 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_29generator1(__pyx_CoroutineObj
   __pyx_L3_first_run:;
   if (unlikely(__pyx_sent_value != Py_None)) {
     if (unlikely(__pyx_sent_value)) PyErr_SetString(PyExc_TypeError, "can't send non-None value to a just-started generator");
-    __PYX_ERR(0, 385, __pyx_L1_error)
+    __PYX_ERR(0, 388, __pyx_L1_error)
   }
 
-  /* "kycli/kycore.pyx":389
+  /* "kycli/kycore.pyx":392
  *             SELECT key FROM kvstore
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])             # <<<<<<<<<<<<<<
  *         for row in results:
  *             yield row[0]
 */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 389, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 392, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "kycli/kycore.pyx":386
+  /* "kycli/kycore.pyx":389
  * 
  *     def __iter__(self):
  *         results = self._bind_and_fetch("""             # <<<<<<<<<<<<<<
  *             SELECT key FROM kvstore
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
 */
-  __pyx_t_2 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_cur_scope->__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_cur_scope->__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_FROM_kvstore_WHERE_e, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 386, __pyx_L1_error)
+  __pyx_t_2 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_cur_scope->__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_cur_scope->__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_FROM_kvstore_WHERE_e, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 389, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_cur_scope->__pyx_v_results = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":390
+  /* "kycli/kycore.pyx":393
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])
  *         for row in results:             # <<<<<<<<<<<<<<
@@ -9295,7 +9349,7 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_29generator1(__pyx_CoroutineObj
 */
   if (unlikely(__pyx_cur_scope->__pyx_v_results == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(0, 390, __pyx_L1_error)
+    __PYX_ERR(0, 393, __pyx_L1_error)
   }
   __pyx_t_2 = __pyx_cur_scope->__pyx_v_results; __Pyx_INCREF(__pyx_t_2);
   __pyx_t_3 = 0;
@@ -9303,27 +9357,27 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_29generator1(__pyx_CoroutineObj
     {
       Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_2);
       #if !CYTHON_ASSUME_SAFE_SIZE
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 390, __pyx_L1_error)
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 393, __pyx_L1_error)
       #endif
       if (__pyx_t_3 >= __pyx_temp) break;
     }
     __pyx_t_1 = __Pyx_PyList_GetItemRefFast(__pyx_t_2, __pyx_t_3, __Pyx_ReferenceSharing_OwnStrongReference);
     ++__pyx_t_3;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 390, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 393, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_row);
     __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_row, __pyx_t_1);
     __Pyx_GIVEREF(__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "kycli/kycore.pyx":391
+    /* "kycli/kycore.pyx":394
  *         """, [])
  *         for row in results:
  *             yield row[0]             # <<<<<<<<<<<<<<
  * 
  *     def __len__(self):
 */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_cur_scope->__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 391, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_cur_scope->__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 394, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
@@ -9341,9 +9395,9 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_29generator1(__pyx_CoroutineObj
     __pyx_cur_scope->__pyx_t_0 = 0;
     __Pyx_XGOTREF(__pyx_t_2);
     __pyx_t_3 = __pyx_cur_scope->__pyx_t_1;
-    if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 391, __pyx_L1_error)
+    if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 394, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":390
+    /* "kycli/kycore.pyx":393
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])
  *         for row in results:             # <<<<<<<<<<<<<<
@@ -9354,7 +9408,7 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_29generator1(__pyx_CoroutineObj
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
 
-  /* "kycli/kycore.pyx":385
+  /* "kycli/kycore.pyx":388
  *         return len(results) > 0
  * 
  *     def __iter__(self):             # <<<<<<<<<<<<<<
@@ -9383,7 +9437,7 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_29generator1(__pyx_CoroutineObj
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":393
+/* "kycli/kycore.pyx":396
  *             yield row[0]
  * 
  *     def __len__(self):             # <<<<<<<<<<<<<<
@@ -9420,30 +9474,30 @@ static Py_ssize_t __pyx_pf_5kycli_6kycore_6Kycore_30__len__(struct __pyx_obj_5ky
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__len__", 0);
 
-  /* "kycli/kycore.pyx":397
+  /* "kycli/kycore.pyx":400
  *             SELECT COUNT(*) FROM kvstore
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])             # <<<<<<<<<<<<<<
  *         return int(results[0][0]) if results else 0
  * 
 */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 397, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 400, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "kycli/kycore.pyx":394
+  /* "kycli/kycore.pyx":397
  * 
  *     def __len__(self):
  *         results = self._bind_and_fetch("""             # <<<<<<<<<<<<<<
  *             SELECT COUNT(*) FROM kvstore
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
 */
-  __pyx_t_2 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_COUNT_FROM_kvstore_WHERE, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 394, __pyx_L1_error)
+  __pyx_t_2 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_COUNT_FROM_kvstore_WHERE, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 397, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_results = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":398
+  /* "kycli/kycore.pyx":401
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])
  *         return int(results[0][0]) if results else 0             # <<<<<<<<<<<<<<
@@ -9454,24 +9508,24 @@ static Py_ssize_t __pyx_pf_5kycli_6kycore_6Kycore_30__len__(struct __pyx_obj_5ky
   else
   {
     Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_v_results);
-    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 398, __pyx_L1_error)
+    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 401, __pyx_L1_error)
     __pyx_t_4 = (__pyx_temp != 0);
   }
 
   if (__pyx_t_4) {
     if (unlikely(__pyx_v_results == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 398, __pyx_L1_error)
+      __PYX_ERR(0, 401, __pyx_L1_error)
     }
-    __pyx_t_2 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 398, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 401, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_2, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 398, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_2, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 401, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyNumber_Int(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 398, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyNumber_Int(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 401, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_t_2); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 398, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_t_2); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 401, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_3 = __pyx_t_5;
   } else {
@@ -9480,7 +9534,7 @@ static Py_ssize_t __pyx_pf_5kycli_6kycore_6Kycore_30__len__(struct __pyx_obj_5ky
   __pyx_r = __pyx_t_3;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":393
+  /* "kycli/kycore.pyx":396
  *             yield row[0]
  * 
  *     def __len__(self):             # <<<<<<<<<<<<<<
@@ -9500,7 +9554,7 @@ static Py_ssize_t __pyx_pf_5kycli_6kycore_6Kycore_30__len__(struct __pyx_obj_5ky
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":400
+/* "kycli/kycore.pyx":403
  *         return int(results[0][0]) if results else 0
  * 
  *     def getkey(self, str key_pattern, deserialize=True):             # <<<<<<<<<<<<<<
@@ -9548,35 +9602,35 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_key_pattern,&__pyx_mstate_global->__pyx_n_u_deserialize,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 400, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 403, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 400, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 403, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 400, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 403, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "getkey", 0) < (0)) __PYX_ERR(0, 400, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "getkey", 0) < (0)) __PYX_ERR(0, 403, __pyx_L3_error)
       if (!values[1]) values[1] = __Pyx_NewRef(((PyObject *)Py_True));
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("getkey", 0, 1, 2, i); __PYX_ERR(0, 400, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("getkey", 0, 1, 2, i); __PYX_ERR(0, 403, __pyx_L3_error) }
       }
     } else {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 400, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 403, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 400, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 403, __pyx_L3_error)
         break;
         default: goto __pyx_L5_argtuple_error;
       }
@@ -9587,7 +9641,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("getkey", 0, 1, 2, __pyx_nargs); __PYX_ERR(0, 400, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("getkey", 0, 1, 2, __pyx_nargs); __PYX_ERR(0, 403, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -9598,7 +9652,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key_pattern), (&PyUnicode_Type), 1, "key_pattern", 1))) __PYX_ERR(0, 400, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key_pattern), (&PyUnicode_Type), 1, "key_pattern", 1))) __PYX_ERR(0, 403, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_32getkey(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_key_pattern, __pyx_v_deserialize);
 
   /* function exit code */
@@ -9650,14 +9704,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("getkey", 0);
 
-  /* "kycli/kycore.pyx":401
+  /* "kycli/kycore.pyx":404
  * 
  *     def getkey(self, str key_pattern, deserialize=True):
  *         cdef str k = key_pattern.lower().strip()             # <<<<<<<<<<<<<<
  * 
  *         # 1. Try exact match (including expired to handle notifications)
 */
-  __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key_pattern); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 401, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key_pattern); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 404, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_2 = __pyx_t_3;
   __Pyx_INCREF(__pyx_t_2);
@@ -9667,39 +9721,39 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 401, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 404, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_v_k = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":409
+  /* "kycli/kycore.pyx":412
  *             FROM kvstore
  *             WHERE key = ?
  *         """, [k])             # <<<<<<<<<<<<<<
  * 
  *         cdef str raw_val
 */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 409, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 412, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_k);
   __Pyx_GIVEREF(__pyx_v_k);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 409, __pyx_L1_error);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 412, __pyx_L1_error);
 
-  /* "kycli/kycore.pyx":405
+  /* "kycli/kycore.pyx":408
  *         # 1. Try exact match (including expired to handle notifications)
  *         # Fetch status using SQLite time for consistency
  *         cdef list results = self._bind_and_fetch("""             # <<<<<<<<<<<<<<
  *             SELECT value, expires_at, (expires_at < datetime('now')) as is_expired
  *             FROM kvstore
 */
-  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_value_expires_at_expires, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 405, __pyx_L1_error)
+  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_value_expires_at_expires, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 408, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_results = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":414
+  /* "kycli/kycore.pyx":417
  *         cdef str exp_at
  *         cdef int is_expired
  *         if results:             # <<<<<<<<<<<<<<
@@ -9710,13 +9764,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
   else
   {
     Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_v_results);
-    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 414, __pyx_L1_error)
+    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 417, __pyx_L1_error)
     __pyx_t_5 = (__pyx_temp != 0);
   }
 
   if (__pyx_t_5) {
 
-    /* "kycli/kycore.pyx":415
+    /* "kycli/kycore.pyx":418
  *         cdef int is_expired
  *         if results:
  *             raw_val = results[0][0]             # <<<<<<<<<<<<<<
@@ -9725,18 +9779,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
     if (unlikely(__pyx_v_results == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 415, __pyx_L1_error)
+      __PYX_ERR(0, 418, __pyx_L1_error)
     }
-    __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 415, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 418, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 415, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (!(likely(PyUnicode_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_1))) __PYX_ERR(0, 415, __pyx_L1_error)
+    if (!(likely(PyUnicode_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_1))) __PYX_ERR(0, 418, __pyx_L1_error)
     __pyx_v_raw_val = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "kycli/kycore.pyx":416
+    /* "kycli/kycore.pyx":419
  *         if results:
  *             raw_val = results[0][0]
  *             exp_at = results[0][1]             # <<<<<<<<<<<<<<
@@ -9745,18 +9799,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
     if (unlikely(__pyx_v_results == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 416, __pyx_L1_error)
+      __PYX_ERR(0, 419, __pyx_L1_error)
     }
-    __pyx_t_1 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 416, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 419, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 416, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 419, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (!(likely(PyUnicode_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_3))) __PYX_ERR(0, 416, __pyx_L1_error)
+    if (!(likely(PyUnicode_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_3))) __PYX_ERR(0, 419, __pyx_L1_error)
     __pyx_v_exp_at = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "kycli/kycore.pyx":417
+    /* "kycli/kycore.pyx":420
  *             raw_val = results[0][0]
  *             exp_at = results[0][1]
  *             is_expired = int(results[0][2]) if results[0][2] is not None else 0             # <<<<<<<<<<<<<<
@@ -9765,11 +9819,11 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
     if (unlikely(__pyx_v_results == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 417, __pyx_L1_error)
+      __PYX_ERR(0, 420, __pyx_L1_error)
     }
-    __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 417, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 420, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 2, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 417, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 2, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_5 = (__pyx_t_1 != Py_None);
@@ -9777,17 +9831,17 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     if (__pyx_t_5) {
       if (unlikely(__pyx_v_results == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 417, __pyx_L1_error)
+        __PYX_ERR(0, 420, __pyx_L1_error)
       }
-      __pyx_t_1 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 417, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, 2, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 417, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, 2, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 420, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyNumber_Int(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 417, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyNumber_Int(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_7 = __Pyx_PyLong_As_int(__pyx_t_1); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 417, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyLong_As_int(__pyx_t_1); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 420, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_6 = __pyx_t_7;
     } else {
@@ -9795,7 +9849,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     }
     __pyx_v_is_expired = __pyx_t_6;
 
-    /* "kycli/kycore.pyx":420
+    /* "kycli/kycore.pyx":423
  * 
  *             # Check if expired
  *             if is_expired:             # <<<<<<<<<<<<<<
@@ -9805,7 +9859,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     __pyx_t_5 = (__pyx_v_is_expired != 0);
     if (__pyx_t_5) {
 
-      /* "kycli/kycore.pyx":421
+      /* "kycli/kycore.pyx":424
  *             # Check if expired
  *             if is_expired:
  *                 warnings.warn(f"Key '{k}' expired at {exp_at} and has been moved to archive.", UserWarning)             # <<<<<<<<<<<<<<
@@ -9813,12 +9867,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
  *                 self._execute_raw("BEGIN TRANSACTION")
 */
       __pyx_t_3 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_warnings); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 421, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_warnings); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 424, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_warn); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 421, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_warn); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 424, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyUnicode_Unicode(__pyx_v_exp_at); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 421, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyUnicode_Unicode(__pyx_v_exp_at); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 424, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_9[0] = __pyx_mstate_global->__pyx_kp_u_Key;
       __pyx_t_9[1] = __pyx_v_k;
@@ -9826,7 +9880,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
       __pyx_t_9[3] = __pyx_t_2;
       __pyx_t_9[4] = __pyx_mstate_global->__pyx_kp_u_and_has_been_moved_to_archive;
       __pyx_t_10 = __Pyx_PyUnicode_Join(__pyx_t_9, 5, 5 + __Pyx_PyUnicode_GET_LENGTH(__pyx_v_k) + 13 + __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2) + 31, 127 | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_v_k) | __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2));
-      if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 421, __pyx_L1_error)
+      if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 424, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_t_4 = 1;
@@ -9847,67 +9901,67 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 421, __pyx_L1_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 424, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "kycli/kycore.pyx":423
+      /* "kycli/kycore.pyx":426
  *                 warnings.warn(f"Key '{k}' expired at {exp_at} and has been moved to archive.", UserWarning)
  *                 # Move to archive and delete
  *                 self._execute_raw("BEGIN TRANSACTION")             # <<<<<<<<<<<<<<
  *                 self._bind_and_execute("INSERT INTO archive (key, value) VALUES (?, ?)", [k, raw_val])
  *                 self._bind_and_execute("DELETE FROM kvstore WHERE key = ?", [k])
 */
-      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 423, __pyx_L1_error)
+      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 426, __pyx_L1_error)
 
-      /* "kycli/kycore.pyx":424
+      /* "kycli/kycore.pyx":427
  *                 # Move to archive and delete
  *                 self._execute_raw("BEGIN TRANSACTION")
  *                 self._bind_and_execute("INSERT INTO archive (key, value) VALUES (?, ?)", [k, raw_val])             # <<<<<<<<<<<<<<
  *                 self._bind_and_execute("DELETE FROM kvstore WHERE key = ?", [k])
  *                 self._execute_raw("COMMIT")
 */
-      __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 424, __pyx_L1_error)
+      __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_INCREF(__pyx_v_k);
       __Pyx_GIVEREF(__pyx_v_k);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 424, __pyx_L1_error);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 427, __pyx_L1_error);
       __Pyx_INCREF(__pyx_v_raw_val);
       __Pyx_GIVEREF(__pyx_v_raw_val);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 1, __pyx_v_raw_val) != (0)) __PYX_ERR(0, 424, __pyx_L1_error);
-      __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_archive_key_value_VA, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 424, __pyx_L1_error)
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 1, __pyx_v_raw_val) != (0)) __PYX_ERR(0, 427, __pyx_L1_error);
+      __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_archive_key_value_VA, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 427, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-      /* "kycli/kycore.pyx":425
+      /* "kycli/kycore.pyx":428
  *                 self._execute_raw("BEGIN TRANSACTION")
  *                 self._bind_and_execute("INSERT INTO archive (key, value) VALUES (?, ?)", [k, raw_val])
  *                 self._bind_and_execute("DELETE FROM kvstore WHERE key = ?", [k])             # <<<<<<<<<<<<<<
  *                 self._execute_raw("COMMIT")
  *                 return "Key not found"
 */
-      __pyx_t_8 = PyList_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 425, __pyx_L1_error)
+      __pyx_t_8 = PyList_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 428, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_INCREF(__pyx_v_k);
       __Pyx_GIVEREF(__pyx_v_k);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 425, __pyx_L1_error);
-      __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_DELETE_FROM_kvstore_WHERE_key, ((PyObject*)__pyx_t_8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 425, __pyx_L1_error)
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 428, __pyx_L1_error);
+      __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_DELETE_FROM_kvstore_WHERE_key, ((PyObject*)__pyx_t_8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 428, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "kycli/kycore.pyx":426
+      /* "kycli/kycore.pyx":429
  *                 self._bind_and_execute("INSERT INTO archive (key, value) VALUES (?, ?)", [k, raw_val])
  *                 self._bind_and_execute("DELETE FROM kvstore WHERE key = ?", [k])
  *                 self._execute_raw("COMMIT")             # <<<<<<<<<<<<<<
  *                 return "Key not found"
  * 
 */
-      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 426, __pyx_L1_error)
+      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 429, __pyx_L1_error)
 
-      /* "kycli/kycore.pyx":427
+      /* "kycli/kycore.pyx":430
  *                 self._bind_and_execute("DELETE FROM kvstore WHERE key = ?", [k])
  *                 self._execute_raw("COMMIT")
  *                 return "Key not found"             # <<<<<<<<<<<<<<
@@ -9919,7 +9973,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
       __pyx_r = __pyx_mstate_global->__pyx_kp_u_Key_not_found;
       goto __pyx_L0;
 
-      /* "kycli/kycore.pyx":420
+      /* "kycli/kycore.pyx":423
  * 
  *             # Check if expired
  *             if is_expired:             # <<<<<<<<<<<<<<
@@ -9928,17 +9982,17 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
     }
 
-    /* "kycli/kycore.pyx":430
+    /* "kycli/kycore.pyx":433
  * 
  *             # Check L1 Cache
  *             if k in self._cache:             # <<<<<<<<<<<<<<
  *                 self._cache.move_to_end(k)
  *                 return self._cache[k]
 */
-    __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_k, __pyx_v_self->_cache, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 430, __pyx_L1_error)
+    __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_k, __pyx_v_self->_cache, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 433, __pyx_L1_error)
     if (__pyx_t_5) {
 
-      /* "kycli/kycore.pyx":431
+      /* "kycli/kycore.pyx":434
  *             # Check L1 Cache
  *             if k in self._cache:
  *                 self._cache.move_to_end(k)             # <<<<<<<<<<<<<<
@@ -9952,12 +10006,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
         PyObject *__pyx_callargs[2] = {__pyx_t_8, __pyx_v_k};
         __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_move_to_end, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 431, __pyx_L1_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 434, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "kycli/kycore.pyx":432
+      /* "kycli/kycore.pyx":435
  *             if k in self._cache:
  *                 self._cache.move_to_end(k)
  *                 return self._cache[k]             # <<<<<<<<<<<<<<
@@ -9965,13 +10019,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
  *             raw_val = self._decrypt_c(raw_val)
 */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_1 = __Pyx_PyObject_Dict_GetItem(__pyx_v_self->_cache, __pyx_v_k); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 432, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Dict_GetItem(__pyx_v_self->_cache, __pyx_v_k); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 435, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_r = __pyx_t_1;
       __pyx_t_1 = 0;
       goto __pyx_L0;
 
-      /* "kycli/kycore.pyx":430
+      /* "kycli/kycore.pyx":433
  * 
  *             # Check L1 Cache
  *             if k in self._cache:             # <<<<<<<<<<<<<<
@@ -9980,19 +10034,19 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
     }
 
-    /* "kycli/kycore.pyx":434
+    /* "kycli/kycore.pyx":437
  *                 return self._cache[k]
  * 
  *             raw_val = self._decrypt_c(raw_val)             # <<<<<<<<<<<<<<
  *             val = raw_val
  *             if deserialize:
 */
-    __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_decrypt_c(__pyx_v_self, __pyx_v_raw_val); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 434, __pyx_L1_error)
+    __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_decrypt_c(__pyx_v_self, __pyx_v_raw_val); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 437, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_raw_val, ((PyObject*)__pyx_t_1));
     __pyx_t_1 = 0;
 
-    /* "kycli/kycore.pyx":435
+    /* "kycli/kycore.pyx":438
  * 
  *             raw_val = self._decrypt_c(raw_val)
  *             val = raw_val             # <<<<<<<<<<<<<<
@@ -10002,17 +10056,17 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     __Pyx_INCREF(__pyx_v_raw_val);
     __pyx_v_val = __pyx_v_raw_val;
 
-    /* "kycli/kycore.pyx":436
+    /* "kycli/kycore.pyx":439
  *             raw_val = self._decrypt_c(raw_val)
  *             val = raw_val
  *             if deserialize:             # <<<<<<<<<<<<<<
  *                 try:
  *                     val = json.loads(raw_val)
 */
-    __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_deserialize); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 436, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_deserialize); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 439, __pyx_L1_error)
     if (__pyx_t_5) {
 
-      /* "kycli/kycore.pyx":437
+      /* "kycli/kycore.pyx":440
  *             val = raw_val
  *             if deserialize:
  *                 try:             # <<<<<<<<<<<<<<
@@ -10028,7 +10082,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
         __Pyx_XGOTREF(__pyx_t_13);
         /*try:*/ {
 
-          /* "kycli/kycore.pyx":438
+          /* "kycli/kycore.pyx":441
  *             if deserialize:
  *                 try:
  *                     val = json.loads(raw_val)             # <<<<<<<<<<<<<<
@@ -10036,9 +10090,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
  *                     val = raw_val
 */
           __pyx_t_8 = NULL;
-          __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 438, __pyx_L7_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 441, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_10);
-          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_mstate_global->__pyx_n_u_loads); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 438, __pyx_L7_error)
+          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_mstate_global->__pyx_n_u_loads); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 441, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
           __pyx_t_4 = 1;
@@ -10058,13 +10112,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
             __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 438, __pyx_L7_error)
+            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 441, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_1);
           }
           __Pyx_DECREF_SET(__pyx_v_val, __pyx_t_1);
           __pyx_t_1 = 0;
 
-          /* "kycli/kycore.pyx":437
+          /* "kycli/kycore.pyx":440
  *             val = raw_val
  *             if deserialize:
  *                 try:             # <<<<<<<<<<<<<<
@@ -10083,7 +10137,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "kycli/kycore.pyx":439
+        /* "kycli/kycore.pyx":442
  *                 try:
  *                     val = json.loads(raw_val)
  *                 except:             # <<<<<<<<<<<<<<
@@ -10093,7 +10147,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
         /*except:*/ {
           __Pyx_ErrRestore(0,0,0);
 
-          /* "kycli/kycore.pyx":440
+          /* "kycli/kycore.pyx":443
  *                     val = json.loads(raw_val)
  *                 except:
  *                     val = raw_val             # <<<<<<<<<<<<<<
@@ -10112,7 +10166,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
         __pyx_L12_try_end:;
       }
 
-      /* "kycli/kycore.pyx":436
+      /* "kycli/kycore.pyx":439
  *             raw_val = self._decrypt_c(raw_val)
  *             val = raw_val
  *             if deserialize:             # <<<<<<<<<<<<<<
@@ -10121,16 +10175,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
     }
 
-    /* "kycli/kycore.pyx":443
+    /* "kycli/kycore.pyx":446
  * 
  *             # Update L1 Cache
  *             self._cache[k] = val             # <<<<<<<<<<<<<<
  *             self._cache.move_to_end(k)
  *             if len(self._cache) > self._cache_limit:
 */
-    if (unlikely((PyObject_SetItem(__pyx_v_self->_cache, __pyx_v_k, __pyx_v_val) < 0))) __PYX_ERR(0, 443, __pyx_L1_error)
+    if (unlikely((PyObject_SetItem(__pyx_v_self->_cache, __pyx_v_k, __pyx_v_val) < 0))) __PYX_ERR(0, 446, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":444
+    /* "kycli/kycore.pyx":447
  *             # Update L1 Cache
  *             self._cache[k] = val
  *             self._cache.move_to_end(k)             # <<<<<<<<<<<<<<
@@ -10144,12 +10198,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
       PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_k};
       __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_move_to_end, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 444, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 447, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "kycli/kycore.pyx":445
+    /* "kycli/kycore.pyx":448
  *             self._cache[k] = val
  *             self._cache.move_to_end(k)
  *             if len(self._cache) > self._cache_limit:             # <<<<<<<<<<<<<<
@@ -10158,12 +10212,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
     __pyx_t_1 = __pyx_v_self->_cache;
     __Pyx_INCREF(__pyx_t_1);
-    __pyx_t_14 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_14 == ((Py_ssize_t)-1))) __PYX_ERR(0, 445, __pyx_L1_error)
+    __pyx_t_14 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_14 == ((Py_ssize_t)-1))) __PYX_ERR(0, 448, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_5 = (__pyx_t_14 > __pyx_v_self->_cache_limit);
     if (__pyx_t_5) {
 
-      /* "kycli/kycore.pyx":446
+      /* "kycli/kycore.pyx":449
  *             self._cache.move_to_end(k)
  *             if len(self._cache) > self._cache_limit:
  *                 self._cache.popitem(last=False)             # <<<<<<<<<<<<<<
@@ -10175,18 +10229,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
       __pyx_t_4 = 0;
       {
         PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_3, NULL};
-        __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 446, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 449, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
-        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_last, Py_False, __pyx_t_8, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 446, __pyx_L1_error)
+        if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_last, Py_False, __pyx_t_8, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 449, __pyx_L1_error)
         __pyx_t_1 = __Pyx_Object_VectorcallMethod_CallFromBuilder((PyObject*)__pyx_mstate_global->__pyx_n_u_popitem, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_8);
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 446, __pyx_L1_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 449, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "kycli/kycore.pyx":445
+      /* "kycli/kycore.pyx":448
  *             self._cache[k] = val
  *             self._cache.move_to_end(k)
  *             if len(self._cache) > self._cache_limit:             # <<<<<<<<<<<<<<
@@ -10195,7 +10249,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
     }
 
-    /* "kycli/kycore.pyx":448
+    /* "kycli/kycore.pyx":451
  *                 self._cache.popitem(last=False)
  * 
  *             return val             # <<<<<<<<<<<<<<
@@ -10207,7 +10261,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     __pyx_r = __pyx_v_val;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":414
+    /* "kycli/kycore.pyx":417
  *         cdef str exp_at
  *         cdef int is_expired
  *         if results:             # <<<<<<<<<<<<<<
@@ -10216,30 +10270,30 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
   }
 
-  /* "kycli/kycore.pyx":454
+  /* "kycli/kycore.pyx":457
  *             SELECT key, value FROM kvstore
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])             # <<<<<<<<<<<<<<
  *         try:
  *             regex = re.compile(key_pattern, re.IGNORECASE)
 */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 454, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 457, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "kycli/kycore.pyx":451
+  /* "kycli/kycore.pyx":454
  * 
  *         # 2. Try regex
  *         results = self._bind_and_fetch("""             # <<<<<<<<<<<<<<
  *             SELECT key, value FROM kvstore
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
 */
-  __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_value_FROM_kvstore_W, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 451, __pyx_L1_error)
+  __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_value_FROM_kvstore_W, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 454, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF_SET(__pyx_v_results, ((PyObject*)__pyx_t_8));
   __pyx_t_8 = 0;
 
-  /* "kycli/kycore.pyx":455
+  /* "kycli/kycore.pyx":458
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])
  *         try:             # <<<<<<<<<<<<<<
@@ -10255,7 +10309,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     __Pyx_XGOTREF(__pyx_t_11);
     /*try:*/ {
 
-      /* "kycli/kycore.pyx":456
+      /* "kycli/kycore.pyx":459
  *         """, [])
  *         try:
  *             regex = re.compile(key_pattern, re.IGNORECASE)             # <<<<<<<<<<<<<<
@@ -10263,14 +10317,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
  *             return "Key not found"
 */
       __pyx_t_1 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 456, __pyx_L16_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 459, __pyx_L16_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_compile); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 456, __pyx_L16_error)
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_compile); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 459, __pyx_L16_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 456, __pyx_L16_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 459, __pyx_L16_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_IGNORECASE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 456, __pyx_L16_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_IGNORECASE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 459, __pyx_L16_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_4 = 1;
@@ -10291,13 +10345,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
         __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 456, __pyx_L16_error)
+        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 459, __pyx_L16_error)
         __Pyx_GOTREF(__pyx_t_8);
       }
       __pyx_v_regex = __pyx_t_8;
       __pyx_t_8 = 0;
 
-      /* "kycli/kycore.pyx":455
+      /* "kycli/kycore.pyx":458
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])
  *         try:             # <<<<<<<<<<<<<<
@@ -10316,7 +10370,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-    /* "kycli/kycore.pyx":457
+    /* "kycli/kycore.pyx":460
  *         try:
  *             regex = re.compile(key_pattern, re.IGNORECASE)
  *         except re.error:             # <<<<<<<<<<<<<<
@@ -10324,9 +10378,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
  * 
 */
     __Pyx_ErrFetch(&__pyx_t_8, &__pyx_t_10, &__pyx_t_2);
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 457, __pyx_L18_except_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 460, __pyx_L18_except_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_error); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 457, __pyx_L18_except_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_error); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 460, __pyx_L18_except_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_6 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_8, __pyx_t_3);
@@ -10336,7 +10390,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     if (__pyx_t_6) {
       __Pyx_ErrRestore(0,0,0);
 
-      /* "kycli/kycore.pyx":458
+      /* "kycli/kycore.pyx":461
  *             regex = re.compile(key_pattern, re.IGNORECASE)
  *         except re.error:
  *             return "Key not found"             # <<<<<<<<<<<<<<
@@ -10350,7 +10404,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     }
     goto __pyx_L18_except_error;
 
-    /* "kycli/kycore.pyx":455
+    /* "kycli/kycore.pyx":458
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])
  *         try:             # <<<<<<<<<<<<<<
@@ -10372,19 +10426,19 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     __pyx_L21_try_end:;
   }
 
-  /* "kycli/kycore.pyx":460
+  /* "kycli/kycore.pyx":463
  *             return "Key not found"
  * 
  *         matches = {}             # <<<<<<<<<<<<<<
  *         for row in results:
  *             if regex.search(row[0]):
 */
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 460, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 463, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_matches = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":461
+  /* "kycli/kycore.pyx":464
  * 
  *         matches = {}
  *         for row in results:             # <<<<<<<<<<<<<<
@@ -10393,7 +10447,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
   if (unlikely(__pyx_v_results == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(0, 461, __pyx_L1_error)
+    __PYX_ERR(0, 464, __pyx_L1_error)
   }
   __pyx_t_2 = __pyx_v_results; __Pyx_INCREF(__pyx_t_2);
   __pyx_t_14 = 0;
@@ -10401,18 +10455,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
     {
       Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_2);
       #if !CYTHON_ASSUME_SAFE_SIZE
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 461, __pyx_L1_error)
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 464, __pyx_L1_error)
       #endif
       if (__pyx_t_14 >= __pyx_temp) break;
     }
     __pyx_t_10 = __Pyx_PyList_GetItemRefFast(__pyx_t_2, __pyx_t_14, __Pyx_ReferenceSharing_OwnStrongReference);
     ++__pyx_t_14;
-    if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 461, __pyx_L1_error)
+    if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 464, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_XDECREF_SET(__pyx_v_row, __pyx_t_10);
     __pyx_t_10 = 0;
 
-    /* "kycli/kycore.pyx":462
+    /* "kycli/kycore.pyx":465
  *         matches = {}
  *         for row in results:
  *             if regex.search(row[0]):             # <<<<<<<<<<<<<<
@@ -10421,7 +10475,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
     __pyx_t_8 = __pyx_v_regex;
     __Pyx_INCREF(__pyx_t_8);
-    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 462, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 465, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_4 = 0;
     {
@@ -10429,40 +10483,40 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
       __pyx_t_10 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_search, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 462, __pyx_L1_error)
+      if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 465, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
     }
-    __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_10); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 462, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_10); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 465, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     if (__pyx_t_5) {
 
-      /* "kycli/kycore.pyx":463
+      /* "kycli/kycore.pyx":466
  *         for row in results:
  *             if regex.search(row[0]):
  *                 decrypted_val = self._decrypt_c(row[1])             # <<<<<<<<<<<<<<
  *                 if deserialize:
  *                     try:
 */
-      __pyx_t_10 = __Pyx_GetItemInt(__pyx_v_row, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 463, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_GetItemInt(__pyx_v_row, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 466, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      if (!(likely(PyUnicode_CheckExact(__pyx_t_10))||((__pyx_t_10) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_10))) __PYX_ERR(0, 463, __pyx_L1_error)
-      __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_decrypt_c(__pyx_v_self, ((PyObject*)__pyx_t_10)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 463, __pyx_L1_error)
+      if (!(likely(PyUnicode_CheckExact(__pyx_t_10))||((__pyx_t_10) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_10))) __PYX_ERR(0, 466, __pyx_L1_error)
+      __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_decrypt_c(__pyx_v_self, ((PyObject*)__pyx_t_10)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 466, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_XDECREF_SET(__pyx_v_decrypted_val, ((PyObject*)__pyx_t_3));
       __pyx_t_3 = 0;
 
-      /* "kycli/kycore.pyx":464
+      /* "kycli/kycore.pyx":467
  *             if regex.search(row[0]):
  *                 decrypted_val = self._decrypt_c(row[1])
  *                 if deserialize:             # <<<<<<<<<<<<<<
  *                     try:
  *                         matches[row[0]] = json.loads(decrypted_val)
 */
-      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_deserialize); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 464, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_deserialize); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 467, __pyx_L1_error)
       if (__pyx_t_5) {
 
-        /* "kycli/kycore.pyx":465
+        /* "kycli/kycore.pyx":468
  *                 decrypted_val = self._decrypt_c(row[1])
  *                 if deserialize:
  *                     try:             # <<<<<<<<<<<<<<
@@ -10478,7 +10532,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
           __Pyx_XGOTREF(__pyx_t_13);
           /*try:*/ {
 
-            /* "kycli/kycore.pyx":466
+            /* "kycli/kycore.pyx":469
  *                 if deserialize:
  *                     try:
  *                         matches[row[0]] = json.loads(decrypted_val)             # <<<<<<<<<<<<<<
@@ -10486,9 +10540,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
  *                         matches[row[0]] = decrypted_val
 */
             __pyx_t_10 = NULL;
-            __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 466, __pyx_L28_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 469, __pyx_L28_error)
             __Pyx_GOTREF(__pyx_t_8);
-            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_loads); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 466, __pyx_L28_error)
+            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_loads); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 469, __pyx_L28_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __pyx_t_4 = 1;
@@ -10508,16 +10562,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
               __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_1, __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
               __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
               __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-              if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 466, __pyx_L28_error)
+              if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 469, __pyx_L28_error)
               __Pyx_GOTREF(__pyx_t_3);
             }
-            __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 466, __pyx_L28_error)
+            __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 469, __pyx_L28_error)
             __Pyx_GOTREF(__pyx_t_1);
-            if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_1, __pyx_t_3) < 0))) __PYX_ERR(0, 466, __pyx_L28_error)
+            if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_1, __pyx_t_3) < 0))) __PYX_ERR(0, 469, __pyx_L28_error)
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-            /* "kycli/kycore.pyx":465
+            /* "kycli/kycore.pyx":468
  *                 decrypted_val = self._decrypt_c(row[1])
  *                 if deserialize:
  *                     try:             # <<<<<<<<<<<<<<
@@ -10535,7 +10589,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-          /* "kycli/kycore.pyx":467
+          /* "kycli/kycore.pyx":470
  *                     try:
  *                         matches[row[0]] = json.loads(decrypted_val)
  *                     except:             # <<<<<<<<<<<<<<
@@ -10544,21 +10598,21 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
           /*except:*/ {
             __Pyx_AddTraceback("kycli.kycore.Kycore.getkey", __pyx_clineno, __pyx_lineno, __pyx_filename);
-            if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_1, &__pyx_t_10) < 0) __PYX_ERR(0, 467, __pyx_L30_except_error)
+            if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_1, &__pyx_t_10) < 0) __PYX_ERR(0, 470, __pyx_L30_except_error)
             __Pyx_XGOTREF(__pyx_t_3);
             __Pyx_XGOTREF(__pyx_t_1);
             __Pyx_XGOTREF(__pyx_t_10);
 
-            /* "kycli/kycore.pyx":468
+            /* "kycli/kycore.pyx":471
  *                         matches[row[0]] = json.loads(decrypted_val)
  *                     except:
  *                         matches[row[0]] = decrypted_val             # <<<<<<<<<<<<<<
  *                 else:
  *                     matches[row[0]] = decrypted_val
 */
-            __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 468, __pyx_L30_except_error)
+            __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 471, __pyx_L30_except_error)
             __Pyx_GOTREF(__pyx_t_8);
-            if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_8, __pyx_v_decrypted_val) < 0))) __PYX_ERR(0, 468, __pyx_L30_except_error)
+            if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_8, __pyx_v_decrypted_val) < 0))) __PYX_ERR(0, 471, __pyx_L30_except_error)
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -10566,7 +10620,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
             goto __pyx_L29_exception_handled;
           }
 
-          /* "kycli/kycore.pyx":465
+          /* "kycli/kycore.pyx":468
  *                 decrypted_val = self._decrypt_c(row[1])
  *                 if deserialize:
  *                     try:             # <<<<<<<<<<<<<<
@@ -10587,7 +10641,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
           __pyx_L35_try_end:;
         }
 
-        /* "kycli/kycore.pyx":464
+        /* "kycli/kycore.pyx":467
  *             if regex.search(row[0]):
  *                 decrypted_val = self._decrypt_c(row[1])
  *                 if deserialize:             # <<<<<<<<<<<<<<
@@ -10597,7 +10651,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
         goto __pyx_L27;
       }
 
-      /* "kycli/kycore.pyx":470
+      /* "kycli/kycore.pyx":473
  *                         matches[row[0]] = decrypted_val
  *                 else:
  *                     matches[row[0]] = decrypted_val             # <<<<<<<<<<<<<<
@@ -10605,14 +10659,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
  *         return matches if matches else "Key not found"
 */
       /*else*/ {
-        __pyx_t_10 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 470, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 473, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
-        if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_10, __pyx_v_decrypted_val) < 0))) __PYX_ERR(0, 470, __pyx_L1_error)
+        if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_10, __pyx_v_decrypted_val) < 0))) __PYX_ERR(0, 473, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       }
       __pyx_L27:;
 
-      /* "kycli/kycore.pyx":462
+      /* "kycli/kycore.pyx":465
  *         matches = {}
  *         for row in results:
  *             if regex.search(row[0]):             # <<<<<<<<<<<<<<
@@ -10621,7 +10675,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
 */
     }
 
-    /* "kycli/kycore.pyx":461
+    /* "kycli/kycore.pyx":464
  * 
  *         matches = {}
  *         for row in results:             # <<<<<<<<<<<<<<
@@ -10631,7 +10685,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":472
+  /* "kycli/kycore.pyx":475
  *                     matches[row[0]] = decrypted_val
  * 
  *         return matches if matches else "Key not found"             # <<<<<<<<<<<<<<
@@ -10639,7 +10693,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
  *     def search(self, str query, limit=100, deserialize=True, keys_only=False):
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_matches); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 472, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_matches); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 475, __pyx_L1_error)
   if (__pyx_t_5) {
     __Pyx_INCREF(__pyx_v_matches);
     __pyx_t_2 = __pyx_v_matches;
@@ -10651,7 +10705,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":400
+  /* "kycli/kycore.pyx":403
  *         return int(results[0][0]) if results else 0
  * 
  *     def getkey(self, str key_pattern, deserialize=True):             # <<<<<<<<<<<<<<
@@ -10683,7 +10737,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_32getkey(struct __pyx_obj_5kycl
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":474
+/* "kycli/kycore.pyx":477
  *         return matches if matches else "Key not found"
  * 
  *     def search(self, str query, limit=100, deserialize=True, keys_only=False):             # <<<<<<<<<<<<<<
@@ -10734,53 +10788,53 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_query,&__pyx_mstate_global->__pyx_n_u_limit,&__pyx_mstate_global->__pyx_n_u_deserialize,&__pyx_mstate_global->__pyx_n_u_keys_only,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 474, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 477, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 474, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 477, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 474, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 477, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 474, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 477, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 474, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 477, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "search", 0) < (0)) __PYX_ERR(0, 474, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "search", 0) < (0)) __PYX_ERR(0, 477, __pyx_L3_error)
       if (!values[1]) values[1] = __Pyx_NewRef(((PyObject *)__pyx_mstate_global->__pyx_int_100));
       if (!values[2]) values[2] = __Pyx_NewRef(((PyObject *)Py_True));
       if (!values[3]) values[3] = __Pyx_NewRef(((PyObject *)Py_False));
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("search", 0, 1, 4, i); __PYX_ERR(0, 474, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("search", 0, 1, 4, i); __PYX_ERR(0, 477, __pyx_L3_error) }
       }
     } else {
       switch (__pyx_nargs) {
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 474, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 477, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 474, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 477, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 474, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 477, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 474, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 477, __pyx_L3_error)
         break;
         default: goto __pyx_L5_argtuple_error;
       }
@@ -10795,7 +10849,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("search", 0, 1, 4, __pyx_nargs); __PYX_ERR(0, 474, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("search", 0, 1, 4, __pyx_nargs); __PYX_ERR(0, 477, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -10806,7 +10860,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_query), (&PyUnicode_Type), 1, "query", 1))) __PYX_ERR(0, 474, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_query), (&PyUnicode_Type), 1, "query", 1))) __PYX_ERR(0, 477, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_34search(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_query, __pyx_v_limit, __pyx_v_deserialize, __pyx_v_keys_only);
 
   /* function exit code */
@@ -10851,17 +10905,17 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("search", 0);
 
-  /* "kycli/kycore.pyx":484
+  /* "kycli/kycore.pyx":487
  *         """
  *         cdef str sql
  *         if keys_only:             # <<<<<<<<<<<<<<
  *             sql = """
  *                 SELECT kvstore.key FROM kvstore
 */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_keys_only); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 484, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_keys_only); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 487, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "kycli/kycore.pyx":485
+    /* "kycli/kycore.pyx":488
  *         cdef str sql
  *         if keys_only:
  *             sql = """             # <<<<<<<<<<<<<<
@@ -10871,7 +10925,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
     __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_SELECT_kvstore_key_FROM_kvstore);
     __pyx_v_sql = __pyx_mstate_global->__pyx_kp_u_SELECT_kvstore_key_FROM_kvstore;
 
-    /* "kycli/kycore.pyx":484
+    /* "kycli/kycore.pyx":487
  *         """
  *         cdef str sql
  *         if keys_only:             # <<<<<<<<<<<<<<
@@ -10881,7 +10935,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
     goto __pyx_L3;
   }
 
-  /* "kycli/kycore.pyx":494
+  /* "kycli/kycore.pyx":497
  *             """
  *         else:
  *             sql = """             # <<<<<<<<<<<<<<
@@ -10894,38 +10948,38 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
   }
   __pyx_L3:;
 
-  /* "kycli/kycore.pyx":503
+  /* "kycli/kycore.pyx":506
  *             """
  * 
  *         results = self._bind_and_fetch(sql, [query, limit])             # <<<<<<<<<<<<<<
  * 
  *         if keys_only:
 */
-  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 503, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 506, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_query);
   __Pyx_GIVEREF(__pyx_v_query);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_2, 0, __pyx_v_query) != (0)) __PYX_ERR(0, 503, __pyx_L1_error);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_2, 0, __pyx_v_query) != (0)) __PYX_ERR(0, 506, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_limit);
   __Pyx_GIVEREF(__pyx_v_limit);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_2, 1, __pyx_v_limit) != (0)) __PYX_ERR(0, 503, __pyx_L1_error);
-  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_v_sql, ((PyObject*)__pyx_t_2)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 503, __pyx_L1_error)
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_2, 1, __pyx_v_limit) != (0)) __PYX_ERR(0, 506, __pyx_L1_error);
+  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_v_sql, ((PyObject*)__pyx_t_2)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 506, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_results = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":505
+  /* "kycli/kycore.pyx":508
  *         results = self._bind_and_fetch(sql, [query, limit])
  * 
  *         if keys_only:             # <<<<<<<<<<<<<<
  *             return [row[0] for row in results]
  * 
 */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_keys_only); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 505, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_keys_only); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 508, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "kycli/kycore.pyx":506
+    /* "kycli/kycore.pyx":509
  * 
  *         if keys_only:
  *             return [row[0] for row in results]             # <<<<<<<<<<<<<<
@@ -10934,11 +10988,11 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
 */
     __Pyx_XDECREF(__pyx_r);
     { /* enter inner scope */
-      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 506, __pyx_L7_error)
+      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 509, __pyx_L7_error)
       __Pyx_GOTREF(__pyx_t_3);
       if (unlikely(__pyx_v_results == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-        __PYX_ERR(0, 506, __pyx_L7_error)
+        __PYX_ERR(0, 509, __pyx_L7_error)
       }
       __pyx_t_2 = __pyx_v_results; __Pyx_INCREF(__pyx_t_2);
       __pyx_t_4 = 0;
@@ -10946,19 +11000,19 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
         {
           Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_2);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 506, __pyx_L7_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 509, __pyx_L7_error)
           #endif
           if (__pyx_t_4 >= __pyx_temp) break;
         }
         __pyx_t_5 = __Pyx_PyList_GetItemRefFast(__pyx_t_2, __pyx_t_4, __Pyx_ReferenceSharing_OwnStrongReference);
         ++__pyx_t_4;
-        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 506, __pyx_L7_error)
+        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 509, __pyx_L7_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_XDECREF_SET(__pyx_7genexpr__pyx_v_row, __pyx_t_5);
         __pyx_t_5 = 0;
-        __pyx_t_5 = __Pyx_GetItemInt(__pyx_7genexpr__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 506, __pyx_L7_error)
+        __pyx_t_5 = __Pyx_GetItemInt(__pyx_7genexpr__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 509, __pyx_L7_error)
         __Pyx_GOTREF(__pyx_t_5);
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_5))) __PYX_ERR(0, 506, __pyx_L7_error)
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_5))) __PYX_ERR(0, 509, __pyx_L7_error)
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       }
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -10973,7 +11027,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":505
+    /* "kycli/kycore.pyx":508
  *         results = self._bind_and_fetch(sql, [query, limit])
  * 
  *         if keys_only:             # <<<<<<<<<<<<<<
@@ -10982,19 +11036,19 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
 */
   }
 
-  /* "kycli/kycore.pyx":508
+  /* "kycli/kycore.pyx":511
  *             return [row[0] for row in results]
  * 
  *         matches = {}             # <<<<<<<<<<<<<<
  *         for row in results:
  *             decrypted_val = self._decrypt(row[1])
 */
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 508, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 511, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_matches = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":509
+  /* "kycli/kycore.pyx":512
  * 
  *         matches = {}
  *         for row in results:             # <<<<<<<<<<<<<<
@@ -11003,7 +11057,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
 */
   if (unlikely(__pyx_v_results == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(0, 509, __pyx_L1_error)
+    __PYX_ERR(0, 512, __pyx_L1_error)
   }
   __pyx_t_3 = __pyx_v_results; __Pyx_INCREF(__pyx_t_3);
   __pyx_t_4 = 0;
@@ -11011,18 +11065,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
     {
       Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_3);
       #if !CYTHON_ASSUME_SAFE_SIZE
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 509, __pyx_L1_error)
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 512, __pyx_L1_error)
       #endif
       if (__pyx_t_4 >= __pyx_temp) break;
     }
     __pyx_t_2 = __Pyx_PyList_GetItemRefFast(__pyx_t_3, __pyx_t_4, __Pyx_ReferenceSharing_OwnStrongReference);
     ++__pyx_t_4;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 509, __pyx_L1_error)
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 512, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_XDECREF_SET(__pyx_v_row, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "kycli/kycore.pyx":510
+    /* "kycli/kycore.pyx":513
  *         matches = {}
  *         for row in results:
  *             decrypted_val = self._decrypt(row[1])             # <<<<<<<<<<<<<<
@@ -11031,7 +11085,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
 */
     __pyx_t_5 = ((PyObject *)__pyx_v_self);
     __Pyx_INCREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_row, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 510, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_row, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 513, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_7 = 0;
     {
@@ -11039,23 +11093,23 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
       __pyx_t_2 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_decrypt_2, __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 510, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 513, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
     }
     __Pyx_XDECREF_SET(__pyx_v_decrypted_val, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "kycli/kycore.pyx":511
+    /* "kycli/kycore.pyx":514
  *         for row in results:
  *             decrypted_val = self._decrypt(row[1])
  *             if deserialize:             # <<<<<<<<<<<<<<
  *                 try:
  *                     matches[row[0]] = json.loads(decrypted_val)
 */
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_deserialize); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 511, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_deserialize); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 514, __pyx_L1_error)
     if (__pyx_t_1) {
 
-      /* "kycli/kycore.pyx":512
+      /* "kycli/kycore.pyx":515
  *             decrypted_val = self._decrypt(row[1])
  *             if deserialize:
  *                 try:             # <<<<<<<<<<<<<<
@@ -11071,7 +11125,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
         __Pyx_XGOTREF(__pyx_t_10);
         /*try:*/ {
 
-          /* "kycli/kycore.pyx":513
+          /* "kycli/kycore.pyx":516
  *             if deserialize:
  *                 try:
  *                     matches[row[0]] = json.loads(decrypted_val)             # <<<<<<<<<<<<<<
@@ -11079,9 +11133,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
  *                     matches[row[0]] = decrypted_val
 */
           __pyx_t_6 = NULL;
-          __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 513, __pyx_L15_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 516, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_loads); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 513, __pyx_L15_error)
+          __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_loads); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 516, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_11);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           __pyx_t_7 = 1;
@@ -11101,16 +11155,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
             __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_11, __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-            if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 513, __pyx_L15_error)
+            if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 516, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_2);
           }
-          __pyx_t_11 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 513, __pyx_L15_error)
+          __pyx_t_11 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 516, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_11);
-          if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_11, __pyx_t_2) < 0))) __PYX_ERR(0, 513, __pyx_L15_error)
+          if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_11, __pyx_t_2) < 0))) __PYX_ERR(0, 516, __pyx_L15_error)
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-          /* "kycli/kycore.pyx":512
+          /* "kycli/kycore.pyx":515
  *             decrypted_val = self._decrypt(row[1])
  *             if deserialize:
  *                 try:             # <<<<<<<<<<<<<<
@@ -11128,7 +11182,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-        /* "kycli/kycore.pyx":514
+        /* "kycli/kycore.pyx":517
  *                 try:
  *                     matches[row[0]] = json.loads(decrypted_val)
  *                 except:             # <<<<<<<<<<<<<<
@@ -11137,21 +11191,21 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
 */
         /*except:*/ {
           __Pyx_AddTraceback("kycli.kycore.Kycore.search", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_11, &__pyx_t_6) < 0) __PYX_ERR(0, 514, __pyx_L17_except_error)
+          if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_11, &__pyx_t_6) < 0) __PYX_ERR(0, 517, __pyx_L17_except_error)
           __Pyx_XGOTREF(__pyx_t_2);
           __Pyx_XGOTREF(__pyx_t_11);
           __Pyx_XGOTREF(__pyx_t_6);
 
-          /* "kycli/kycore.pyx":515
+          /* "kycli/kycore.pyx":518
  *                     matches[row[0]] = json.loads(decrypted_val)
  *                 except:
  *                     matches[row[0]] = decrypted_val             # <<<<<<<<<<<<<<
  *             else:
  *                 matches[row[0]] = decrypted_val
 */
-          __pyx_t_5 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 515, __pyx_L17_except_error)
+          __pyx_t_5 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 518, __pyx_L17_except_error)
           __Pyx_GOTREF(__pyx_t_5);
-          if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_5, __pyx_v_decrypted_val) < 0))) __PYX_ERR(0, 515, __pyx_L17_except_error)
+          if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_5, __pyx_v_decrypted_val) < 0))) __PYX_ERR(0, 518, __pyx_L17_except_error)
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -11159,7 +11213,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
           goto __pyx_L16_exception_handled;
         }
 
-        /* "kycli/kycore.pyx":512
+        /* "kycli/kycore.pyx":515
  *             decrypted_val = self._decrypt(row[1])
  *             if deserialize:
  *                 try:             # <<<<<<<<<<<<<<
@@ -11180,7 +11234,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
         __pyx_L22_try_end:;
       }
 
-      /* "kycli/kycore.pyx":511
+      /* "kycli/kycore.pyx":514
  *         for row in results:
  *             decrypted_val = self._decrypt(row[1])
  *             if deserialize:             # <<<<<<<<<<<<<<
@@ -11190,7 +11244,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
       goto __pyx_L14;
     }
 
-    /* "kycli/kycore.pyx":517
+    /* "kycli/kycore.pyx":520
  *                     matches[row[0]] = decrypted_val
  *             else:
  *                 matches[row[0]] = decrypted_val             # <<<<<<<<<<<<<<
@@ -11198,14 +11252,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
  * 
 */
     /*else*/ {
-      __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 517, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 520, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_6, __pyx_v_decrypted_val) < 0))) __PYX_ERR(0, 517, __pyx_L1_error)
+      if (unlikely((PyDict_SetItem(__pyx_v_matches, __pyx_t_6, __pyx_v_decrypted_val) < 0))) __PYX_ERR(0, 520, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     }
     __pyx_L14:;
 
-    /* "kycli/kycore.pyx":509
+    /* "kycli/kycore.pyx":512
  * 
  *         matches = {}
  *         for row in results:             # <<<<<<<<<<<<<<
@@ -11215,7 +11269,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":518
+  /* "kycli/kycore.pyx":521
  *             else:
  *                 matches[row[0]] = decrypted_val
  *         return matches             # <<<<<<<<<<<<<<
@@ -11227,7 +11281,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
   __pyx_r = __pyx_v_matches;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":474
+  /* "kycli/kycore.pyx":477
  *         return matches if matches else "Key not found"
  * 
  *     def search(self, str query, limit=100, deserialize=True, keys_only=False):             # <<<<<<<<<<<<<<
@@ -11256,7 +11310,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_34search(struct __pyx_obj_5kycl
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":520
+/* "kycli/kycore.pyx":523
  *         return matches
  * 
  *     def optimize_index(self):             # <<<<<<<<<<<<<<
@@ -11316,16 +11370,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_36optimize_index(struct __pyx_o
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("optimize_index", 0);
 
-  /* "kycli/kycore.pyx":522
+  /* "kycli/kycore.pyx":525
  *     def optimize_index(self):
  *         """Optimize the FTS5 index for faster search performance."""
  *         self._execute_raw("INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')")             # <<<<<<<<<<<<<<
  * 
  *     async def getkey_async(self, str key_pattern):
 */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_fts_kvstore_fts_kvst); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 522, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_fts_kvstore_fts_kvst); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 525, __pyx_L1_error)
 
-  /* "kycli/kycore.pyx":520
+  /* "kycli/kycore.pyx":523
  *         return matches
  * 
  *     def optimize_index(self):             # <<<<<<<<<<<<<<
@@ -11346,7 +11400,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_36optimize_index(struct __pyx_o
 }
 static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_40generator2(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
-/* "kycli/kycore.pyx":524
+/* "kycli/kycore.pyx":527
  *         self._execute_raw("INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')")
  * 
  *     async def getkey_async(self, str key_pattern):             # <<<<<<<<<<<<<<
@@ -11394,32 +11448,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_key_pattern,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 524, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 527, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 524, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 527, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "getkey_async", 0) < (0)) __PYX_ERR(0, 524, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "getkey_async", 0) < (0)) __PYX_ERR(0, 527, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("getkey_async", 1, 1, 1, i); __PYX_ERR(0, 524, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("getkey_async", 1, 1, 1, i); __PYX_ERR(0, 527, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 524, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 527, __pyx_L3_error)
     }
     __pyx_v_key_pattern = ((PyObject*)values[0]);
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("getkey_async", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 524, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("getkey_async", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 527, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -11430,7 +11484,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key_pattern), (&PyUnicode_Type), 1, "key_pattern", 1))) __PYX_ERR(0, 524, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key_pattern), (&PyUnicode_Type), 1, "key_pattern", 1))) __PYX_ERR(0, 527, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_38getkey_async(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_key_pattern);
 
   /* function exit code */
@@ -11462,7 +11516,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_38getkey_async(struct __pyx_obj
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_5kycli_6kycore___pyx_scope_struct_2_getkey_async *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 524, __pyx_L1_error)
+    __PYX_ERR(0, 527, __pyx_L1_error)
   } else {
     __Pyx_GOTREF((PyObject *)__pyx_cur_scope);
   }
@@ -11473,7 +11527,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_38getkey_async(struct __pyx_obj
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_key_pattern);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_key_pattern);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Coroutine_New((__pyx_coroutine_body_t) __pyx_gb_5kycli_6kycore_6Kycore_40generator2, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2]), (PyObject *) __pyx_cur_scope, __pyx_mstate_global->__pyx_n_u_getkey_async, __pyx_mstate_global->__pyx_n_u_Kycore_getkey_async, __pyx_mstate_global->__pyx_n_u_kycli_kycore); if (unlikely(!gen)) __PYX_ERR(0, 524, __pyx_L1_error)
+    __pyx_CoroutineObject *gen = __Pyx_Coroutine_New((__pyx_coroutine_body_t) __pyx_gb_5kycli_6kycore_6Kycore_40generator2, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2]), (PyObject *) __pyx_cur_scope, __pyx_mstate_global->__pyx_n_u_getkey_async, __pyx_mstate_global->__pyx_n_u_Kycore_getkey_async, __pyx_mstate_global->__pyx_n_u_kycli_kycore); if (unlikely(!gen)) __PYX_ERR(0, 527, __pyx_L1_error)
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -11514,10 +11568,10 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_40generator2(__pyx_CoroutineObj
   __pyx_L3_first_run:;
   if (unlikely(__pyx_sent_value != Py_None)) {
     if (unlikely(__pyx_sent_value)) PyErr_SetString(PyExc_TypeError, "can't send non-None value to a just-started coroutine");
-    __PYX_ERR(0, 524, __pyx_L1_error)
+    __PYX_ERR(0, 527, __pyx_L1_error)
   }
 
-  /* "kycli/kycore.pyx":526
+  /* "kycli/kycore.pyx":529
  *     async def getkey_async(self, str key_pattern):
  *         """Asynchronous version of getkey."""
  *         return await asyncio.to_thread(self.getkey, key_pattern)             # <<<<<<<<<<<<<<
@@ -11526,12 +11580,12 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_40generator2(__pyx_CoroutineObj
 */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2 = NULL;
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_asyncio); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 526, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_asyncio); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 529, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_to_thread); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 526, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_to_thread); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 529, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_cur_scope->__pyx_v_self), __pyx_mstate_global->__pyx_n_u_getkey); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 526, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_cur_scope->__pyx_v_self), __pyx_mstate_global->__pyx_n_u_getkey); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 529, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_5 = 1;
   #if CYTHON_UNPACK_METHODS
@@ -11551,7 +11605,7 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_40generator2(__pyx_CoroutineObj
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 526, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 529, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_t_6 = __Pyx_Coroutine_Yield_From(__pyx_generator, __pyx_t_1, &__pyx_r);
@@ -11565,21 +11619,21 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_40generator2(__pyx_CoroutineObj
     __pyx_generator->resume_label = 1;
     return __pyx_r;
     __pyx_L4_resume_from_await:;
-    if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 526, __pyx_L1_error)
+    if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 529, __pyx_L1_error)
     __pyx_t_1 = __pyx_sent_value; __Pyx_INCREF(__pyx_t_1);
   } else if (likely(__pyx_t_6 == PYGEN_RETURN)) {
     __Pyx_GOTREF(__pyx_r);
     __pyx_t_1 = __pyx_r; __pyx_r = NULL;
   } else {
     __Pyx_XGOTREF(__pyx_r);
-    __PYX_ERR(0, 526, __pyx_L1_error)
+    __PYX_ERR(0, 529, __pyx_L1_error)
   }
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
   CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
 
-  /* "kycli/kycore.pyx":524
+  /* "kycli/kycore.pyx":527
  *         self._execute_raw("INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')")
  * 
  *     async def getkey_async(self, str key_pattern):             # <<<<<<<<<<<<<<
@@ -11608,7 +11662,7 @@ static PyObject *__pyx_gb_5kycli_6kycore_6Kycore_40generator2(__pyx_CoroutineObj
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":528
+/* "kycli/kycore.pyx":531
  *         return await asyncio.to_thread(self.getkey, key_pattern)
  * 
  *     cdef _bind_and_execute(self, str sql, list params):             # <<<<<<<<<<<<<<
@@ -11641,7 +11695,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_bind_and_execute", 0);
 
-  /* "kycli/kycore.pyx":529
+  /* "kycli/kycore.pyx":532
  * 
  *     cdef _bind_and_execute(self, str sql, list params):
  *         cdef sqlite3_stmt* stmt = NULL             # <<<<<<<<<<<<<<
@@ -11650,7 +11704,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
 */
   __pyx_v_stmt = NULL;
 
-  /* "kycli/kycore.pyx":530
+  /* "kycli/kycore.pyx":533
  *     cdef _bind_and_execute(self, str sql, list params):
  *         cdef sqlite3_stmt* stmt = NULL
  *         cdef bytes sql_bytes = sql.encode('utf-8')             # <<<<<<<<<<<<<<
@@ -11659,25 +11713,25 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
 */
   if (unlikely(__pyx_v_sql == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "encode");
-    __PYX_ERR(0, 530, __pyx_L1_error)
+    __PYX_ERR(0, 533, __pyx_L1_error)
   }
-  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 530, __pyx_L1_error)
+  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 533, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sql_bytes = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":531
+  /* "kycli/kycore.pyx":534
  *         cdef sqlite3_stmt* stmt = NULL
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
  *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")
  * 
 */
-  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 531, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 534, __pyx_L1_error)
   __pyx_t_3 = (sqlite3_prepare_v2(__pyx_v_self->_db, __pyx_t_2, -1, (&__pyx_v_stmt), NULL) != SQLITE_OK);
   if (unlikely(__pyx_t_3)) {
 
-    /* "kycli/kycore.pyx":532
+    /* "kycli/kycore.pyx":535
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
  *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")             # <<<<<<<<<<<<<<
@@ -11685,12 +11739,12 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
  *         cdef bytes p_bytes
 */
     __pyx_t_4 = NULL;
-    __pyx_t_5 = __Pyx_PyBytes_FromString(sqlite3_errmsg(__pyx_v_self->_db)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 532, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyBytes_FromString(sqlite3_errmsg(__pyx_v_self->_db)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 535, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 532, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 535, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Prepare_error, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 532, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Prepare_error, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 535, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_t_7 = 1;
@@ -11699,14 +11753,14 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 532, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 535, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 532, __pyx_L1_error)
+    __PYX_ERR(0, 535, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":531
+    /* "kycli/kycore.pyx":534
  *         cdef sqlite3_stmt* stmt = NULL
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
@@ -11715,7 +11769,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
 */
   }
 
-  /* "kycli/kycore.pyx":535
+  /* "kycli/kycore.pyx":538
  * 
  *         cdef bytes p_bytes
  *         for i, p in enumerate(params):             # <<<<<<<<<<<<<<
@@ -11730,55 +11784,55 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
     {
       Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_5);
       #if !CYTHON_ASSUME_SAFE_SIZE
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 535, __pyx_L1_error)
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 538, __pyx_L1_error)
       #endif
       if (__pyx_t_8 >= __pyx_temp) break;
     }
     __pyx_t_4 = __Pyx_PyList_GetItemRefFast(__pyx_t_5, __pyx_t_8, __Pyx_ReferenceSharing_OwnStrongReference);
     ++__pyx_t_8;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 535, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 538, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_XDECREF_SET(__pyx_v_p, __pyx_t_4);
     __pyx_t_4 = 0;
     __Pyx_INCREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
-    __pyx_t_4 = __Pyx_PyLong_AddObjC(__pyx_t_1, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 535, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyLong_AddObjC(__pyx_t_1, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 538, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "kycli/kycore.pyx":536
+    /* "kycli/kycore.pyx":539
  *         cdef bytes p_bytes
  *         for i, p in enumerate(params):
  *             p_bytes = str(p).encode('utf-8')             # <<<<<<<<<<<<<<
  *             sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
  * 
 */
-    __pyx_t_4 = __Pyx_PyObject_Unicode(__pyx_v_p); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 536, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Unicode(__pyx_v_p); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 539, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = PyUnicode_AsUTF8String(((PyObject*)__pyx_t_4)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 536, __pyx_L1_error)
+    __pyx_t_6 = PyUnicode_AsUTF8String(((PyObject*)__pyx_t_4)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 539, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_XDECREF_SET(__pyx_v_p_bytes, ((PyObject*)__pyx_t_6));
     __pyx_t_6 = 0;
 
-    /* "kycli/kycore.pyx":537
+    /* "kycli/kycore.pyx":540
  *         for i, p in enumerate(params):
  *             p_bytes = str(p).encode('utf-8')
  *             sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)             # <<<<<<<<<<<<<<
  * 
  *         if sqlite3_step(stmt) != SQLITE_DONE:
 */
-    __pyx_t_6 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 537, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 540, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 537, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 540, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_10 = __Pyx_PyBytes_AsString(__pyx_v_p_bytes); if (unlikely((!__pyx_t_10) && PyErr_Occurred())) __PYX_ERR(0, 537, __pyx_L1_error)
-    __pyx_t_11 = __Pyx_PyBytes_GET_SIZE(__pyx_v_p_bytes); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 537, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyBytes_AsString(__pyx_v_p_bytes); if (unlikely((!__pyx_t_10) && PyErr_Occurred())) __PYX_ERR(0, 540, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyBytes_GET_SIZE(__pyx_v_p_bytes); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 540, __pyx_L1_error)
     (void)(sqlite3_bind_text(__pyx_v_stmt, __pyx_t_9, __pyx_t_10, __pyx_t_11, SQLITE_TRANSIENT));
 
-    /* "kycli/kycore.pyx":535
+    /* "kycli/kycore.pyx":538
  * 
  *         cdef bytes p_bytes
  *         for i, p in enumerate(params):             # <<<<<<<<<<<<<<
@@ -11789,7 +11843,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":539
+  /* "kycli/kycore.pyx":542
  *             sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
  * 
  *         if sqlite3_step(stmt) != SQLITE_DONE:             # <<<<<<<<<<<<<<
@@ -11799,7 +11853,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
   __pyx_t_3 = (sqlite3_step(__pyx_v_stmt) != SQLITE_DONE);
   if (unlikely(__pyx_t_3)) {
 
-    /* "kycli/kycore.pyx":540
+    /* "kycli/kycore.pyx":543
  * 
  *         if sqlite3_step(stmt) != SQLITE_DONE:
  *             err = sqlite3_errmsg(self._db)             # <<<<<<<<<<<<<<
@@ -11808,7 +11862,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
 */
     __pyx_v_err = sqlite3_errmsg(__pyx_v_self->_db);
 
-    /* "kycli/kycore.pyx":541
+    /* "kycli/kycore.pyx":544
  *         if sqlite3_step(stmt) != SQLITE_DONE:
  *             err = sqlite3_errmsg(self._db)
  *             sqlite3_finalize(stmt)             # <<<<<<<<<<<<<<
@@ -11817,7 +11871,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
 */
     (void)(sqlite3_finalize(__pyx_v_stmt));
 
-    /* "kycli/kycore.pyx":542
+    /* "kycli/kycore.pyx":545
  *             err = sqlite3_errmsg(self._db)
  *             sqlite3_finalize(stmt)
  *             raise RuntimeError(f"Step error: {err}")             # <<<<<<<<<<<<<<
@@ -11825,12 +11879,12 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
  *         sqlite3_finalize(stmt)
 */
     __pyx_t_5 = NULL;
-    __pyx_t_6 = __Pyx_PyBytes_FromString(__pyx_v_err); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 542, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyBytes_FromString(__pyx_v_err); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 545, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 542, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 545, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Step_error, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 542, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Step_error, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 545, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_7 = 1;
@@ -11839,14 +11893,14 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 542, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 545, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 542, __pyx_L1_error)
+    __PYX_ERR(0, 545, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":539
+    /* "kycli/kycore.pyx":542
  *             sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
  * 
  *         if sqlite3_step(stmt) != SQLITE_DONE:             # <<<<<<<<<<<<<<
@@ -11855,7 +11909,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
 */
   }
 
-  /* "kycli/kycore.pyx":544
+  /* "kycli/kycore.pyx":547
  *             raise RuntimeError(f"Step error: {err}")
  * 
  *         sqlite3_finalize(stmt)             # <<<<<<<<<<<<<<
@@ -11864,7 +11918,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
 */
   (void)(sqlite3_finalize(__pyx_v_stmt));
 
-  /* "kycli/kycore.pyx":528
+  /* "kycli/kycore.pyx":531
  *         return await asyncio.to_thread(self.getkey, key_pattern)
  * 
  *     cdef _bind_and_execute(self, str sql, list params):             # <<<<<<<<<<<<<<
@@ -11892,7 +11946,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_execute(struct __pyx_o
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":546
+/* "kycli/kycore.pyx":549
  *         sqlite3_finalize(stmt)
  * 
  *     cdef list _bind_and_fetch(self, str sql, list params):             # <<<<<<<<<<<<<<
@@ -11931,7 +11985,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_bind_and_fetch", 0);
 
-  /* "kycli/kycore.pyx":547
+  /* "kycli/kycore.pyx":550
  * 
  *     cdef list _bind_and_fetch(self, str sql, list params):
  *         cdef sqlite3_stmt* stmt = NULL             # <<<<<<<<<<<<<<
@@ -11940,7 +11994,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
 */
   __pyx_v_stmt = NULL;
 
-  /* "kycli/kycore.pyx":548
+  /* "kycli/kycore.pyx":551
  *     cdef list _bind_and_fetch(self, str sql, list params):
  *         cdef sqlite3_stmt* stmt = NULL
  *         cdef bytes sql_bytes = sql.encode('utf-8')             # <<<<<<<<<<<<<<
@@ -11949,25 +12003,25 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
 */
   if (unlikely(__pyx_v_sql == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "encode");
-    __PYX_ERR(0, 548, __pyx_L1_error)
+    __PYX_ERR(0, 551, __pyx_L1_error)
   }
-  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 548, __pyx_L1_error)
+  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 551, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sql_bytes = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":549
+  /* "kycli/kycore.pyx":552
  *         cdef sqlite3_stmt* stmt = NULL
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
  *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")
  * 
 */
-  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 549, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 552, __pyx_L1_error)
   __pyx_t_3 = (sqlite3_prepare_v2(__pyx_v_self->_db, __pyx_t_2, -1, (&__pyx_v_stmt), NULL) != SQLITE_OK);
   if (unlikely(__pyx_t_3)) {
 
-    /* "kycli/kycore.pyx":550
+    /* "kycli/kycore.pyx":553
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
  *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")             # <<<<<<<<<<<<<<
@@ -11975,12 +12029,12 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
  *         cdef bytes p_bytes
 */
     __pyx_t_4 = NULL;
-    __pyx_t_5 = __Pyx_PyBytes_FromString(sqlite3_errmsg(__pyx_v_self->_db)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 550, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyBytes_FromString(sqlite3_errmsg(__pyx_v_self->_db)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 553, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 550, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 553, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Prepare_error, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 550, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Prepare_error, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 553, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_t_7 = 1;
@@ -11989,14 +12043,14 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 550, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 553, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 550, __pyx_L1_error)
+    __PYX_ERR(0, 553, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":549
+    /* "kycli/kycore.pyx":552
  *         cdef sqlite3_stmt* stmt = NULL
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
@@ -12005,7 +12059,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
 */
   }
 
-  /* "kycli/kycore.pyx":553
+  /* "kycli/kycore.pyx":556
  * 
  *         cdef bytes p_bytes
  *         for i, p in enumerate(params):             # <<<<<<<<<<<<<<
@@ -12020,55 +12074,55 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
     {
       Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_5);
       #if !CYTHON_ASSUME_SAFE_SIZE
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 553, __pyx_L1_error)
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 556, __pyx_L1_error)
       #endif
       if (__pyx_t_8 >= __pyx_temp) break;
     }
     __pyx_t_4 = __Pyx_PyList_GetItemRefFast(__pyx_t_5, __pyx_t_8, __Pyx_ReferenceSharing_OwnStrongReference);
     ++__pyx_t_8;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 553, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 556, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_XDECREF_SET(__pyx_v_p, __pyx_t_4);
     __pyx_t_4 = 0;
     __Pyx_INCREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
-    __pyx_t_4 = __Pyx_PyLong_AddObjC(__pyx_t_1, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 553, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyLong_AddObjC(__pyx_t_1, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 556, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "kycli/kycore.pyx":554
+    /* "kycli/kycore.pyx":557
  *         cdef bytes p_bytes
  *         for i, p in enumerate(params):
  *             p_bytes = str(p).encode('utf-8')             # <<<<<<<<<<<<<<
  *             sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
  * 
 */
-    __pyx_t_4 = __Pyx_PyObject_Unicode(__pyx_v_p); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 554, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Unicode(__pyx_v_p); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 557, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = PyUnicode_AsUTF8String(((PyObject*)__pyx_t_4)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 554, __pyx_L1_error)
+    __pyx_t_6 = PyUnicode_AsUTF8String(((PyObject*)__pyx_t_4)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 557, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_XDECREF_SET(__pyx_v_p_bytes, ((PyObject*)__pyx_t_6));
     __pyx_t_6 = 0;
 
-    /* "kycli/kycore.pyx":555
+    /* "kycli/kycore.pyx":558
  *         for i, p in enumerate(params):
  *             p_bytes = str(p).encode('utf-8')
  *             sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)             # <<<<<<<<<<<<<<
  * 
  *         cdef list rows = []
 */
-    __pyx_t_6 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 555, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 558, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 555, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 558, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_10 = __Pyx_PyBytes_AsString(__pyx_v_p_bytes); if (unlikely((!__pyx_t_10) && PyErr_Occurred())) __PYX_ERR(0, 555, __pyx_L1_error)
-    __pyx_t_11 = __Pyx_PyBytes_GET_SIZE(__pyx_v_p_bytes); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 555, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyBytes_AsString(__pyx_v_p_bytes); if (unlikely((!__pyx_t_10) && PyErr_Occurred())) __PYX_ERR(0, 558, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyBytes_GET_SIZE(__pyx_v_p_bytes); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 558, __pyx_L1_error)
     (void)(sqlite3_bind_text(__pyx_v_stmt, __pyx_t_9, __pyx_t_10, __pyx_t_11, SQLITE_TRANSIENT));
 
-    /* "kycli/kycore.pyx":553
+    /* "kycli/kycore.pyx":556
  * 
  *         cdef bytes p_bytes
  *         for i, p in enumerate(params):             # <<<<<<<<<<<<<<
@@ -12079,19 +12133,19 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":557
+  /* "kycli/kycore.pyx":560
  *             sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
  * 
  *         cdef list rows = []             # <<<<<<<<<<<<<<
  *         cdef int col_count
  *         cdef list row
 */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 557, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 560, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_rows = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":562
+  /* "kycli/kycore.pyx":565
  *         cdef const unsigned char* text
  * 
  *         while sqlite3_step(stmt) == SQLITE_ROW:             # <<<<<<<<<<<<<<
@@ -12102,7 +12156,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
     __pyx_t_3 = (sqlite3_step(__pyx_v_stmt) == SQLITE_ROW);
     if (!__pyx_t_3) break;
 
-    /* "kycli/kycore.pyx":563
+    /* "kycli/kycore.pyx":566
  * 
  *         while sqlite3_step(stmt) == SQLITE_ROW:
  *             col_count = sqlite3_column_count(stmt)             # <<<<<<<<<<<<<<
@@ -12111,19 +12165,19 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
 */
     __pyx_v_col_count = sqlite3_column_count(__pyx_v_stmt);
 
-    /* "kycli/kycore.pyx":564
+    /* "kycli/kycore.pyx":567
  *         while sqlite3_step(stmt) == SQLITE_ROW:
  *             col_count = sqlite3_column_count(stmt)
  *             row = []             # <<<<<<<<<<<<<<
  *             for i in range(col_count):
  *                 text = sqlite3_column_text(stmt, i)
 */
-    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 564, __pyx_L1_error)
+    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 567, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_row, ((PyObject*)__pyx_t_1));
     __pyx_t_1 = 0;
 
-    /* "kycli/kycore.pyx":565
+    /* "kycli/kycore.pyx":568
  *             col_count = sqlite3_column_count(stmt)
  *             row = []
  *             for i in range(col_count):             # <<<<<<<<<<<<<<
@@ -12131,7 +12185,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
  *                 if text == NULL:
 */
     __pyx_t_5 = NULL;
-    __pyx_t_6 = __Pyx_PyLong_From_int(__pyx_v_col_count); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 565, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyLong_From_int(__pyx_v_col_count); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 568, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_7 = 1;
     {
@@ -12139,12 +12193,12 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(&PyRange_Type), __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 565, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 568, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
-    __pyx_t_6 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 565, __pyx_L1_error)
+    __pyx_t_6 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 568, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_12 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_6); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 565, __pyx_L1_error)
+    __pyx_t_12 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_6); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 568, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     for (;;) {
       {
@@ -12152,7 +12206,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
         if (unlikely(!__pyx_t_1)) {
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
-            if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 565, __pyx_L1_error)
+            if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 568, __pyx_L1_error)
             PyErr_Clear();
           }
           break;
@@ -12162,17 +12216,17 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
       __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
       __pyx_t_1 = 0;
 
-      /* "kycli/kycore.pyx":566
+      /* "kycli/kycore.pyx":569
  *             row = []
  *             for i in range(col_count):
  *                 text = sqlite3_column_text(stmt, i)             # <<<<<<<<<<<<<<
  *                 if text == NULL:
  *                     row.append(None)
 */
-      __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_v_i); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 566, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_v_i); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 569, __pyx_L1_error)
       __pyx_v_text = sqlite3_column_text(__pyx_v_stmt, __pyx_t_9);
 
-      /* "kycli/kycore.pyx":567
+      /* "kycli/kycore.pyx":570
  *             for i in range(col_count):
  *                 text = sqlite3_column_text(stmt, i)
  *                 if text == NULL:             # <<<<<<<<<<<<<<
@@ -12182,16 +12236,16 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
       __pyx_t_3 = (__pyx_v_text == NULL);
       if (__pyx_t_3) {
 
-        /* "kycli/kycore.pyx":568
+        /* "kycli/kycore.pyx":571
  *                 text = sqlite3_column_text(stmt, i)
  *                 if text == NULL:
  *                     row.append(None)             # <<<<<<<<<<<<<<
  *                 else:
  *                     row.append((<char*>text).decode('utf-8'))
 */
-        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_row, Py_None); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 568, __pyx_L1_error)
+        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_row, Py_None); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 571, __pyx_L1_error)
 
-        /* "kycli/kycore.pyx":567
+        /* "kycli/kycore.pyx":570
  *             for i in range(col_count):
  *                 text = sqlite3_column_text(stmt, i)
  *                 if text == NULL:             # <<<<<<<<<<<<<<
@@ -12201,7 +12255,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
         goto __pyx_L11;
       }
 
-      /* "kycli/kycore.pyx":570
+      /* "kycli/kycore.pyx":573
  *                     row.append(None)
  *                 else:
  *                     row.append((<char*>text).decode('utf-8'))             # <<<<<<<<<<<<<<
@@ -12210,15 +12264,15 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
 */
       /*else*/ {
         __pyx_t_14 = ((char *)__pyx_v_text);
-        __pyx_t_8 = __Pyx_ssize_strlen(__pyx_t_14); if (unlikely(__pyx_t_8 == ((Py_ssize_t)-1))) __PYX_ERR(0, 570, __pyx_L1_error)
-        __pyx_t_1 = __Pyx_decode_c_string(__pyx_t_14, 0, __pyx_t_8, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 570, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_ssize_strlen(__pyx_t_14); if (unlikely(__pyx_t_8 == ((Py_ssize_t)-1))) __PYX_ERR(0, 573, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_decode_c_string(__pyx_t_14, 0, __pyx_t_8, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 573, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_row, __pyx_t_1); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 570, __pyx_L1_error)
+        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_row, __pyx_t_1); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 573, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       }
       __pyx_L11:;
 
-      /* "kycli/kycore.pyx":565
+      /* "kycli/kycore.pyx":568
  *             col_count = sqlite3_column_count(stmt)
  *             row = []
  *             for i in range(col_count):             # <<<<<<<<<<<<<<
@@ -12228,17 +12282,17 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
     }
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "kycli/kycore.pyx":571
+    /* "kycli/kycore.pyx":574
  *                 else:
  *                     row.append((<char*>text).decode('utf-8'))
  *             rows.append(row)             # <<<<<<<<<<<<<<
  * 
  *         sqlite3_finalize(stmt)
 */
-    __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_rows, __pyx_v_row); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 571, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_rows, __pyx_v_row); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 574, __pyx_L1_error)
   }
 
-  /* "kycli/kycore.pyx":573
+  /* "kycli/kycore.pyx":576
  *             rows.append(row)
  * 
  *         sqlite3_finalize(stmt)             # <<<<<<<<<<<<<<
@@ -12247,7 +12301,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
 */
   (void)(sqlite3_finalize(__pyx_v_stmt));
 
-  /* "kycli/kycore.pyx":574
+  /* "kycli/kycore.pyx":577
  * 
  *         sqlite3_finalize(stmt)
  *         return rows             # <<<<<<<<<<<<<<
@@ -12259,7 +12313,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
   __pyx_r = __pyx_v_rows;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":546
+  /* "kycli/kycore.pyx":549
  *         sqlite3_finalize(stmt)
  * 
  *     cdef list _bind_and_fetch(self, str sql, list params):             # <<<<<<<<<<<<<<
@@ -12287,7 +12341,7 @@ static PyObject *__pyx_f_5kycli_6kycore_6Kycore__bind_and_fetch(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":576
+/* "kycli/kycore.pyx":579
  *         return rows
  * 
  *     def delete(self, str key):             # <<<<<<<<<<<<<<
@@ -12334,32 +12388,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_key,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 576, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 579, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 576, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 579, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "delete", 0) < (0)) __PYX_ERR(0, 576, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "delete", 0) < (0)) __PYX_ERR(0, 579, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("delete", 1, 1, 1, i); __PYX_ERR(0, 576, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("delete", 1, 1, 1, i); __PYX_ERR(0, 579, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 576, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 579, __pyx_L3_error)
     }
     __pyx_v_key = ((PyObject*)values[0]);
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("delete", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 576, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("delete", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 579, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -12370,7 +12424,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 576, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 579, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_41delete(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_key);
 
   /* function exit code */
@@ -12421,14 +12475,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("delete", 0);
 
-  /* "kycli/kycore.pyx":577
+  /* "kycli/kycore.pyx":580
  * 
  *     def delete(self, str key):
  *         cdef str k = key.lower().strip()             # <<<<<<<<<<<<<<
  * 
  *         # Fetch value before deleting to move it to archive
 */
-  __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 577, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 580, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_2 = __pyx_t_3;
   __Pyx_INCREF(__pyx_t_2);
@@ -12438,31 +12492,31 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
     __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 577, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 580, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_v_k = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":580
+  /* "kycli/kycore.pyx":583
  * 
  *         # Fetch value before deleting to move it to archive
  *         cdef list results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])             # <<<<<<<<<<<<<<
  *         if not results:
  *             return "Key not found"
 */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 580, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 583, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_k);
   __Pyx_GIVEREF(__pyx_v_k);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 580, __pyx_L1_error);
-  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_value_FROM_kvstore_WHERE, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 580, __pyx_L1_error)
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 583, __pyx_L1_error);
+  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_value_FROM_kvstore_WHERE, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 583, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_results = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":581
+  /* "kycli/kycore.pyx":584
  *         # Fetch value before deleting to move it to archive
  *         cdef list results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])
  *         if not results:             # <<<<<<<<<<<<<<
@@ -12473,14 +12527,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
   else
   {
     Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_v_results);
-    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 581, __pyx_L1_error)
+    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 584, __pyx_L1_error)
     __pyx_t_5 = (__pyx_temp != 0);
   }
 
   __pyx_t_6 = (!__pyx_t_5);
   if (__pyx_t_6) {
 
-    /* "kycli/kycore.pyx":582
+    /* "kycli/kycore.pyx":585
  *         cdef list results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])
  *         if not results:
  *             return "Key not found"             # <<<<<<<<<<<<<<
@@ -12492,7 +12546,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
     __pyx_r = __pyx_mstate_global->__pyx_kp_u_Key_not_found;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":581
+    /* "kycli/kycore.pyx":584
  *         # Fetch value before deleting to move it to archive
  *         cdef list results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])
  *         if not results:             # <<<<<<<<<<<<<<
@@ -12501,7 +12555,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
 */
   }
 
-  /* "kycli/kycore.pyx":584
+  /* "kycli/kycore.pyx":587
  *             return "Key not found"
  * 
  *         cdef str val = results[0][0] # Keep encrypted in archive             # <<<<<<<<<<<<<<
@@ -12510,18 +12564,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
 */
   if (unlikely(__pyx_v_results == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 584, __pyx_L1_error)
+    __PYX_ERR(0, 587, __pyx_L1_error)
   }
-  __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 584, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 587, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 584, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 587, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(PyUnicode_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_1))) __PYX_ERR(0, 584, __pyx_L1_error)
+  if (!(likely(PyUnicode_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_1))) __PYX_ERR(0, 587, __pyx_L1_error)
   __pyx_v_val = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":586
+  /* "kycli/kycore.pyx":589
  *         cdef str val = results[0][0] # Keep encrypted in archive
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -12537,62 +12591,79 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
     __Pyx_XGOTREF(__pyx_t_9);
     /*try:*/ {
 
-      /* "kycli/kycore.pyx":587
+      /* "kycli/kycore.pyx":590
  * 
  *         try:
  *             self._execute_raw("BEGIN TRANSACTION")             # <<<<<<<<<<<<<<
  *             # Move to archive
  *             self._bind_and_execute("INSERT INTO archive (key, value) VALUES (?, ?)", [k, val])
 */
-      __pyx_t_10 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 587, __pyx_L4_error)
+      __pyx_t_10 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 590, __pyx_L4_error)
 
-      /* "kycli/kycore.pyx":589
+      /* "kycli/kycore.pyx":592
  *             self._execute_raw("BEGIN TRANSACTION")
  *             # Move to archive
  *             self._bind_and_execute("INSERT INTO archive (key, value) VALUES (?, ?)", [k, val])             # <<<<<<<<<<<<<<
- *             # Remove from active store
- *             self._bind_and_execute("DELETE FROM kvstore WHERE key=?", [k])
+ *             # Record deletion in audit log for PITR
+ *             self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, NULL)", [k])
 */
-      __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 589, __pyx_L4_error)
+      __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 592, __pyx_L4_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_INCREF(__pyx_v_k);
       __Pyx_GIVEREF(__pyx_v_k);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 589, __pyx_L4_error);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 592, __pyx_L4_error);
       __Pyx_INCREF(__pyx_v_val);
       __Pyx_GIVEREF(__pyx_v_val);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 1, __pyx_v_val) != (0)) __PYX_ERR(0, 589, __pyx_L4_error);
-      __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_archive_key_value_VA, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 589, __pyx_L4_error)
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 1, __pyx_v_val) != (0)) __PYX_ERR(0, 592, __pyx_L4_error);
+      __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_archive_key_value_VA, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 592, __pyx_L4_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "kycli/kycore.pyx":591
+      /* "kycli/kycore.pyx":594
  *             self._bind_and_execute("INSERT INTO archive (key, value) VALUES (?, ?)", [k, val])
+ *             # Record deletion in audit log for PITR
+ *             self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, NULL)", [k])             # <<<<<<<<<<<<<<
+ *             # Remove from active store
+ *             self._bind_and_execute("DELETE FROM kvstore WHERE key=?", [k])
+*/
+      __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 594, __pyx_L4_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_INCREF(__pyx_v_k);
+      __Pyx_GIVEREF(__pyx_v_k);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 594, __pyx_L4_error);
+      __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_audit_log_key_value_2, ((PyObject*)__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 594, __pyx_L4_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "kycli/kycore.pyx":596
+ *             self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, NULL)", [k])
  *             # Remove from active store
  *             self._bind_and_execute("DELETE FROM kvstore WHERE key=?", [k])             # <<<<<<<<<<<<<<
  *             self._execute_raw("COMMIT")
  * 
 */
-      __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 591, __pyx_L4_error)
-      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 596, __pyx_L4_error)
+      __Pyx_GOTREF(__pyx_t_1);
       __Pyx_INCREF(__pyx_v_k);
       __Pyx_GIVEREF(__pyx_v_k);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 591, __pyx_L4_error);
-      __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_DELETE_FROM_kvstore_WHERE_key_2, ((PyObject*)__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 591, __pyx_L4_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 596, __pyx_L4_error);
+      __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_DELETE_FROM_kvstore_WHERE_key_2, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 596, __pyx_L4_error)
+      __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "kycli/kycore.pyx":592
+      /* "kycli/kycore.pyx":597
  *             # Remove from active store
  *             self._bind_and_execute("DELETE FROM kvstore WHERE key=?", [k])
  *             self._execute_raw("COMMIT")             # <<<<<<<<<<<<<<
  * 
  *             self._dirty_keys.add(k)
 */
-      __pyx_t_10 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 592, __pyx_L4_error)
+      __pyx_t_10 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 597, __pyx_L4_error)
 
-      /* "kycli/kycore.pyx":594
+      /* "kycli/kycore.pyx":599
  *             self._execute_raw("COMMIT")
  * 
  *             self._dirty_keys.add(k)             # <<<<<<<<<<<<<<
@@ -12601,30 +12672,30 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
 */
       if (unlikely(__pyx_v_self->_dirty_keys == Py_None)) {
         PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "add");
-        __PYX_ERR(0, 594, __pyx_L4_error)
+        __PYX_ERR(0, 599, __pyx_L4_error)
       }
-      __pyx_t_11 = PySet_Add(__pyx_v_self->_dirty_keys, __pyx_v_k); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 594, __pyx_L4_error)
+      __pyx_t_11 = PySet_Add(__pyx_v_self->_dirty_keys, __pyx_v_k); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 599, __pyx_L4_error)
 
-      /* "kycli/kycore.pyx":597
+      /* "kycli/kycore.pyx":602
  * 
  *             # Invalidate L1 Cache
  *             if k in self._cache:             # <<<<<<<<<<<<<<
  *                 del self._cache[k]
  * 
 */
-      __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_v_k, __pyx_v_self->_cache, Py_EQ)); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 597, __pyx_L4_error)
+      __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_v_k, __pyx_v_self->_cache, Py_EQ)); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 602, __pyx_L4_error)
       if (__pyx_t_6) {
 
-        /* "kycli/kycore.pyx":598
+        /* "kycli/kycore.pyx":603
  *             # Invalidate L1 Cache
  *             if k in self._cache:
  *                 del self._cache[k]             # <<<<<<<<<<<<<<
  * 
  *             return "Deleted and moved to archive (Auto-permanently deleted after 15 days)"
 */
-        if (unlikely((PyObject_DelItem(__pyx_v_self->_cache, __pyx_v_k) < 0))) __PYX_ERR(0, 598, __pyx_L4_error)
+        if (unlikely((PyObject_DelItem(__pyx_v_self->_cache, __pyx_v_k) < 0))) __PYX_ERR(0, 603, __pyx_L4_error)
 
-        /* "kycli/kycore.pyx":597
+        /* "kycli/kycore.pyx":602
  * 
  *             # Invalidate L1 Cache
  *             if k in self._cache:             # <<<<<<<<<<<<<<
@@ -12633,7 +12704,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
 */
       }
 
-      /* "kycli/kycore.pyx":600
+      /* "kycli/kycore.pyx":605
  *                 del self._cache[k]
  * 
  *             return "Deleted and moved to archive (Auto-permanently deleted after 15 days)"             # <<<<<<<<<<<<<<
@@ -12645,7 +12716,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
       __pyx_r = __pyx_mstate_global->__pyx_kp_u_Deleted_and_moved_to_archive_Aut;
       goto __pyx_L8_try_return;
 
-      /* "kycli/kycore.pyx":586
+      /* "kycli/kycore.pyx":589
  *         cdef str val = results[0][0] # Keep encrypted in archive
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -12658,7 +12729,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "kycli/kycore.pyx":601
+    /* "kycli/kycore.pyx":606
  * 
  *             return "Deleted and moved to archive (Auto-permanently deleted after 15 days)"
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -12668,24 +12739,24 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
     __pyx_t_10 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
     if (__pyx_t_10) {
       __Pyx_AddTraceback("kycli.kycore.Kycore.delete", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_3, &__pyx_t_2) < 0) __PYX_ERR(0, 601, __pyx_L6_except_error)
-      __Pyx_XGOTREF(__pyx_t_1);
+      if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_1, &__pyx_t_2) < 0) __PYX_ERR(0, 606, __pyx_L6_except_error)
       __Pyx_XGOTREF(__pyx_t_3);
+      __Pyx_XGOTREF(__pyx_t_1);
       __Pyx_XGOTREF(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __pyx_v_e = __pyx_t_3;
+      __Pyx_INCREF(__pyx_t_1);
+      __pyx_v_e = __pyx_t_1;
       /*try:*/ {
 
-        /* "kycli/kycore.pyx":602
+        /* "kycli/kycore.pyx":607
  *             return "Deleted and moved to archive (Auto-permanently deleted after 15 days)"
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")             # <<<<<<<<<<<<<<
  *             raise e
  * 
 */
-        __pyx_t_10 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 602, __pyx_L16_error)
+        __pyx_t_10 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 607, __pyx_L16_error)
 
-        /* "kycli/kycore.pyx":603
+        /* "kycli/kycore.pyx":608
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")
  *             raise e             # <<<<<<<<<<<<<<
@@ -12693,10 +12764,10 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
  *     def get_replication_stream(self, last_id=0):
 */
         __Pyx_Raise(__pyx_v_e, 0, 0, 0);
-        __PYX_ERR(0, 603, __pyx_L16_error)
+        __PYX_ERR(0, 608, __pyx_L16_error)
       }
 
-      /* "kycli/kycore.pyx":601
+      /* "kycli/kycore.pyx":606
  * 
  *             return "Deleted and moved to archive (Auto-permanently deleted after 15 days)"
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -12737,7 +12808,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
     }
     goto __pyx_L6_except_error;
 
-    /* "kycli/kycore.pyx":586
+    /* "kycli/kycore.pyx":589
  *         cdef str val = results[0][0] # Keep encrypted in archive
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -12758,7 +12829,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
     goto __pyx_L0;
   }
 
-  /* "kycli/kycore.pyx":576
+  /* "kycli/kycore.pyx":579
  *         return rows
  * 
  *     def delete(self, str key):             # <<<<<<<<<<<<<<
@@ -12783,7 +12854,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_41delete(struct __pyx_obj_5kycl
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":605
+/* "kycli/kycore.pyx":610
  *             raise e
  * 
  *     def get_replication_stream(self, last_id=0):             # <<<<<<<<<<<<<<
@@ -12831,24 +12902,24 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_last_id,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 605, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 610, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 605, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 610, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "get_replication_stream", 0) < (0)) __PYX_ERR(0, 605, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "get_replication_stream", 0) < (0)) __PYX_ERR(0, 610, __pyx_L3_error)
       if (!values[0]) values[0] = __Pyx_NewRef(((PyObject *)__pyx_mstate_global->__pyx_int_0));
     } else {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 605, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 610, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
@@ -12859,7 +12930,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("get_replication_stream", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 605, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("get_replication_stream", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 610, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -12890,7 +12961,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_43get_replication_stream(struct
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_replication_stream", 0);
 
-  /* "kycli/kycore.pyx":609
+  /* "kycli/kycore.pyx":614
  *         Stream updates since a specific audit log ID for replication.
  *         """
  *         return self._bind_and_fetch("SELECT id, key, value, timestamp FROM audit_log WHERE id > ? ORDER BY id ASC", [last_id])             # <<<<<<<<<<<<<<
@@ -12898,19 +12969,19 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_43get_replication_stream(struct
  *     def sync_from_stream(self, list entries):
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 609, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 614, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_last_id);
   __Pyx_GIVEREF(__pyx_v_last_id);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_last_id) != (0)) __PYX_ERR(0, 609, __pyx_L1_error);
-  __pyx_t_2 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_id_key_value_timestamp_FR, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 609, __pyx_L1_error)
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_last_id) != (0)) __PYX_ERR(0, 614, __pyx_L1_error);
+  __pyx_t_2 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_id_key_value_timestamp_FR, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 614, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":605
+  /* "kycli/kycore.pyx":610
  *             raise e
  * 
  *     def get_replication_stream(self, last_id=0):             # <<<<<<<<<<<<<<
@@ -12930,7 +13001,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_43get_replication_stream(struct
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":611
+/* "kycli/kycore.pyx":616
  *         return self._bind_and_fetch("SELECT id, key, value, timestamp FROM audit_log WHERE id > ? ORDER BY id ASC", [last_id])
  * 
  *     def sync_from_stream(self, list entries):             # <<<<<<<<<<<<<<
@@ -12978,32 +13049,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_entries,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 611, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 616, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 611, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 616, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "sync_from_stream", 0) < (0)) __PYX_ERR(0, 611, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "sync_from_stream", 0) < (0)) __PYX_ERR(0, 616, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("sync_from_stream", 1, 1, 1, i); __PYX_ERR(0, 611, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("sync_from_stream", 1, 1, 1, i); __PYX_ERR(0, 616, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 611, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 616, __pyx_L3_error)
     }
     __pyx_v_entries = ((PyObject*)values[0]);
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("sync_from_stream", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 611, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("sync_from_stream", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 616, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -13014,7 +13085,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_entries), (&PyList_Type), 1, "entries", 1))) __PYX_ERR(0, 611, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_entries), (&PyList_Type), 1, "entries", 1))) __PYX_ERR(0, 616, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_entries);
 
   /* function exit code */
@@ -13062,7 +13133,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("sync_from_stream", 0);
 
-  /* "kycli/kycore.pyx":615
+  /* "kycli/kycore.pyx":620
  *         Apply replication entries from another instance.
  *         """
  *         try:             # <<<<<<<<<<<<<<
@@ -13078,16 +13149,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "kycli/kycore.pyx":616
+      /* "kycli/kycore.pyx":621
  *         """
  *         try:
  *             self._execute_raw("BEGIN TRANSACTION")             # <<<<<<<<<<<<<<
  *             for entry in entries:
  *                 # entry is [id, key, value, timestamp]
 */
-      __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 616, __pyx_L3_error)
+      __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 621, __pyx_L3_error)
 
-      /* "kycli/kycore.pyx":617
+      /* "kycli/kycore.pyx":622
  *         try:
  *             self._execute_raw("BEGIN TRANSACTION")
  *             for entry in entries:             # <<<<<<<<<<<<<<
@@ -13096,7 +13167,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
 */
       if (unlikely(__pyx_v_entries == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-        __PYX_ERR(0, 617, __pyx_L3_error)
+        __PYX_ERR(0, 622, __pyx_L3_error)
       }
       __pyx_t_5 = __pyx_v_entries; __Pyx_INCREF(__pyx_t_5);
       __pyx_t_6 = 0;
@@ -13104,54 +13175,54 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
         {
           Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_5);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 617, __pyx_L3_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 622, __pyx_L3_error)
           #endif
           if (__pyx_t_6 >= __pyx_temp) break;
         }
         __pyx_t_7 = __Pyx_PyList_GetItemRefFast(__pyx_t_5, __pyx_t_6, __Pyx_ReferenceSharing_OwnStrongReference);
         ++__pyx_t_6;
-        if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 617, __pyx_L3_error)
+        if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 622, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_XDECREF_SET(__pyx_v_entry, __pyx_t_7);
         __pyx_t_7 = 0;
 
-        /* "kycli/kycore.pyx":619
+        /* "kycli/kycore.pyx":624
  *             for entry in entries:
  *                 # entry is [id, key, value, timestamp]
  *                 k, v = entry[1], entry[2]             # <<<<<<<<<<<<<<
  *                 self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, v])
  *                 # We don't add to audit_log to avoid loops, but we might want a 'sync' flag
 */
-        __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_entry, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 619, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_entry, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 624, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_entry, 2, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 619, __pyx_L3_error)
+        __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_entry, 2, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 624, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_7);
         __pyx_t_7 = 0;
         __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_8);
         __pyx_t_8 = 0;
 
-        /* "kycli/kycore.pyx":620
+        /* "kycli/kycore.pyx":625
  *                 # entry is [id, key, value, timestamp]
  *                 k, v = entry[1], entry[2]
  *                 self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, v])             # <<<<<<<<<<<<<<
  *                 # We don't add to audit_log to avoid loops, but we might want a 'sync' flag
  *             self._execute_raw("COMMIT")
 */
-        __pyx_t_8 = PyList_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 620, __pyx_L3_error)
+        __pyx_t_8 = PyList_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 625, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_INCREF(__pyx_v_k);
         __Pyx_GIVEREF(__pyx_v_k);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 620, __pyx_L3_error);
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 625, __pyx_L3_error);
         __Pyx_INCREF(__pyx_v_v);
         __Pyx_GIVEREF(__pyx_v_v);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 1, __pyx_v_v) != (0)) __PYX_ERR(0, 620, __pyx_L3_error);
-        __pyx_t_7 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k_2, ((PyObject*)__pyx_t_8)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 620, __pyx_L3_error)
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 1, __pyx_v_v) != (0)) __PYX_ERR(0, 625, __pyx_L3_error);
+        __pyx_t_7 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k_2, ((PyObject*)__pyx_t_8)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 625, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-        /* "kycli/kycore.pyx":617
+        /* "kycli/kycore.pyx":622
  *         try:
  *             self._execute_raw("BEGIN TRANSACTION")
  *             for entry in entries:             # <<<<<<<<<<<<<<
@@ -13161,16 +13232,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
       }
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-      /* "kycli/kycore.pyx":622
+      /* "kycli/kycore.pyx":627
  *                 self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, v])
  *                 # We don't add to audit_log to avoid loops, but we might want a 'sync' flag
  *             self._execute_raw("COMMIT")             # <<<<<<<<<<<<<<
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")
 */
-      __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 622, __pyx_L3_error)
+      __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 627, __pyx_L3_error)
 
-      /* "kycli/kycore.pyx":615
+      /* "kycli/kycore.pyx":620
  *         Apply replication entries from another instance.
  *         """
  *         try:             # <<<<<<<<<<<<<<
@@ -13187,7 +13258,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-    /* "kycli/kycore.pyx":623
+    /* "kycli/kycore.pyx":628
  *                 # We don't add to audit_log to avoid loops, but we might want a 'sync' flag
  *             self._execute_raw("COMMIT")
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -13197,7 +13268,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
     __pyx_t_4 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
     if (__pyx_t_4) {
       __Pyx_AddTraceback("kycli.kycore.Kycore.sync_from_stream", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_7, &__pyx_t_8) < 0) __PYX_ERR(0, 623, __pyx_L5_except_error)
+      if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_7, &__pyx_t_8) < 0) __PYX_ERR(0, 628, __pyx_L5_except_error)
       __Pyx_XGOTREF(__pyx_t_5);
       __Pyx_XGOTREF(__pyx_t_7);
       __Pyx_XGOTREF(__pyx_t_8);
@@ -13205,27 +13276,27 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
       __pyx_v_e = __pyx_t_7;
       /*try:*/ {
 
-        /* "kycli/kycore.pyx":624
+        /* "kycli/kycore.pyx":629
  *             self._execute_raw("COMMIT")
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")             # <<<<<<<<<<<<<<
  *             raise e
  * 
 */
-        __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 624, __pyx_L17_error)
+        __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 629, __pyx_L17_error)
 
-        /* "kycli/kycore.pyx":625
+        /* "kycli/kycore.pyx":630
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")
  *             raise e             # <<<<<<<<<<<<<<
  * 
- *     def restore(self, str key):
+ *     def restore_to(self, str timestamp):
 */
         __Pyx_Raise(__pyx_v_e, 0, 0, 0);
-        __PYX_ERR(0, 625, __pyx_L17_error)
+        __PYX_ERR(0, 630, __pyx_L17_error)
       }
 
-      /* "kycli/kycore.pyx":623
+      /* "kycli/kycore.pyx":628
  *                 # We don't add to audit_log to avoid loops, but we might want a 'sync' flag
  *             self._execute_raw("COMMIT")
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -13266,7 +13337,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
     }
     goto __pyx_L5_except_error;
 
-    /* "kycli/kycore.pyx":615
+    /* "kycli/kycore.pyx":620
  *         Apply replication entries from another instance.
  *         """
  *         try:             # <<<<<<<<<<<<<<
@@ -13282,7 +13353,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
     __pyx_L8_try_end:;
   }
 
-  /* "kycli/kycore.pyx":611
+  /* "kycli/kycore.pyx":616
  *         return self._bind_and_fetch("SELECT id, key, value, timestamp FROM audit_log WHERE id > ? ORDER BY id ASC", [last_id])
  * 
  *     def sync_from_stream(self, list entries):             # <<<<<<<<<<<<<<
@@ -13309,8 +13380,740 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":627
+/* "kycli/kycore.pyx":632
  *             raise e
+ * 
+ *     def restore_to(self, str timestamp):             # <<<<<<<<<<<<<<
+ *         """
+ *         Point-in-Time Recovery: Reconstruct database state at a specific timestamp.
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_48restore_to(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_5kycli_6kycore_6Kycore_47restore_to, "\n        Point-in-Time Recovery: Reconstruct database state at a specific timestamp.\n        :param timestamp: Target timestamp (e.g., '2026-01-01 12:00:00')\n        ");
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_48restore_to = {"restore_to", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_48restore_to, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5kycli_6kycore_6Kycore_47restore_to};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_48restore_to(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_timestamp = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("restore_to (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_timestamp,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 632, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 632, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "restore_to", 0) < (0)) __PYX_ERR(0, 632, __pyx_L3_error)
+      for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("restore_to", 1, 1, 1, i); __PYX_ERR(0, 632, __pyx_L3_error) }
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 632, __pyx_L3_error)
+    }
+    __pyx_v_timestamp = ((PyObject*)values[0]);
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("restore_to", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 632, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("kycli.kycore.Kycore.restore_to", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_timestamp), (&PyUnicode_Type), 1, "timestamp", 1))) __PYX_ERR(0, 632, __pyx_L1_error)
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_47restore_to(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_timestamp);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  goto __pyx_L7_cleaned_up;
+  __pyx_L0:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __pyx_L7_cleaned_up:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore_to(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_timestamp) {
+  PyObject *__pyx_v_sql = NULL;
+  PyObject *__pyx_v_e = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  size_t __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_t_9;
+  char const *__pyx_t_10;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
+  PyObject *__pyx_t_13 = NULL;
+  PyObject *__pyx_t_14 = NULL;
+  PyObject *__pyx_t_15 = NULL;
+  PyObject *__pyx_t_16 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("restore_to", 0);
+
+  /* "kycli/kycore.pyx":637
+ *         :param timestamp: Target timestamp (e.g., '2026-01-01 12:00:00')
+ *         """
+ *         try:             # <<<<<<<<<<<<<<
+ *             self._execute_raw("BEGIN TRANSACTION")
+ * 
+*/
+  {
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ExceptionSave(&__pyx_t_1, &__pyx_t_2, &__pyx_t_3);
+    __Pyx_XGOTREF(__pyx_t_1);
+    __Pyx_XGOTREF(__pyx_t_2);
+    __Pyx_XGOTREF(__pyx_t_3);
+    /*try:*/ {
+
+      /* "kycli/kycore.pyx":638
+ *         """
+ *         try:
+ *             self._execute_raw("BEGIN TRANSACTION")             # <<<<<<<<<<<<<<
+ * 
+ *             # 1. Clear current store
+*/
+      __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 638, __pyx_L3_error)
+
+      /* "kycli/kycore.pyx":641
+ * 
+ *             # 1. Clear current store
+ *             self._execute_raw("DELETE FROM kvstore")             # <<<<<<<<<<<<<<
+ * 
+ *             # 2. Find latest non-NULL entry for each key before timestamp
+*/
+      __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_DELETE_FROM_kvstore); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 641, __pyx_L3_error)
+
+      /* "kycli/kycore.pyx":645
+ *             # 2. Find latest non-NULL entry for each key before timestamp
+ *             # We use a subquery to find the MAX(id) for each key up to the timestamp
+ *             sql = """             # <<<<<<<<<<<<<<
+ *                 INSERT INTO kvstore (key, value)
+ *                 SELECT key, value FROM audit_log
+*/
+      __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_INSERT_INTO_kvstore_key_value_S);
+      __pyx_v_sql = __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_kvstore_key_value_S;
+
+      /* "kycli/kycore.pyx":654
+ *                 ) AND value IS NOT NULL
+ *             """
+ *             self._bind_and_execute(sql, [timestamp])             # <<<<<<<<<<<<<<
+ * 
+ *             self._execute_raw("COMMIT")
+*/
+      __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 654, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_INCREF(__pyx_v_timestamp);
+      __Pyx_GIVEREF(__pyx_v_timestamp);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 0, __pyx_v_timestamp) != (0)) __PYX_ERR(0, 654, __pyx_L3_error);
+      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_v_sql, ((PyObject*)__pyx_t_5)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 654, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+
+      /* "kycli/kycore.pyx":656
+ *             self._bind_and_execute(sql, [timestamp])
+ * 
+ *             self._execute_raw("COMMIT")             # <<<<<<<<<<<<<<
+ * 
+ *             # 3. Invalidate cache
+*/
+      __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 656, __pyx_L3_error)
+
+      /* "kycli/kycore.pyx":659
+ * 
+ *             # 3. Invalidate cache
+ *             self._cache.clear()             # <<<<<<<<<<<<<<
+ * 
+ *             return f"Database restored to state at {timestamp}"
+*/
+      __pyx_t_5 = __pyx_v_self->_cache;
+      __Pyx_INCREF(__pyx_t_5);
+      __pyx_t_7 = 0;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_5, NULL};
+        __pyx_t_6 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_clear, __pyx_callargs+__pyx_t_7, (1-__pyx_t_7) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 659, __pyx_L3_error)
+        __Pyx_GOTREF(__pyx_t_6);
+      }
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+
+      /* "kycli/kycore.pyx":661
+ *             self._cache.clear()
+ * 
+ *             return f"Database restored to state at {timestamp}"             # <<<<<<<<<<<<<<
+ *         except Exception as e:
+ *             self._execute_raw("ROLLBACK")
+*/
+      __Pyx_XDECREF(__pyx_r);
+      __pyx_t_6 = __Pyx_PyUnicode_Unicode(__pyx_v_timestamp); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 661, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Database_restored_to_state_at, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 661, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_r = __pyx_t_5;
+      __pyx_t_5 = 0;
+      goto __pyx_L7_try_return;
+
+      /* "kycli/kycore.pyx":637
+ *         :param timestamp: Target timestamp (e.g., '2026-01-01 12:00:00')
+ *         """
+ *         try:             # <<<<<<<<<<<<<<
+ *             self._execute_raw("BEGIN TRANSACTION")
+ * 
+*/
+    }
+    __pyx_L3_error:;
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+
+    /* "kycli/kycore.pyx":662
+ * 
+ *             return f"Database restored to state at {timestamp}"
+ *         except Exception as e:             # <<<<<<<<<<<<<<
+ *             self._execute_raw("ROLLBACK")
+ *             raise e
+*/
+    __pyx_t_4 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
+    if (__pyx_t_4) {
+      __Pyx_AddTraceback("kycli.kycore.Kycore.restore_to", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_6, &__pyx_t_8) < 0) __PYX_ERR(0, 662, __pyx_L5_except_error)
+      __Pyx_XGOTREF(__pyx_t_5);
+      __Pyx_XGOTREF(__pyx_t_6);
+      __Pyx_XGOTREF(__pyx_t_8);
+      __Pyx_INCREF(__pyx_t_6);
+      __pyx_v_e = __pyx_t_6;
+      /*try:*/ {
+
+        /* "kycli/kycore.pyx":663
+ *             return f"Database restored to state at {timestamp}"
+ *         except Exception as e:
+ *             self._execute_raw("ROLLBACK")             # <<<<<<<<<<<<<<
+ *             raise e
+ * 
+*/
+        __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 663, __pyx_L14_error)
+
+        /* "kycli/kycore.pyx":664
+ *         except Exception as e:
+ *             self._execute_raw("ROLLBACK")
+ *             raise e             # <<<<<<<<<<<<<<
+ * 
+ *     def compact(self, int retention_days=15):
+*/
+        __Pyx_Raise(__pyx_v_e, 0, 0, 0);
+        __PYX_ERR(0, 664, __pyx_L14_error)
+      }
+
+      /* "kycli/kycore.pyx":662
+ * 
+ *             return f"Database restored to state at {timestamp}"
+ *         except Exception as e:             # <<<<<<<<<<<<<<
+ *             self._execute_raw("ROLLBACK")
+ *             raise e
+*/
+      /*finally:*/ {
+        __pyx_L14_error:;
+        /*exception exit:*/{
+          __Pyx_PyThreadState_declare
+          __Pyx_PyThreadState_assign
+          __pyx_t_11 = 0; __pyx_t_12 = 0; __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0; __pyx_t_16 = 0;
+           __Pyx_ExceptionSwap(&__pyx_t_14, &__pyx_t_15, &__pyx_t_16);
+          if ( unlikely(__Pyx_GetException(&__pyx_t_11, &__pyx_t_12, &__pyx_t_13) < 0)) __Pyx_ErrFetch(&__pyx_t_11, &__pyx_t_12, &__pyx_t_13);
+          __Pyx_XGOTREF(__pyx_t_11);
+          __Pyx_XGOTREF(__pyx_t_12);
+          __Pyx_XGOTREF(__pyx_t_13);
+          __Pyx_XGOTREF(__pyx_t_14);
+          __Pyx_XGOTREF(__pyx_t_15);
+          __Pyx_XGOTREF(__pyx_t_16);
+          __pyx_t_4 = __pyx_lineno; __pyx_t_9 = __pyx_clineno; __pyx_t_10 = __pyx_filename;
+          {
+            __Pyx_DECREF(__pyx_v_e); __pyx_v_e = 0;
+          }
+          __Pyx_XGIVEREF(__pyx_t_14);
+          __Pyx_XGIVEREF(__pyx_t_15);
+          __Pyx_XGIVEREF(__pyx_t_16);
+          __Pyx_ExceptionReset(__pyx_t_14, __pyx_t_15, __pyx_t_16);
+          __Pyx_XGIVEREF(__pyx_t_11);
+          __Pyx_XGIVEREF(__pyx_t_12);
+          __Pyx_XGIVEREF(__pyx_t_13);
+          __Pyx_ErrRestore(__pyx_t_11, __pyx_t_12, __pyx_t_13);
+          __pyx_t_11 = 0; __pyx_t_12 = 0; __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0; __pyx_t_16 = 0;
+          __pyx_lineno = __pyx_t_4; __pyx_clineno = __pyx_t_9; __pyx_filename = __pyx_t_10;
+          goto __pyx_L5_except_error;
+        }
+      }
+    }
+    goto __pyx_L5_except_error;
+
+    /* "kycli/kycore.pyx":637
+ *         :param timestamp: Target timestamp (e.g., '2026-01-01 12:00:00')
+ *         """
+ *         try:             # <<<<<<<<<<<<<<
+ *             self._execute_raw("BEGIN TRANSACTION")
+ * 
+*/
+    __pyx_L5_except_error:;
+    __Pyx_XGIVEREF(__pyx_t_1);
+    __Pyx_XGIVEREF(__pyx_t_2);
+    __Pyx_XGIVEREF(__pyx_t_3);
+    __Pyx_ExceptionReset(__pyx_t_1, __pyx_t_2, __pyx_t_3);
+    goto __pyx_L1_error;
+    __pyx_L7_try_return:;
+    __Pyx_XGIVEREF(__pyx_t_1);
+    __Pyx_XGIVEREF(__pyx_t_2);
+    __Pyx_XGIVEREF(__pyx_t_3);
+    __Pyx_ExceptionReset(__pyx_t_1, __pyx_t_2, __pyx_t_3);
+    goto __pyx_L0;
+  }
+
+  /* "kycli/kycore.pyx":632
+ *             raise e
+ * 
+ *     def restore_to(self, str timestamp):             # <<<<<<<<<<<<<<
+ *         """
+ *         Point-in-Time Recovery: Reconstruct database state at a specific timestamp.
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_AddTraceback("kycli.kycore.Kycore.restore_to", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_sql);
+  __Pyx_XDECREF(__pyx_v_e);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "kycli/kycore.pyx":666
+ *             raise e
+ * 
+ *     def compact(self, int retention_days=15):             # <<<<<<<<<<<<<<
+ *         """
+ *         Database Compaction: Cleanup old audit/archive data and reclaim space.
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_50compact(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_5kycli_6kycore_6Kycore_49compact, "\n        Database Compaction: Cleanup old audit/archive data and reclaim space.\n        :param retention_days: Number of days of history to keep (default 15)\n        ");
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_50compact = {"compact", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_50compact, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5kycli_6kycore_6Kycore_49compact};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_50compact(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  int __pyx_v_retention_days;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("compact (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_retention_days,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 666, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 666, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "compact", 0) < (0)) __PYX_ERR(0, 666, __pyx_L3_error)
+    } else {
+      switch (__pyx_nargs) {
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 666, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    if (values[0]) {
+      __pyx_v_retention_days = __Pyx_PyLong_As_int(values[0]); if (unlikely((__pyx_v_retention_days == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 666, __pyx_L3_error)
+    } else {
+      __pyx_v_retention_days = ((int)15);
+    }
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("compact", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 666, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("kycli.kycore.Kycore.compact", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_49compact(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_retention_days);
+
+  /* function exit code */
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49compact(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, int __pyx_v_retention_days) {
+  PyObject *__pyx_v_e = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_11 = NULL;
+  size_t __pyx_t_12;
+  int __pyx_t_13;
+  char const *__pyx_t_14;
+  PyObject *__pyx_t_15 = NULL;
+  PyObject *__pyx_t_16 = NULL;
+  PyObject *__pyx_t_17 = NULL;
+  PyObject *__pyx_t_18 = NULL;
+  PyObject *__pyx_t_19 = NULL;
+  PyObject *__pyx_t_20 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("compact", 0);
+
+  /* "kycli/kycore.pyx":671
+ *         :param retention_days: Number of days of history to keep (default 15)
+ *         """
+ *         try:             # <<<<<<<<<<<<<<
+ *             # 1. Cleanup Audit Log
+ *             self._bind_and_execute("DELETE FROM audit_log WHERE (julianday('now') - julianday(timestamp)) > ?", [retention_days])
+*/
+  {
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ExceptionSave(&__pyx_t_1, &__pyx_t_2, &__pyx_t_3);
+    __Pyx_XGOTREF(__pyx_t_1);
+    __Pyx_XGOTREF(__pyx_t_2);
+    __Pyx_XGOTREF(__pyx_t_3);
+    /*try:*/ {
+
+      /* "kycli/kycore.pyx":673
+ *         try:
+ *             # 1. Cleanup Audit Log
+ *             self._bind_and_execute("DELETE FROM audit_log WHERE (julianday('now') - julianday(timestamp)) > ?", [retention_days])             # <<<<<<<<<<<<<<
+ * 
+ *             # 2. Cleanup Archive
+*/
+      __pyx_t_4 = __Pyx_PyLong_From_int(__pyx_v_retention_days); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 673, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 673, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_GIVEREF(__pyx_t_4);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_4) != (0)) __PYX_ERR(0, 673, __pyx_L3_error);
+      __pyx_t_4 = 0;
+      __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_DELETE_FROM_audit_log_WHERE_juli, ((PyObject*)__pyx_t_5)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 673, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+      /* "kycli/kycore.pyx":676
+ * 
+ *             # 2. Cleanup Archive
+ *             self._bind_and_execute("DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > ?", [retention_days])             # <<<<<<<<<<<<<<
+ * 
+ *             # 3. SQLite Maintenance
+*/
+      __pyx_t_4 = __Pyx_PyLong_From_int(__pyx_v_retention_days); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 676, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 676, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_GIVEREF(__pyx_t_4);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_4) != (0)) __PYX_ERR(0, 676, __pyx_L3_error);
+      __pyx_t_4 = 0;
+      __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_DELETE_FROM_archive_WHERE_julian_2, ((PyObject*)__pyx_t_5)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 676, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+      /* "kycli/kycore.pyx":679
+ * 
+ *             # 3. SQLite Maintenance
+ *             self._execute_raw("VACUUM")             # <<<<<<<<<<<<<<
+ *             self._execute_raw("ANALYZE")
+ * 
+*/
+      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_VACUUM); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 679, __pyx_L3_error)
+
+      /* "kycli/kycore.pyx":680
+ *             # 3. SQLite Maintenance
+ *             self._execute_raw("VACUUM")
+ *             self._execute_raw("ANALYZE")             # <<<<<<<<<<<<<<
+ * 
+ *             return "Compaction complete: Space reclaimed and stale history purged."
+*/
+      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ANALYZE); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 680, __pyx_L3_error)
+
+      /* "kycli/kycore.pyx":682
+ *             self._execute_raw("ANALYZE")
+ * 
+ *             return "Compaction complete: Space reclaimed and stale history purged."             # <<<<<<<<<<<<<<
+ *         except Exception as e:
+ *             raise RuntimeError(f"Compaction failed: {e}")
+*/
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_Compaction_complete_Space_reclai);
+      __pyx_r = __pyx_mstate_global->__pyx_kp_u_Compaction_complete_Space_reclai;
+      goto __pyx_L7_try_return;
+
+      /* "kycli/kycore.pyx":671
+ *         :param retention_days: Number of days of history to keep (default 15)
+ *         """
+ *         try:             # <<<<<<<<<<<<<<
+ *             # 1. Cleanup Audit Log
+ *             self._bind_and_execute("DELETE FROM audit_log WHERE (julianday('now') - julianday(timestamp)) > ?", [retention_days])
+*/
+    }
+    __pyx_L3_error:;
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+
+    /* "kycli/kycore.pyx":683
+ * 
+ *             return "Compaction complete: Space reclaimed and stale history purged."
+ *         except Exception as e:             # <<<<<<<<<<<<<<
+ *             raise RuntimeError(f"Compaction failed: {e}")
+ * 
+*/
+    __pyx_t_6 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
+    if (__pyx_t_6) {
+      __Pyx_AddTraceback("kycli.kycore.Kycore.compact", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_5, &__pyx_t_7) < 0) __PYX_ERR(0, 683, __pyx_L5_except_error)
+      __Pyx_XGOTREF(__pyx_t_4);
+      __Pyx_XGOTREF(__pyx_t_5);
+      __Pyx_XGOTREF(__pyx_t_7);
+      __Pyx_INCREF(__pyx_t_5);
+      __pyx_v_e = __pyx_t_5;
+      /*try:*/ {
+
+        /* "kycli/kycore.pyx":684
+ *             return "Compaction complete: Space reclaimed and stale history purged."
+ *         except Exception as e:
+ *             raise RuntimeError(f"Compaction failed: {e}")             # <<<<<<<<<<<<<<
+ * 
+ *     def restore(self, str key):
+*/
+        __pyx_t_9 = NULL;
+        __pyx_t_10 = __Pyx_PyObject_FormatSimple(__pyx_v_e, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 684, __pyx_L14_error)
+        __Pyx_GOTREF(__pyx_t_10);
+        __pyx_t_11 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Compaction_failed, __pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 684, __pyx_L14_error)
+        __Pyx_GOTREF(__pyx_t_11);
+        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+        __pyx_t_12 = 1;
+        {
+          PyObject *__pyx_callargs[2] = {__pyx_t_9, __pyx_t_11};
+          __pyx_t_8 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_12, (2-__pyx_t_12) | (__pyx_t_12*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 684, __pyx_L14_error)
+          __Pyx_GOTREF(__pyx_t_8);
+        }
+        __Pyx_Raise(__pyx_t_8, 0, 0, 0);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __PYX_ERR(0, 684, __pyx_L14_error)
+      }
+
+      /* "kycli/kycore.pyx":683
+ * 
+ *             return "Compaction complete: Space reclaimed and stale history purged."
+ *         except Exception as e:             # <<<<<<<<<<<<<<
+ *             raise RuntimeError(f"Compaction failed: {e}")
+ * 
+*/
+      /*finally:*/ {
+        __pyx_L14_error:;
+        /*exception exit:*/{
+          __Pyx_PyThreadState_declare
+          __Pyx_PyThreadState_assign
+          __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_20 = 0;
+          __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
+          __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
+          __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+           __Pyx_ExceptionSwap(&__pyx_t_18, &__pyx_t_19, &__pyx_t_20);
+          if ( unlikely(__Pyx_GetException(&__pyx_t_15, &__pyx_t_16, &__pyx_t_17) < 0)) __Pyx_ErrFetch(&__pyx_t_15, &__pyx_t_16, &__pyx_t_17);
+          __Pyx_XGOTREF(__pyx_t_15);
+          __Pyx_XGOTREF(__pyx_t_16);
+          __Pyx_XGOTREF(__pyx_t_17);
+          __Pyx_XGOTREF(__pyx_t_18);
+          __Pyx_XGOTREF(__pyx_t_19);
+          __Pyx_XGOTREF(__pyx_t_20);
+          __pyx_t_6 = __pyx_lineno; __pyx_t_13 = __pyx_clineno; __pyx_t_14 = __pyx_filename;
+          {
+            __Pyx_DECREF(__pyx_v_e); __pyx_v_e = 0;
+          }
+          __Pyx_XGIVEREF(__pyx_t_18);
+          __Pyx_XGIVEREF(__pyx_t_19);
+          __Pyx_XGIVEREF(__pyx_t_20);
+          __Pyx_ExceptionReset(__pyx_t_18, __pyx_t_19, __pyx_t_20);
+          __Pyx_XGIVEREF(__pyx_t_15);
+          __Pyx_XGIVEREF(__pyx_t_16);
+          __Pyx_XGIVEREF(__pyx_t_17);
+          __Pyx_ErrRestore(__pyx_t_15, __pyx_t_16, __pyx_t_17);
+          __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_20 = 0;
+          __pyx_lineno = __pyx_t_6; __pyx_clineno = __pyx_t_13; __pyx_filename = __pyx_t_14;
+          goto __pyx_L5_except_error;
+        }
+      }
+    }
+    goto __pyx_L5_except_error;
+
+    /* "kycli/kycore.pyx":671
+ *         :param retention_days: Number of days of history to keep (default 15)
+ *         """
+ *         try:             # <<<<<<<<<<<<<<
+ *             # 1. Cleanup Audit Log
+ *             self._bind_and_execute("DELETE FROM audit_log WHERE (julianday('now') - julianday(timestamp)) > ?", [retention_days])
+*/
+    __pyx_L5_except_error:;
+    __Pyx_XGIVEREF(__pyx_t_1);
+    __Pyx_XGIVEREF(__pyx_t_2);
+    __Pyx_XGIVEREF(__pyx_t_3);
+    __Pyx_ExceptionReset(__pyx_t_1, __pyx_t_2, __pyx_t_3);
+    goto __pyx_L1_error;
+    __pyx_L7_try_return:;
+    __Pyx_XGIVEREF(__pyx_t_1);
+    __Pyx_XGIVEREF(__pyx_t_2);
+    __Pyx_XGIVEREF(__pyx_t_3);
+    __Pyx_ExceptionReset(__pyx_t_1, __pyx_t_2, __pyx_t_3);
+    goto __pyx_L0;
+  }
+
+  /* "kycli/kycore.pyx":666
+ *             raise e
+ * 
+ *     def compact(self, int retention_days=15):             # <<<<<<<<<<<<<<
+ *         """
+ *         Database Compaction: Cleanup old audit/archive data and reclaim space.
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_AddTraceback("kycli.kycore.Kycore.compact", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_e);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "kycli/kycore.pyx":686
+ *             raise RuntimeError(f"Compaction failed: {e}")
  * 
  *     def restore(self, str key):             # <<<<<<<<<<<<<<
  *         """Restore the latest value for a key from the archive."""
@@ -13318,16 +14121,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_45sync_from_stream(struct __pyx
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_48restore(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_52restore(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_5kycli_6kycore_6Kycore_47restore, "Restore the latest value for a key from the archive.");
-static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_48restore = {"restore", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_48restore, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5kycli_6kycore_6Kycore_47restore};
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_48restore(PyObject *__pyx_v_self, 
+PyDoc_STRVAR(__pyx_doc_5kycli_6kycore_6Kycore_51restore, "Restore the latest value for a key from the archive.");
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_52restore = {"restore", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_52restore, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5kycli_6kycore_6Kycore_51restore};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_52restore(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -13357,32 +14160,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_key,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 627, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 686, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 627, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 686, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "restore", 0) < (0)) __PYX_ERR(0, 627, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "restore", 0) < (0)) __PYX_ERR(0, 686, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("restore", 1, 1, 1, i); __PYX_ERR(0, 627, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("restore", 1, 1, 1, i); __PYX_ERR(0, 686, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 627, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 686, __pyx_L3_error)
     }
     __pyx_v_key = ((PyObject*)values[0]);
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("restore", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 627, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("restore", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 686, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -13393,8 +14196,8 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 627, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_47restore(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_key);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 686, __pyx_L1_error)
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_51restore(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_key);
 
   /* function exit code */
   goto __pyx_L0;
@@ -13413,7 +14216,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_key) {
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51restore(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_key) {
   PyObject *__pyx_v_k = 0;
   PyObject *__pyx_v_results = 0;
   PyObject *__pyx_v_latest_value = 0;
@@ -13431,14 +14234,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("restore", 0);
 
-  /* "kycli/kycore.pyx":629
+  /* "kycli/kycore.pyx":688
  *     def restore(self, str key):
  *         """Restore the latest value for a key from the archive."""
  *         cdef str k = key.lower().strip()             # <<<<<<<<<<<<<<
  * 
  *         # Pull latest from archive
 */
-  __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 629, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 688, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_2 = __pyx_t_3;
   __Pyx_INCREF(__pyx_t_2);
@@ -13448,31 +14251,31 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
     __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_4, (1-__pyx_t_4) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 629, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 688, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_v_k = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":632
+  /* "kycli/kycore.pyx":691
  * 
  *         # Pull latest from archive
  *         cdef list results = self._bind_and_fetch("SELECT value FROM archive WHERE key = ? ORDER BY deleted_at DESC LIMIT 1", [k])             # <<<<<<<<<<<<<<
  * 
  *         if not results:
 */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 632, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 691, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_k);
   __Pyx_GIVEREF(__pyx_v_k);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 632, __pyx_L1_error);
-  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_value_FROM_archive_WHERE, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 632, __pyx_L1_error)
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 691, __pyx_L1_error);
+  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_value_FROM_archive_WHERE, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 691, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_results = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":634
+  /* "kycli/kycore.pyx":693
  *         cdef list results = self._bind_and_fetch("SELECT value FROM archive WHERE key = ? ORDER BY deleted_at DESC LIMIT 1", [k])
  * 
  *         if not results:             # <<<<<<<<<<<<<<
@@ -13483,14 +14286,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
   else
   {
     Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_v_results);
-    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 634, __pyx_L1_error)
+    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 693, __pyx_L1_error)
     __pyx_t_5 = (__pyx_temp != 0);
   }
 
   __pyx_t_6 = (!__pyx_t_5);
   if (__pyx_t_6) {
 
-    /* "kycli/kycore.pyx":635
+    /* "kycli/kycore.pyx":694
  * 
  *         if not results:
  *             return "No archived version found for this key (Note: Archive is purged after 15 days)"             # <<<<<<<<<<<<<<
@@ -13502,7 +14305,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
     __pyx_r = __pyx_mstate_global->__pyx_kp_u_No_archived_version_found_for_th;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":634
+    /* "kycli/kycore.pyx":693
  *         cdef list results = self._bind_and_fetch("SELECT value FROM archive WHERE key = ? ORDER BY deleted_at DESC LIMIT 1", [k])
  * 
  *         if not results:             # <<<<<<<<<<<<<<
@@ -13511,7 +14314,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
 */
   }
 
-  /* "kycli/kycore.pyx":637
+  /* "kycli/kycore.pyx":696
  *             return "No archived version found for this key (Note: Archive is purged after 15 days)"
  * 
  *         cdef str latest_value = results[0][0]             # <<<<<<<<<<<<<<
@@ -13520,36 +14323,36 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
 */
   if (unlikely(__pyx_v_results == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 637, __pyx_L1_error)
+    __PYX_ERR(0, 696, __pyx_L1_error)
   }
-  __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 637, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 696, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 637, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 696, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(PyUnicode_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_1))) __PYX_ERR(0, 637, __pyx_L1_error)
+  if (!(likely(PyUnicode_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_1))) __PYX_ERR(0, 696, __pyx_L1_error)
   __pyx_v_latest_value = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":640
+  /* "kycli/kycore.pyx":699
  * 
  *         # Check if it's already in kvstore (maybe it was recreated)
  *         results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])             # <<<<<<<<<<<<<<
  *         if results and results[0][0] == latest_value:
  *             return "Already in active store with identical value"
 */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 640, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 699, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_k);
   __Pyx_GIVEREF(__pyx_v_k);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 640, __pyx_L1_error);
-  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_value_FROM_kvstore_WHERE, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 640, __pyx_L1_error)
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 699, __pyx_L1_error);
+  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_value_FROM_kvstore_WHERE, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 699, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF_SET(__pyx_v_results, ((PyObject*)__pyx_t_3));
   __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":641
+  /* "kycli/kycore.pyx":700
  *         # Check if it's already in kvstore (maybe it was recreated)
  *         results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])
  *         if results and results[0][0] == latest_value:             # <<<<<<<<<<<<<<
@@ -13560,7 +14363,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
   else
   {
     Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_v_results);
-    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 641, __pyx_L1_error)
+    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 700, __pyx_L1_error)
     __pyx_t_5 = (__pyx_temp != 0);
   }
 
@@ -13571,20 +14374,20 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
   }
   if (unlikely(__pyx_v_results == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 641, __pyx_L1_error)
+    __PYX_ERR(0, 700, __pyx_L1_error)
   }
-  __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 641, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_results, 0, long, 1, __Pyx_PyLong_From_long, 1, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 700, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 641, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 700, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_5 = (__Pyx_PyUnicode_Equals(__pyx_t_1, __pyx_v_latest_value, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 641, __pyx_L1_error)
+  __pyx_t_5 = (__Pyx_PyUnicode_Equals(__pyx_t_1, __pyx_v_latest_value, Py_EQ)); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 700, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_6 = __pyx_t_5;
   __pyx_L5_bool_binop_done:;
   if (__pyx_t_6) {
 
-    /* "kycli/kycore.pyx":642
+    /* "kycli/kycore.pyx":701
  *         results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])
  *         if results and results[0][0] == latest_value:
  *             return "Already in active store with identical value"             # <<<<<<<<<<<<<<
@@ -13596,7 +14399,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
     __pyx_r = __pyx_mstate_global->__pyx_kp_u_Already_in_active_store_with_ide;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":641
+    /* "kycli/kycore.pyx":700
  *         # Check if it's already in kvstore (maybe it was recreated)
  *         results = self._bind_and_fetch("SELECT value FROM kvstore WHERE key = ?", [k])
  *         if results and results[0][0] == latest_value:             # <<<<<<<<<<<<<<
@@ -13605,65 +14408,65 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
 */
   }
 
-  /* "kycli/kycore.pyx":645
+  /* "kycli/kycore.pyx":704
  * 
  *         # Re-save it (latest_value is already encrypted if encryption was on)
  *         self._execute_raw("BEGIN TRANSACTION")             # <<<<<<<<<<<<<<
  *         self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, latest_value])
  *         self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, latest_value])
 */
-  __pyx_t_7 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 645, __pyx_L1_error)
+  __pyx_t_7 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 704, __pyx_L1_error)
 
-  /* "kycli/kycore.pyx":646
+  /* "kycli/kycore.pyx":705
  *         # Re-save it (latest_value is already encrypted if encryption was on)
  *         self._execute_raw("BEGIN TRANSACTION")
  *         self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, latest_value])             # <<<<<<<<<<<<<<
  *         self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, latest_value])
  *         self._execute_raw("COMMIT")
 */
-  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 646, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 705, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_k);
   __Pyx_GIVEREF(__pyx_v_k);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 646, __pyx_L1_error);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 705, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_latest_value);
   __Pyx_GIVEREF(__pyx_v_latest_value);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 1, __pyx_v_latest_value) != (0)) __PYX_ERR(0, 646, __pyx_L1_error);
-  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k_2, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 646, __pyx_L1_error)
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 1, __pyx_v_latest_value) != (0)) __PYX_ERR(0, 705, __pyx_L1_error);
+  __pyx_t_3 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k_2, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 705, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":647
+  /* "kycli/kycore.pyx":706
  *         self._execute_raw("BEGIN TRANSACTION")
  *         self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, latest_value])
  *         self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, latest_value])             # <<<<<<<<<<<<<<
  *         self._execute_raw("COMMIT")
  *         return f"Restored: {k}"
 */
-  __pyx_t_3 = PyList_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 647, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 706, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_k);
   __Pyx_GIVEREF(__pyx_v_k);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 647, __pyx_L1_error);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 706, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_latest_value);
   __Pyx_GIVEREF(__pyx_v_latest_value);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 1, __pyx_v_latest_value) != (0)) __PYX_ERR(0, 647, __pyx_L1_error);
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_audit_log_key_value, ((PyObject*)__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 647, __pyx_L1_error)
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 1, __pyx_v_latest_value) != (0)) __PYX_ERR(0, 706, __pyx_L1_error);
+  __pyx_t_1 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_audit_log_key_value, ((PyObject*)__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 706, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":648
+  /* "kycli/kycore.pyx":707
  *         self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, latest_value])
  *         self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, latest_value])
  *         self._execute_raw("COMMIT")             # <<<<<<<<<<<<<<
  *         return f"Restored: {k}"
  * 
 */
-  __pyx_t_7 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 648, __pyx_L1_error)
+  __pyx_t_7 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 707, __pyx_L1_error)
 
-  /* "kycli/kycore.pyx":649
+  /* "kycli/kycore.pyx":708
  *         self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, latest_value])
  *         self._execute_raw("COMMIT")
  *         return f"Restored: {k}"             # <<<<<<<<<<<<<<
@@ -13671,14 +14474,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
  *     def listkeys(self, pattern=None):
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Restored, __pyx_v_k); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 649, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Restored, __pyx_v_k); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 708, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":627
- *             raise e
+  /* "kycli/kycore.pyx":686
+ *             raise RuntimeError(f"Compaction failed: {e}")
  * 
  *     def restore(self, str key):             # <<<<<<<<<<<<<<
  *         """Restore the latest value for a key from the archive."""
@@ -13701,7 +14504,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":651
+/* "kycli/kycore.pyx":710
  *         return f"Restored: {k}"
  * 
  *     def listkeys(self, pattern=None):             # <<<<<<<<<<<<<<
@@ -13710,15 +14513,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_47restore(struct __pyx_obj_5kyc
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_50listkeys(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_54listkeys(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_50listkeys = {"listkeys", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_50listkeys, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_50listkeys(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_54listkeys = {"listkeys", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_54listkeys, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_54listkeys(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -13748,24 +14551,24 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_pattern,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 651, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 710, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 651, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 710, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "listkeys", 0) < (0)) __PYX_ERR(0, 651, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "listkeys", 0) < (0)) __PYX_ERR(0, 710, __pyx_L3_error)
       if (!values[0]) values[0] = __Pyx_NewRef(((PyObject *)Py_None));
     } else {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 651, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 710, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
@@ -13776,7 +14579,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("listkeys", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 651, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("listkeys", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 710, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -13787,7 +14590,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_49listkeys(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_pattern);
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_53listkeys(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_pattern);
 
   /* function exit code */
   for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -13797,7 +14600,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_pattern) {
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53listkeys(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_pattern) {
   PyObject *__pyx_v_results = NULL;
   PyObject *__pyx_v_keys = NULL;
   PyObject *__pyx_v_regex = NULL;
@@ -13823,30 +14626,30 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("listkeys", 0);
 
-  /* "kycli/kycore.pyx":655
+  /* "kycli/kycore.pyx":714
  *             SELECT key FROM kvstore
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])             # <<<<<<<<<<<<<<
  *         keys = [row[0] for row in results]
  *         if not pattern:
 */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 655, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 714, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "kycli/kycore.pyx":652
+  /* "kycli/kycore.pyx":711
  * 
  *     def listkeys(self, pattern=None):
  *         results = self._bind_and_fetch("""             # <<<<<<<<<<<<<<
  *             SELECT key FROM kvstore
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
 */
-  __pyx_t_2 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_FROM_kvstore_WHERE_e, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 652, __pyx_L1_error)
+  __pyx_t_2 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_FROM_kvstore_WHERE_e, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 711, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_results = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":656
+  /* "kycli/kycore.pyx":715
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])
  *         keys = [row[0] for row in results]             # <<<<<<<<<<<<<<
@@ -13854,11 +14657,11 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
  *             return keys
 */
   { /* enter inner scope */
-    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 656, __pyx_L5_error)
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 715, __pyx_L5_error)
     __Pyx_GOTREF(__pyx_t_2);
     if (unlikely(__pyx_v_results == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-      __PYX_ERR(0, 656, __pyx_L5_error)
+      __PYX_ERR(0, 715, __pyx_L5_error)
     }
     __pyx_t_1 = __pyx_v_results; __Pyx_INCREF(__pyx_t_1);
     __pyx_t_3 = 0;
@@ -13866,19 +14669,19 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
       {
         Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
         #if !CYTHON_ASSUME_SAFE_SIZE
-        if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 656, __pyx_L5_error)
+        if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 715, __pyx_L5_error)
         #endif
         if (__pyx_t_3 >= __pyx_temp) break;
       }
       __pyx_t_4 = __Pyx_PyList_GetItemRefFast(__pyx_t_1, __pyx_t_3, __Pyx_ReferenceSharing_OwnStrongReference);
       ++__pyx_t_3;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 656, __pyx_L5_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 715, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_XDECREF_SET(__pyx_8genexpr1__pyx_v_row, __pyx_t_4);
       __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_GetItemInt(__pyx_8genexpr1__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 656, __pyx_L5_error)
+      __pyx_t_4 = __Pyx_GetItemInt(__pyx_8genexpr1__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 715, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_4);
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_4))) __PYX_ERR(0, 656, __pyx_L5_error)
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_4))) __PYX_ERR(0, 715, __pyx_L5_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -13892,18 +14695,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
   __pyx_v_keys = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":657
+  /* "kycli/kycore.pyx":716
  *         """, [])
  *         keys = [row[0] for row in results]
  *         if not pattern:             # <<<<<<<<<<<<<<
  *             return keys
  * 
 */
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_pattern); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 657, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_pattern); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 716, __pyx_L1_error)
   __pyx_t_6 = (!__pyx_t_5);
   if (__pyx_t_6) {
 
-    /* "kycli/kycore.pyx":658
+    /* "kycli/kycore.pyx":717
  *         keys = [row[0] for row in results]
  *         if not pattern:
  *             return keys             # <<<<<<<<<<<<<<
@@ -13915,7 +14718,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
     __pyx_r = __pyx_v_keys;
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":657
+    /* "kycli/kycore.pyx":716
  *         """, [])
  *         keys = [row[0] for row in results]
  *         if not pattern:             # <<<<<<<<<<<<<<
@@ -13924,7 +14727,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
 */
   }
 
-  /* "kycli/kycore.pyx":660
+  /* "kycli/kycore.pyx":719
  *             return keys
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -13940,7 +14743,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
     __Pyx_XGOTREF(__pyx_t_9);
     /*try:*/ {
 
-      /* "kycli/kycore.pyx":661
+      /* "kycli/kycore.pyx":720
  * 
  *         try:
  *             regex = re.compile(pattern, re.IGNORECASE)             # <<<<<<<<<<<<<<
@@ -13948,14 +14751,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
  *         except re.error:
 */
       __pyx_t_1 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 661, __pyx_L11_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 720, __pyx_L11_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_compile); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 661, __pyx_L11_error)
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_compile); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 720, __pyx_L11_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 661, __pyx_L11_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 720, __pyx_L11_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_IGNORECASE); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 661, __pyx_L11_error)
+      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_IGNORECASE); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 720, __pyx_L11_error)
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_12 = 1;
@@ -13976,13 +14779,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
         __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 661, __pyx_L11_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 720, __pyx_L11_error)
         __Pyx_GOTREF(__pyx_t_2);
       }
       __pyx_v_regex = __pyx_t_2;
       __pyx_t_2 = 0;
 
-      /* "kycli/kycore.pyx":662
+      /* "kycli/kycore.pyx":721
  *         try:
  *             regex = re.compile(pattern, re.IGNORECASE)
  *             return [k for k in keys if regex.search(k)]             # <<<<<<<<<<<<<<
@@ -13991,7 +14794,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
 */
       __Pyx_XDECREF(__pyx_r);
       { /* enter inner scope */
-        __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 662, __pyx_L19_error)
+        __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 721, __pyx_L19_error)
         __Pyx_GOTREF(__pyx_t_2);
         __pyx_t_10 = __pyx_v_keys; __Pyx_INCREF(__pyx_t_10);
         __pyx_t_3 = 0;
@@ -13999,13 +14802,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
           {
             Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_10);
             #if !CYTHON_ASSUME_SAFE_SIZE
-            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 662, __pyx_L19_error)
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 721, __pyx_L19_error)
             #endif
             if (__pyx_t_3 >= __pyx_temp) break;
           }
           __pyx_t_11 = __Pyx_PyList_GetItemRefFast(__pyx_t_10, __pyx_t_3, __Pyx_ReferenceSharing_OwnStrongReference);
           ++__pyx_t_3;
-          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 662, __pyx_L19_error)
+          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 721, __pyx_L19_error)
           __Pyx_GOTREF(__pyx_t_11);
           __Pyx_XDECREF_SET(__pyx_8genexpr2__pyx_v_k, __pyx_t_11);
           __pyx_t_11 = 0;
@@ -14016,13 +14819,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
             PyObject *__pyx_callargs[2] = {__pyx_t_1, __pyx_8genexpr2__pyx_v_k};
             __pyx_t_11 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_search, __pyx_callargs+__pyx_t_12, (2-__pyx_t_12) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
             __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-            if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 662, __pyx_L19_error)
+            if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 721, __pyx_L19_error)
             __Pyx_GOTREF(__pyx_t_11);
           }
-          __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 662, __pyx_L19_error)
+          __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 721, __pyx_L19_error)
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
           if (__pyx_t_6) {
-            if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_8genexpr2__pyx_v_k))) __PYX_ERR(0, 662, __pyx_L19_error)
+            if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_8genexpr2__pyx_v_k))) __PYX_ERR(0, 721, __pyx_L19_error)
           }
         }
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -14037,7 +14840,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
       __pyx_t_2 = 0;
       goto __pyx_L15_try_return;
 
-      /* "kycli/kycore.pyx":660
+      /* "kycli/kycore.pyx":719
  *             return keys
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -14052,7 +14855,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "kycli/kycore.pyx":663
+    /* "kycli/kycore.pyx":722
  *             regex = re.compile(pattern, re.IGNORECASE)
  *             return [k for k in keys if regex.search(k)]
  *         except re.error:             # <<<<<<<<<<<<<<
@@ -14060,9 +14863,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
  * 
 */
     __Pyx_ErrFetch(&__pyx_t_2, &__pyx_t_10, &__pyx_t_11);
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 663, __pyx_L13_except_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 722, __pyx_L13_except_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_error); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 663, __pyx_L13_except_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_error); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 722, __pyx_L13_except_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_13 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_2, __pyx_t_4);
@@ -14071,12 +14874,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
     __pyx_t_2 = 0; __pyx_t_10 = 0; __pyx_t_11 = 0;
     if (__pyx_t_13) {
       __Pyx_AddTraceback("kycli.kycore.Kycore.listkeys", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_11, &__pyx_t_10, &__pyx_t_2) < 0) __PYX_ERR(0, 663, __pyx_L13_except_error)
+      if (__Pyx_GetException(&__pyx_t_11, &__pyx_t_10, &__pyx_t_2) < 0) __PYX_ERR(0, 722, __pyx_L13_except_error)
       __Pyx_XGOTREF(__pyx_t_11);
       __Pyx_XGOTREF(__pyx_t_10);
       __Pyx_XGOTREF(__pyx_t_2);
 
-      /* "kycli/kycore.pyx":664
+      /* "kycli/kycore.pyx":723
  *             return [k for k in keys if regex.search(k)]
  *         except re.error:
  *             return []             # <<<<<<<<<<<<<<
@@ -14084,7 +14887,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
  *     def get_history(self, str key=None):
 */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 664, __pyx_L13_except_error)
+      __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 723, __pyx_L13_except_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_r = __pyx_t_4;
       __pyx_t_4 = 0;
@@ -14095,7 +14898,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
     }
     goto __pyx_L13_except_error;
 
-    /* "kycli/kycore.pyx":660
+    /* "kycli/kycore.pyx":719
  *             return keys
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -14122,7 +14925,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
     goto __pyx_L0;
   }
 
-  /* "kycli/kycore.pyx":651
+  /* "kycli/kycore.pyx":710
  *         return f"Restored: {k}"
  * 
  *     def listkeys(self, pattern=None):             # <<<<<<<<<<<<<<
@@ -14150,7 +14953,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":666
+/* "kycli/kycore.pyx":725
  *             return []
  * 
  *     def get_history(self, str key=None):             # <<<<<<<<<<<<<<
@@ -14159,15 +14962,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_49listkeys(struct __pyx_obj_5ky
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_52get_history(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_56get_history(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_52get_history = {"get_history", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_52get_history, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_52get_history(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_56get_history = {"get_history", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_56get_history, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_56get_history(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -14197,24 +15000,24 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_key,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 666, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 725, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 666, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 725, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "get_history", 0) < (0)) __PYX_ERR(0, 666, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "get_history", 0) < (0)) __PYX_ERR(0, 725, __pyx_L3_error)
       if (!values[0]) values[0] = __Pyx_NewRef(((PyObject*)Py_None));
     } else {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 666, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 725, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
@@ -14225,7 +15028,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("get_history", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 666, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("get_history", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 725, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -14236,8 +15039,8 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 666, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_51get_history(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_key);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_key), (&PyUnicode_Type), 1, "key", 1))) __PYX_ERR(0, 725, __pyx_L1_error)
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_55get_history(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_key);
 
   /* function exit code */
   goto __pyx_L0;
@@ -14256,7 +15059,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_key) {
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55get_history(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_key) {
   PyObject *__pyx_v_results = 0;
   PyObject *__pyx_v_decrypted_results = 0;
   PyObject *__pyx_v_row = NULL;
@@ -14277,7 +15080,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_history", 0);
 
-  /* "kycli/kycore.pyx":668
+  /* "kycli/kycore.pyx":727
  *     def get_history(self, str key=None):
  *         cdef list results
  *         if key is None or key == "-h":             # <<<<<<<<<<<<<<
@@ -14290,27 +15093,27 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
     __pyx_t_1 = __pyx_t_2;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_2 = (__Pyx_PyUnicode_Equals(__pyx_v_key, __pyx_mstate_global->__pyx_kp_u_h_2, Py_EQ)); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 668, __pyx_L1_error)
+  __pyx_t_2 = (__Pyx_PyUnicode_Equals(__pyx_v_key, __pyx_mstate_global->__pyx_kp_u_h_2, Py_EQ)); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 727, __pyx_L1_error)
   __pyx_t_1 = __pyx_t_2;
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "kycli/kycore.pyx":669
+    /* "kycli/kycore.pyx":728
  *         cdef list results
  *         if key is None or key == "-h":
  *             results = self._bind_and_fetch("SELECT key, value, timestamp FROM audit_log ORDER BY timestamp DESC, id DESC", [])             # <<<<<<<<<<<<<<
  *         else:
  *             results = self._bind_and_fetch("SELECT key, value, timestamp FROM audit_log WHERE key = ? ORDER BY timestamp DESC, id DESC", [key.lower().strip()])
 */
-    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 669, __pyx_L1_error)
+    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 728, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_value_timestamp_FROM, ((PyObject*)__pyx_t_3)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 669, __pyx_L1_error)
+    __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_value_timestamp_FROM, ((PyObject*)__pyx_t_3)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 728, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_results = ((PyObject*)__pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "kycli/kycore.pyx":668
+    /* "kycli/kycore.pyx":727
  *     def get_history(self, str key=None):
  *         cdef list results
  *         if key is None or key == "-h":             # <<<<<<<<<<<<<<
@@ -14320,7 +15123,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
     goto __pyx_L3;
   }
 
-  /* "kycli/kycore.pyx":671
+  /* "kycli/kycore.pyx":730
  *             results = self._bind_and_fetch("SELECT key, value, timestamp FROM audit_log ORDER BY timestamp DESC, id DESC", [])
  *         else:
  *             results = self._bind_and_fetch("SELECT key, value, timestamp FROM audit_log WHERE key = ? ORDER BY timestamp DESC, id DESC", [key.lower().strip()])             # <<<<<<<<<<<<<<
@@ -14328,7 +15131,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
  *         cdef list decrypted_results = []
 */
   /*else*/ {
-    __pyx_t_5 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 671, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_key); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 730, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_3 = __pyx_t_5;
     __Pyx_INCREF(__pyx_t_3);
@@ -14338,15 +15141,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
       __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_strip, __pyx_callargs+__pyx_t_6, (1-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 671, __pyx_L1_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 730, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
     }
-    __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 671, __pyx_L1_error)
+    __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 730, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_GIVEREF(__pyx_t_4);
-    if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_4) != (0)) __PYX_ERR(0, 671, __pyx_L1_error);
+    if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_4) != (0)) __PYX_ERR(0, 730, __pyx_L1_error);
     __pyx_t_4 = 0;
-    __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_value_timestamp_FROM_2, ((PyObject*)__pyx_t_5)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 671, __pyx_L1_error)
+    __pyx_t_4 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_value_timestamp_FROM_2, ((PyObject*)__pyx_t_5)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 730, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_results = ((PyObject*)__pyx_t_4);
@@ -14354,19 +15157,19 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
   }
   __pyx_L3:;
 
-  /* "kycli/kycore.pyx":673
+  /* "kycli/kycore.pyx":732
  *             results = self._bind_and_fetch("SELECT key, value, timestamp FROM audit_log WHERE key = ? ORDER BY timestamp DESC, id DESC", [key.lower().strip()])
  * 
  *         cdef list decrypted_results = []             # <<<<<<<<<<<<<<
  *         for row in results:
  *             decrypted_results.append([row[0], self._decrypt(row[1]), row[2]])
 */
-  __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 673, __pyx_L1_error)
+  __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 732, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_v_decrypted_results = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "kycli/kycore.pyx":674
+  /* "kycli/kycore.pyx":733
  * 
  *         cdef list decrypted_results = []
  *         for row in results:             # <<<<<<<<<<<<<<
@@ -14375,7 +15178,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
 */
   if (unlikely(__pyx_v_results == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(0, 674, __pyx_L1_error)
+    __PYX_ERR(0, 733, __pyx_L1_error)
   }
   __pyx_t_4 = __pyx_v_results; __Pyx_INCREF(__pyx_t_4);
   __pyx_t_7 = 0;
@@ -14383,29 +15186,29 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
     {
       Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_4);
       #if !CYTHON_ASSUME_SAFE_SIZE
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 674, __pyx_L1_error)
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 733, __pyx_L1_error)
       #endif
       if (__pyx_t_7 >= __pyx_temp) break;
     }
     __pyx_t_5 = __Pyx_PyList_GetItemRefFast(__pyx_t_4, __pyx_t_7, __Pyx_ReferenceSharing_OwnStrongReference);
     ++__pyx_t_7;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 674, __pyx_L1_error)
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 733, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_XDECREF_SET(__pyx_v_row, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "kycli/kycore.pyx":675
+    /* "kycli/kycore.pyx":734
  *         cdef list decrypted_results = []
  *         for row in results:
  *             decrypted_results.append([row[0], self._decrypt(row[1]), row[2]])             # <<<<<<<<<<<<<<
  *         return decrypted_results
  * 
 */
-    __pyx_t_5 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 675, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_GetItemInt(__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 734, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_8 = ((PyObject *)__pyx_v_self);
     __Pyx_INCREF(__pyx_t_8);
-    __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_row, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 675, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_row, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 734, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     __pyx_t_6 = 0;
     {
@@ -14413,26 +15216,26 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
       __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_decrypt_2, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 675, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 734, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
     }
-    __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_row, 2, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 675, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_row, 2, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 734, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_8 = PyList_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 675, __pyx_L1_error)
+    __pyx_t_8 = PyList_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 734, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_GIVEREF(__pyx_t_5);
-    if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 0, __pyx_t_5) != (0)) __PYX_ERR(0, 675, __pyx_L1_error);
+    if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 0, __pyx_t_5) != (0)) __PYX_ERR(0, 734, __pyx_L1_error);
     __Pyx_GIVEREF(__pyx_t_3);
-    if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 1, __pyx_t_3) != (0)) __PYX_ERR(0, 675, __pyx_L1_error);
+    if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 1, __pyx_t_3) != (0)) __PYX_ERR(0, 734, __pyx_L1_error);
     __Pyx_GIVEREF(__pyx_t_9);
-    if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 2, __pyx_t_9) != (0)) __PYX_ERR(0, 675, __pyx_L1_error);
+    if (__Pyx_PyList_SET_ITEM(__pyx_t_8, 2, __pyx_t_9) != (0)) __PYX_ERR(0, 734, __pyx_L1_error);
     __pyx_t_5 = 0;
     __pyx_t_3 = 0;
     __pyx_t_9 = 0;
-    __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_decrypted_results, __pyx_t_8); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 675, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_decrypted_results, __pyx_t_8); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 734, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-    /* "kycli/kycore.pyx":674
+    /* "kycli/kycore.pyx":733
  * 
  *         cdef list decrypted_results = []
  *         for row in results:             # <<<<<<<<<<<<<<
@@ -14442,7 +15245,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "kycli/kycore.pyx":676
+  /* "kycli/kycore.pyx":735
  *         for row in results:
  *             decrypted_results.append([row[0], self._decrypt(row[1]), row[2]])
  *         return decrypted_results             # <<<<<<<<<<<<<<
@@ -14454,7 +15257,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
   __pyx_r = __pyx_v_decrypted_results;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":666
+  /* "kycli/kycore.pyx":725
  *             return []
  * 
  *     def get_history(self, str key=None):             # <<<<<<<<<<<<<<
@@ -14480,7 +15283,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_51get_history(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":678
+/* "kycli/kycore.pyx":737
  *         return decrypted_results
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -14521,30 +15324,30 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_5store___get__(struct __pyx_obj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "kycli/kycore.pyx":683
+  /* "kycli/kycore.pyx":742
  *             SELECT key, value FROM kvstore
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])             # <<<<<<<<<<<<<<
  *         return {row[0]: self._decrypt(row[1]) for row in results}
  * 
 */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 683, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 742, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "kycli/kycore.pyx":680
+  /* "kycli/kycore.pyx":739
  *     @property
  *     def store(self):
  *         results = self._bind_and_fetch("""             # <<<<<<<<<<<<<<
  *             SELECT key, value FROM kvstore
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
 */
-  __pyx_t_2 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_value_FROM_kvstore_W, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 680, __pyx_L1_error)
+  __pyx_t_2 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_fetch(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_SELECT_key_value_FROM_kvstore_W, ((PyObject*)__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 739, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_results = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":684
+  /* "kycli/kycore.pyx":743
  *             WHERE (expires_at IS NULL OR expires_at > datetime('now'))
  *         """, [])
  *         return {row[0]: self._decrypt(row[1]) for row in results}             # <<<<<<<<<<<<<<
@@ -14553,11 +15356,11 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_5store___get__(struct __pyx_obj
 */
   __Pyx_XDECREF(__pyx_r);
   { /* enter inner scope */
-    __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 684, __pyx_L5_error)
+    __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 743, __pyx_L5_error)
     __Pyx_GOTREF(__pyx_t_2);
     if (unlikely(__pyx_v_results == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-      __PYX_ERR(0, 684, __pyx_L5_error)
+      __PYX_ERR(0, 743, __pyx_L5_error)
     }
     __pyx_t_1 = __pyx_v_results; __Pyx_INCREF(__pyx_t_1);
     __pyx_t_3 = 0;
@@ -14565,21 +15368,21 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_5store___get__(struct __pyx_obj
       {
         Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
         #if !CYTHON_ASSUME_SAFE_SIZE
-        if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 684, __pyx_L5_error)
+        if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 743, __pyx_L5_error)
         #endif
         if (__pyx_t_3 >= __pyx_temp) break;
       }
       __pyx_t_4 = __Pyx_PyList_GetItemRefFast(__pyx_t_1, __pyx_t_3, __Pyx_ReferenceSharing_OwnStrongReference);
       ++__pyx_t_3;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 684, __pyx_L5_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 743, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_XDECREF_SET(__pyx_8genexpr3__pyx_v_row, __pyx_t_4);
       __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_GetItemInt(__pyx_8genexpr3__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 684, __pyx_L5_error)
+      __pyx_t_4 = __Pyx_GetItemInt(__pyx_8genexpr3__pyx_v_row, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 743, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_6 = ((PyObject *)__pyx_v_self);
       __Pyx_INCREF(__pyx_t_6);
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_8genexpr3__pyx_v_row, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 684, __pyx_L5_error)
+      __pyx_t_7 = __Pyx_GetItemInt(__pyx_8genexpr3__pyx_v_row, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_SharedReference); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 743, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_7);
       __pyx_t_8 = 0;
       {
@@ -14587,10 +15390,10 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_5store___get__(struct __pyx_obj
         __pyx_t_5 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_decrypt_2, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 684, __pyx_L5_error)
+        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 743, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_5);
       }
-      if (unlikely(PyDict_SetItem(__pyx_t_2, (PyObject*)__pyx_t_4, (PyObject*)__pyx_t_5))) __PYX_ERR(0, 684, __pyx_L5_error)
+      if (unlikely(PyDict_SetItem(__pyx_t_2, (PyObject*)__pyx_t_4, (PyObject*)__pyx_t_5))) __PYX_ERR(0, 743, __pyx_L5_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
@@ -14606,7 +15409,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_5store___get__(struct __pyx_obj
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":678
+  /* "kycli/kycore.pyx":737
  *         return decrypted_results
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -14632,7 +15435,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_5store___get__(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":686
+/* "kycli/kycore.pyx":745
  *         return {row[0]: self._decrypt(row[1]) for row in results}
  * 
  *     def load_store(self, dict store_data):             # <<<<<<<<<<<<<<
@@ -14641,15 +15444,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_5store___get__(struct __pyx_obj
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_54load_store(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_58load_store(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_54load_store = {"load_store", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_54load_store, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_54load_store(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_58load_store = {"load_store", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_58load_store, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_58load_store(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -14679,32 +15482,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_store_data,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 686, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 745, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 686, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 745, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "load_store", 0) < (0)) __PYX_ERR(0, 686, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "load_store", 0) < (0)) __PYX_ERR(0, 745, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("load_store", 1, 1, 1, i); __PYX_ERR(0, 686, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("load_store", 1, 1, 1, i); __PYX_ERR(0, 745, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 686, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 745, __pyx_L3_error)
     }
     __pyx_v_store_data = ((PyObject*)values[0]);
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("load_store", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 686, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("load_store", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 745, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -14715,8 +15518,8 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_store_data), (&PyDict_Type), 1, "store_data", 1))) __PYX_ERR(0, 686, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_53load_store(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_store_data);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_store_data), (&PyDict_Type), 1, "store_data", 1))) __PYX_ERR(0, 745, __pyx_L1_error)
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_57load_store(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_store_data);
 
   /* function exit code */
   goto __pyx_L0;
@@ -14735,7 +15538,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_store_data) {
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57load_store(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_store_data) {
   PyObject *__pyx_v_k = NULL;
   PyObject *__pyx_v_v = NULL;
   PyObject *__pyx_v_e = NULL;
@@ -14766,18 +15569,18 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("load_store", 0);
 
-  /* "kycli/kycore.pyx":687
+  /* "kycli/kycore.pyx":746
  * 
  *     def load_store(self, dict store_data):
  *         if not store_data:             # <<<<<<<<<<<<<<
  *             return
  *         try:
 */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_store_data); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 687, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_store_data); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 746, __pyx_L1_error)
   __pyx_t_2 = (!__pyx_t_1);
   if (__pyx_t_2) {
 
-    /* "kycli/kycore.pyx":688
+    /* "kycli/kycore.pyx":747
  *     def load_store(self, dict store_data):
  *         if not store_data:
  *             return             # <<<<<<<<<<<<<<
@@ -14788,7 +15591,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "kycli/kycore.pyx":687
+    /* "kycli/kycore.pyx":746
  * 
  *     def load_store(self, dict store_data):
  *         if not store_data:             # <<<<<<<<<<<<<<
@@ -14797,7 +15600,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
 */
   }
 
-  /* "kycli/kycore.pyx":689
+  /* "kycli/kycore.pyx":748
  *         if not store_data:
  *             return
  *         try:             # <<<<<<<<<<<<<<
@@ -14813,16 +15616,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
     __Pyx_XGOTREF(__pyx_t_5);
     /*try:*/ {
 
-      /* "kycli/kycore.pyx":690
+      /* "kycli/kycore.pyx":749
  *             return
  *         try:
  *             self._execute_raw("BEGIN TRANSACTION")             # <<<<<<<<<<<<<<
  *             for k, v in store_data.items():
  *                 self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k.lower(), v])
 */
-      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 690, __pyx_L4_error)
+      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_BEGIN_TRANSACTION); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 749, __pyx_L4_error)
 
-      /* "kycli/kycore.pyx":691
+      /* "kycli/kycore.pyx":750
  *         try:
  *             self._execute_raw("BEGIN TRANSACTION")
  *             for k, v in store_data.items():             # <<<<<<<<<<<<<<
@@ -14832,9 +15635,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
       __pyx_t_8 = 0;
       if (unlikely(__pyx_v_store_data == Py_None)) {
         PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "items");
-        __PYX_ERR(0, 691, __pyx_L4_error)
+        __PYX_ERR(0, 750, __pyx_L4_error)
       }
-      __pyx_t_10 = __Pyx_dict_iterator(__pyx_v_store_data, 1, __pyx_mstate_global->__pyx_n_u_items, (&__pyx_t_9), (&__pyx_t_6)); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 691, __pyx_L4_error)
+      __pyx_t_10 = __Pyx_dict_iterator(__pyx_v_store_data, 1, __pyx_mstate_global->__pyx_n_u_items, (&__pyx_t_9), (&__pyx_t_6)); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 750, __pyx_L4_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_XDECREF(__pyx_t_7);
       __pyx_t_7 = __pyx_t_10;
@@ -14842,7 +15645,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
       while (1) {
         __pyx_t_12 = __Pyx_dict_iter_next(__pyx_t_7, __pyx_t_9, &__pyx_t_8, &__pyx_t_10, &__pyx_t_11, NULL, __pyx_t_6);
         if (unlikely(__pyx_t_12 == 0)) break;
-        if (unlikely(__pyx_t_12 == -1)) __PYX_ERR(0, 691, __pyx_L4_error)
+        if (unlikely(__pyx_t_12 == -1)) __PYX_ERR(0, 750, __pyx_L4_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_10);
@@ -14850,7 +15653,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
         __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_11);
         __pyx_t_11 = 0;
 
-        /* "kycli/kycore.pyx":692
+        /* "kycli/kycore.pyx":751
  *             self._execute_raw("BEGIN TRANSACTION")
  *             for k, v in store_data.items():
  *                 self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k.lower(), v])             # <<<<<<<<<<<<<<
@@ -14864,23 +15667,23 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
           PyObject *__pyx_callargs[2] = {__pyx_t_10, NULL};
           __pyx_t_11 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_lower, __pyx_callargs+__pyx_t_13, (1-__pyx_t_13) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
           __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 692, __pyx_L4_error)
+          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 751, __pyx_L4_error)
           __Pyx_GOTREF(__pyx_t_11);
         }
-        __pyx_t_10 = PyList_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 692, __pyx_L4_error)
+        __pyx_t_10 = PyList_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 751, __pyx_L4_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_GIVEREF(__pyx_t_11);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 0, __pyx_t_11) != (0)) __PYX_ERR(0, 692, __pyx_L4_error);
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 0, __pyx_t_11) != (0)) __PYX_ERR(0, 751, __pyx_L4_error);
         __Pyx_INCREF(__pyx_v_v);
         __Pyx_GIVEREF(__pyx_v_v);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 1, __pyx_v_v) != (0)) __PYX_ERR(0, 692, __pyx_L4_error);
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 1, __pyx_v_v) != (0)) __PYX_ERR(0, 751, __pyx_L4_error);
         __pyx_t_11 = 0;
-        __pyx_t_11 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k_2, ((PyObject*)__pyx_t_10)); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 692, __pyx_L4_error)
+        __pyx_t_11 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_OR_REPLACE_INTO_kvstore_k_2, ((PyObject*)__pyx_t_10)); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 751, __pyx_L4_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-        /* "kycli/kycore.pyx":693
+        /* "kycli/kycore.pyx":752
  *             for k, v in store_data.items():
  *                 self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k.lower(), v])
  *                 self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k.lower(), v])             # <<<<<<<<<<<<<<
@@ -14894,34 +15697,34 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
           PyObject *__pyx_callargs[2] = {__pyx_t_10, NULL};
           __pyx_t_11 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_lower, __pyx_callargs+__pyx_t_13, (1-__pyx_t_13) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
           __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 693, __pyx_L4_error)
+          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 752, __pyx_L4_error)
           __Pyx_GOTREF(__pyx_t_11);
         }
-        __pyx_t_10 = PyList_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 693, __pyx_L4_error)
+        __pyx_t_10 = PyList_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 752, __pyx_L4_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_GIVEREF(__pyx_t_11);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 0, __pyx_t_11) != (0)) __PYX_ERR(0, 693, __pyx_L4_error);
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 0, __pyx_t_11) != (0)) __PYX_ERR(0, 752, __pyx_L4_error);
         __Pyx_INCREF(__pyx_v_v);
         __Pyx_GIVEREF(__pyx_v_v);
-        if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 1, __pyx_v_v) != (0)) __PYX_ERR(0, 693, __pyx_L4_error);
+        if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 1, __pyx_v_v) != (0)) __PYX_ERR(0, 752, __pyx_L4_error);
         __pyx_t_11 = 0;
-        __pyx_t_11 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_audit_log_key_value, ((PyObject*)__pyx_t_10)); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 693, __pyx_L4_error)
+        __pyx_t_11 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_bind_and_execute(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_INSERT_INTO_audit_log_key_value, ((PyObject*)__pyx_t_10)); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 752, __pyx_L4_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       }
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "kycli/kycore.pyx":694
+      /* "kycli/kycore.pyx":753
  *                 self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k.lower(), v])
  *                 self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k.lower(), v])
  *             self._execute_raw("COMMIT")             # <<<<<<<<<<<<<<
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")
 */
-      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 694, __pyx_L4_error)
+      __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_COMMIT); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 753, __pyx_L4_error)
 
-      /* "kycli/kycore.pyx":689
+      /* "kycli/kycore.pyx":748
  *         if not store_data:
  *             return
  *         try:             # <<<<<<<<<<<<<<
@@ -14938,7 +15741,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
     __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "kycli/kycore.pyx":695
+    /* "kycli/kycore.pyx":754
  *                 self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k.lower(), v])
  *             self._execute_raw("COMMIT")
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -14948,7 +15751,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
     __pyx_t_6 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
     if (__pyx_t_6) {
       __Pyx_AddTraceback("kycli.kycore.Kycore.load_store", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_11, &__pyx_t_10) < 0) __PYX_ERR(0, 695, __pyx_L6_except_error)
+      if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_11, &__pyx_t_10) < 0) __PYX_ERR(0, 754, __pyx_L6_except_error)
       __Pyx_XGOTREF(__pyx_t_7);
       __Pyx_XGOTREF(__pyx_t_11);
       __Pyx_XGOTREF(__pyx_t_10);
@@ -14956,16 +15759,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
       __pyx_v_e = __pyx_t_11;
       /*try:*/ {
 
-        /* "kycli/kycore.pyx":696
+        /* "kycli/kycore.pyx":755
  *             self._execute_raw("COMMIT")
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")             # <<<<<<<<<<<<<<
  *             raise e
  * 
 */
-        __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 696, __pyx_L17_error)
+        __pyx_t_6 = ((struct __pyx_vtabstruct_5kycli_6kycore_Kycore *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_n_u_ROLLBACK); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 755, __pyx_L17_error)
 
-        /* "kycli/kycore.pyx":697
+        /* "kycli/kycore.pyx":756
  *         except Exception as e:
  *             self._execute_raw("ROLLBACK")
  *             raise e             # <<<<<<<<<<<<<<
@@ -14973,10 +15776,10 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
  *     def export_data(self, str filepath, str file_format="csv"):
 */
         __Pyx_Raise(__pyx_v_e, 0, 0, 0);
-        __PYX_ERR(0, 697, __pyx_L17_error)
+        __PYX_ERR(0, 756, __pyx_L17_error)
       }
 
-      /* "kycli/kycore.pyx":695
+      /* "kycli/kycore.pyx":754
  *                 self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k.lower(), v])
  *             self._execute_raw("COMMIT")
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -15017,7 +15820,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
     }
     goto __pyx_L6_except_error;
 
-    /* "kycli/kycore.pyx":689
+    /* "kycli/kycore.pyx":748
  *         if not store_data:
  *             return
  *         try:             # <<<<<<<<<<<<<<
@@ -15033,7 +15836,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
     __pyx_L9_try_end:;
   }
 
-  /* "kycli/kycore.pyx":686
+  /* "kycli/kycore.pyx":745
  *         return {row[0]: self._decrypt(row[1]) for row in results}
  * 
  *     def load_store(self, dict store_data):             # <<<<<<<<<<<<<<
@@ -15059,7 +15862,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":699
+/* "kycli/kycore.pyx":758
  *             raise e
  * 
  *     def export_data(self, str filepath, str file_format="csv"):             # <<<<<<<<<<<<<<
@@ -15068,15 +15871,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_53load_store(struct __pyx_obj_5
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_56export_data(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_60export_data(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_56export_data = {"export_data", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_56export_data, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_56export_data(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_60export_data = {"export_data", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_60export_data, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_60export_data(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -15107,35 +15910,35 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_filepath,&__pyx_mstate_global->__pyx_n_u_file_format,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 699, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 758, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 699, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 758, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 699, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 758, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "export_data", 0) < (0)) __PYX_ERR(0, 699, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "export_data", 0) < (0)) __PYX_ERR(0, 758, __pyx_L3_error)
       if (!values[1]) values[1] = __Pyx_NewRef(((PyObject*)__pyx_mstate_global->__pyx_n_u_csv));
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("export_data", 0, 1, 2, i); __PYX_ERR(0, 699, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("export_data", 0, 1, 2, i); __PYX_ERR(0, 758, __pyx_L3_error) }
       }
     } else {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 699, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 758, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 699, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 758, __pyx_L3_error)
         break;
         default: goto __pyx_L5_argtuple_error;
       }
@@ -15146,7 +15949,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("export_data", 0, 1, 2, __pyx_nargs); __PYX_ERR(0, 699, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("export_data", 0, 1, 2, __pyx_nargs); __PYX_ERR(0, 758, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -15157,9 +15960,9 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_filepath), (&PyUnicode_Type), 1, "filepath", 1))) __PYX_ERR(0, 699, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_file_format), (&PyUnicode_Type), 1, "file_format", 1))) __PYX_ERR(0, 699, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_55export_data(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_filepath, __pyx_v_file_format);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_filepath), (&PyUnicode_Type), 1, "filepath", 1))) __PYX_ERR(0, 758, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_file_format), (&PyUnicode_Type), 1, "file_format", 1))) __PYX_ERR(0, 758, __pyx_L1_error)
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_59export_data(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_filepath, __pyx_v_file_format);
 
   /* function exit code */
   goto __pyx_L0;
@@ -15178,7 +15981,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_filepath, PyObject *__pyx_v_file_format) {
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_59export_data(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_filepath, PyObject *__pyx_v_file_format) {
   PyObject *__pyx_v_data = NULL;
   PyObject *__pyx_v_dir_name = NULL;
   PyObject *__pyx_v_fd = NULL;
@@ -15217,35 +16020,35 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("export_data", 0);
 
-  /* "kycli/kycore.pyx":700
+  /* "kycli/kycore.pyx":759
  * 
  *     def export_data(self, str filepath, str file_format="csv"):
  *         data = self.store             # <<<<<<<<<<<<<<
  *         dir_name = os.path.dirname(os.path.abspath(filepath))
  *         if dir_name: os.makedirs(dir_name, exist_ok=True)
 */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_mstate_global->__pyx_n_u_store); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 700, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_mstate_global->__pyx_n_u_store); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 759, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_data = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":701
+  /* "kycli/kycore.pyx":760
  *     def export_data(self, str filepath, str file_format="csv"):
  *         data = self.store
  *         dir_name = os.path.dirname(os.path.abspath(filepath))             # <<<<<<<<<<<<<<
  *         if dir_name: os.makedirs(dir_name, exist_ok=True)
  * 
 */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 701, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 760, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_path); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 701, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_path); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 760, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_2 = __pyx_t_4;
   __Pyx_INCREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 701, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 760, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_path); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 701, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_path); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 760, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_5 = __pyx_t_7;
@@ -15256,7 +16059,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
     __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_abspath, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 701, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 760, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
   }
   __pyx_t_8 = 0;
@@ -15266,25 +16069,25 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 701, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 760, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_v_dir_name = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":702
+  /* "kycli/kycore.pyx":761
  *         data = self.store
  *         dir_name = os.path.dirname(os.path.abspath(filepath))
  *         if dir_name: os.makedirs(dir_name, exist_ok=True)             # <<<<<<<<<<<<<<
  * 
  *         fd, temp_path = tempfile.mkstemp(dir=dir_name, prefix=".kycli_export_")
 */
-  __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_v_dir_name); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 702, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_v_dir_name); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 761, __pyx_L1_error)
   if (__pyx_t_9) {
     __pyx_t_4 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 702, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 761, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_makedirs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 702, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_makedirs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 761, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_8 = 1;
@@ -15301,20 +16104,20 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
     #endif
     {
       PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_v_dir_name};
-      __pyx_t_3 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 702, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 761, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_exist_ok, Py_True, __pyx_t_3, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 702, __pyx_L1_error)
+      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_exist_ok, Py_True, __pyx_t_3, __pyx_callargs+2, 0) < (0)) __PYX_ERR(0, 761, __pyx_L1_error)
       __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_3);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 702, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 761, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "kycli/kycore.pyx":704
+  /* "kycli/kycore.pyx":763
  *         if dir_name: os.makedirs(dir_name, exist_ok=True)
  * 
  *         fd, temp_path = tempfile.mkstemp(dir=dir_name, prefix=".kycli_export_")             # <<<<<<<<<<<<<<
@@ -15322,9 +16125,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
  *             with os.fdopen(fd, 'w', newline='') as f:
 */
   __pyx_t_2 = NULL;
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_tempfile); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 704, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_tempfile); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 763, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_mkstemp); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 704, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_mkstemp); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 763, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_8 = 1;
@@ -15341,15 +16144,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
   #endif
   {
     PyObject *__pyx_callargs[2 + ((CYTHON_VECTORCALL) ? 2 : 0)] = {__pyx_t_2, NULL};
-    __pyx_t_3 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 704, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_MakeVectorcallBuilderKwds(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 763, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_dir, __pyx_v_dir_name, __pyx_t_3, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 704, __pyx_L1_error)
-    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_prefix, __pyx_mstate_global->__pyx_kp_u_kycli_export, __pyx_t_3, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 704, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_dir, __pyx_v_dir_name, __pyx_t_3, __pyx_callargs+1, 0) < (0)) __PYX_ERR(0, 763, __pyx_L1_error)
+    if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_prefix, __pyx_mstate_global->__pyx_kp_u_kycli_export, __pyx_t_3, __pyx_callargs+1, 1) < (0)) __PYX_ERR(0, 763, __pyx_L1_error)
     __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_8, (1-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_3);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 704, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 763, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   if ((likely(PyTuple_CheckExact(__pyx_t_1))) || (PyList_CheckExact(__pyx_t_1))) {
@@ -15358,7 +16161,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
     if (unlikely(size != 2)) {
       if (size > 2) __Pyx_RaiseTooManyValuesError(2);
       else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 704, __pyx_L1_error)
+      __PYX_ERR(0, 763, __pyx_L1_error)
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
     if (likely(PyTuple_CheckExact(sequence))) {
@@ -15368,22 +16171,22 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
       __Pyx_INCREF(__pyx_t_3);
     } else {
       __pyx_t_4 = __Pyx_PyList_GetItemRefFast(sequence, 0, __Pyx_ReferenceSharing_SharedReference);
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 704, __pyx_L1_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 763, __pyx_L1_error)
       __Pyx_XGOTREF(__pyx_t_4);
       __pyx_t_3 = __Pyx_PyList_GetItemRefFast(sequence, 1, __Pyx_ReferenceSharing_SharedReference);
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 704, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 763, __pyx_L1_error)
       __Pyx_XGOTREF(__pyx_t_3);
     }
     #else
-    __pyx_t_4 = __Pyx_PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 704, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 763, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __Pyx_PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 704, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 763, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     #endif
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
     Py_ssize_t index = -1;
-    __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 704, __pyx_L1_error)
+    __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 763, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_10 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_2);
@@ -15391,7 +16194,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
     __Pyx_GOTREF(__pyx_t_4);
     index = 1; __pyx_t_3 = __pyx_t_10(__pyx_t_2); if (unlikely(!__pyx_t_3)) goto __pyx_L4_unpacking_failed;
     __Pyx_GOTREF(__pyx_t_3);
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_2), 2) < (0)) __PYX_ERR(0, 704, __pyx_L1_error)
+    if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_2), 2) < (0)) __PYX_ERR(0, 763, __pyx_L1_error)
     __pyx_t_10 = NULL;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     goto __pyx_L5_unpacking_done;
@@ -15399,7 +16202,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_10 = NULL;
     if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 704, __pyx_L1_error)
+    __PYX_ERR(0, 763, __pyx_L1_error)
     __pyx_L5_unpacking_done:;
   }
   __pyx_v_fd = __pyx_t_4;
@@ -15407,7 +16210,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
   __pyx_v_temp_path = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "kycli/kycore.pyx":705
+  /* "kycli/kycore.pyx":764
  * 
  *         fd, temp_path = tempfile.mkstemp(dir=dir_name, prefix=".kycli_export_")
  *         try:             # <<<<<<<<<<<<<<
@@ -15423,7 +16226,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
     __Pyx_XGOTREF(__pyx_t_13);
     /*try:*/ {
 
-      /* "kycli/kycore.pyx":706
+      /* "kycli/kycore.pyx":765
  *         fd, temp_path = tempfile.mkstemp(dir=dir_name, prefix=".kycli_export_")
  *         try:
  *             with os.fdopen(fd, 'w', newline='') as f:             # <<<<<<<<<<<<<<
@@ -15432,9 +16235,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
 */
       /*with:*/ {
         __pyx_t_3 = NULL;
-        __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 706, __pyx_L6_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 765, __pyx_L6_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_fdopen); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 706, __pyx_L6_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_fdopen); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 765, __pyx_L6_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __pyx_t_8 = 1;
@@ -15451,20 +16254,20 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
         #endif
         {
           PyObject *__pyx_callargs[3 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_3, __pyx_v_fd, __pyx_mstate_global->__pyx_n_u_w};
-          __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 706, __pyx_L6_error)
+          __pyx_t_4 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 765, __pyx_L6_error)
           __Pyx_GOTREF(__pyx_t_4);
-          if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_newline, __pyx_mstate_global->__pyx_kp_u_, __pyx_t_4, __pyx_callargs+3, 0) < (0)) __PYX_ERR(0, 706, __pyx_L6_error)
+          if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_newline, __pyx_mstate_global->__pyx_kp_u_, __pyx_t_4, __pyx_callargs+3, 0) < (0)) __PYX_ERR(0, 765, __pyx_L6_error)
           __pyx_t_1 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_8, (3-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_4);
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 706, __pyx_L6_error)
+          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 765, __pyx_L6_error)
           __Pyx_GOTREF(__pyx_t_1);
         }
-        __pyx_t_14 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_exit); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 706, __pyx_L6_error)
+        __pyx_t_14 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_exit); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 765, __pyx_L6_error)
         __Pyx_GOTREF(__pyx_t_14);
         __pyx_t_4 = NULL;
-        __pyx_t_3 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_enter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 706, __pyx_L12_error)
+        __pyx_t_3 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_enter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 765, __pyx_L12_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_8 = 1;
         #if CYTHON_UNPACK_METHODS
@@ -15483,7 +16286,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
           __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_8, (1-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 706, __pyx_L12_error)
+          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 765, __pyx_L12_error)
           __Pyx_GOTREF(__pyx_t_2);
         }
         __pyx_t_3 = __pyx_t_2;
@@ -15501,20 +16304,20 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
               __pyx_v_f = __pyx_t_3;
               __pyx_t_3 = 0;
 
-              /* "kycli/kycore.pyx":707
+              /* "kycli/kycore.pyx":766
  *         try:
  *             with os.fdopen(fd, 'w', newline='') as f:
  *                 if file_format.lower() == "json":             # <<<<<<<<<<<<<<
  *                     json.dump(data, f, indent=4)
  *                 else:
 */
-              __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_file_format); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 707, __pyx_L16_error)
+              __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_file_format); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 766, __pyx_L16_error)
               __Pyx_GOTREF(__pyx_t_3);
-              __pyx_t_9 = (__Pyx_PyUnicode_Equals(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_json, Py_EQ)); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 707, __pyx_L16_error)
+              __pyx_t_9 = (__Pyx_PyUnicode_Equals(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_json, Py_EQ)); if (unlikely((__pyx_t_9 < 0))) __PYX_ERR(0, 766, __pyx_L16_error)
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
               if (__pyx_t_9) {
 
-                /* "kycli/kycore.pyx":708
+                /* "kycli/kycore.pyx":767
  *             with os.fdopen(fd, 'w', newline='') as f:
  *                 if file_format.lower() == "json":
  *                     json.dump(data, f, indent=4)             # <<<<<<<<<<<<<<
@@ -15522,9 +16325,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
  *                     writer = csv.writer(f)
 */
                 __pyx_t_1 = NULL;
-                __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 708, __pyx_L16_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 767, __pyx_L16_error)
                 __Pyx_GOTREF(__pyx_t_2);
-                __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_dump); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 708, __pyx_L16_error)
+                __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_dump); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 767, __pyx_L16_error)
                 __Pyx_GOTREF(__pyx_t_4);
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
                 __pyx_t_8 = 1;
@@ -15541,19 +16344,19 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
                 #endif
                 {
                   PyObject *__pyx_callargs[3 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_1, __pyx_v_data, __pyx_v_f};
-                  __pyx_t_2 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 708, __pyx_L16_error)
+                  __pyx_t_2 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 767, __pyx_L16_error)
                   __Pyx_GOTREF(__pyx_t_2);
-                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_indent, __pyx_mstate_global->__pyx_int_4, __pyx_t_2, __pyx_callargs+3, 0) < (0)) __PYX_ERR(0, 708, __pyx_L16_error)
+                  if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_indent, __pyx_mstate_global->__pyx_int_4, __pyx_t_2, __pyx_callargs+3, 0) < (0)) __PYX_ERR(0, 767, __pyx_L16_error)
                   __pyx_t_3 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_8, (3-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_2);
                   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
                   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
                   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 708, __pyx_L16_error)
+                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 767, __pyx_L16_error)
                   __Pyx_GOTREF(__pyx_t_3);
                 }
                 __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-                /* "kycli/kycore.pyx":707
+                /* "kycli/kycore.pyx":766
  *         try:
  *             with os.fdopen(fd, 'w', newline='') as f:
  *                 if file_format.lower() == "json":             # <<<<<<<<<<<<<<
@@ -15563,7 +16366,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
                 goto __pyx_L22;
               }
 
-              /* "kycli/kycore.pyx":710
+              /* "kycli/kycore.pyx":769
  *                     json.dump(data, f, indent=4)
  *                 else:
  *                     writer = csv.writer(f)             # <<<<<<<<<<<<<<
@@ -15572,9 +16375,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
 */
               /*else*/ {
                 __pyx_t_4 = NULL;
-                __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_csv); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 710, __pyx_L16_error)
+                __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_csv); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 769, __pyx_L16_error)
                 __Pyx_GOTREF(__pyx_t_2);
-                __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_writer); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 710, __pyx_L16_error)
+                __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_writer); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 769, __pyx_L16_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
                 __pyx_t_8 = 1;
@@ -15594,13 +16397,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
                   __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_1, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
                   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
                   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 710, __pyx_L16_error)
+                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 769, __pyx_L16_error)
                   __Pyx_GOTREF(__pyx_t_3);
                 }
                 __pyx_v_writer = __pyx_t_3;
                 __pyx_t_3 = 0;
 
-                /* "kycli/kycore.pyx":711
+                /* "kycli/kycore.pyx":770
  *                 else:
  *                     writer = csv.writer(f)
  *                     writer.writerow(["key", "value"])             # <<<<<<<<<<<<<<
@@ -15609,26 +16412,26 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
 */
                 __pyx_t_1 = __pyx_v_writer;
                 __Pyx_INCREF(__pyx_t_1);
-                __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 711, __pyx_L16_error)
+                __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 770, __pyx_L16_error)
                 __Pyx_GOTREF(__pyx_t_4);
                 __Pyx_INCREF(__pyx_mstate_global->__pyx_n_u_key);
                 __Pyx_GIVEREF(__pyx_mstate_global->__pyx_n_u_key);
-                if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 0, __pyx_mstate_global->__pyx_n_u_key) != (0)) __PYX_ERR(0, 711, __pyx_L16_error);
+                if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 0, __pyx_mstate_global->__pyx_n_u_key) != (0)) __PYX_ERR(0, 770, __pyx_L16_error);
                 __Pyx_INCREF(__pyx_mstate_global->__pyx_n_u_value);
                 __Pyx_GIVEREF(__pyx_mstate_global->__pyx_n_u_value);
-                if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 1, __pyx_mstate_global->__pyx_n_u_value) != (0)) __PYX_ERR(0, 711, __pyx_L16_error);
+                if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 1, __pyx_mstate_global->__pyx_n_u_value) != (0)) __PYX_ERR(0, 770, __pyx_L16_error);
                 __pyx_t_8 = 0;
                 {
                   PyObject *__pyx_callargs[2] = {__pyx_t_1, __pyx_t_4};
                   __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_writerow, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
                   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
                   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 711, __pyx_L16_error)
+                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 770, __pyx_L16_error)
                   __Pyx_GOTREF(__pyx_t_3);
                 }
                 __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-                /* "kycli/kycore.pyx":712
+                /* "kycli/kycore.pyx":771
  *                     writer = csv.writer(f)
  *                     writer.writerow(["key", "value"])
  *                     for k, v in data.items():             # <<<<<<<<<<<<<<
@@ -15638,9 +16441,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
                 __pyx_t_18 = 0;
                 if (unlikely(__pyx_v_data == Py_None)) {
                   PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "items");
-                  __PYX_ERR(0, 712, __pyx_L16_error)
+                  __PYX_ERR(0, 771, __pyx_L16_error)
                 }
-                __pyx_t_4 = __Pyx_dict_iterator(__pyx_v_data, 0, __pyx_mstate_global->__pyx_n_u_items, (&__pyx_t_19), (&__pyx_t_20)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 712, __pyx_L16_error)
+                __pyx_t_4 = __Pyx_dict_iterator(__pyx_v_data, 0, __pyx_mstate_global->__pyx_n_u_items, (&__pyx_t_19), (&__pyx_t_20)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 771, __pyx_L16_error)
                 __Pyx_GOTREF(__pyx_t_4);
                 __Pyx_XDECREF(__pyx_t_3);
                 __pyx_t_3 = __pyx_t_4;
@@ -15648,7 +16451,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
                 while (1) {
                   __pyx_t_21 = __Pyx_dict_iter_next(__pyx_t_3, __pyx_t_19, &__pyx_t_18, &__pyx_t_4, &__pyx_t_1, NULL, __pyx_t_20);
                   if (unlikely(__pyx_t_21 == 0)) break;
-                  if (unlikely(__pyx_t_21 == -1)) __PYX_ERR(0, 712, __pyx_L16_error)
+                  if (unlikely(__pyx_t_21 == -1)) __PYX_ERR(0, 771, __pyx_L16_error)
                   __Pyx_GOTREF(__pyx_t_4);
                   __Pyx_GOTREF(__pyx_t_1);
                   __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_4);
@@ -15656,7 +16459,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
                   __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_1);
                   __pyx_t_1 = 0;
 
-                  /* "kycli/kycore.pyx":713
+                  /* "kycli/kycore.pyx":772
  *                     writer.writerow(["key", "value"])
  *                     for k, v in data.items():
  *                         writer.writerow([k, v])             # <<<<<<<<<<<<<<
@@ -15665,21 +16468,21 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
 */
                   __pyx_t_4 = __pyx_v_writer;
                   __Pyx_INCREF(__pyx_t_4);
-                  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 713, __pyx_L16_error)
+                  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 772, __pyx_L16_error)
                   __Pyx_GOTREF(__pyx_t_2);
                   __Pyx_INCREF(__pyx_v_k);
                   __Pyx_GIVEREF(__pyx_v_k);
-                  if (__Pyx_PyList_SET_ITEM(__pyx_t_2, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 713, __pyx_L16_error);
+                  if (__Pyx_PyList_SET_ITEM(__pyx_t_2, 0, __pyx_v_k) != (0)) __PYX_ERR(0, 772, __pyx_L16_error);
                   __Pyx_INCREF(__pyx_v_v);
                   __Pyx_GIVEREF(__pyx_v_v);
-                  if (__Pyx_PyList_SET_ITEM(__pyx_t_2, 1, __pyx_v_v) != (0)) __PYX_ERR(0, 713, __pyx_L16_error);
+                  if (__Pyx_PyList_SET_ITEM(__pyx_t_2, 1, __pyx_v_v) != (0)) __PYX_ERR(0, 772, __pyx_L16_error);
                   __pyx_t_8 = 0;
                   {
                     PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_t_2};
                     __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_writerow, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
                     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
                     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-                    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 713, __pyx_L16_error)
+                    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 772, __pyx_L16_error)
                     __Pyx_GOTREF(__pyx_t_1);
                   }
                   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -15688,7 +16491,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
               }
               __pyx_L22:;
 
-              /* "kycli/kycore.pyx":706
+              /* "kycli/kycore.pyx":765
  *         fd, temp_path = tempfile.mkstemp(dir=dir_name, prefix=".kycli_export_")
  *         try:
  *             with os.fdopen(fd, 'w', newline='') as f:             # <<<<<<<<<<<<<<
@@ -15710,20 +16513,20 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
             __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
             /*except:*/ {
               __Pyx_AddTraceback("kycli.kycore.Kycore.export_data", __pyx_clineno, __pyx_lineno, __pyx_filename);
-              if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_1, &__pyx_t_2) < 0) __PYX_ERR(0, 706, __pyx_L18_except_error)
+              if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_1, &__pyx_t_2) < 0) __PYX_ERR(0, 765, __pyx_L18_except_error)
               __Pyx_XGOTREF(__pyx_t_3);
               __Pyx_XGOTREF(__pyx_t_1);
               __Pyx_XGOTREF(__pyx_t_2);
-              __pyx_t_4 = PyTuple_Pack(3, __pyx_t_3, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 706, __pyx_L18_except_error)
+              __pyx_t_4 = PyTuple_Pack(3, __pyx_t_3, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 765, __pyx_L18_except_error)
               __Pyx_GOTREF(__pyx_t_4);
               __pyx_t_22 = __Pyx_PyObject_Call(__pyx_t_14, __pyx_t_4, NULL);
               __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-              if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 706, __pyx_L18_except_error)
+              if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 765, __pyx_L18_except_error)
               __Pyx_GOTREF(__pyx_t_22);
               __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_22);
               __Pyx_DECREF(__pyx_t_22); __pyx_t_22 = 0;
-              if (__pyx_t_9 < (0)) __PYX_ERR(0, 706, __pyx_L18_except_error)
+              if (__pyx_t_9 < (0)) __PYX_ERR(0, 765, __pyx_L18_except_error)
               __pyx_t_23 = (!__pyx_t_9);
               if (unlikely(__pyx_t_23)) {
                 __Pyx_GIVEREF(__pyx_t_3);
@@ -15731,7 +16534,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
                 __Pyx_XGIVEREF(__pyx_t_2);
                 __Pyx_ErrRestoreWithState(__pyx_t_3, __pyx_t_1, __pyx_t_2);
                 __pyx_t_3 = 0;  __pyx_t_1 = 0;  __pyx_t_2 = 0; 
-                __PYX_ERR(0, 706, __pyx_L18_except_error)
+                __PYX_ERR(0, 765, __pyx_L18_except_error)
               }
               __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
               __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -15757,7 +16560,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
             if (__pyx_t_14) {
               __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_14, __pyx_mstate_global->__pyx_tuple[0], NULL);
               __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-              if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 706, __pyx_L6_error)
+              if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 765, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
             }
@@ -15772,7 +16575,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
         __pyx_L28:;
       }
 
-      /* "kycli/kycore.pyx":714
+      /* "kycli/kycore.pyx":773
  *                     for k, v in data.items():
  *                         writer.writerow([k, v])
  *             shutil.move(temp_path, filepath)             # <<<<<<<<<<<<<<
@@ -15780,9 +16583,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
  *             if os.path.exists(temp_path): os.remove(temp_path)
 */
       __pyx_t_1 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_shutil); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 714, __pyx_L6_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_shutil); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 773, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_move); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 714, __pyx_L6_error)
+      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_move); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 773, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_8 = 1;
@@ -15802,12 +16605,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
         __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_8, (3-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 714, __pyx_L6_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 773, __pyx_L6_error)
         __Pyx_GOTREF(__pyx_t_2);
       }
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "kycli/kycore.pyx":705
+      /* "kycli/kycore.pyx":764
  * 
  *         fd, temp_path = tempfile.mkstemp(dir=dir_name, prefix=".kycli_export_")
  *         try:             # <<<<<<<<<<<<<<
@@ -15828,7 +16631,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "kycli/kycore.pyx":715
+    /* "kycli/kycore.pyx":774
  *                         writer.writerow([k, v])
  *             shutil.move(temp_path, filepath)
  *         except Exception:             # <<<<<<<<<<<<<<
@@ -15838,21 +16641,21 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
     __pyx_t_20 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
     if (__pyx_t_20) {
       __Pyx_AddTraceback("kycli.kycore.Kycore.export_data", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_4, &__pyx_t_1) < 0) __PYX_ERR(0, 715, __pyx_L8_except_error)
+      if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_4, &__pyx_t_1) < 0) __PYX_ERR(0, 774, __pyx_L8_except_error)
       __Pyx_XGOTREF(__pyx_t_2);
       __Pyx_XGOTREF(__pyx_t_4);
       __Pyx_XGOTREF(__pyx_t_1);
 
-      /* "kycli/kycore.pyx":716
+      /* "kycli/kycore.pyx":775
  *             shutil.move(temp_path, filepath)
  *         except Exception:
  *             if os.path.exists(temp_path): os.remove(temp_path)             # <<<<<<<<<<<<<<
  *             raise
  * 
 */
-      __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 716, __pyx_L8_except_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 775, __pyx_L8_except_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_path); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 716, __pyx_L8_except_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_path); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 775, __pyx_L8_except_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_7 = __pyx_t_6;
@@ -15863,16 +16666,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
         __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_exists, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 716, __pyx_L8_except_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 775, __pyx_L8_except_error)
         __Pyx_GOTREF(__pyx_t_3);
       }
-      __pyx_t_23 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_23 < 0))) __PYX_ERR(0, 716, __pyx_L8_except_error)
+      __pyx_t_23 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_23 < 0))) __PYX_ERR(0, 775, __pyx_L8_except_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (__pyx_t_23) {
         __pyx_t_6 = NULL;
-        __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 716, __pyx_L8_except_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 775, __pyx_L8_except_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_remove); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 716, __pyx_L8_except_error)
+        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_remove); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 775, __pyx_L8_except_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __pyx_t_8 = 1;
@@ -15892,13 +16695,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
           __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
           __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 716, __pyx_L8_except_error)
+          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 775, __pyx_L8_except_error)
           __Pyx_GOTREF(__pyx_t_3);
         }
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       }
 
-      /* "kycli/kycore.pyx":717
+      /* "kycli/kycore.pyx":776
  *         except Exception:
  *             if os.path.exists(temp_path): os.remove(temp_path)
  *             raise             # <<<<<<<<<<<<<<
@@ -15910,11 +16713,11 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
       __Pyx_XGIVEREF(__pyx_t_1);
       __Pyx_ErrRestoreWithState(__pyx_t_2, __pyx_t_4, __pyx_t_1);
       __pyx_t_2 = 0;  __pyx_t_4 = 0;  __pyx_t_1 = 0; 
-      __PYX_ERR(0, 717, __pyx_L8_except_error)
+      __PYX_ERR(0, 776, __pyx_L8_except_error)
     }
     goto __pyx_L8_except_error;
 
-    /* "kycli/kycore.pyx":705
+    /* "kycli/kycore.pyx":764
  * 
  *         fd, temp_path = tempfile.mkstemp(dir=dir_name, prefix=".kycli_export_")
  *         try:             # <<<<<<<<<<<<<<
@@ -15930,7 +16733,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
     __pyx_L11_try_end:;
   }
 
-  /* "kycli/kycore.pyx":699
+  /* "kycli/kycore.pyx":758
  *             raise e
  * 
  *     def export_data(self, str filepath, str file_format="csv"):             # <<<<<<<<<<<<<<
@@ -15965,7 +16768,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":719
+/* "kycli/kycore.pyx":778
  *             raise
  * 
  *     def import_data(self, str filepath):             # <<<<<<<<<<<<<<
@@ -15974,15 +16777,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_55export_data(struct __pyx_obj_
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_58import_data(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_62import_data(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_58import_data = {"import_data", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_58import_data, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_58import_data(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_62import_data = {"import_data", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_62import_data, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_62import_data(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -16012,32 +16815,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_filepath,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 719, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 778, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 719, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 778, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "import_data", 0) < (0)) __PYX_ERR(0, 719, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "import_data", 0) < (0)) __PYX_ERR(0, 778, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("import_data", 1, 1, 1, i); __PYX_ERR(0, 719, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("import_data", 1, 1, 1, i); __PYX_ERR(0, 778, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 719, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 778, __pyx_L3_error)
     }
     __pyx_v_filepath = ((PyObject*)values[0]);
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("import_data", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 719, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("import_data", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 778, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -16048,8 +16851,8 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_filepath), (&PyUnicode_Type), 1, "filepath", 1))) __PYX_ERR(0, 719, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_57import_data(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_filepath);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_filepath), (&PyUnicode_Type), 1, "filepath", 1))) __PYX_ERR(0, 778, __pyx_L1_error)
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_61import_data(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v_filepath);
 
   /* function exit code */
   goto __pyx_L0;
@@ -16068,7 +16871,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_filepath) {
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_61import_data(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, PyObject *__pyx_v_filepath) {
   PyObject *__pyx_v_data = NULL;
   PyObject *__pyx_v_f = NULL;
   PyObject *__pyx_v_reader = NULL;
@@ -16094,16 +16897,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("import_data", 0);
 
-  /* "kycli/kycore.pyx":720
+  /* "kycli/kycore.pyx":779
  * 
  *     def import_data(self, str filepath):
  *         if not os.path.exists(filepath):             # <<<<<<<<<<<<<<
  *             raise FileNotFoundError(f"Import file not found: {filepath}")
  *         data = {}
 */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 720, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 779, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_path); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 720, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_path); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 779, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_2 = __pyx_t_4;
@@ -16114,15 +16917,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
     __pyx_t_1 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_exists, __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 720, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 779, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 720, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 779, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_7 = (!__pyx_t_6);
   if (unlikely(__pyx_t_7)) {
 
-    /* "kycli/kycore.pyx":721
+    /* "kycli/kycore.pyx":780
  *     def import_data(self, str filepath):
  *         if not os.path.exists(filepath):
  *             raise FileNotFoundError(f"Import file not found: {filepath}")             # <<<<<<<<<<<<<<
@@ -16130,9 +16933,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
  *         if filepath.endswith(".json"):
 */
     __pyx_t_4 = NULL;
-    __pyx_t_2 = __Pyx_PyUnicode_Unicode(__pyx_v_filepath); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 721, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyUnicode_Unicode(__pyx_v_filepath); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 780, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Import_file_not_found, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 721, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Import_file_not_found, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 780, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_5 = 1;
@@ -16141,14 +16944,14 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_FileNotFoundError)), __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 721, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 780, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 721, __pyx_L1_error)
+    __PYX_ERR(0, 780, __pyx_L1_error)
 
-    /* "kycli/kycore.pyx":720
+    /* "kycli/kycore.pyx":779
  * 
  *     def import_data(self, str filepath):
  *         if not os.path.exists(filepath):             # <<<<<<<<<<<<<<
@@ -16157,19 +16960,19 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
 */
   }
 
-  /* "kycli/kycore.pyx":722
+  /* "kycli/kycore.pyx":781
  *         if not os.path.exists(filepath):
  *             raise FileNotFoundError(f"Import file not found: {filepath}")
  *         data = {}             # <<<<<<<<<<<<<<
  *         if filepath.endswith(".json"):
  *             with open(filepath, "r") as f: data = json.load(f)
 */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 722, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 781, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_data = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "kycli/kycore.pyx":723
+  /* "kycli/kycore.pyx":782
  *             raise FileNotFoundError(f"Import file not found: {filepath}")
  *         data = {}
  *         if filepath.endswith(".json"):             # <<<<<<<<<<<<<<
@@ -16178,12 +16981,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
 */
   if (unlikely(__pyx_v_filepath == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "endswith");
-    __PYX_ERR(0, 723, __pyx_L1_error)
+    __PYX_ERR(0, 782, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_PyUnicode_Tailmatch(__pyx_v_filepath, __pyx_mstate_global->__pyx_kp_u_json_2, 0, PY_SSIZE_T_MAX, 1); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 723, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyUnicode_Tailmatch(__pyx_v_filepath, __pyx_mstate_global->__pyx_kp_u_json_2, 0, PY_SSIZE_T_MAX, 1); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 782, __pyx_L1_error)
   if (__pyx_t_7) {
 
-    /* "kycli/kycore.pyx":724
+    /* "kycli/kycore.pyx":783
  *         data = {}
  *         if filepath.endswith(".json"):
  *             with open(filepath, "r") as f: data = json.load(f)             # <<<<<<<<<<<<<<
@@ -16197,13 +17000,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
         PyObject *__pyx_callargs[3] = {__pyx_t_3, __pyx_v_filepath, __pyx_mstate_global->__pyx_n_u_r};
         __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_builtin_open, __pyx_callargs+__pyx_t_5, (3-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 724, __pyx_L1_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 783, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
       }
-      __pyx_t_8 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_exit); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 724, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_exit); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 783, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __pyx_t_4 = NULL;
-      __pyx_t_2 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_enter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 724, __pyx_L5_error)
+      __pyx_t_2 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_enter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 783, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_5 = 1;
       #if CYTHON_UNPACK_METHODS
@@ -16222,7 +17025,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
         __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_5, (1-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 724, __pyx_L5_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 783, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_3);
       }
       __pyx_t_2 = __pyx_t_3;
@@ -16240,9 +17043,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
             __pyx_v_f = __pyx_t_2;
             __pyx_t_2 = 0;
             __pyx_t_1 = NULL;
-            __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 724, __pyx_L9_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_json); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 783, __pyx_L9_error)
             __Pyx_GOTREF(__pyx_t_3);
-            __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_load); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 724, __pyx_L9_error)
+            __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_load); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 783, __pyx_L9_error)
             __Pyx_GOTREF(__pyx_t_4);
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
             __pyx_t_5 = 1;
@@ -16262,7 +17065,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
               __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
               __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-              if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 724, __pyx_L9_error)
+              if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 783, __pyx_L9_error)
               __Pyx_GOTREF(__pyx_t_2);
             }
             __Pyx_DECREF_SET(__pyx_v_data, __pyx_t_2);
@@ -16279,20 +17082,20 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           /*except:*/ {
             __Pyx_AddTraceback("kycli.kycore.Kycore.import_data", __pyx_clineno, __pyx_lineno, __pyx_filename);
-            if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_4, &__pyx_t_1) < 0) __PYX_ERR(0, 724, __pyx_L11_except_error)
+            if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_4, &__pyx_t_1) < 0) __PYX_ERR(0, 783, __pyx_L11_except_error)
             __Pyx_XGOTREF(__pyx_t_2);
             __Pyx_XGOTREF(__pyx_t_4);
             __Pyx_XGOTREF(__pyx_t_1);
-            __pyx_t_3 = PyTuple_Pack(3, __pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 724, __pyx_L11_except_error)
+            __pyx_t_3 = PyTuple_Pack(3, __pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 783, __pyx_L11_except_error)
             __Pyx_GOTREF(__pyx_t_3);
             __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_3, NULL);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-            if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 724, __pyx_L11_except_error)
+            if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 783, __pyx_L11_except_error)
             __Pyx_GOTREF(__pyx_t_12);
             __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_12);
             __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-            if (__pyx_t_7 < (0)) __PYX_ERR(0, 724, __pyx_L11_except_error)
+            if (__pyx_t_7 < (0)) __PYX_ERR(0, 783, __pyx_L11_except_error)
             __pyx_t_6 = (!__pyx_t_7);
             if (unlikely(__pyx_t_6)) {
               __Pyx_GIVEREF(__pyx_t_2);
@@ -16300,7 +17103,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
               __Pyx_XGIVEREF(__pyx_t_1);
               __Pyx_ErrRestoreWithState(__pyx_t_2, __pyx_t_4, __pyx_t_1);
               __pyx_t_2 = 0;  __pyx_t_4 = 0;  __pyx_t_1 = 0; 
-              __PYX_ERR(0, 724, __pyx_L11_except_error)
+              __PYX_ERR(0, 783, __pyx_L11_except_error)
             }
             __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -16326,7 +17129,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
           if (__pyx_t_8) {
             __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_mstate_global->__pyx_tuple[0], NULL);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-            if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 724, __pyx_L1_error)
+            if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 783, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_11);
             __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
           }
@@ -16341,7 +17144,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
       __pyx_L18:;
     }
 
-    /* "kycli/kycore.pyx":723
+    /* "kycli/kycore.pyx":782
  *             raise FileNotFoundError(f"Import file not found: {filepath}")
  *         data = {}
  *         if filepath.endswith(".json"):             # <<<<<<<<<<<<<<
@@ -16351,7 +17154,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
     goto __pyx_L4;
   }
 
-  /* "kycli/kycore.pyx":725
+  /* "kycli/kycore.pyx":784
  *         if filepath.endswith(".json"):
  *             with open(filepath, "r") as f: data = json.load(f)
  *         elif filepath.endswith(".csv"):             # <<<<<<<<<<<<<<
@@ -16360,12 +17163,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
 */
   if (unlikely(__pyx_v_filepath == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "endswith");
-    __PYX_ERR(0, 725, __pyx_L1_error)
+    __PYX_ERR(0, 784, __pyx_L1_error)
   }
-  __pyx_t_6 = __Pyx_PyUnicode_Tailmatch(__pyx_v_filepath, __pyx_mstate_global->__pyx_kp_u_csv_2, 0, PY_SSIZE_T_MAX, 1); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 725, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyUnicode_Tailmatch(__pyx_v_filepath, __pyx_mstate_global->__pyx_kp_u_csv_2, 0, PY_SSIZE_T_MAX, 1); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 784, __pyx_L1_error)
   if (__pyx_t_6) {
 
-    /* "kycli/kycore.pyx":726
+    /* "kycli/kycore.pyx":785
  *             with open(filepath, "r") as f: data = json.load(f)
  *         elif filepath.endswith(".csv"):
  *             with open(filepath, "r") as f:             # <<<<<<<<<<<<<<
@@ -16379,13 +17182,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
         PyObject *__pyx_callargs[3] = {__pyx_t_4, __pyx_v_filepath, __pyx_mstate_global->__pyx_n_u_r};
         __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_builtin_open, __pyx_callargs+__pyx_t_5, (3-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 726, __pyx_L1_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 785, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
       }
-      __pyx_t_8 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_exit); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 726, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_exit); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 785, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __pyx_t_2 = NULL;
-      __pyx_t_3 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_enter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 726, __pyx_L19_error)
+      __pyx_t_3 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_enter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 785, __pyx_L19_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_5 = 1;
       #if CYTHON_UNPACK_METHODS
@@ -16404,7 +17207,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
         __pyx_t_4 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_3, __pyx_callargs+__pyx_t_5, (1-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
         __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 726, __pyx_L19_error)
+        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 785, __pyx_L19_error)
         __Pyx_GOTREF(__pyx_t_4);
       }
       __pyx_t_3 = __pyx_t_4;
@@ -16422,7 +17225,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
             __pyx_v_f = __pyx_t_3;
             __pyx_t_3 = 0;
 
-            /* "kycli/kycore.pyx":727
+            /* "kycli/kycore.pyx":786
  *         elif filepath.endswith(".csv"):
  *             with open(filepath, "r") as f:
  *                 reader = csv.DictReader(f)             # <<<<<<<<<<<<<<
@@ -16430,9 +17233,9 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
  *         self.load_store(data)
 */
             __pyx_t_1 = NULL;
-            __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_csv); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 727, __pyx_L23_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_csv); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 786, __pyx_L23_error)
             __Pyx_GOTREF(__pyx_t_4);
-            __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_DictReader); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 727, __pyx_L23_error)
+            __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_DictReader); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 786, __pyx_L23_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
             __pyx_t_5 = 1;
@@ -16452,13 +17255,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
               __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_2, __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
               __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
               __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-              if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 727, __pyx_L23_error)
+              if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 786, __pyx_L23_error)
               __Pyx_GOTREF(__pyx_t_3);
             }
             __pyx_v_reader = __pyx_t_3;
             __pyx_t_3 = 0;
 
-            /* "kycli/kycore.pyx":728
+            /* "kycli/kycore.pyx":787
  *             with open(filepath, "r") as f:
  *                 reader = csv.DictReader(f)
  *                 data = {row["key"]: row["value"] for row in reader}             # <<<<<<<<<<<<<<
@@ -16466,16 +17269,16 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
  * 
 */
             { /* enter inner scope */
-              __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 728, __pyx_L31_error)
+              __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 787, __pyx_L31_error)
               __Pyx_GOTREF(__pyx_t_3);
               if (likely(PyList_CheckExact(__pyx_v_reader)) || PyTuple_CheckExact(__pyx_v_reader)) {
                 __pyx_t_2 = __pyx_v_reader; __Pyx_INCREF(__pyx_t_2);
                 __pyx_t_13 = 0;
                 __pyx_t_14 = NULL;
               } else {
-                __pyx_t_13 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_reader); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 728, __pyx_L31_error)
+                __pyx_t_13 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_reader); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 787, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_2);
-                __pyx_t_14 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_2); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 728, __pyx_L31_error)
+                __pyx_t_14 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_2); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 787, __pyx_L31_error)
               }
               for (;;) {
                 if (likely(!__pyx_t_14)) {
@@ -16483,7 +17286,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
                     {
                       Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_2);
                       #if !CYTHON_ASSUME_SAFE_SIZE
-                      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 728, __pyx_L31_error)
+                      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 787, __pyx_L31_error)
                       #endif
                       if (__pyx_t_13 >= __pyx_temp) break;
                     }
@@ -16493,7 +17296,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
                     {
                       Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_2);
                       #if !CYTHON_ASSUME_SAFE_SIZE
-                      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 728, __pyx_L31_error)
+                      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 787, __pyx_L31_error)
                       #endif
                       if (__pyx_t_13 >= __pyx_temp) break;
                     }
@@ -16504,13 +17307,13 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
                     #endif
                     ++__pyx_t_13;
                   }
-                  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 728, __pyx_L31_error)
+                  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 787, __pyx_L31_error)
                 } else {
                   __pyx_t_1 = __pyx_t_14(__pyx_t_2);
                   if (unlikely(!__pyx_t_1)) {
                     PyObject* exc_type = PyErr_Occurred();
                     if (exc_type) {
-                      if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 728, __pyx_L31_error)
+                      if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 787, __pyx_L31_error)
                       PyErr_Clear();
                     }
                     break;
@@ -16519,11 +17322,11 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_XDECREF_SET(__pyx_8genexpr4__pyx_v_row, __pyx_t_1);
                 __pyx_t_1 = 0;
-                __pyx_t_1 = __Pyx_PyObject_Dict_GetItem(__pyx_8genexpr4__pyx_v_row, __pyx_mstate_global->__pyx_n_u_key); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 728, __pyx_L31_error)
+                __pyx_t_1 = __Pyx_PyObject_Dict_GetItem(__pyx_8genexpr4__pyx_v_row, __pyx_mstate_global->__pyx_n_u_key); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 787, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_1);
-                __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_8genexpr4__pyx_v_row, __pyx_mstate_global->__pyx_n_u_value); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 728, __pyx_L31_error)
+                __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_8genexpr4__pyx_v_row, __pyx_mstate_global->__pyx_n_u_value); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 787, __pyx_L31_error)
                 __Pyx_GOTREF(__pyx_t_4);
-                if (unlikely(PyDict_SetItem(__pyx_t_3, (PyObject*)__pyx_t_1, (PyObject*)__pyx_t_4))) __PYX_ERR(0, 728, __pyx_L31_error)
+                if (unlikely(PyDict_SetItem(__pyx_t_3, (PyObject*)__pyx_t_1, (PyObject*)__pyx_t_4))) __PYX_ERR(0, 787, __pyx_L31_error)
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
                 __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
               }
@@ -16538,7 +17341,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
             __Pyx_DECREF_SET(__pyx_v_data, __pyx_t_3);
             __pyx_t_3 = 0;
 
-            /* "kycli/kycore.pyx":726
+            /* "kycli/kycore.pyx":785
  *             with open(filepath, "r") as f: data = json.load(f)
  *         elif filepath.endswith(".csv"):
  *             with open(filepath, "r") as f:             # <<<<<<<<<<<<<<
@@ -16557,20 +17360,20 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           /*except:*/ {
             __Pyx_AddTraceback("kycli.kycore.Kycore.import_data", __pyx_clineno, __pyx_lineno, __pyx_filename);
-            if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_2, &__pyx_t_4) < 0) __PYX_ERR(0, 726, __pyx_L25_except_error)
+            if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_2, &__pyx_t_4) < 0) __PYX_ERR(0, 785, __pyx_L25_except_error)
             __Pyx_XGOTREF(__pyx_t_3);
             __Pyx_XGOTREF(__pyx_t_2);
             __Pyx_XGOTREF(__pyx_t_4);
-            __pyx_t_1 = PyTuple_Pack(3, __pyx_t_3, __pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 726, __pyx_L25_except_error)
+            __pyx_t_1 = PyTuple_Pack(3, __pyx_t_3, __pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 785, __pyx_L25_except_error)
             __Pyx_GOTREF(__pyx_t_1);
             __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_1, NULL);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 726, __pyx_L25_except_error)
+            if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 785, __pyx_L25_except_error)
             __Pyx_GOTREF(__pyx_t_12);
             __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_12);
             __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-            if (__pyx_t_6 < (0)) __PYX_ERR(0, 726, __pyx_L25_except_error)
+            if (__pyx_t_6 < (0)) __PYX_ERR(0, 785, __pyx_L25_except_error)
             __pyx_t_7 = (!__pyx_t_6);
             if (unlikely(__pyx_t_7)) {
               __Pyx_GIVEREF(__pyx_t_3);
@@ -16578,7 +17381,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
               __Pyx_XGIVEREF(__pyx_t_4);
               __Pyx_ErrRestoreWithState(__pyx_t_3, __pyx_t_2, __pyx_t_4);
               __pyx_t_3 = 0;  __pyx_t_2 = 0;  __pyx_t_4 = 0; 
-              __PYX_ERR(0, 726, __pyx_L25_except_error)
+              __PYX_ERR(0, 785, __pyx_L25_except_error)
             }
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -16604,7 +17407,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
           if (__pyx_t_8) {
             __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_mstate_global->__pyx_tuple[0], NULL);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-            if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 726, __pyx_L1_error)
+            if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 785, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_9);
             __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
           }
@@ -16619,7 +17422,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
       __pyx_L39:;
     }
 
-    /* "kycli/kycore.pyx":725
+    /* "kycli/kycore.pyx":784
  *         if filepath.endswith(".json"):
  *             with open(filepath, "r") as f: data = json.load(f)
  *         elif filepath.endswith(".csv"):             # <<<<<<<<<<<<<<
@@ -16629,7 +17432,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
   }
   __pyx_L4:;
 
-  /* "kycli/kycore.pyx":729
+  /* "kycli/kycore.pyx":788
  *                 reader = csv.DictReader(f)
  *                 data = {row["key"]: row["value"] for row in reader}
  *         self.load_store(data)             # <<<<<<<<<<<<<<
@@ -16643,12 +17446,12 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
     PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_data};
     __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_load_store, __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 729, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 788, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "kycli/kycore.pyx":719
+  /* "kycli/kycore.pyx":778
  *             raise
  * 
  *     def import_data(self, str filepath):             # <<<<<<<<<<<<<<
@@ -16676,7 +17479,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":731
+/* "kycli/kycore.pyx":790
  *         self.load_store(data)
  * 
  *     def persist(self):             # <<<<<<<<<<<<<<
@@ -16685,15 +17488,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_57import_data(struct __pyx_obj_
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_60persist(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_64persist(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_60persist = {"persist", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_60persist, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_60persist(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_64persist = {"persist", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_64persist, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_64persist(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -16719,14 +17522,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   const Py_ssize_t __pyx_kwds_len = unlikely(__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
   if (unlikely(__pyx_kwds_len < 0)) return NULL;
   if (unlikely(__pyx_kwds_len > 0)) {__Pyx_RejectKeywords("persist", __pyx_kwds); return NULL;}
-  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_59persist(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_63persist(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_59persist(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self) {
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_63persist(struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -16735,7 +17538,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_59persist(struct __pyx_obj_5kyc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("persist", 0);
 
-  /* "kycli/kycore.pyx":732
+  /* "kycli/kycore.pyx":791
  * 
  *     def persist(self):
  *         self._dirty_keys.clear()             # <<<<<<<<<<<<<<
@@ -16744,11 +17547,11 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_59persist(struct __pyx_obj_5kyc
 */
   if (unlikely(__pyx_v_self->_dirty_keys == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "clear");
-    __PYX_ERR(0, 732, __pyx_L1_error)
+    __PYX_ERR(0, 791, __pyx_L1_error)
   }
-  __pyx_t_1 = PySet_Clear(__pyx_v_self->_dirty_keys); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 732, __pyx_L1_error)
+  __pyx_t_1 = PySet_Clear(__pyx_v_self->_dirty_keys); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 791, __pyx_L1_error)
 
-  /* "kycli/kycore.pyx":731
+  /* "kycli/kycore.pyx":790
  *         self.load_store(data)
  * 
  *     def persist(self):             # <<<<<<<<<<<<<<
@@ -16768,7 +17571,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_59persist(struct __pyx_obj_5kyc
   return __pyx_r;
 }
 
-/* "kycli/kycore.pyx":734
+/* "kycli/kycore.pyx":793
  *         self._dirty_keys.clear()
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -16796,7 +17599,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_9data_path___get__(struct __pyx
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "kycli/kycore.pyx":736
+  /* "kycli/kycore.pyx":795
  *     @property
  *     def data_path(self):
  *         return self._data_path             # <<<<<<<<<<<<<<
@@ -16806,7 +17609,7 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_9data_path___get__(struct __pyx
   __pyx_r = __pyx_v_self->_data_path;
   goto __pyx_L0;
 
-  /* "kycli/kycore.pyx":734
+  /* "kycli/kycore.pyx":793
  *         self._dirty_keys.clear()
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -16828,15 +17631,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_9data_path___get__(struct __pyx
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_62__reduce_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_66__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_62__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_62__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_62__reduce_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_66__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_66__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_66__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -16862,14 +17665,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   const Py_ssize_t __pyx_kwds_len = unlikely(__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
   if (unlikely(__pyx_kwds_len < 0)) return NULL;
   if (unlikely(__pyx_kwds_len > 0)) {__Pyx_RejectKeywords("__reduce_cython__", __pyx_kwds); return NULL;}
-  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_61__reduce_cython__(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_65__reduce_cython__(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_61__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self) {
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_65__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_lineno = 0;
@@ -16909,15 +17712,15 @@ static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_61__reduce_cython__(CYTHON_UNUS
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_64__setstate_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_68__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_64__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_64__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_64__setstate_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_5kycli_6kycore_6Kycore_68__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_68__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5kycli_6kycore_6Kycore_68__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -16983,7 +17786,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_63__setstate_cython__(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_5kycli_6kycore_6Kycore_67__setstate_cython__(((struct __pyx_obj_5kycli_6kycore_Kycore *)__pyx_v_self), __pyx_v___pyx_state);
 
   /* function exit code */
   for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -16993,7 +17796,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_63__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_5kycli_6kycore_6Kycore_67__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5kycli_6kycore_Kycore *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_lineno = 0;
@@ -17158,15 +17961,17 @@ static PyMethodDef __pyx_methods_5kycli_6kycore_Kycore[] = {
   {"delete", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_42delete, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {"get_replication_stream", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_44get_replication_stream, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5kycli_6kycore_6Kycore_43get_replication_stream},
   {"sync_from_stream", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_46sync_from_stream, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5kycli_6kycore_6Kycore_45sync_from_stream},
-  {"restore", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_48restore, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5kycli_6kycore_6Kycore_47restore},
-  {"listkeys", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_50listkeys, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"get_history", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_52get_history, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"load_store", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_54load_store, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"export_data", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_56export_data, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"import_data", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_58import_data, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"persist", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_60persist, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__reduce_cython__", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_62__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_64__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"restore_to", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_48restore_to, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5kycli_6kycore_6Kycore_47restore_to},
+  {"compact", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_50compact, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5kycli_6kycore_6Kycore_49compact},
+  {"restore", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_52restore, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5kycli_6kycore_6Kycore_51restore},
+  {"listkeys", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_54listkeys, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"get_history", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_56get_history, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"load_store", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_58load_store, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"export_data", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_60export_data, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"import_data", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_62import_data, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"persist", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_64persist, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__reduce_cython__", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_66__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5kycli_6kycore_6Kycore_68__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -17886,15 +18691,15 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_Kycore, (PyObject *) __pyx_mstate->__pyx_ptype_5kycli_6kycore_Kycore) < (0)) __PYX_ERR(0, 54, __pyx_L1_error)
   if (__Pyx_setup_reduce((PyObject *) __pyx_mstate->__pyx_ptype_5kycli_6kycore_Kycore) < (0)) __PYX_ERR(0, 54, __pyx_L1_error)
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct__save_async = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5kycli_6kycore___pyx_scope_struct__save_async_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct__save_async)) __PYX_ERR(0, 359, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5kycli_6kycore___pyx_scope_struct__save_async_spec, __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct__save_async) < (0)) __PYX_ERR(0, 359, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct__save_async = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5kycli_6kycore___pyx_scope_struct__save_async_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct__save_async)) __PYX_ERR(0, 362, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5kycli_6kycore___pyx_scope_struct__save_async_spec, __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct__save_async) < (0)) __PYX_ERR(0, 362, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct__save_async = &__pyx_type_5kycli_6kycore___pyx_scope_struct__save_async;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct__save_async) < (0)) __PYX_ERR(0, 359, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct__save_async) < (0)) __PYX_ERR(0, 362, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct__save_async);
@@ -17905,15 +18710,15 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   }
   #endif
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_1___iter__ = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5kycli_6kycore___pyx_scope_struct_1___iter___spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_1___iter__)) __PYX_ERR(0, 385, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5kycli_6kycore___pyx_scope_struct_1___iter___spec, __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_1___iter__) < (0)) __PYX_ERR(0, 385, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_1___iter__ = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5kycli_6kycore___pyx_scope_struct_1___iter___spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_1___iter__)) __PYX_ERR(0, 388, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5kycli_6kycore___pyx_scope_struct_1___iter___spec, __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_1___iter__) < (0)) __PYX_ERR(0, 388, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_1___iter__ = &__pyx_type_5kycli_6kycore___pyx_scope_struct_1___iter__;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_1___iter__) < (0)) __PYX_ERR(0, 385, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_1___iter__) < (0)) __PYX_ERR(0, 388, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_1___iter__);
@@ -17924,15 +18729,15 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   }
   #endif
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5kycli_6kycore___pyx_scope_struct_2_getkey_async_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async)) __PYX_ERR(0, 524, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5kycli_6kycore___pyx_scope_struct_2_getkey_async_spec, __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async) < (0)) __PYX_ERR(0, 524, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5kycli_6kycore___pyx_scope_struct_2_getkey_async_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async)) __PYX_ERR(0, 527, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5kycli_6kycore___pyx_scope_struct_2_getkey_async_spec, __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async) < (0)) __PYX_ERR(0, 527, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async = &__pyx_type_5kycli_6kycore___pyx_scope_struct_2_getkey_async;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async) < (0)) __PYX_ERR(0, 524, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async) < (0)) __PYX_ERR(0, 527, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_5kycli_6kycore___pyx_scope_struct_2_getkey_async);
@@ -18728,313 +19533,344 @@ __Pyx_RefNannySetupContext("PyInit_kycore", 0);
   if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_exit, __pyx_t_2) < (0)) __PYX_ERR(0, 178, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":205
+  /* "kycli/kycore.pyx":208
  *             return "[DECRYPTION FAILED: Incorrect master key]"
  * 
  *     def _encrypt(self, str plaintext):             # <<<<<<<<<<<<<<
  *         return self._encrypt_c(plaintext)
  * 
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_7_encrypt, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore__encrypt, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_7_encrypt, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore__encrypt, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 208, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_encrypt_2, __pyx_t_2) < (0)) __PYX_ERR(0, 205, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_encrypt_2, __pyx_t_2) < (0)) __PYX_ERR(0, 208, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":208
+  /* "kycli/kycore.pyx":211
  *         return self._encrypt_c(plaintext)
  * 
  *     def _decrypt(self, str encrypted_text):             # <<<<<<<<<<<<<<
  *         return self._decrypt_c(encrypted_text)
  * 
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_9_decrypt, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore__decrypt, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 208, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_9_decrypt, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore__decrypt, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 211, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_decrypt_2, __pyx_t_2) < (0)) __PYX_ERR(0, 208, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_decrypt_2, __pyx_t_2) < (0)) __PYX_ERR(0, 211, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":219
+  /* "kycli/kycore.pyx":222
  *         return 0
  * 
  *     def _parse_ttl(self, ttl):             # <<<<<<<<<<<<<<
  *         if ttl is None:
  *             return None
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_11_parse_ttl, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore__parse_ttl, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 219, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_11_parse_ttl, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore__parse_ttl, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 222, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_parse_ttl, __pyx_t_2) < (0)) __PYX_ERR(0, 219, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_parse_ttl, __pyx_t_2) < (0)) __PYX_ERR(0, 222, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":250
+  /* "kycli/kycore.pyx":253
  *         return val
  * 
  *     def save(self, str key, value, ttl=None):             # <<<<<<<<<<<<<<
  *         if not key or not key.strip():
  *             raise ValueError("Key cannot be empty")
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_13save, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_save, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[8])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 250, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_13save, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_save, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[8])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[1]);
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_save, __pyx_t_2) < (0)) __PYX_ERR(0, 250, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_save, __pyx_t_2) < (0)) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":315
+  /* "kycli/kycore.pyx":318
  *             raise e
  * 
  *     def save_many(self, list items, ttl=None):             # <<<<<<<<<<<<<<
  *         """
  *         Batch save multiple key-value pairs in a single transaction.
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_15save_many, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_save_many, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[9])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 315, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_15save_many, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_save_many, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[9])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 318, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[1]);
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_save_many, __pyx_t_2) < (0)) __PYX_ERR(0, 315, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_save_many, __pyx_t_2) < (0)) __PYX_ERR(0, 318, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":359
+  /* "kycli/kycore.pyx":362
  *             raise e
  * 
  *     async def save_async(self, str key, value, ttl=None):             # <<<<<<<<<<<<<<
  *         """Asynchronous version of save using a thread pool."""
  *         return await asyncio.to_thread(self.save, key, value, ttl=ttl)
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_17save_async, __Pyx_CYFUNCTION_CCLASS | __Pyx_CYFUNCTION_COROUTINE, __pyx_mstate_global->__pyx_n_u_Kycore_save_async, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 359, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_17save_async, __Pyx_CYFUNCTION_CCLASS | __Pyx_CYFUNCTION_COROUTINE, __pyx_mstate_global->__pyx_n_u_Kycore_save_async, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 362, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[1]);
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_save_async, __pyx_t_2) < (0)) __PYX_ERR(0, 359, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_save_async, __pyx_t_2) < (0)) __PYX_ERR(0, 362, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":400
+  /* "kycli/kycore.pyx":403
  *         return int(results[0][0]) if results else 0
  * 
  *     def getkey(self, str key_pattern, deserialize=True):             # <<<<<<<<<<<<<<
  *         cdef str k = key_pattern.lower().strip()
  * 
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_33getkey, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_getkey, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[10])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 400, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_33getkey, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_getkey, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[10])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 403, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[2]);
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_getkey, __pyx_t_2) < (0)) __PYX_ERR(0, 400, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_getkey, __pyx_t_2) < (0)) __PYX_ERR(0, 403, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":474
+  /* "kycli/kycore.pyx":477
  *         return matches if matches else "Key not found"
  * 
  *     def search(self, str query, limit=100, deserialize=True, keys_only=False):             # <<<<<<<<<<<<<<
  *         """
  *         Perform a high-performance full-text search using FTS5.
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_35search, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_search, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[11])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 474, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_35search, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_search, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[11])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 477, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[3]);
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_search, __pyx_t_2) < (0)) __PYX_ERR(0, 474, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_search, __pyx_t_2) < (0)) __PYX_ERR(0, 477, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":520
+  /* "kycli/kycore.pyx":523
  *         return matches
  * 
  *     def optimize_index(self):             # <<<<<<<<<<<<<<
  *         """Optimize the FTS5 index for faster search performance."""
  *         self._execute_raw("INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')")
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_37optimize_index, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_optimize_index, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[12])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 520, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_37optimize_index, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_optimize_index, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[12])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 523, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_optimize_index, __pyx_t_2) < (0)) __PYX_ERR(0, 520, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_optimize_index, __pyx_t_2) < (0)) __PYX_ERR(0, 523, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":524
+  /* "kycli/kycore.pyx":527
  *         self._execute_raw("INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')")
  * 
  *     async def getkey_async(self, str key_pattern):             # <<<<<<<<<<<<<<
  *         """Asynchronous version of getkey."""
  *         return await asyncio.to_thread(self.getkey, key_pattern)
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_39getkey_async, __Pyx_CYFUNCTION_CCLASS | __Pyx_CYFUNCTION_COROUTINE, __pyx_mstate_global->__pyx_n_u_Kycore_getkey_async, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 524, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_39getkey_async, __Pyx_CYFUNCTION_CCLASS | __Pyx_CYFUNCTION_COROUTINE, __pyx_mstate_global->__pyx_n_u_Kycore_getkey_async, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 527, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_getkey_async, __pyx_t_2) < (0)) __PYX_ERR(0, 524, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_getkey_async, __pyx_t_2) < (0)) __PYX_ERR(0, 527, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":576
+  /* "kycli/kycore.pyx":579
  *         return rows
  * 
  *     def delete(self, str key):             # <<<<<<<<<<<<<<
  *         cdef str k = key.lower().strip()
  * 
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_42delete, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_delete, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[13])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 576, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_42delete, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_delete, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[13])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 579, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_delete, __pyx_t_2) < (0)) __PYX_ERR(0, 576, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_delete, __pyx_t_2) < (0)) __PYX_ERR(0, 579, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":605
+  /* "kycli/kycore.pyx":610
  *             raise e
  * 
  *     def get_replication_stream(self, last_id=0):             # <<<<<<<<<<<<<<
  *         """
  *         Stream updates since a specific audit log ID for replication.
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_44get_replication_stream, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_get_replication_stream, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[14])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 605, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_44get_replication_stream, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_get_replication_stream, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[14])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 610, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[4]);
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_get_replication_stream, __pyx_t_2) < (0)) __PYX_ERR(0, 605, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_get_replication_stream, __pyx_t_2) < (0)) __PYX_ERR(0, 610, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":611
+  /* "kycli/kycore.pyx":616
  *         return self._bind_and_fetch("SELECT id, key, value, timestamp FROM audit_log WHERE id > ? ORDER BY id ASC", [last_id])
  * 
  *     def sync_from_stream(self, list entries):             # <<<<<<<<<<<<<<
  *         """
  *         Apply replication entries from another instance.
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_46sync_from_stream, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_sync_from_stream, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[15])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 611, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_46sync_from_stream, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_sync_from_stream, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[15])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 616, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_sync_from_stream, __pyx_t_2) < (0)) __PYX_ERR(0, 611, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_sync_from_stream, __pyx_t_2) < (0)) __PYX_ERR(0, 616, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":627
+  /* "kycli/kycore.pyx":632
  *             raise e
+ * 
+ *     def restore_to(self, str timestamp):             # <<<<<<<<<<<<<<
+ *         """
+ *         Point-in-Time Recovery: Reconstruct database state at a specific timestamp.
+*/
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_48restore_to, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_restore_to, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[16])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 632, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
+  #endif
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_restore_to, __pyx_t_2) < (0)) __PYX_ERR(0, 632, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "kycli/kycore.pyx":666
+ *             raise e
+ * 
+ *     def compact(self, int retention_days=15):             # <<<<<<<<<<<<<<
+ *         """
+ *         Database Compaction: Cleanup old audit/archive data and reclaim space.
+*/
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_50compact, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_compact, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[17])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 666, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
+  #endif
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[5]);
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_compact, __pyx_t_2) < (0)) __PYX_ERR(0, 666, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "kycli/kycore.pyx":686
+ *             raise RuntimeError(f"Compaction failed: {e}")
  * 
  *     def restore(self, str key):             # <<<<<<<<<<<<<<
  *         """Restore the latest value for a key from the archive."""
  *         cdef str k = key.lower().strip()
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_48restore, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_restore, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[16])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 627, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_52restore, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_restore, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[18])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 686, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_restore, __pyx_t_2) < (0)) __PYX_ERR(0, 627, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_restore, __pyx_t_2) < (0)) __PYX_ERR(0, 686, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":651
+  /* "kycli/kycore.pyx":710
  *         return f"Restored: {k}"
  * 
  *     def listkeys(self, pattern=None):             # <<<<<<<<<<<<<<
  *         results = self._bind_and_fetch("""
  *             SELECT key FROM kvstore
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_50listkeys, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_listkeys, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[17])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 651, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_54listkeys, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_listkeys, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[19])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 710, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[1]);
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_listkeys, __pyx_t_2) < (0)) __PYX_ERR(0, 651, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_listkeys, __pyx_t_2) < (0)) __PYX_ERR(0, 710, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":666
+  /* "kycli/kycore.pyx":725
  *             return []
  * 
  *     def get_history(self, str key=None):             # <<<<<<<<<<<<<<
  *         cdef list results
  *         if key is None or key == "-h":
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_52get_history, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_get_history, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[18])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 666, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_56get_history, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_get_history, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[20])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 725, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[1]);
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_get_history, __pyx_t_2) < (0)) __PYX_ERR(0, 666, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_get_history, __pyx_t_2) < (0)) __PYX_ERR(0, 725, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":686
+  /* "kycli/kycore.pyx":745
  *         return {row[0]: self._decrypt(row[1]) for row in results}
  * 
  *     def load_store(self, dict store_data):             # <<<<<<<<<<<<<<
  *         if not store_data:
  *             return
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_54load_store, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_load_store, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[19])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 686, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_58load_store, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_load_store, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[21])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 745, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_load_store, __pyx_t_2) < (0)) __PYX_ERR(0, 686, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_load_store, __pyx_t_2) < (0)) __PYX_ERR(0, 745, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":699
+  /* "kycli/kycore.pyx":758
  *             raise e
  * 
  *     def export_data(self, str filepath, str file_format="csv"):             # <<<<<<<<<<<<<<
  *         data = self.store
  *         dir_name = os.path.dirname(os.path.abspath(filepath))
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_56export_data, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_export_data, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[20])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 699, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_60export_data, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_export_data, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[22])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 758, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[5]);
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_export_data, __pyx_t_2) < (0)) __PYX_ERR(0, 699, __pyx_L1_error)
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_mstate_global->__pyx_tuple[6]);
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_export_data, __pyx_t_2) < (0)) __PYX_ERR(0, 758, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":719
+  /* "kycli/kycore.pyx":778
  *             raise
  * 
  *     def import_data(self, str filepath):             # <<<<<<<<<<<<<<
  *         if not os.path.exists(filepath):
  *             raise FileNotFoundError(f"Import file not found: {filepath}")
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_58import_data, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_import_data, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[21])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 719, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_62import_data, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_import_data, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[23])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 778, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_import_data, __pyx_t_2) < (0)) __PYX_ERR(0, 719, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_import_data, __pyx_t_2) < (0)) __PYX_ERR(0, 778, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/kycore.pyx":731
+  /* "kycli/kycore.pyx":790
  *         self.load_store(data)
  * 
  *     def persist(self):             # <<<<<<<<<<<<<<
  *         self._dirty_keys.clear()
  * 
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_60persist, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_persist, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[22])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 731, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_64persist, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore_persist, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[24])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 790, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_persist, __pyx_t_2) < (0)) __PYX_ERR(0, 731, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_6kycore_Kycore, __pyx_mstate_global->__pyx_n_u_persist, __pyx_t_2) < (0)) __PYX_ERR(0, 790, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "(tree fragment)":1
@@ -19042,7 +19878,7 @@ __Pyx_RefNannySetupContext("PyInit_kycore", 0);
  *     raise TypeError, "self._db cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_62__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore___reduce_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[23])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_66__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore___reduce_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[25])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
@@ -19056,7 +19892,7 @@ __Pyx_RefNannySetupContext("PyInit_kycore", 0);
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._db cannot be converted to a Python object for pickling"
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_64__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore___setstate_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[24])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_6kycore_6Kycore_68__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Kycore___setstate_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_kycore, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[26])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
@@ -19112,8 +19948,8 @@ __Pyx_RefNannySetupContext("PyInit_kycore", 0);
 
 static int __Pyx_InitCachedBuiltins(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 535, __pyx_L1_error)
-  __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_open); if (!__pyx_builtin_open) __PYX_ERR(0, 724, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 538, __pyx_L1_error)
+  __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_open); if (!__pyx_builtin_open) __PYX_ERR(0, 783, __pyx_L1_error)
 
   /* Cached unbound methods */
   __pyx_mstate->__pyx_umethod_PyDict_Type_items.type = (PyObject*)&PyDict_Type;
@@ -19137,97 +19973,108 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "kycli/kycore.pyx":199
+  /* "kycli/kycore.pyx":202
  *         try:
  *             data = base64.b64decode(encrypted_text[4:].encode('utf-8'))
  *             nonce = data[:12]             # <<<<<<<<<<<<<<
  *             ciphertext = data[12:]
  *             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
 */
-  __pyx_mstate_global->__pyx_slice[0] = PySlice_New(Py_None, __pyx_mstate_global->__pyx_int_12, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[0])) __PYX_ERR(0, 199, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_slice[0] = PySlice_New(Py_None, __pyx_mstate_global->__pyx_int_12, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[0])) __PYX_ERR(0, 202, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_slice[0]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_slice[0]);
 
-  /* "kycli/kycore.pyx":200
+  /* "kycli/kycore.pyx":203
  *             data = base64.b64decode(encrypted_text[4:].encode('utf-8'))
  *             nonce = data[:12]
  *             ciphertext = data[12:]             # <<<<<<<<<<<<<<
  *             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
  *         except Exception:
 */
-  __pyx_mstate_global->__pyx_slice[1] = PySlice_New(__pyx_mstate_global->__pyx_int_12, Py_None, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[1])) __PYX_ERR(0, 200, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_slice[1] = PySlice_New(__pyx_mstate_global->__pyx_int_12, Py_None, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_slice[1])) __PYX_ERR(0, 203, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_slice[1]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_slice[1]);
 
-  /* "kycli/kycore.pyx":706
+  /* "kycli/kycore.pyx":765
  *         fd, temp_path = tempfile.mkstemp(dir=dir_name, prefix=".kycli_export_")
  *         try:
  *             with os.fdopen(fd, 'w', newline='') as f:             # <<<<<<<<<<<<<<
  *                 if file_format.lower() == "json":
  *                     json.dump(data, f, indent=4)
 */
-  __pyx_mstate_global->__pyx_tuple[0] = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_tuple[0])) __PYX_ERR(0, 706, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_tuple[0] = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_tuple[0])) __PYX_ERR(0, 765, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[0]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[0]);
 
-  /* "kycli/kycore.pyx":250
+  /* "kycli/kycore.pyx":253
  *         return val
  * 
  *     def save(self, str key, value, ttl=None):             # <<<<<<<<<<<<<<
  *         if not key or not key.strip():
  *             raise ValueError("Key cannot be empty")
 */
-  __pyx_mstate_global->__pyx_tuple[1] = PyTuple_Pack(1, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_tuple[1])) __PYX_ERR(0, 250, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_tuple[1] = PyTuple_Pack(1, Py_None); if (unlikely(!__pyx_mstate_global->__pyx_tuple[1])) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[1]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[1]);
 
-  /* "kycli/kycore.pyx":400
+  /* "kycli/kycore.pyx":403
  *         return int(results[0][0]) if results else 0
  * 
  *     def getkey(self, str key_pattern, deserialize=True):             # <<<<<<<<<<<<<<
  *         cdef str k = key_pattern.lower().strip()
  * 
 */
-  __pyx_mstate_global->__pyx_tuple[2] = PyTuple_Pack(1, Py_True); if (unlikely(!__pyx_mstate_global->__pyx_tuple[2])) __PYX_ERR(0, 400, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_tuple[2] = PyTuple_Pack(1, Py_True); if (unlikely(!__pyx_mstate_global->__pyx_tuple[2])) __PYX_ERR(0, 403, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[2]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[2]);
 
-  /* "kycli/kycore.pyx":474
+  /* "kycli/kycore.pyx":477
  *         return matches if matches else "Key not found"
  * 
  *     def search(self, str query, limit=100, deserialize=True, keys_only=False):             # <<<<<<<<<<<<<<
  *         """
  *         Perform a high-performance full-text search using FTS5.
 */
-  __pyx_mstate_global->__pyx_tuple[3] = PyTuple_Pack(3, __pyx_mstate_global->__pyx_int_100, Py_True, Py_False); if (unlikely(!__pyx_mstate_global->__pyx_tuple[3])) __PYX_ERR(0, 474, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_tuple[3] = PyTuple_Pack(3, __pyx_mstate_global->__pyx_int_100, Py_True, Py_False); if (unlikely(!__pyx_mstate_global->__pyx_tuple[3])) __PYX_ERR(0, 477, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[3]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[3]);
 
-  /* "kycli/kycore.pyx":605
+  /* "kycli/kycore.pyx":610
  *             raise e
  * 
  *     def get_replication_stream(self, last_id=0):             # <<<<<<<<<<<<<<
  *         """
  *         Stream updates since a specific audit log ID for replication.
 */
-  __pyx_mstate_global->__pyx_tuple[4] = PyTuple_Pack(1, __pyx_mstate_global->__pyx_int_0); if (unlikely(!__pyx_mstate_global->__pyx_tuple[4])) __PYX_ERR(0, 605, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_tuple[4] = PyTuple_Pack(1, __pyx_mstate_global->__pyx_int_0); if (unlikely(!__pyx_mstate_global->__pyx_tuple[4])) __PYX_ERR(0, 610, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[4]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[4]);
 
-  /* "kycli/kycore.pyx":699
+  /* "kycli/kycore.pyx":666
+ *             raise e
+ * 
+ *     def compact(self, int retention_days=15):             # <<<<<<<<<<<<<<
+ *         """
+ *         Database Compaction: Cleanup old audit/archive data and reclaim space.
+*/
+  __pyx_mstate_global->__pyx_tuple[5] = PyTuple_Pack(1, __pyx_mstate_global->__pyx_int_15); if (unlikely(!__pyx_mstate_global->__pyx_tuple[5])) __PYX_ERR(0, 666, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[5]);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[5]);
+
+  /* "kycli/kycore.pyx":758
  *             raise e
  * 
  *     def export_data(self, str filepath, str file_format="csv"):             # <<<<<<<<<<<<<<
  *         data = self.store
  *         dir_name = os.path.dirname(os.path.abspath(filepath))
 */
-  __pyx_mstate_global->__pyx_tuple[5] = PyTuple_Pack(1, __pyx_mstate_global->__pyx_n_u_csv); if (unlikely(!__pyx_mstate_global->__pyx_tuple[5])) __PYX_ERR(0, 699, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[5]);
-  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[5]);
+  __pyx_mstate_global->__pyx_tuple[6] = PyTuple_Pack(1, __pyx_mstate_global->__pyx_n_u_csv); if (unlikely(!__pyx_mstate_global->__pyx_tuple[6])) __PYX_ERR(0, 758, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[6]);
+  __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[6]);
   #if CYTHON_IMMORTAL_CONSTANTS
   {
     PyObject **table = __pyx_mstate->__pyx_tuple;
-    for (Py_ssize_t i=0; i<6; ++i) {
+    for (Py_ssize_t i=0; i<7; ++i) {
       #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
       #if PY_VERSION_HEX < 0x030E0000
       if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -19273,34 +20120,34 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 10; } index[] = {{0},{50},{44},{17},{58},{242},{243},{174},{743},{88},{25},{41},{73},{81},{33},{31},{69},{52},{172},{46},{48},{55},{72},{57},{23},{21},{5},{19},{13},{78},{4},{179},{24},{23},{25},{24},{15},{10},{140},{122},{76},{117},{124},{76},{90},{319},{334},{72},{39},{144},{14},{25},{41},{12},{13},{60},{20},{17},{1},{1},{8},{31},{92},{4},{18},{7},{6},{4},{13},{2},{2},{9},{5},{14},{16},{11},{60},{14},{5},{6},{9},{6},{10},{10},{6},{16},{15},{15},{24},{26},{15},{15},{17},{13},{18},{18},{29},{13},{19},{18},{15},{17},{21},{14},{14},{11},{17},{16},{13},{23},{1},{11},{10},{20},{8},{6},{15},{7},{9},{7},{18},{9},{9},{9},{6},{10},{18},{5},{11},{7},{7},{30},{43},{41},{3},{1},{4},{8},{7},{6},{7},{8},{17},{13},{6},{6},{11},{3},{8},{7},{4},{5},{1},{6},{7},{8},{14},{9},{7},{5},{9},{5},{6},{8},{7},{8},{8},{6},{8},{6},{10},{10},{11},{1},{2},{6},{11},{8},{8},{11},{22},{6},{12},{12},{5},{1},{6},{11},{6},{13},{10},{7},{5},{8},{10},{4},{1},{3},{11},{4},{9},{12},{4},{7},{12},{6},{5},{8},{4},{10},{5},{5},{1},{8},{8},{10},{5},{7},{7},{10},{19},{10},{4},{11},{8},{7},{4},{8},{3},{4},{14},{2},{11},{10},{4},{7},{7},{9},{3},{7},{6},{8},{11},{14},{12},{5},{1},{7},{2},{6},{10},{17},{13},{5},{6},{7},{7},{3},{1},{5},{4},{4},{10},{9},{6},{6},{7},{4},{4},{12},{10},{12},{19},{6},{3},{6},{11},{5},{10},{8},{10},{5},{16},{9},{8},{8},{5},{4},{9},{8},{9},{3},{4},{7},{3},{1},{3},{9},{5},{6},{1},{4},{8},{6},{8},{1},{474},{5},{319},{146},{157},{205},{2},{119},{25},{132},{275},{11},{11},{90},{175},{178},{7},{13},{9},{26},{2},{476},{102},{16}};
-    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (4323 bytes) */
-const char* const cstring = "BZh91AY&SYtf\017\363\000\004\323\177\377\377\377\377\377\377\377\377\377\277\377\377\377\377\377\377\377\300@@@@@@@@@@@@\000@\000`\021=\337d\036\3546\333kb\272\336\335\333Z\353[\273\227\257os\324\327k\263:\270N\333m\210f\335\335-wJ\266\207\200\035<\002Q\010Q\250h\236\324ji\246\215\251\355\023\305O\310\3216\323J~\204\332\231&\223Li\265'\214TmL\r\021\350\214jz\214\323D\364\324\364\217(\002I\010\r\006\2044Si\251\3520&\246i\031OP\375H\332\203@\365\036\246\217\325\r\006\200z\2001\r\000\032\000\000\tS\322d I\210h\243CA\265<\220\000\006\201\243\324\320\032\001\241\240\r\000\000\r\0004\000\321\240\221\020\210\322\004\3010)\264\3242z\217S\322h\036\246\200\032\000\r\006\206\2154\000\320\001\243C@\r\006\202\r10\t\200&\010\323L\000\t\200\023CC\023\000\000\000\000\214#\000\21512\030\002E\t\220\231\023LL\232&\304\232h\324\365O\324m(\363Di\036\221\350@4\032\003@\320\365\0322\003\324<\232\232\017P\320=G\374\221\213G$e\340C\320p\320D@\\\203\234\014\350}\277\277\360\0353\371?\263\374\255G?\245\315\251\020\314 d\253\023\343\371>o\235\350z\334\257w\233\211y\311\367\374\374\262\313,\262\313,\244\031\321\204\302b\355\243\315\346\002\010\250)DR\231r\354@T\024JtDPEM\021\217\376\006c\210I\264\333b\033I\215!\2610i\215\215\212\001+\256\271]\254\222\244\223\262\226.J9ms\017l\340\344\246\341f\303\351\330\2559\256v\022\003I[\201\357\225\024\276G\320>rb\323\2037b\200\2246\364\002\320\301\261\214m\003L\001\214M\211\266\306\305B\324\205DP\014\3434%>Z\252I@$\244\2733\024\220\306\322\201\020\260m\244\332M\215\211\273\003\262\254\235\004.\324\354e(H\2747\305\276pUo&\"a\320P\243+\331P\362\027bF\001\215\206\030\227\355)%sJl\202\355\265\205\\\027[=\226#\026\030a\231\232\324\240T\0054\323t\211\222\352\312\345z\257\007H\217\206\340\240^8\244R5\263\240\342;\220\315\270]p\352\024\310\030W)h\243\317bN\n%=:\306i\322\222\016\037k\367\n\0038\311$\222\016\201\000B\257\206\257\033\361\277x\034\216/\307\314\022&\310\22396\227=~S\301\010\263\322W\013\021[\210\274\023\031\371G[\255\016\372y?\277\272G\302f\232\375b""\362e\302\261/+\316N\330\310\205@\177^\345-\232\315\232'\2020\251\263\312\327\211\336\233\270\270\010\227\201\340\306\336\332\356\350\270\365\300\340-\030O\276$\0361\230\270\226\374\360&\273\333\0369TR\317\256\264\306\270,\246\232\214sAK\340\311\t\024Z\226k\306_\016\210\345\234\261\214i\021\022\326\333\017\337\231\307\307\231\263\372\360\035\241\217\305\325\023<%5\335\357[\313d\016\244\270\315A\223\200\304e\320\336\274\021<s(i\322\216Rz\353\243\027\234]5i\306\354\237\247g\007\344}\242\216\266-\006f{\367\001nD4(\006eI\226\311p\266vt\317\252\200\327\255)\236\t[\245\320\373EZ\207\n\327\337\003l\2276\017?\347\002\325<\001fe\203\034\306\3046\263\340\246)_l:}\316\347k\243\267\016\311\336^\273\0313\323;\257\006\016s\203\251\224e\023t\343I\010y\227\207w\306\213\302\236\227\205tx\264\354\325e|\3419m\241\360x\215^q\002\252\335\346Z\031\205\246V\332[\227U\334h/f\\\234x\222C\366\010\034\360H\214m\274\212\343,\255\201\016\244\205\243\3138\212i\342a\320\321\023B\301\2232\264\350e\264\201\027\373b\272\215\021\366|3\025N\240gy7\313\361\236\034\333\3725\236\341\315\275\311]{\302\353\275\257R\277G\374cGO,\231.\3714i\313\002\0037\010\023CI?W_f\251}\036O\007\223\305\237\034\275\326\034\315\334\341\320(\262\240\255\333=\027$jM\252w\033\007\226\374y+^\372b\2312\002\201\002\2577\313\361b\177?y{\255)>85\240\016$\036\177\"\337\034\225!\207\026XA\023iG)\321\227w\336V\226J\331.\024\007\233\177\341\322\356\332\314B\2320\231\016\227\222\025\001P\025S\177\351\235\314\364t\241\177\277\275m\n\214p\244i\373\365l\303\326\366\361\203\362\365|=6\253JW\275\007\034\033W\177\003\014 \006\027\3644\233\365\314\003\230J\260\252/J\225O/01+!\250y*=*j\245\300\241\357\337\177\231\344@\343\232=\302Q*\004f|\017\257\302\322ayQ\027\237\363\352A\261\032\373]\035\037\206\201\026\022\231DS\216Sd]]\210\230\371u\362.\037\203\310D\245\237\221c\307\262\216\005\306\240\375l^\233\346k\213\217\n\374M\n\231\306\351u\241\250.\013\215\\\361[X\210\313*\302\317\352\343\324\352\277\313\016\330\231\025z\362\350\335\354fY\2037\312""\202\353\365\3700\203,\r`\372\303A Q`I\350\210\225 f\360l\tJ*[O\252PI\252\312\212\375\244\330\3160\006$\215\344\025#\245az(\022\322\004\005\272\241\353\345[\207\037\224\n\347\260h24\257N\232C\217\333\337\216\205Yb`\254\035\324\267\n\245\374\266\237\302\277\020\007\302\224\226\000m^;\340\267E\245d\017l)v~nC\264\025@`\254: \007\200\r\201\n\232\307\326\366\360H\233\215>\004\347\\2a\332B\271\023n=\250\275F\333{k\001\203\317\353Q\241\211\221\214\006?\317Ln\"\025\241s4g\336>(\035KH\014D?\266\023LP\037F\276n@\355r\341U\032\340\037\022C\221\315\031C~\006\323\325\305xN^[\024Y\254p\3411\032\320\311\3067HERH\3052\000\231 8\373\260\363\261\372\272\204xFg\316\320\017\005blGHR\"Z\210<\304\302\233\312}\245\2533\007%\344^Z\213\017<'\010\204\3423A\332.B\255\221\342D\327\264\233\250\255ZS1\013hc\026\350j\300\244\003H\010f\251\"e:\233\347y\020\031\235u\244p\361+\nx\0134\310\313#\246\"\210\030\000\345\315\253\014P\373\247u\247\265\302G\256\350\221N\376j\342\\\006c!\333\312\262\345\351\177=\377C\320\313r}C|\t\200\306\2759$e\200\306\261#\210\335,\310\020l\r\2245\2274\002\221N\034\205\021\335P\215\205\001`\rv\271\215D\305\027 \200\026\216\302\354\004\345\314mmo\352\325\004\212.G[\236V\323\327\360eT\272A2H.2\261m\335\315\351j\340IT\2751\307au\t\334\317S\005\247?\300\342!wx\3078/\005Ye\322XGn\332\203\006\214\356\252=N\301\000m\360)\303\244d\240S\266\314QC\252\345\353\224\\\034\201\253\013\361\255Zs\357\370\305\")\277b8\252\250\212\345\017{\326s\322g5\335,I\026IH\023\370\235q\346\023`\304\017\002<X\216m\225Z\261\315\234\322\201c,tNTFo-R\222zS\023\021r|\356\275\363\331\207\255\2064\212\202\226r\"a<\30593J\210b\352gb\331\337;\257\362O\205\271]\356\373\035\006\256\t\035\006L\325\243\014[Y\211\235\024\351)\307\3461\021\233\262\231e.\226\346\344n\277I\274\3271\242\303\335\227\250\314\243\002l\005\214\261\016\2015RU\222\341\272g\227.\346\342b\010\252\240\032\234\006!T\331\236\022\230O\240\036\236\034\313<\240\"l\025\215D/\001\223D/w\026@D\311\332\212H\304B\222!2\301z\3313\n\225X\027\256\337]1u""\305\330\347\357\310\220\035\310\020\370c\025f\202\216\034!\250\206\316\322b|\2342i\303<\316\031\240\216\253K[\203`\245\361l\240\276\256]\210\2039T\375\251A3w\010[\311\0341=c\177\035H\035\320gZv\340\342<\360\331\372\325\222X*\020\022\226\325\364\201$\204\220\321MC\277\231C\000X\2435\341\247\247\273[\216\355\253\330\245\030.+\204q\267\352\203:\226\023\263i\254\327x\316\002\314V\032V' \243\025&=tQ\226\355v\345\300\335\265V\306\252\014\203\2530\307\276\\M.\256WH\333\002\006\343i\347Jy\352c\326n\322Q\214js\232`\301\262\343\231\372i\243\272\267\3578\222pL\340/\326\206\230\263P\315\266Br\306\311\330\327\254\224\232\352=9\212g?\356\206\362\tF \033I\215]\000\\\305\256\322D\331\3358o_6e\252_\030V\243`\310j\216\351Y\236\267\221C!^p\3668\270JN,\330\253\320\346-#\373\244\323+\261\030X\033j\2169-efh\276|\032Hh\317\257q\225\361\247j6kn\310D\036X\007\331a`\344\354\314\266\245\024lwm\3165\304\342z\234\241E\031[:\331\256U\025\032\273\221\225\312M\"\250\022\330\330g|\355b}\226T\226`\326\321uC\251\344\260\224Nlw\t\0218o\264\264\304)\231\334\031u\331F\307\266\202\202'\200Y3\230\2360J:+\313\0135\306r\206\265\262f\341ds\034\316O\007\216,t\363\323\345}\315\362\354Ba\222\003/\025\307?\312\243\010\030\235\016\344\317.\033\352\242\236\334\341\223&#Y\246\t\032\223\023st\007GDrE\355\330tSWc\337\010\267\033\r\233\341T\267ab'\235IK\271\240\363\360{\323;\211\362M{L\206\317\266\367<\372\326\220A\202\200\346\001\266\3474^\257(m\354\334\310\033\214-L\263\221K\254\031\003\210\234B, \035X\334\347\035{f\245\201\335\255\202(\255\202\317\227\004v\257l\234[\266\025\305\351\2457\n\342i_7e\25124\221\005\372\214y#F\2051\361L\262I\233<\247d\274\314wEZh\033>\000v7%@\303\334\264\023^\303Ke\013\237,\265_O\0246\206\362F\355v\350\327X\022\301\322Q\301$@\2000c\014\215\233\037\035!\212\370;\336Z\225i&\206\033\260\004\030\306@\3268\303{\247\017CL\340F[\207\257\230\251;<-\021Q\236pr\255\352\207\262\t\230j\202q\362\21126O\273\\\257\235\\\317\277]\231\n\267\327\263\330\262/\037\373\202\333-\224b0\002\246\345\275\301""\253\331\334\354\326p\345,6\310\262\0231\347\343\253F\314g \306\230\314\350A\027BO\036\250\360\300\210\260\231s\310\343w\0212\312\335b+Mj\020\334\300\233!\220\340\303\026\303\"r\214lP`\321\023\2152H1'\211\2620d\271\223\2043\035\212\2535\030\357\241\027\362\234\206\234\363\253S\266|\"5N\331\027b\221\026G\001\004JUH\300\034\355Q\230\302\027\337\305\250>\261\005)\212\210\332\210\247\200{-7G\272\340\240\340\245y\246\253+\2312\3137t\233\234;|:\226\001cH\014\010\03011\211\203C\033\006\324:\322$\254\025FO:\3002\032\275[\026\014\275\252D\320\211B\"-\200(\rv>\224\305\331\327s\306~\303c\242\370\261\301\2358n^\204%\t\255\342\336\213\2416\331 Q\327\2019\261\356\231\231\232m\257\2715\257\255\004\311\205\010\321\201N4e\345\232\356~\377\244\231'\001\261#\305\336\324\225Hl;\366Y\243F\261Z]\277\004:\227b2\230\333\023KF4\236\246S\211\034\364Z\352\337K\235\257\253\202\320\024X!Sf\355\341\325\301XR\220\320n\232!\242\207A\310q\361\213\022\221\320\265\364L\262\r,\306\022R\341\220\236LE\2648\267M8%\252\222W\007\236`87\323\036\335.]l\314Z2\272\002r{\260l\322P\355\006\321\265u\355\325\227\344\231\300\313\236\003,\364+t\323n\004\213\324\244\253Y\340\352g\2279SO,\317\247\320\246\360\270\255\331i\340\337*\370-\311\240h\3107X\351\256N1\310\357C\324\237\272\2739a\247;M\361q\211\242/s\257\030T\022b\257\005\n\204\332=\020\026\226\004RT\233\276\345!u\253\364\332\335\205UM\203>/Z\372\326\225\264\033\206\346\355\266l$j\347\263c-\207f\313;\312[Zo.\261\274\2522\207\274(\\N\324\204I\335\024k\203RP\003h\234#J\206\246\027\333\023\201\272\211\230\332\252\230koC\207\206#Z\374\316N\3313$\250\334]\006m\\\204\352\332\214\206\\6\032c\323\024\250:*m$zU\"\336\325\022Zi/\204\030$\3278e\020\230\223=\312\334\355\025w\323\024T\201)\312\010\232ti\333\206-%z\260.\274\261l\214u\027\325s\340\\\013\252\224>N\0337\375\030\227\204\222\304$\244\311u#9\361\224&e\222\3115c\316\361\262\250\360\036\035U\035\375X\350\320r\025\313\235fb\3302\326\271\233z`\034\014\003\366\350\344}|\"6#B\200\312\356\204I8J\360H\247\006\274\2319\326+""\004Y\001b\270\277\206hS'\003\226L\341\315\022:\254\356\347\317_+I\303\226\226\004\014\310uU\017.d-\224_\303\n8\317!\010\204\367\262\255:\033\360\032\201\337\244\r\244\356\333\213\212\230=4\031x*\200/*.gF\r\340w-\013&sNq`V\314\331\263\334\211\377%![\336\346\227\233\237\273\367n{\363\3568s\233&\347?w\366m6\330\220\333K\023\374\022\362\2203\242\242\023\033p\300xs\322\205\321\031\014A\0073l:+\2104>\2046\307\034\350%~\214:\356z\200P\317\233D\250\023,\2436>\301\365\034H\371\035(\027\332A\304\210\\\306~\317\250\036\327I}T\207$\310\317\343\271\351\233\362sc\207\305*Q\322i\023\036\322\214\375\3401\375\237\246\300\363\221QE\330\325GODs\230\367Q7w\225\n\023\367X{\272\354s[\256\304e\232?\322-\024\311\024\2424U+\357e.N\346S\007\220\244\021\034'\022}\316\006\277Y\020\356\250.fh\254\221\202\204\222\2306/\305\316\342\342\365\351\027O\354*\207\211@yP\201\032\345\201\317\2529b\251\024>\321\210\3069\030%\350\343\201\\\361\261\021\257\260TF\nE\306F\017\247\340\312\316\300\257\2021\261\235c\320l\334\327c\010M\326\253s\274\337\3403w=\032\256.\032\315\035&\367\372{\215B\321\2266\376\035\261\025d\216\303,!k\340\353KM\343\201F\260r\335\216\350\222H\324\303u\226\356]\373\023\010T\n\314\031g=Pu\326Hx\257m\337\\\344\357\347\350z\340\375m\243\225E,\347-\225\226\243W5m\265\205\245\221o\330\343\226\n\343\243\355\255\356\235\201\336k\003\\\267\372ulV\276\264\343\216\256\264dr@\330\243\355\316\212\256\2340\255J\221\020\345\345\346\214\247\231\354\016\306Sh\0243k\350\316\237x\310\356\317l\314\217\265I\272\033S1\255\223\027\027\241g\241\277!\326\347\351aC\345\247+\016Y\301.],:\023\255\023f\315\035%\265\307\217f\377N\2571\346\247y\375\271\013\333VY@\373'\336[O\273\327\343\261.P\303\274i6'\222\016Q\216\360\r\243\365\276K\245?\234j\333\267\364\023\017\207x)5=\341\276\033\201\301\247\362\031\205[\272\251\252iV\333.tN\316\316\237\237\027g\317\321Jn\351N\341r4\232\205\005\310kG\314\007\314f6\007J\314ta\023\235\222W3\2743\204\343\260r\223.\021\267\341\362\251!\256D\022\253\244\330^\364dM\030\rJ\214R\"\371""\205\022\264\r\031\342&\212\265s\337w&\033\261\264\342\366\204b\327`651\252z\017\352<\327\266\352\326\347;Y\030\264\r;N\320c35N\rw\272\207\215k\313{8\334\361\275a\314\321:;\334\007G\276\370J\243+gV\234\313\360\301\352\252\236\245\177\361w$S\205\t\007F`\3770";
-    PyObject *data = __Pyx_DecompressString(cstring, 4323, 2);
+    const struct { const unsigned int length: 10; } index[] = {{0},{50},{44},{17},{58},{242},{243},{174},{743},{88},{62},{19},{25},{41},{9},{73},{72},{73},{19},{81},{33},{31},{30},{69},{52},{172},{46},{48},{51},{55},{307},{72},{57},{23},{21},{5},{19},{13},{78},{4},{179},{24},{23},{25},{24},{15},{10},{140},{122},{76},{117},{124},{76},{90},{319},{334},{72},{39},{144},{14},{25},{41},{12},{13},{60},{20},{17},{1},{1},{8},{31},{92},{4},{18},{7},{6},{4},{13},{2},{2},{9},{5},{14},{16},{11},{60},{14},{5},{6},{7},{9},{6},{10},{10},{6},{16},{15},{15},{24},{26},{15},{15},{17},{14},{13},{18},{18},{29},{13},{19},{18},{15},{17},{21},{14},{14},{17},{11},{17},{16},{13},{23},{1},{11},{10},{20},{8},{6},{6},{15},{7},{9},{7},{18},{9},{9},{9},{6},{10},{5},{18},{5},{11},{7},{7},{7},{30},{43},{41},{3},{1},{4},{8},{7},{6},{7},{8},{17},{13},{6},{6},{11},{3},{8},{7},{4},{5},{1},{6},{7},{8},{14},{9},{7},{5},{9},{5},{6},{8},{7},{8},{8},{6},{8},{6},{10},{10},{11},{1},{2},{6},{11},{8},{8},{11},{22},{6},{12},{12},{5},{1},{6},{11},{6},{13},{10},{7},{5},{8},{10},{4},{1},{3},{11},{4},{9},{12},{4},{7},{12},{6},{5},{8},{4},{10},{5},{5},{1},{8},{8},{10},{5},{7},{7},{10},{19},{10},{4},{11},{8},{7},{4},{8},{3},{4},{14},{2},{11},{10},{4},{7},{7},{9},{3},{7},{6},{8},{11},{14},{12},{5},{1},{7},{2},{6},{10},{17},{13},{5},{6},{7},{10},{7},{14},{3},{1},{5},{4},{4},{10},{9},{6},{6},{7},{4},{4},{12},{10},{12},{19},{6},{3},{6},{11},{5},{10},{8},{10},{5},{16},{9},{8},{8},{5},{4},{9},{9},{8},{9},{3},{4},{7},{3},{1},{3},{9},{5},{6},{1},{4},{8},{6},{8},{1},{474},{5},{319},{146},{157},{205},{2},{119},{25},{132},{275},{11},{11},{90},{101},{175},{195},{7},{13},{9},{26},{2},{92},{476},{102},{16}};
+    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (4553 bytes) */
+const char* const cstring = "BZh91AY&SY\"f\331m\000\005Q\177\377\377\377\377\377\377\377\377\377\277\377\377\377\377\377\377\377\300@@@@@@@@@@@@\000@\000`\022=\337jOTT\017{\214\366\325w\231.\232\354\322\347q\324\366\263&\331\005J\333c4IJ\252I^\343\330\001\351\200J!\023S)\203I\201G\206\200dh\0230\236\244\375L\232\023S\312mO\021<\n=OPyOS\305\r\r\251\230I\243\324\364\236I\240I\020M\0012h\023A\244\323Si6\211\251\350\214\214 \030\206M\014\2324\0324\0004\001\240hhh\000\032\236\202\0212\247\224h\000\r\003\324\000\032\007\250\006\206\2314\000\321\240i\246\232h\000\000\000\001\240\022\024@$H<\247\352\215\352z\243\324hi\352\006\201\211\221\240\000\031\000\r\007\250\320\003F\200\332F\200\036\240\323D\032b`\023\000L\021\246\230\000\023\000&\206\206&\000\000\000\001\030F\001\032bd0\004\211\023\"\032\004\323ML#j\236\214\322C4\325<\223\364\"m\023ji\243A\241\246\215\000\311\350\203@h\0006\246\200h\350$a\221\256\346\256Dz\3164\210\307\010\027 \332\006}\274\337\343\371\r\305\375\037\261\222\356\030~NL\203\272  !2u\301\345s\360\260\3611r2j\024\216\217s\241]u\327]u\337z\014\250\306c2t#\342\370\220B,\n\325\025\256\215\032\320\213\002\251R\242\242\n*TX\364\001\230\310\223i\266\3046\223\032C`0i\215\215\212\020\225kU]\344\004\344K\246\225\313\322G\325k\331=\263V)\365\3126\037^\236M\266{n\354J\213q\233\303\027e\017\300\212\375\325M\2778\343\246*G\247S\247\340+\301)\257\240\026\206\r\214cb\033\032\030\201\246&\323i\266\306\305R\324\222\252*\006\350\315\344*v,\261\010\200\232\232\350\240\246\2066\202\t\005\303m&\322llM\334\005\313\241`\255\240\007\300\252\306)R\"^\034\005\300\354IY\335\304\230y%EL\251\323!\241\232\273@\255\030\3321\311^eS\003\023J\214\205\337k\032\274/\305C\026$m1\214ff\275(\225\201JS\014I%\345\347\202\320\254\311\361-\361\360\t\205\204FD\345\223+\017:s,\210\330]q7c\221a\003\271\254\324\234\264'\nE|\026\246n\364\200GW\355\376\301@\316R5\330$$w\204 \2356W\367:\275\236\362\"\303\217\305\330\024\325[r(u\326e\317o\214\367\"L\363W\301x\263\0276L^\355F~\021\225\265hwl)\355\373\2769l\177Q\266\245\371\317%\203""\333\331\212\236K6\334Ul\";\314\017\347\273S\021\216\3313L\246x\245\0266\274m~\327z\276\"\014B$R\360<Y\033\332^f\371\224\363\300\340\2350\243\035\026\222\200\306\341t\256\306\334\211a\374\010\016\025\224hYbctVr\225Zv\210\235\222/fa\230\233ll,\035\277\023i\227\264{I\313\252\234I\314p\321\270=\337s\321\257\334\327\3751\337(<?gP\230\375%\\\367{6wks\302\217h\340\031\363\032\nj\334\315\317\010\037\266eF\375\350\356\223\262\315\024\323\021\373=\3735\347\242\270k\342\343\374\312\370\334+\2672\300\031\232\020\346\003\014\324u(\206\322\242\005#\203\364\353\327\234;\322\rUNx\310T\350\3125i+\256/C\246\311W*T>\262\307\2660\376\371\336^\252\265\026kW\3474\326\354\004b\245\245\\\025\316\255\220\313\314\274\271\364(\262qM4\225\024|\211\"\322x\377\234\210\345h\373\013\253\026\t\002\010e\205 \r\367\021\351\204#\323\277\241\360cxe\0131\002\"\272\300\275\323\215>Q2\354\021\355-\r\213o-\367\227\355wq\361\344b\033g'[9\225\017\350\220s\302\024\245\202\362A\310]j`GZij\361\320\220\250\274\020\262\261t4L\263\244\261h\322\260\235\014\245e\"!B\364\366~\233\026\306+=\177~\321Xwb\200\317D\363\231\331\350y\344\333J\267\2768\313\013\231\265P\\\211\224\266\025 \213\266J\030\013d\345\035\242>\205\305\213\006\nZ\014\037AD\006\331\354X\335\244z\3759s\264\350\332\\W\346I\230\263d\334X\211\340T\200Y\013mI\210\205\232;\355\206\202\206\247\227U\213\322\232V\226\220P\205\237\367\225\267\272|m\013\346iU\351\215j\003\252\203\265\312\036h\344XCF\3110\202%I#\326se~W\320\323\212\312%t\300\207^\253\257\252\232\245r\t\031\n\323\365\261.zX\370\017\200\375eU\307\234\212\326\005\202\002\267\243\203\005K\r\021YW\365\353\342\307\037=\277II\275\036\307s\232\365yj\360\004\032za\332\314f\3155\262\250I\256\232\265\353\353xA\212\210\221\n\250\251\225\221G\232\310,\342B\221\307G\211\371\023\0256\303\263\360x\351\246\321\036\315\344\375_T\302\260\315G\206\017\257\325i0\306XNq\253\361\353A\304\213\275\320\271s\032@)\203\023\021!\t[F\211\014\\\304\"\240\361h*\206\226\373{\000\240\014oVY\301\021\231\3047\327\247\256\334\234""\202\361\235R\266IRc\035\376\334\014\003`h\r\006\311\332\271\031Z2\323`]\356\271\351\371?3nNJ}\002tY\354\3358\373\375\376.\305\2606y\320\271\271\270\362\t\227%\302\017`\320M\nM\004\376\030\335\230\005\204\014\346\016\240\004\220XWN\265\004\216\006X+x\223c;@\213\220\271\204X\216\032\313\320T\021\334\003\213\215?\241\255m:\277\250\024\2370\310Y\260\027\246\245\003\265\374{\032u+\013\223\005\200\376\307\226\271\305b\376\234\307\271o\220\010\363\362\311i\003\225|L]o\026\362\320\250\375\300\214Z\271\274\225\320\213\"p%q\335\204\037d\017 \"\215f\353\370\260\024[y22[l\230\271\036\224\"(\253v^\334]&\350=\351\214\315\305~6\366&\035\235\375\342\005\365\313'\013f\213R]\226\203V\371\334\021\307\200\201\244C\370q\233\323\022>\225\275\216\270tyZ\362*&\036\246R\021\263\016Y\353\314K|\373\031\327l\344\344\304\030[\305\004#\003\203\024\204\324\032p\320\221(\241a1\304\230\210\216\257\204\375y|\216\000\275\241\215\273XHkh&\304p\014\356\233M\"\312Id\311\262+#\303\350\361\023_i=\014~f\370l\004\255\213\202\372\375\313@9!0\021^\361dZ\021uk0\020\322\002\010\206\270\014\352\010(\021\264\007ci\211%5/\247\350\211\035;\217V\324.n\225y_!~\314\215Z\217\022\324\255A\244\007]\356| \206\362\317\213\360_\245\207\323\002\036\006\242\025<\355\224\201x\033\r\013\275\266\266\366\372\236\307O\233\233F$\371\016\000(\"P\241y\362\005\242\0065\221\034f\351^i;0\035\227\250\350.i\005\005 \352*\267\205`\270\212\202\340\033\r\3226\022*\300DD^=y\026Z4\207\262\006\335\276n\315\236\264\322*n\367\203J\257\017\033\235U7\344\r\3046\034X\014\227\027u\371<\234\372\2704\261,\013\302A\276\273\311G,\226\375\002\264\231R\370\306x\257\255ic\253\361>\031R,\254\262\n\302\257R\356\3568G\306\303\324\007\250R\323X\003\236B\235\336\023\031\002~\213/E\r7/\224\306pV\rZ\017\304\261\230\326\350\371\007\336y\375\010\007\257L\210yV\355KIW,-\013\246&\241\0012L\000 \342\227\246\310X\201@\re\244=\007\177\225R\233*\217b\030\221\t\232\006\212h'|}eD\224\022$H\265\324&\370\302w_\365r\323ATQ\235\026\231NE3f\306\250\351z)\261|\3417\321\350O+""\363\303\314\337\326l\343\304\3533f\260Yim\332\3333l\002\225\354+\317\324b\003\034Q\231\202\276\246\254\224\215R\307\223z\217}\256cvg\275?\0134\214E\030\205\234\271\016\250\032\274\202\301e\257\t@\301u\360$E\025\326\201\212d1\032\345\271y\005#=A\004\361\351Z\247\002(\302\346\003a \275u\232 \250\243\033\274\301\002*S\n+3)\025\231\0240\010\325\243H\253e\3101\256\377i1v\205\333\347\364\346\246\007{\t\271J+ZE\\q\014$l\340QJN>Y\263\307\347\267\2755\221\261\263\223t\3024y\332\027\313\273\320\207c\272\247\353\305\323\024\342\300\037\271\014 |\223\223)\010y\2436m\307\245\315\327\023~\027\363)\203o\014\262\302\254\274Ig\266\353\006\333\033d\262\272I\317\327\241\217\032m\220\331\207\000nnv,\251\340j\326\224\205\205ld\n]\256\354 \3152\202e\033L2\273FgX\312\331\n\322H)\005E\"eYM\333\252\255\313\217\252\2256\255\223\035\203\304-\273\316o(\322\366c\206'\034H\234\307!\327\214\347[\037Q\273\t\026\333mn\355 \311\263\351\2245\322\256\352\347\347:\240n2\002\234n\3033\013*L\342d'!\215\222\340\337,\2219t\250\374\275Rs\2133\377\270\231\331A\010\300!\264\230\325a\005X\270\030\nT\035e\213\005\262(\313j`\263\rjL\243%\305j\335\362\267bYi\250]\036&\316\267\207T\252c5s9\224,,\210\3772\203;Wq\204\007\270\335\007\225Pf\222Sj;\316\310p\232\036X\347Y}\222\337\226Wp\267tH\036\210\016v\213\2077v\332\3139#[\305\265I[#\252\372\216qWe\366\345{u\276\243\212J\275i\337sP\212\260oF\210\234\336[Iv\357\242\306\0313[!\244\331\326F\007{+\204\210\035\027\330XhA4mgb\353\265\014\303iH\215B' \272n\305V\305+uW\236Wn\266eM{f\315\312\310\352:\235@ 9s\316t\364\241\203[\351\262\023\014$\031\373\354\016\337\316\253(\232qn\344<-\262\345\321]T\350\230f\311\213l5\305#bb]]\300\356w-\315\006\206\336\366\246\262\350\020\215\255\322\303m\204k\307\233+\2219\254V>\036\243\336e\010&~\3141M\241\244\206\333\321\007\201\354R\362B3+\010`6\335j\213\325\345L\372\364\355\006\226\006\004\313\271T\366\006DuI\362D\"\301\000\352\205\355T9\3638+\260|9\331\004\030J\212\327[\265\335\t\336\314\244\233\301\026\311\357V\273\205\212\346\005\262""\2565#\023I\020[\272\307\2124\314\236\r\2062JR\243\275\321#\345\340\307\205^h\036\255\360\214\370\300\250\311B\320Y\221\217\035\365.\336y\354\321N%\025\310\034\346'\025,\335\317D\021\267\225B\330\241\323\211\201\206\r\246\315o\216\261\222\370w\275\026+@\032\030yp\004\030\006@\303\004a\337\356G\255\234\351&\253\217Wx\325i\324\354k\212\343>z\302\367\215c/\214\305\201s\032aP\241\214\211#\212|\333\261\3215\203CF\353\263\021d)\330\364k\203e\376\235i,\214 0Acs\336\351\365=\215=\313O#Aq\234\223\"\206m\316uH\351\306d\030\023L\350\340)tI\343\273\036Y\022Z\0033\005\362\016v\230\024\245\220wZK%tE\033\244\023j28e\206\226Jj\030\261C&\211LA\224 \260O\006\311\223(\351C`f6\226+Z\230\337R_\350:\006{s\254S\306}\000\270N\310\227h\211\006!h\342\214e\022\320\3600T\313 {\357\351\340\036\240\3523\021R1\200\247h\307\2321\321ho\033{:vp\216\007\034\254\256d\314\027n\357\033\234[\\G\n\302,\340\203\010\206\014Li0hi\264\233\007\360\342EV)-]u\201\231\317\262\265n\257\036\250\033\221\027\200+\034\023\214\274_H\232\\7>\014yL\017\035\346\367\272\0271\311\272\232x/\0269FXt\366\021\204e\313\212\005o\024\262\030\337\007\22334\271T0M|,A\t'\023\332U\221My\320\325g\243VN^o94\240\r\324\2173\317\260\226\333,\223a\3502\255\026Y\026N\275\330!\322\205n1\261\266&\226\230\334{\272N\2629\352\265\331\300\007;\017\251\207\002\005&\201*\2727\336\035\274.\254(Q\367\034FoT\316oV$n\225\004\216\016\326I\247\036f\206\001\230\356\\\231w\t4S\222\263LF\355\231\351Km\014\261\017\001\220\341\215-\351\266\027\254\333/\032\3071B\224\031\236\342Jz\303Y\257\271m\315\321\227_)b2K6&\332\345T#\332q\"\212\t)J\034[\365\0256T\247nP\246\0365n\030\026>\255\234\235\214l\344\2776\211\2530\341s\313\004\346\234\316\374})\370\213\237<\265\355\262\363\261s\232MWA\337>R\020E\306fa\355\332\255OG}\002\265\202-n\3417mBAZY\366'>\364\224\216SS\321rq\316\013\240:\316\276\374\371\246\2228\363c\233\007\"\357~1\003s>\002\2673\225\324\207d\360\005\013\211[K\030\211\315\224\213\221\245\250\004\330\241k\354\211w\025\325\325+\036\0031\0011k\004\224\035""\227gWE\325\234t\306\277\007d\250\311e\255\311\3323-\350N\314\262\230\313\306\303v\\\"\235GU[\322-\357\264w'\207FA\262\263\031\344I\356e\006\320\343+\302fM\007S\335\202VbR\324V\220\224\030&\356\211\246\251\223Y\204\031%z\254.\274\255tB\034\345\362\271\270.\013\225(\364q\335\301\313\"\360\232FA\0016O\216T\247 \252P\3215\265Es\334y\206Y.\241\357\360\330vt\347\321\240\3430e\345[\206w\231\255A\261\232\323\021\000\300\207&\256\324,\345H\342F\244\343\024\271\340E\2367\211\"\256n|\314\374\013E`\253qh\270\277\242hS&\347V,\343\265\245\273.\357m\360\354\352l\\u\255\201\0032\036\353\211,m\013\245\\\234\023\211\304\266\205\000(O\263}%\243\242\003\244\036\200!\260\032\256\313\324H\265\266\240\302\325 \013\311\0270\376E\274`\327-\313=\246\375\242\255#\276J\225\310\323\336\347\001\036\224\327|9f\364L\343o\n\261[\\\324\231\3117\261U\025UDA[K\007\370\245\306@\315\245\"cn1\017/\221(\266\323#A\032\023\\\215\350m\206\370h|\2626\3076\242\242\375Z6~5\001Fr\365\313\000\245\031Vi\346\017\236\345\007\304\347AsHo\244\\\206~\357\236\034\236r\373+\035\nP\021\367\271\370\033\205\035T\273\266\0341egV^\301\t\361q\246\366\371\261\303\264\014\0108\370Pih\216s\036\320N\257j\241\205/\251\207\263Q\216kw\330\214\315\303\377\021p\322h\246\030\321T\314\366\342,\336\214F\017\"b\204\363\270\357M\347\003_\205\004\340P\027\037\304+)0R\222\213\035\203g\361\271\335\375\376\275Sh\354\367\205\020\341Q\007\325\002\004k\226\007FTr\320\237Bw\260b1\216F\t\271\0141\225\317\034T\r\376\"z0R\204\204`\372r31\320x\352\2066\023L\375\016m\215\3660\234u\265[\233\313\376\200\316\274\344j\270\3306\232:\237\363\360?\203\347*\030\343wd\347\210\242\323\206&D\205Os\252.K\307j\215`\345\333\207lJt\332\222]I\275;~t\254\025\002\026\014\315\316T\035\266\312G\016\347>\352\304\237e<\376\210\337\275Dr\250\246u,\325\244\276\025\032\271+Q\254*-5\335\212\254\314\210\234\301\350|\313\271\227\020\357\306!\256]\330r\374\031\233\253\225\0144v\241!\247\031\264!\363K\241GZt\345\237>\201;\037\037$fV?Pyq\033\204ax\274~L\031|\033\245\373%\267Z\366""\374\336S\007FW\355z\315\002\365e]S\272\354\3165-\365\253'seG\223`v\330XcI\303\227P\301\301\301\035N\256<\213\353YY\365_i\355\333\302\177\2163&}2\215\251\236\321\275\370\001\215\373\277O\3171%\306\031\273\006\332\351)\031\022\312^\274\003f\352>XcK\2666\263\363\345\027\207\273\2001F\207\364\035\201\322\035\272\366\2469Csi6\217\232\023\234&l`\032\274\272\376\211\\\276\214\004\311t\214\036\347#L\0040\226\371\255\037 |\273cc:>\311\236\303\252\315Q\t\240\253:0\n\3736\021Q@#7\201\215\021\004\240\273\"B\022rBX\245\244\204)\026\002FA\004]\351P\"L\334#\332wR$\222\265M\030n\233I\253\322\216EIE\200\225HU\"\321\r\210\312r\030\316\177\346I\221R8E\232\315\305J2\222\032)[\231g\325\335Z\213\231Q\217Z\264m\3100\262\353\026k\000\r\035\353X\204\202\031\345L\325M\371Ab\252\232dMJ4\341/\370\273\222)\302\204\201\0236\313h";
+    PyObject *data = __Pyx_DecompressString(cstring, 4553, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (4207 bytes) */
-const char* const cstring = "x\332\345Y\315[\333\306\326\217\311\027\311%7P\2346\355\275m\207\346\003h\3007N\311\027I\232G\330\206\270\330\006\177\000I\223T\025\326\030+\310\222-\311\030\247\267\275Yf\251\245\226Zj\351%K\226Yj\351\245\377\204\374\t\367\234\221l\313\020\222\364\366\366}\337\347y\375`i43\2329\037\277\3379g\014\227*$r\244\300-\244\022d{G7T\215\022.\036'\261\225\324Z:C\350nU\322\250\316\013\006\211s\205D!\231Np\262F\005\261I$\205\010EC\332\241\304{\253!\031e\"\211T1\244\242 \223\035A\256\323\205\304R2C\n9.\223\347b\205\344J&\226K\3002$\231\211'\036\223\344\"\311\254\024H\342q2_\310\303\253\273\274P\027%\203\337\246M\262\222!\336\203\254nMA\307\364Y\022\370\370\313xb\017.#h\3052\n55\360\002~$\021\366-$\226@\337\325\\2\315\345\236\220\345\304\023\302\255\025V\222(X:\221)\314\034z\013\205)$\036\277c\204ix\304\230HejP1h7\022O,rk\251\002\211\255\345r\260\025\217\235\371\002\227^\035x\273\257\350Gk\334\265\323\377\262\316\206T\241\272!T\252\177\276\312]\244N\035)zP\335\337\247\306; \377{\244\315%\227\320\332\203\362\032\332\026\277\275\303\013\022\341\026\221o\311L>\221+ \310\273\2320\246\034\222\305\237\007.\\!%C\347\375\331S\232\332\220\304\031Tv\306\323e\232\254s\251\265D\236L)\264\021\361\207\261\311\246`\303\233vo`\213D&~\357\367+!\372J\304\023\251\004L\376\217\225\010\264g\310\221\032MMz\\\232\234!\252,vU\303&\233\213\215\377\236ju_\265\265Ut\375\377Q\325\376\247\201\341[n=\231+\254q\251w\3621 \002Y\313'3K\330ss\252/\306\014)\252\212\001\271\341\301\244?or:\246\326e\221(\252A\324*U\210(\030\302\246\240\323y\3624\236\210\345\236\254b\276 \213\\2\225\210\317\223\244RT5\215\026\rR\021t\203j\250\342s\037\201\213\271\225t/\356o<J\344\022d\352E]\226\004E\024\232S\223\212\332\230\234&\263\244\337\325\217\316\323\323\344{\022\275\031\\\250\253\207\267P \032$\363L\345\314Z*E\270L<8t\037\245\247\030\000\375\355\216^\020\003\324\003\362\360\275\023\036<\214{\022\022\220\227T\324\035h\031j?\265quC\235\255R\255\"(`R\271\331M7D(\241i\2427A\234\246>\3754\221avD\373\255j\352\016$g\"\004\354\207k""\356H\264A\214\262\244{~z~\366(\224\3656\017`k`r\0364\212\025\002\320\033Tn`\356\037\262\355\331\217\025\257\007\375\2073\344\341\364\300\354~\312\374\250\371Gp\273Od\265\n\002J/\001\325\335\320\236#\271\304j\212\213%\274\025z\031+\310\211\276\226\203{\007\266\377\210u\016\312]\251\252\232AJ\222L\031\271Jj]\021\221@0\031\312\201B!\005]\000\035c\236L.\003\010\330\245((8w\223\022Z\251\032M\354\352\275\233\351!O$;T\323%U\361\006p\035\017;\010\246\251\214j\000y9\337\021\320[\255k[\207@\231Q\025\2123\341Epn\254i\224a9\230\014\020\2266\251\006\256\006<\353\206&\025\361-\230\244\220\325\304\352\354\334\2359F\006\215\276\200 \240\023\275\276Y\224\005]\247:QKd\263.\311\006\024\244F\263J\365\010I\226HS\255Ct\363xS\205y\301\027\2142\204\033\235\032\330 \223Ls\301\000\255xx]R\266&\211(a\244A-\340\355EA\326id5\307-\2459\260S\261Ly\035<\375`\366\326\334\365\353\327\375\376\027j]S\004\231\257\250\"}\260\301\245\374n\275\251\024\313\232\252\250u\375Af%\227\356\r\030`f\236y\362A:\221^\001\226j\264*\200_\251\246\251\332<\311Q6\010~{\027\307\242\037\244\226\037e\006\207\220XS\007H\207\204\003\214\005z\277?\310\267#\n\036_\226\330\312Z\2460\365\355\364\007E\372C;\373\233\r\346\266\231@\311\351\345\200\036\255\275-\001\356\337\203\021Vrq\310\351\013O\360\231\313\307\216\210Z\177\256\002\1770T\3767\214\367Q\206\353\331*P\315'\362\261\031\264\0356~\317Z\203P\374\320\312\207j\234\356V\236U\"\357w\021~~\2003\315@)\322\257\337\274\312\007\344\010\014\373}\207\226\361\304\016\256\223\346\n\261G\007\331\324cTw\271w\273\350\035\243\357qU\367\3233\226&(\333\207FS\311t\262@\036\016\364\177\204\371fz\017\037\002\335\377{k\372\306\013\330i\260\276<\004\352\340\201\037\300\354/\032=\274\316;\253\301#\367\016\326\0103\003Q\340PY4M\004\035\022)\357\315\021\007\226\374\310t\321\217\030\331\224d\364\222Q\036r^E \353X?\260DI\022\003\003\225\272\316J\007\201\2546E\001\177\377!\013P\310\247!\027\312\204%\335\274A\253\335\325\326\224m\220W\361\036'#dM\247\220\234K%i\227\352\363D\237!\225\031R\236!\020\351""\0333$=C\240\262\240\221\255\310\014\211^\207\221\0330\024\205\261hzz\235\031\265_\271`eq\345\311\354\225\312\354\025\221\\y4\177%=\177%\037y(\210\"\257`\301\201\345C\031l\264I!\375\037,\252#E\255Y5\324-M\250\226\233\004J\021M\320\232X\227h\264VG{\262b\207*l\032\230\000\212\014\005\202\230,\023\311\360~\372\232\254JU\"\371\235\301\325&#\221\242\276\363\323\3243\361\332\364\324S\275R\026\033\351\346\363\351\313\242\244\013\2332\010\343]\213\363\223\276\263\241d2\310Vq\026*+oP\214\274\320a\313\355fQ\226\320\277P\337\361\354\341\037pE:T\233\273\277A\033\217P\021qS\247r)\302\213\233\001\333\300\351\013J7\303W\031\374\304\312.u\023\213)\246YU*n\313P\374\334\307\322K\331\322\241\236)\322\357\353Fi\366\016\227\310/\305\322=\217\306V\322\000\3558\324g9*\210TK.Ae\223\210q\371\3042\023\306\273Fx\036\216&T\343\371\376\363.\344\205\376\24348\nj\327\213\224/2\311\002\375P\247\201I\215\303#\"eF\356>\372\256\351>B1\245S\3360d\277\303\343\247\377\340\233\020\315\345\367lQ\203\007s\003?\232\201\036\250\311d\251\350\325\206`\027*T\372\203@\231\201\007^\300b\317\357\222*\0077\220aq\230\245w\037UA\364\352?\277\243{\200\340%E\244\273~g\025\253m\275\253\223F\203/\350\302N\2609\260=\353\200\303aWB\235\"\312\273\0170\217/ij\305W)\275\242\201\027\251\210\036]]X\216/\336x\224\346b<\277\332\334\205/\366\362\031\272\013\316.\345VR\251\005.\266\234\177\304\335\270y\253\037\016X4\0206\365\252\000\345\272\274\245j@\207\n\223GR\375[\004\266V\353P\242C\360\342\205\206\200H\330\2745\007>\004HA\003\274\207\r\300\330\255\271~\215\r\010W\320\"\274\241\tE\030-n\027eU\207wd\031\353sU\321\213j\245\n\007\235\"(\002\340\016\262.R\026^\302!'R\325\300\256X\313\353\357\037\215\024\245j\031\354\035\021\000\325\037\230\272-\226\"\325M\270\336\000b\213\350\345n,\0267y\264\202\247\227\217\320.R\375\033$\t\360d]6\364~\007\304z?\201P\r\317YT\207;\330\367%\205\243\010\374\361\212P\301&\273\325+U\374\352\3243\232\017\374.\001\2727\2217\300k=\026\302M\223`Y\2705\251R\257\260\223\026\013\301t\267\310\033\233\354\n\247'""\274\2034\300U\335\340\325mv\207x\300\356z\227\303\300\037HAp\205\220Z\007Q\373i)\300\254RI,\211\370\313\016\236Dy\357\310\211M\264\017\317\227\352\200B>@\273w\363\315\343V\220a\354%/\"\360[\200\251j\031bz\231\352\001\312!\205\024\203\207\\\330C]?/J\272(m\201\037\341\004\246w\203\020^\331\256:\306\331m\330\013\267\003A\241_A\326\342\227W\025\271\311\242n\304\213\272\220\330\014\374\362\222(\2038\320`)[\246\312\226Q\226\021,]\322#\333\373\214\307\026t5\250V\341\201\245\000o\270n\243{u\357\267\031\374\007\010\030\253Xf\027\252W\266u</\342\331R\346\321\365^k\307# \345Qh\036\217\236u04\217\231\r\277\274\241\202\327E\236a\007\256\264\201lR\000\024\212Z\204c\365\026\2054\214\376\031\014=\252\016\357j\r\3400@\251\037F\321k\276A\374\250T\225At\304XU\255\302\037\032\264\252QH\343U\277\010\340yHK\274\357*l\356\030\230\314x\370\324\352\202\354\211U\253S\255\251iB\003\325\321\250\306RJ/\033\360\207\362B\257\203\356b\023\200\2511m\375\340\3503\013jQ]G\261u\001\236 \032\366Cd/6\352\254x\361B#\306\024E\3241q\352\314f\220u|\273AK\244%\001V\r\344\"\376\035yI/\003\322d\275&cw]Gq\204-\212j1\311\330\205\301\023\220]\362\316@\230i\275\t\232T=\030\227\331O\004hvl0\016\361\014d\274Q\006\365p\001\026p\250\214?^T\350K\250~\300\3430\010&\004\315\353\212d\324\241\336\025\325J\335(\356\300.]\274\210\014\246\354\2427\032\202\246\340\027s>:\335s=\205\035\232\356\211\033\255\211\366\360\005\363\251}\312\336tN9\302\333\341cg\276\264\342.\271\336\n\265\306\340\351\257\347_\013o\317\036;3\362:\332\036\371\324\334\262\262\326\246\035\262\307\332#\027\314\r\213\263rV\315\016\265G>\267\306\341a\303\346\354\234]sN;\215\226\320\322\366\306\366.\355m\354\377\360Fx{\352\330\271\321\327\265\366\350E\353$\254P\266\325V\326\275\305\273\374\317\235\321\260\231\266\307\354\211\366h\330\r_\265\005w\362\211\373\344G\367\307\347\356\363\237\372}\2517\334\233l\273?\3673\263\346\255\251\231\343f\334\n\341\320\222u\037\366\016\341\240a\335\266'\354h\007$\026\255kv\326\026\332#\237\230\023\355\221\363(\304X;\374\205u""\331*\201\264\331\0164'p\2511\363\264YC\351\332#\243\320\374\247\035\2659\234\257\233\023\346\234\331\264\207\354\313\260\n\333\346\016\214%\234\261\316\310\270\031\205W\317\214\233\227\335OAL\033e\372\353\371\366\360\231\366H\330\\0\313\226`\375\352,8B\373\374\230\t\026\203\351\235a\024cx\344\365\222\031\305\325\353\260\\\324\2121#\216\022\373\204\275\354\324Z\307[\321\026\327\036\205\351\355\360\205\366\305\257a\3648l\271\350\\vJ-\256\225\355\004\272&:\341\277\371+\234\262\205\316\360\371\327\277X\263v\315=\373]+\352\236\230rBoG\320ys\240\367\310\271\316\360W\226\320\036\376\013\372\362\013k\n5\262w\235\235V\256\325\334\017\355_|\023~\363\324}\014\346\007\307\224\335\262\344J/:\250\313\250y\016\234&t\240q\322|b1+\304\314\035\360\375\016\030\020\344\2343k\355\360g\346K\360\315\2443\326\276\210\212<rb\260\362\323\375\020N\230gN/9\213\255\253{'\367\262\355\360\204\035\266\327\235\250\303u\2409\316\0341\372\225%\332\327\234\254#tzn\327]\335p\215\306\333c\307vC\211!\270%\206\026\207\372\250x\352>}\346>C\030\201\341\307.0[&\000\233A0\214\233\337\231\002\000\342\256\275`\213\316D;|\321:m\355\302\330I'\333\351\252\326\006\273\375jq=U\031Z\334\023\337\330\023\035\260\326\034\200\340\212\251\003d\212\010|\300\224\373\305\267\316\204{\355\027\367\227\177vz\317 \336\314\017(\344\017C\313x[\036\312\340-3T\300[ah\035o\353C\317\360\366l\350\371Pg\030\224\350a\341K\306\236\254]t\306\300\317bkz/\272\027\333\253\355\237\334\317\277\t\275\031C\tk\356\211\253\356\325\333\356\355\245\375\332\333\260\317I\020\364\355'\307\316\215\263[\037\212u\207s6Z\\\307s6@\t<V\263\216[sV\003a\022D\341\337\255\270}\006v\275\204\266\357S\244\017+\321\271\212\321`\020iHAX/j-\002\037=\341\356\354\205\260e\300\242\303\343\346\rs\r 6a\337\260\327\234\251\326D+\212\300\2337s\300\245\220\375\205s\027\205\033y\235\262\206\355a'\344\204\235\037[\215=\001\27136n\336\266&@\322:\200h\t\336\003\037\336\003\266\306l\335\363\037\206\020|l\000T\302_Zy\3734s50y\032Yko8\034N;n\335\004\034\002E\332\027\277\262$\234""\342\214\303\010X\354\n\210\376\027;\332>?\212\352j\346\005\026\327d\347\033\334\016\2507r\356\025\367\212k3\327#o\332\001\026`\343\270y\323:k_Exu\241(\272\"ui\311-\311\256\\u\253\265\203 \205pVt\213[\356V\271\375^\320\005\266\375\334\032\003\310\t^<\252u\007\272\322\342t\367\223Kv\324\275\374`/\273\307V\253\341\224;\346]\010\305\3316\360!k\276\000\343\036wn\267.\267(\340\211k\237\273\200\004\266j\375Q\320\001\203\367r7tzN}\004\346\2559gZ\341\326\006\274\005~Z\206\201PW\006\035C)\206'\346\321\254Yb\254\033\361\250V\353\014{\331\240`\177j\327z\332\370\323o\232\303\020\255\373SG\315!\363\252\025r?\207\204\02308\010\242\003\006\242\355\361p{\364S\0204\344N\334\335\033\353\014_d\342%pi\220w\030\301\260\216N\357\260\265\3211\247\255Z;\360`\000\000\263\177R\007X\374\025\263N\312:e\t\257\030\240\323\3405\360\"&\322\263\003\2409c\215y\261\262\316ls\001\363\305A\374`\324\355|\000\037\035\310\327y\330o\023i\210\351\247\233\257\335\350\257\356\257\277\271\277\375\253\023\260yg\2300z\0149\023\316@\262r'sn.\357\346\013\036f\346\314\006\340B\203\010~\311\316;\314Cl\3729O!P\322\035\201\344\341~\355a\371g\367g\241\337\207\313\270\205\rw\343q\273k\001_x4\317\221\342zK\375\324\036\020\367\263\236 \023\007\222\217;\n\361\330\275\264\346\256\255\273\353X$\364\373\026\367\205\375\332@\242\032\201\240\006e\312\241\"!\216\370\260C\035\017\217G\020\320\367+\206\262{\310\226W\241\366\211\263\257\257\231Y\367\304\254\223E\327\216\2766\334qF>\310Ou\267\276\363\032\322\305d\027\356\006\240[\264.!2q\315o\031\037a\344\026\310\301\365z\006\0359\334O\323m?cn\001\306\302\335\\\n\031\366\357V\322~\332\n\201N\027.\366\223\355e;\356\014\273\327\343\373\334~\026S\357\031\347o\030\302\306\335qL/]\362\334\337\343\366\262h\376\021\306\3302\004\320E\010\353'[Y\0144a\237D~\035\307&\022@\371=Gp\200\244\230!\020D\307\235\373\255\032\242\353.f\023\337ac\356\3307\366\264\363\235\033\211\355G\377X\205\301\3520\337\245\252\253B\034\325!W\032!\016S&7\2640\324\3678\202\315}\214\261\265\023$Y\300\355\377aAwD)\3605F""\225O\016\026z\000\024\210\010\230[Y\3059\210\344@\025\330D\376yix\001\220q\005R[\014R\264\227mz\305\241\367\353\337\016;\211\340\261\346\337\002\t\251\201";
-    PyObject *data = __Pyx_DecompressString(cstring, 4207, 1);
+    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (4464 bytes) */
+const char* const cstring = "x\332\345Y\313{\323\326\266\307\001\212\341\204CLBK{N\333\235\362H\\\022_L\303+@\371\024\333\til'~$\201\006\252*\326v,\"[\266$\3071=\355e\310PC\r5\324\320\303\0143d\250\241\207\376\023\370\023\316Z[\262-\347\001\364\264\275\367~\337\315\207\245\255\275\267\366^\217\337\372\255\265\005\227\314'\262$\317\315%\023d{G\323\025\225\022.\036'\261\345\344j*M\350nUR\251\306\013:\211s\371D~1\225\340d\225\nb\223H\025\"\024ti\207\022\367\255\206\244\227\210$\322\212.\025\004\231\354\010r\235\316%\026\026\323$\237\345\3229.\226_\\N\307\262\tX\206,\246\343\211\247dq\236\244\227\363$\361t1\227\317\301\253\273\274P\027%\235\337\246M\262\234&\356\203\254lMBG\370\034\361\375y\313\270b\017.#\250\205\022\n59\360\002\376I\"\354\233O,\200\276+\331\305\024\227}F\226\022\317\010\267\232_^D\301R\211t~\352\320[(L>\361\364\210\021\246\3411c\"\225\251NE\277\335H<1\317\255&\363$\266\232\315\302V<v\346\362\\je\340\355\276\242\037\255q\327N\377\313:\353R\231j\272P\256\376\365*w\221:y\254\350~u\177\237\032G@\376\367H\233]\\@k\017\312\253\253[\374\366\016/H\204\233\307x[L\347\022\331<\202\274\253\t\213\224C\262x\363\300\205\313\244\250k\2747{RU\032\2228\205\312N\271\272\204\311\032\227\\M\344\310d\2056\"\33606\331\024l\270\323\036\014l\221H\307\037\374~%DO\211x\"\231\200\311\377\261\022\276\366\0249V\243\311\t7\226&\246\210\"\213]\325\260\311\346b\343\317S\255\356\251\266\272\202\256\377?\252\332\37740<\313\255-f\363\253\\\362\310x\364\211@Vs\213\351\005\354\271=\331\027c\212\024\224\212\016\271\341\321\2047o\"\034S\312U\314 J\005\006\313U\264\304,\311A\027%*-\310\002\320\211H\204\212\010\371E\220))I\370^\223T\353\352\026\025#\276\267\213\202$Sq\226\304\224\272,\222\212\242\023\245J+D\024taS\320`\321\215x\"\226}\266\202\t\210\314s\213\311D|\226,V\n\212\n\373\350\244,h:U\321f/6\\L\307_x\330\236\317.\247z\031e\375I\"\233 \223/\353\262\004R\t\315\311\211\212\322\230\010\223i\322\357\352\363~8L\276'\321\333\177\322B\217\007\326\351\021\376\307\254\324\243\345\303\013y\2568\242\313[\331\307\205\2139""\346\360\364j2I\270t\334?\364\020MMq\037o\377\343\027Dz~t\244\020\375\t\217\036\307=\317\001\016\330\230Ht\005Q\240S\202\254\354\232\206A\243\254\354\270\243\275\264\317\325ue\272J\325\262P\001\270\311\315n*&B\021\275\034\275\r\3026\265\360F\"\315 \201PXQ\225\035(\\\210\340\203\002\256\271#\321\006\321\001w.\206_\234;.\002{\233\373\342n`r\016\364\215\345}a9\250\372\300\334?d\371s\037+^\217\026\036O\221\307\341\201\331\375r\342O\232\217\222\207?\202*\373\274\250TA'\351\025\235\010\277\227\371ze\300qv\177\217\355{b\037z\301u\000\253\234\216(0|K\246\270\247\223\222\030>\030\224G\276\342.\332/\221\036B\024\034=s!\273\274\272B\346\236\241\304\207&\204\031\002\\5|\2708\n\231\313Y\222M\254$\271X\342XcM\371\2604\350a\237\223?b\235\203\350(W\025U'E`e\306\306E\245^\021\221qa2\2305\237OB\027\004\250>K&\226 \324\330\245 Tp\356&%\264\\\325\233\330\325{7\335\213o\221\354PUc\244\217\003\270\216\033\241\030\262\223i\005S\010\347\301\035z\335\\q \364\323J\205\342Lx\021B(\326\324K\260\034L\006\242\2206\251\n\001\005\254\241\351\252T\300\267`R\205\254$V\246g\356\3150\312Q\351K\310\032\032\321\352\233\220\2444\215jD)\222\315\272$\353p$\322\233U\252E\310b\2214\225:\344W\227\235\2520\317\377\202^\202\374\244Q\035\033d\202i.`*\343\341u\251\2625AD\tS\023j\001o\317\013\262F#+Yn!\305\201\235\n%\312k\020\034\217\246\357\314\334\274y\323\353\177\251\324\325\212 \363eE\244\217\326\271\244\327\2555+\205\222\252T\224\272\366(\275\234M\365\006t03\317<\371(\225H-\003\027\252\264*\200_\251\252*\352,\311z\324;K\216b\262\350\007\t\314c\372\301!\004\357\344\001jCZ\003\214\371z\277?\310j\307\224\334\236,\261\345\325t~\362\333\360\007E\372C;{\233\rVWS\276\210>25\003\334!\347\302.q\250*!\246\341\231\313\305\216\311\r\177\255\002\1770!\375\031\306\373(\303\365l\345;O&r\261)\264\0356~\317Z\203P\374\320\312\307\246\016\327*\221\367\273\010\377~\200S\365@1\334?A\270\2657\310\341\033\366\372\216\311@\376uR\\>\366\344\250\214\301\"\252\273\334\321.:b\364=\256\352\376\365\214\245\n\225\355C\243\311\305\324b\236<""\036\350\377\010\363M\365\036>\004\272\377\367\326\364\214\347\257X\006\216\017\207@\355\377\344\004`\366\026\215\036^\347\310\212\374\330\275\3755\302\324\000\013\034*>\303D\320 \221\362\356\034q`\311\217L\027}\306\310$%\275\227\214r\220\363\312\002Y\303\372\201%J\222\030\030(\3275V:\010d\245)\n\370\005\222\314\301\371!\005\271P&,\351\346tZ\355\256\266Z\331\006y+\356\343D\204\254\302IC\253\027\213\322.\325f\2116E\312S\2444E\200\351\033S$5E\240\262\240\221\255\310\024\211\336\204\221[0\024\205\261h*\274\306\214\332\257\\\260\262\270\366l\372Zy\372\232H\256=\231\275\226\232\275\226\213<\026D\221\257`\301\201\345C\tl\264I!\375\037<\272D\nj\263\252+[\252P-5\t\224\"\252\000\247]\250KTZ\253\243=Y\261C+l\032\230\000\212\214\n\236\214e\"\351\356\307\327\211\252T%\222\327\351_m\"\022)h;?M>\027o\204'7\264rIl\244\232/\302WEI\0236e\020\306\275\026f'<g\213x\316\332*LCe\345\016\212\221\227\032l\271\335,\310\022\372\027\352;\236=\374\027\\1\034\252\315\335\337\240\215g\356\210\270\251Q\271\030\341\305M\237m\340\374\017\245\233\356\251\014~be\227\262\211\305\024\323\254*\025\266e(~\036b\351U\331\322\240\236)\320\357\353zq\372\036\227\310-\304R\\\232K>\3731\321sll9\005\010\217C\231\226\245\202H\325\305\005(p\0221.\227Xb2\271\327\010\317\3039\220\252<\337\177\336\205\364\320\177\224\006GA\373z\201\362\005&\240\257\037\3125v\004=4\"Rf\353\356\243\347\241\356#\324T\032\345u]\366:\n\356w\013\357\311\rZ\357\301\263+\332\320\353\331\242:\357}\367\360\365@\241&K\005\267`\004cQ\241\334\037\2048\032x\340\005\254\000\275.\251|p\003\031\026\207YZ\367Q\021D\267(\364:\272\0071^\252\210t\327\353\254b\t\256uU\360\316\350\203O\274\256x\035\232\260C}\315\001yX\007\034\324\273\"k\024c\241\373\000\363\370\242\252\224=\035S\313*8\231\212\350\360\225\271\245\370\374\255').\306\363+\315]\370a/\237\246\273\200\205bv9\231\234\343bK\271'\334\255\333w\326\270\330\352j\252O\035\2149\204M\255*@i/o)*\204N\231I%)\336\r\234\244*u(\347\201\350x\241! \\6\357\314\200\243\001w\320\000\027c\003\200xg\246_\217\027d""\024\037 \214\326\342uU(\300\224\302vAV4xQ\226)\373Z\245y\000\300\033\034\220\n\240\032\004\205?Z#%\341\025\034\216\"U\025L\217g\000\355\375\243\221\202T-\201K\"\002\204\301\007\246n\213\305Hu\023\256\267\200\020D\004B\227\303\305M\036-\342\352\350A\272\013m\357\006\311\005\334[\227u\255\337\0019\302K<T\305\363\031\325\340\016\266~E\341\010\003\377\370\212P\306&\273\325\313U\374i\3245\240\027)\335\210\351\336D^\007?\366\302\026n\252\004\313\302\255I+\3652;\2411\352\246\273\005^\337dW8u\341\035\244\201\340\326t^\331fw\340\021v\327\272A\017!\006\251\013\256@\305u\020\265\237\316|\301W,\212E\021?!\342\t\226w\217\252\330D\373\360|\261\016\270\344}\221ytH\272\341\347\017B\366\222K!\374\026\340\253Z\202\\P\242\232/*1\312*:\0179\264\207\300~>\2254Q\332\002?\302\311M\353\262\026^\331\256\032\362\3636\354\205\333\201\240\320_\301\300\306\037\257T\344&c\353\210\313\326\220\020u\374\361\222(\2038\320`\251^\246\225-\275$#X\272\274\200\204\320'\005lAW\203\252e\036\342\026P\016\327mt\257\346~9\303\377\272\003c\025J\354B\265\362\266\206\347L<\223\312<\272\336m\355\270\301Hy\024\232\307#k\035\014\315cF\304\037\220\007x]\344\031v\340J\033\030T\025\000EE)\300q|\213B\372F\377\014\262\223\242\301\273j\003\342\031\240\324\347]\364\232g\020\217\270\2522\210\216\030\253*U\370\207\006\255\252\024\322\177\325+\036x\036\322\031\357\271\n\233;:&A\036\376juAv\305\252\325\251\332TU\241\201\352\250Te9\250\227>\370C\211\244\327Aw\261\t\300T\231\266\036c\366\211\323\2131\225\342\367r\004\024~\265\200\332V\323P\035M\2001\340\315>\231\366XTc\305\220K\242H9\025Q\303D\2541[B\372\362\354\t-\221\026\005\330\303\227\324\370#\022\234V\002\004\312ZM\306\356\272\206\362\t[\024\325e\242\272\362\"l\001\361E\367L\205\231\333\235\240J\325\203\014\316>9\240;\260\301b\213g\340\343\365\022\250\207\0130\"\2422~\014\361Nh\330x\005e\025@\002f\201\215\301\004\365\212\244\327\241\220\026\225r]/\354\300v]@\211\014\307\354\2425\032\202Z\301\037\026\023\210\n\027\033\024\266j:\247n\265\306\333\301K\306\206\365\211\265i""\177b\013\357\202'\316~i\306\035r\263\025h\205\340\351\357\027\336\010\357\316\2358;\374&\332\036\376\324\33023\346\246\025\260B\355\341K\306\272\311\231Y\263f\005\332\303\237\233\243\360\260nqV\326\252\331g\354FKh\251{\241\275+{\353\373?\274\025\336}r\342\374\310\233Z{\344\262y\032V(YJ+\343\334\341\035\376\347\316\310\230\221\262B\326x{d\314\031\273n\t\316\3043\347\331\217\316\217/\234\027?\365\373\222o\271\267\231v\177\356gF\315]S5F\215\270\031\300\241\005\363!\354\035\300A\335\274k\215[\321\016H,\2327\254\214%\264\207/\032\343\355\341\013(D\250=\366\205y\325,\202\264\231\0164\307q\251\220q\306\250\241t\355\341\021h\376\313\212Z\034\316\327\214qc\306hZC\326UX\205ms\017\306\022v\2503<jD\341\325\263\243\306U\347S\020\323B\231\376~\241\035<\333\036\0363\346\214\222)\230\277\332s\266\320\276\0202\300b0\275\023D1\202\303o\026\214(\256^\207\345\242f\214\031q\204X\247\254%\273\326:\331\212\266\270\366\010Lo\217]j_\376\032FO\302\226\363\366U\273\330\342Z\231\216\257k\2743\366\017o\205O,\241\023\274\360\346\027s\332\2529\347\276kE\235S\223v\340\3350:o\006\364\036>\337\t~e\n\355\340\337\320\227_\230\223\250\221\265k\357\264\262\255\346~`\377\362\333\261\267\033\316S0?8\246\344\224$Gz\331A]F\214\363\3404\241\003\215\323\3063\223Y!f\354\200\357w\300\200 \347\214Qk\217}f\274\002\337L\330\241\366eT\344\211\035\203\2257\366\0038a\2269\275h\317\267\256\357\235\336\313\264\307\306\2551k\315\216\332\\\007\232\243\314\021#_\231\242u\303\316\330B\247\347v\315\321tGo\274;qb7\220\030\202[bh~\250\217\212\rg\343\271\363\034a\004\206\017]b\266L\0006\375`\0305\2763\004\000\304}k\316\022\355\361\366\330e\363\214\271\013c\247\355L\247\253Z\033\354\366\253\311\365TehqN}c\215w\300Z3\000\202k\206\006\220) \360\001S\316\027\337\332\343\316\215_\234_\376\325\351=\203xS?\240\220?\014-\341mi(\215\267\364P\036o\371\2415\274\255\r=\307\333\363\241\027C\235 (\321\303\302\227,z2V\301\016\201\237\305Vx/\272\027\333\253\355\237\336\317\275\r\274\r\241\2045\347\324u\347\372]\347\356\302~\355\335\230\027""\223 \350\273\213'\316\217\262[\037\212u\233\263\327[\\\307u6@\t<V3O\2323f\003a\342G\341?\315\270u\026v\275\202\266\357\207H\037V\242}\035\331`\020i\030\202\260^\324\234\207xt\205\273\267\027\300\226\016\213\006G\215[\306*@l\334\272e\255\332\223\255\361V\024\2017kd!\226\002\326\027\366}\024n\370M\322\014ZA;`\217\331?\266\032{\002\306Nh\324\270k\216\203\244u\000\321\002\274\007>|\000\321\032\2634\327\177H!\370\330\000\250\214}i\346\2543\314\325\020\311a\214Zk\335\346p\332I\3636\340\020B\244}\371+S\302)\366(\214\200\305\256\201\350\177\263\242\355\013#\250\256j\\b\274&\333\337\340v\020z\303\347_s\257\2716s=\306M\333\027\005\3308i\3346\317Y\327\021^](\212\216H\035Zt\212\262#W\235j\355 H\201\316\nNa\313\331*\265\337\013:\337\266\237\233!\200\234\340\362Q\255;\320\225\026\247;\027\257XQ\347\352\243\275\314\036[\255\206S\356\031\367\201\2123m\210\207\214\361\022\214{\322\276\333\272\332\242\200'\256}\376\022\006\260Y\353\217\202\016H\336K]\352t\235\372\004\314[\263\317\266\306Z\353\360\026\370i\t\006\002]\0314\244R\244'\346\321\214QdQ7\354\206Z\255\023t\263A\336\372\324\252\365\264\361\246\3376\202\300\326\375\251#\306\220q\335\0148\237C\302\361\031\034\004\321\000\003\321\366\350X{\344S\0204\340\214\337\337\013u\202\227\231x\t\\\032\344\r\"\030\326\320\351\035\2666:\346\214Yk\373\036t\000`\346/\352\000\213\277f\326I\232\237\230\302k\006\350\024x\r\274\210\211\364\334\000h\316\232!\227+\353\3146\2270_\034\304\017\262n\347\003\370\300l\334_\331M]n3\330\245\201\363!g\004\270\313\272\r\220\017u\006\247\236\001\342\006\342\033uF\277cX?z\223\016\024\0059Pj\023c\035s\\\267(p\242\277:\277\376\346\374\366\337\035\237c;A\302bp\310\036\267\0072\2423\221u\2629'\227w\2019c4\000|*\244\211+V\316f0`\323\317\273V\003K:\303\220\241\234\257\335\200\371\331\371Y\350\367\3412N~\335Y\177\332\356\232\331\023\036}p\254\270\356R?\265\007\304\375\254'\310\370\201\014\307\014\347\\YuV\327\2345\254D\372}P\224`,\367;\346\367\205\375\332@z\034\006*\205\342\350Pi\022GTZ\201\216\033\005\307\204\275""\207&$\320\007\030\243\257\003\355S\347\336\33402\316\251i;\203\200\032y\243;\243,\344!+\326\235\372\316\033HRa;\304 \321\227\013\371\307\251\251\314\337^\227\342(\330\353C\213On\277P\027\215)4\366\014\326\031\316\251\211n\000\353\020\257\242y\005c\r\347|\313\030\006F\356\200\216\\\257g\0205\301~\341\321\366j\200-\210\232\261nu\0005\303?\315Ek\243\025\000\261.]\356\227\017W\255\270\035tn\306\367\271\375\014\026\023g\355\177 )\003d1av\351\340\341\036\267\227A_\0173\016*AJ\230\207Du\272\225A\352\034\363h\301\253L\331D\002q\373\300\026l\240\035\314y\210\330\223\366\303V\r\241|\037\363\243\207\216\220\023\372\306\n\333\3379\221\330~\364\217\325L\207}\240A\366\327\003\034\026\001\334\320\334P\337k\210l\347\251\207\260\276\217|\220\372\017K\324c\212\233\257\221'/\036,]\001\204\300qX-\260\032z0l|um\023\203\335-,\346\000\031\327 Y\307\240\350p\363g\257\334u?\224\356\260C\026\236\330\376\r4E\315\210";
+    PyObject *data = __Pyx_DecompressString(cstring, 4464, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (10170 bytes) */
-const char* const bytes = "ALTER TABLE kvstore ADD COLUMN expires_at DATETIMEAlready in active store with identical valueBEGIN TRANSACTIONCREATE INDEX IF NOT EXISTS idx_audit_key ON audit_log(key)\n            CREATE TABLE IF NOT EXISTS archive (\n                id INTEGER PRIMARY KEY AUTOINCREMENT,\n                key TEXT,\n                value TEXT,\n                deleted_at DATETIME DEFAULT CURRENT_TIMESTAMP\n            )\n        \n            CREATE TABLE IF NOT EXISTS audit_log (\n                id INTEGER PRIMARY KEY AUTOINCREMENT,\n                key TEXT,\n                value TEXT,\n                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP\n            )\n        \n            CREATE TABLE IF NOT EXISTS kvstore (\n                key TEXT PRIMARY KEY,\n                value TEXT,\n                expires_at DATETIME\n            )\n        \n            CREATE TRIGGER IF NOT EXISTS trg_kv_ai AFTER INSERT ON kvstore BEGIN\n                INSERT INTO fts_kvstore(rowid, key, value) VALUES (new.rowid, new.key, new.value);\n            END;\n            CREATE TRIGGER IF NOT EXISTS trg_kv_ad AFTER DELETE ON kvstore BEGIN\n                INSERT INTO fts_kvstore(fts_kvstore, rowid, key, value) VALUES('delete', old.rowid, old.key, old.value);\n            END;\n            CREATE TRIGGER IF NOT EXISTS trg_kv_au AFTER UPDATE ON kvstore BEGIN\n                INSERT INTO fts_kvstore(fts_kvstore, rowid, key, value) VALUES('delete', old.rowid, old.key, old.value);\n                INSERT INTO fts_kvstore(rowid, key, value) VALUES (new.rowid, new.key, new.value);\n            END;\n        CREATE VIRTUAL TABLE IF NOT EXISTS fts_kvstore USING fts5(key, value, content='kvstore')Could not open database: [DECRYPTION FAILED: Incorrect master key]DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > 15DELETE FROM kvstore WHERE expires_at IS NOT NULL AND expires_at < datetime('now')DELETE FROM kvstore WHERE key = ?DELETE FROM kvstore WHERE key=?Deleted and moved to archi""ve (Auto-permanently deleted after 15 days)[ENCRYPTED: Provide a master key to view this value]\n            INSERT INTO archive (key, value)\n            SELECT key, value FROM kvstore \n            WHERE expires_at IS NOT NULL AND expires_at < datetime('now')\n        INSERT INTO archive (key, value) VALUES (?, ?)INSERT INTO audit_log (key, value) VALUES (?, ?)INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)Import file not found: Invalid TTL format: 'Key 'Key cannot be emptyKey not foundNo archived version found for this key (Note: Archive is purged after 15 days)NoneNote that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.PRAGMA cache_size=-64000PRAGMA journal_mode=WALPRAGMA synchronous=NORMALPRAGMA temp_store=MEMORYPrepare error: Restored: \n            SELECT 1 FROM kvstore \n            WHERE key = ? \n            AND (expires_at IS NULL OR expires_at > datetime('now'))\n        \n            SELECT COUNT(*) FROM kvstore \n            WHERE (expires_at IS NULL OR expires_at > datetime('now'))\n        SELECT id, key, value, timestamp FROM audit_log WHERE id > ? ORDER BY id ASC\n            SELECT key FROM kvstore \n            WHERE (expires_at IS NULL OR expires_at > datetime('now'))\n        \n            SELECT key, value FROM kvstore \n            WHERE (expires_at IS NULL OR expires_at > datetime('now'))\n        SELECT key, value, timestamp FROM audit_log ORDER BY timestamp DESC, id DESCSELECT key, value, timestamp FROM audit_log WHERE key = ? ORDER BY timestamp DESC, id DESC\n                SELECT kvstore.key FROM kvstore \n                JOIN fts_kvstore ON kvstore.rowid = fts_kvstore.rowid \n                WHERE fts_kvstore MATCH ? \n                AND (kvstore.expires_at IS NULL OR kvstore.exp""ires_at > datetime('now'))\n                ORDER BY rank\n                LIMIT ?\n            \n                SELECT kvstore.key, kvstore.value FROM kvstore \n                JOIN fts_kvstore ON kvstore.rowid = fts_kvstore.rowid \n                WHERE fts_kvstore MATCH ? \n                AND (kvstore.expires_at IS NULL OR kvstore.expires_at > datetime('now'))\n                ORDER BY rank\n                LIMIT ?\n            SELECT value FROM archive WHERE key = ? ORDER BY deleted_at DESC LIMIT 1SELECT value FROM kvstore WHERE key = ?\n            SELECT value, expires_at, (expires_at < datetime('now')) as is_expired\n            FROM kvstore \n            WHERE key = ?\n        SQLite error: Schema Validation Error: Schema must be a Pydantic BaseModel classStep error: Unknown error'. Use suffixes: s, m, h, d, w, M, y (e.g., 10m, 2h, 1d, 1M)Value cannot be None%Y-%m-%d %H:%M:%S.?add_note and has been moved to archive.cryptography library is required for encryption. Install it with 'pip install cryptography'..csv^(\\d+)([smhdwMy])$disableenableenc:' expired at gc-hisenabled.json.kycli_export_kycli/kycore.pyx~/kydata.dbself._db cannot be converted to a Python object for pickling<stringsource>utf-8AESGCMBaseModelCOMMITDictReaderIGNORECASEKycoreKycore.__enter__Kycore.__exit__Kycore.__iter__Kycore.__reduce_cython__Kycore.__setstate_cython__Kycore._decryptKycore._encryptKycore._parse_ttlKycore.deleteKycore.export_dataKycore.get_historyKycore.get_replication_streamKycore.getkeyKycore.getkey_asyncKycore.import_dataKycore.listkeysKycore.load_storeKycore.optimize_indexKycore.persistKycore.restoreKycore.saveKycore.save_asyncKycore.save_manyKycore.searchKycore.sync_from_streamMOrderedDictPBKDF2HMAC__Pyx_PyDict_NextRefROLLBACKSHA256ValidationErrorabspathalgorithmasyncioasyncio.coroutines__await__b64decodeb64encodebase64cache_sizecline_in_tracebackclosecollectionscompilecreatedcryptography.hazmat.primitivescryptography.hazmat.primitives.ciphers.aeadcryptography.hazmat.pri""mitives.kdf.pbkdf2csvddatadatetimedb_pathdecodedecrypt_decryptdecrypted_resultsdecrypted_valdeletederivedeserializedirdir_namedirnamedumpdumpseencodeencrypt_encryptencrypted_text__enter__entriesentryenumerateerrorexc_tbexc_typeexc_valexist_okexistingexists__exit__exp_atexpanduserexpires_atexport_dataffdfdopenfile_formatfilepath__func__get_historyget_replication_streamgetkeygetkey_async__getstate__grouphhashesimport_dataindent_is_coroutineis_expiredisdigititems__iter__iterationsjsonkkeykey_patternkeyskeys_onlykycli.kycorelastlast_idlatest_valuelengthlimitlistkeysloadload_storeloadslowerm__main__makedirsmaster_keymatchmatchesmkstempmodel_dumpmodel_validate_json__module__movemove_to_end__name__newlinenextnochangenowopenoptimize_indexosoverwritten_parse_ttlpathpatternpersistplaintextpoppopitemprefixpydantic__pyx_state__pyx_vtable____qualname__queryrraw_valrereader__reduce____reduce_cython____reduce_ex__regexremoverestoreresultsrowss_ttlsaltsavesave_asyncsave_manyschemasearchsecondsselfsend__set_name__setdefault__setstate____setstate_cython__shutilsqlstatusstorage_valstorestore_datastrftimestring_valstripsync_from_streamtemp_pathtempfile__test__throwtimetimedeltatimezoneto_threadttluniturandomutcvvalvalidatedvaluevalueswwarnwarningswriterwriterowy\320\0042\260!\330\010\025\220[\240\006\240b\250\006\250a\360\010\000\t\035\230D\320 0\260\001\260\021\360\010\000\016\017\210a\360\n\000\t\014\2101\330\014\026\220g\230Q\230b\240\001\240\021\330\014\025\220W\230A\230R\230q\240\001\330\014\031\230\023\230A\230W\240A\240R\240q\250\007\250w\260a\260r\270\021\270#\270W\300J\310a\360\006\000\r\020\210q\330\020\030\230\005\230Q\230h\240o\260Q\3206_\320_`\340\020\024\220M\240\021\240!\330\020\024\320\024&\240a\320'Y\320YZ\320Z]\320]^\330\020\024\320\024&\240a\320'L\310A\310Q\330\020\024\220M\240\021\240!\330\020\027\220q\360\006\000\r\020\210r\220\023\220D\230\001\330\020\024\220G\230<\240q\250\001\330\020\027\220t\2307\240!\2401\340\014\026\220d\230+\240Q\240a\330\014\022\220!\330""\014\017\210q\330\020\021\330\024\032\230$\230f\240A\240Q\340\024\032\230!\360\006\000\r\021\220\007\220q\230\005\230Q\330\014\020\220\007\220|\2401\240A\330\014\017\210s\220!\2204\220y\240\002\240$\240a\330\020\024\220G\2308\2401\240E\250\021\340\014\023\2201\360\006\000\t\023\220$\320\026&\240a\240q\360\006\000\016\017\330\010\t\330\014\024\220B\220h\230a\230}\250B\250a\330\017\021\220\021\330\014\023\2201\340\010\022\220!\330\010\014\210G\2201\330\014\017\210u\220G\2301\230C\230q\240\001\330\020 \240\004\240K\250q\260\003\2601\260A\330\020\023\2201\330\024\025\330\030\037\230q\240\003\2401\240F\250$\250f\260A\260Q\340\030\037\230q\240\003\2401\240F\250!\340\024\033\2301\230C\230q\240\006\240a\340\010\017\210{\230-\240q\320\n3\2601\320\004(\250\001\360\014\000\t\014\2104\210q\330\014\r\340\010\036\230a\330\010\013\2101\330\014\032\230(\240$\240a\240x\250v\260R\260y\300\001\300\030\310\024\310[\320XY\320Y_\320_h\320hi\320ij\340\010\t\330\014\020\220\r\230Q\230a\340\014\020\220\005\220Y\230a\330\020\024\220C\220v\230R\230v\240Q\340\020\023\2204\220q\330\024\027\220z\240\021\240'\250\021\330\030 \240\004\240H\250C\250v\260[\300\001\340\020\023\220:\230Q\230h\240f\250F\260&\270\005\270Q\330\024!\240\024\240V\2501\250A\340\024!\240\023\240A\240Q\340\020\036\230d\240+\250Q\250a\340\020\024\320\024&\240a\320's\320st\320tw\360\000\000x\001E\002\360\000\000E\002F\002\330\020\024\320\024&\240a\320'[\320[\\\320\\_\320_`\360\006\000\021\025\220G\2301\230E\240\021\330\020\024\220G\230<\240q\250\001\330\020\023\2203\220a\220t\2309\240B\240d\250!\330\024\030\230\007\230x\240q\250\005\250Q\340\014\020\220\r\230Q\230a\330\010\017\210}\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\320\004\"\240!\340\010\013\2104\210s\220%\220s\230$\230c\240\021\330\014\026\220d\320\032*\250!\320+{\320{|\340\014\026\220d\320\032*\250!\360\000\000,J\002\360\000\000J\002K\002\360\000\000K\002N\002\360\000\000N\002T\002\360\000\000T\002V\002\360\000\000V\002\\\002\360\000\000\\\002]\002\340\010&""\240a\330\010\014\210G\2201\330\014\035\230W\240A\240Q\240c\250\021\250$\250d\260)\2701\270C\270q\300\005\300S\310\001\310\021\330\010\017\210q\320\004&\320&7\3207G\300q\360\024\000\t\014\2101\330\014\022\220!\360\022\000\r\023\220!\360\022\000\t\023\220$\320\026&\240a\240u\250A\250W\260A\340\010\013\2101\330\014\023\2201\220C\220q\230\003\2304\230w\240a\340\010\022\220!\330\010\014\210G\2201\330\014\034\230D\240\t\250\021\250#\250Q\250a\330\014\017\210q\330\020\021\330\024\033\2301\230C\230q\240\006\240d\250&\260\001\260\021\340\024\033\2301\230C\230q\240\006\240a\340\020\027\220q\230\003\2301\230F\240!\330\010\017\210q\320\0048\270\001\330\010\017\210t\2201\330\010\023\2202\220U\230(\240!\2402\240U\250(\260!\2601\330\010\013\210:\220R\220y\240\001\240\032\2509\260A\340\010\014\210L\230\010\240\010\250\001\250\024\250Z\260w\270a\330\010\t\330\021\023\2207\230!\2304\230u\240H\250G\2601\330\020\023\220;\230f\240C\240s\250!\330\024\030\230\005\230Q\230f\240C\240w\250a\340\024\035\230S\240\007\240q\250\001\330\024\032\230)\2401\240A\240W\250A\330\024\030\230\003\2305\240\004\240F\250!\330\030\036\230i\240q\250\001\250\023\250A\330\014\022\220%\220q\230\013\2401\330\017\020\330\014\017\210r\220\025\220g\230Q\230l\250\"\250G\2601\260A\330\014\r\200A\200A\330\010\013\2104\210q\330\014\r\330\010\t\330\014\020\220\r\230Q\230a\330\014\020\220\003\2205\230\n\240&\250\001\330\020\024\320\024&\240a\320'd\320de\320ef\320fl\320lp\320pq\330\020\024\320\024&\240a\320'[\320[\\\320\\]\320]c\320cg\320gh\330\014\020\220\r\230Q\230a\330\010\017\210}\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\200A\330\010\013\2104\210q\330\014\031\230\021\230$\230a\330\014\020\220\007\220q\200A\330\010\013\2104\210r\220\025\220g\230Q\230a\330\014\022\320\022#\2401\320$=\270Q\270a\330\010\017\210q\330\010\013\2108\2209\230A\230Q\330\021\025\220Q\220j\240\010\250\003\2507\260$\260e\2701\270A\330\r\025\220Y\230a\230q\330\021\025\220Q\220j\240\010\250\001\330\020\031\230\023\230K\240q\250\001\330\020""\027\220q\230\003\2301\230H\240C\240q\250\t\260\024\260W\270A\330\010\014\210K\220q\230\001\200A\330\010\013\2104\210s\220!\330\014\023\2201\330\010\013\210:\220Q\220f\230E\240\021\330\014\023\2203\220a\220q\340\010\031\230\023\230A\230T\240\026\240q\330\010\013\2104\210q\330\014\023\2201\330\010\013\2105\220\010\230\001\330\014\023\2203\220a\220q\340\010\020\220\002\220&\230\001\320\0310\260\001\330\010\013\2104\210q\330\014\r\330\020\027\220s\230!\2301\330\023\024\330\020\026\220j\240\001\320!9\270\021\340\010\030\230\003\2301\230E\240\026\240q\250\001\330\010\030\230\005\230V\2401\240A\340\010\013\2105\220\003\2205\230\007\230q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\017\210q\200A\330\010\014\210L\230\006\230a\200A\340\010\014\210M\230\021\230!\200A\360\010\000\t\n\330\014\020\220\r\230Q\230a\330\014\020\220\t\230\021\340\020\023\2204\220u\230A\230T\240\025\240a\240q\330\020\024\320\024&\240a\320'd\320de\320eh\320hi\340\014\020\220\r\230Q\230a\330\010\017\210}\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\200A\340\010\025\220S\230\006\230b\240\006\240a\360\006\000\t\035\230D\320 0\260\001\3201}\320}~\320~\177\340\010\013\2104\210q\330\014\023\2201\340\010 \240\007\240q\250\002\250!\2501\360\006\000\t\023\220$\320\026&\240a\320'R\320RS\320ST\330\010\013\2108\2204\220w\230a\230r\240\021\240#\240S\250\001\330\014\023\2201\360\006\000\t\r\210M\230\021\230!\330\010\014\320\014\036\230a\320\037\\\320\\]\320]`\320`a\330\010\014\320\014\036\230a\320\037S\320ST\320TW\320WX\330\010\014\210M\230\021\230!\330\010\017\210}\230A\200A\330\010\025\220S\230\006\230b\240\006\240a\360\006\000\t\035\230D\320 0\260\001\3201\\\320\\]\320]^\330\010\013\2104\210q\330\014\023\2201\340\010\027\220w\230a""\230r\240\021\240!\340\010\t\330\014\020\220\r\230Q\230a\340\014\020\320\020\"\240!\320#U\320UV\320VY\320YZ\340\014\020\320\020\"\240!\320#F\300a\300q\330\014\020\220\r\230Q\230a\340\014\020\220\014\230D\240\001\240\021\360\006\000\r\020\210r\220\023\220D\230\001\330\020\024\220D\230\007\230q\240\001\340\014\023\2201\330\010\017\210}\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\200A\330\010\017\210q\200A\330\010\017\210t\220;\230a\230q\200\001\330\004\n\210+\220Q\320\004-\250Q\360\010\000\t\020\210t\320\023#\2401\320$t\320tu\320uv\210!\320\004'\240q\330\010\013\2104\210t\2203\220d\230#\230V\2401\330\014\022\220*\230A\230Q\330\010\013\2106\220\023\220A\330\014\022\220*\230A\230Q\340\010\025\220S\230\006\230b\240\006\240a\360\010\000\t\014\2104\210q\330\014\r\330\020\023\220:\230Q\230g\240Q\330\024 \240\004\240H\250C\250q\330\024\034\230I\240[\260\001\360\006\000\025\030\220z\240\021\240'\250\021\330\030$\240D\250\010\3200D\300A\300Q\330\030 \240\t\250\033\260A\330\014\023\320\023&\240a\330\020\026\220j\240\001\320!<\270A\270Q\360\006\000\t\014\210:\220Q\220h\230f\240F\250&\260\005\260Q\330\014\031\230\024\230V\2401\240A\340\014\031\230\023\230A\230Q\360\006\000\t \230t\240;\250a\250q\340\010\034\230D\240\007\240q\250\003\250<\260q\340\010\013\2109\220C\220q\330\014\023\2201\340\010\021\320\021\"\240)\2503\320.C\3001\340\010\036\230a\330\010\013\2101\330\014\032\230(\240$\240a\240x\250v\260R\260y\300\001\300\030\310\024\310[\320XY\320Y_\320_h\320hi\320ij\340\010\t\330\014\020\220\r\230Q\230a\360\006\000\r\021\320\020\"\240!\320#o\320op\320ps\360\000\000t\001A\002\360\000\000A\002B\002\340\014\020\320\020\"\240!\320#W\320WX\320X[\320[\\\340\014\020\220\r\230Q\230a\330\014\020\220\014\230D\240\001\240\021\360\006\000\r\021\220\007\220q\230\005\230Q\330\014\020\220\007\220|\2401\240A\330\014\017\210s\220!\2204\220y\240\002\240$\240a\330\020\024\220G\2308\2401\240E\250\021\340\014\023\2201\330\010\017\210}\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\320\004""\037\230q\330\010\022\220$\320\026&\240a\240q\360\006\000\016\017\330\010\017\210q\220\003\2201\220C\220t\2307\240!\330\010\013\2104\210q\330\014\023\2201\340\010\t\330\014\024\220B\220h\230a\230y\250\002\250!\330\014\023\2201\220B\220d\230%\230u\240C\240u\250G\2601\260A\330\017\021\220\021\330\014\023\2201kycli_vault_salt";
+    #else /* compression: none (11111 bytes) */
+const char* const bytes = "ALTER TABLE kvstore ADD COLUMN expires_at DATETIMEAlready in active store with identical valueBEGIN TRANSACTIONCREATE INDEX IF NOT EXISTS idx_audit_key ON audit_log(key)\n            CREATE TABLE IF NOT EXISTS archive (\n                id INTEGER PRIMARY KEY AUTOINCREMENT,\n                key TEXT,\n                value TEXT,\n                deleted_at DATETIME DEFAULT CURRENT_TIMESTAMP\n            )\n        \n            CREATE TABLE IF NOT EXISTS audit_log (\n                id INTEGER PRIMARY KEY AUTOINCREMENT,\n                key TEXT,\n                value TEXT,\n                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP\n            )\n        \n            CREATE TABLE IF NOT EXISTS kvstore (\n                key TEXT PRIMARY KEY,\n                value TEXT,\n                expires_at DATETIME\n            )\n        \n            CREATE TRIGGER IF NOT EXISTS trg_kv_ai AFTER INSERT ON kvstore BEGIN\n                INSERT INTO fts_kvstore(rowid, key, value) VALUES (new.rowid, new.key, new.value);\n            END;\n            CREATE TRIGGER IF NOT EXISTS trg_kv_ad AFTER DELETE ON kvstore BEGIN\n                INSERT INTO fts_kvstore(fts_kvstore, rowid, key, value) VALUES('delete', old.rowid, old.key, old.value);\n            END;\n            CREATE TRIGGER IF NOT EXISTS trg_kv_au AFTER UPDATE ON kvstore BEGIN\n                INSERT INTO fts_kvstore(fts_kvstore, rowid, key, value) VALUES('delete', old.rowid, old.key, old.value);\n                INSERT INTO fts_kvstore(rowid, key, value) VALUES (new.rowid, new.key, new.value);\n            END;\n        CREATE VIRTUAL TABLE IF NOT EXISTS fts_kvstore USING fts5(key, value, content='kvstore')Compaction complete: Space reclaimed and stale history purged.Compaction failed: Could not open database: [DECRYPTION FAILED: Incorrect master key][DELETED]DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > 15DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > ?DELETE FR""OM audit_log WHERE (julianday('now') - julianday(timestamp)) > ?DELETE FROM kvstoreDELETE FROM kvstore WHERE expires_at IS NOT NULL AND expires_at < datetime('now')DELETE FROM kvstore WHERE key = ?DELETE FROM kvstore WHERE key=?Database restored to state at Deleted and moved to archive (Auto-permanently deleted after 15 days)[ENCRYPTED: Provide a master key to view this value]\n            INSERT INTO archive (key, value)\n            SELECT key, value FROM kvstore \n            WHERE expires_at IS NOT NULL AND expires_at < datetime('now')\n        INSERT INTO archive (key, value) VALUES (?, ?)INSERT INTO audit_log (key, value) VALUES (?, ?)INSERT INTO audit_log (key, value) VALUES (?, NULL)INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')\n                INSERT INTO kvstore (key, value)\n                SELECT key, value FROM audit_log\n                WHERE id IN (\n                    SELECT MAX(id) FROM audit_log \n                    WHERE timestamp <= ? \n                    GROUP BY key\n                ) AND value IS NOT NULL\n            INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)Import file not found: Invalid TTL format: 'Key 'Key cannot be emptyKey not foundNo archived version found for this key (Note: Archive is purged after 15 days)NoneNote that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.PRAGMA cache_size=-64000PRAGMA journal_mode=WALPRAGMA synchronous=NORMALPRAGMA temp_store=MEMORYPrepare error: Restored: \n            SELECT 1 FROM kvstore \n            WHERE key = ? \n            AND (expires_at IS NULL OR expires_at > datetime('now'))\n        \n            SELECT COUNT(*) FROM kvstore \n            WHERE (expires_at IS NULL OR expires_at > datetime('now'))\n        SELECT id, key, value, timestamp FROM audit_log WHERE id > ? ORDER BY"" id ASC\n            SELECT key FROM kvstore \n            WHERE (expires_at IS NULL OR expires_at > datetime('now'))\n        \n            SELECT key, value FROM kvstore \n            WHERE (expires_at IS NULL OR expires_at > datetime('now'))\n        SELECT key, value, timestamp FROM audit_log ORDER BY timestamp DESC, id DESCSELECT key, value, timestamp FROM audit_log WHERE key = ? ORDER BY timestamp DESC, id DESC\n                SELECT kvstore.key FROM kvstore \n                JOIN fts_kvstore ON kvstore.rowid = fts_kvstore.rowid \n                WHERE fts_kvstore MATCH ? \n                AND (kvstore.expires_at IS NULL OR kvstore.expires_at > datetime('now'))\n                ORDER BY rank\n                LIMIT ?\n            \n                SELECT kvstore.key, kvstore.value FROM kvstore \n                JOIN fts_kvstore ON kvstore.rowid = fts_kvstore.rowid \n                WHERE fts_kvstore MATCH ? \n                AND (kvstore.expires_at IS NULL OR kvstore.expires_at > datetime('now'))\n                ORDER BY rank\n                LIMIT ?\n            SELECT value FROM archive WHERE key = ? ORDER BY deleted_at DESC LIMIT 1SELECT value FROM kvstore WHERE key = ?\n            SELECT value, expires_at, (expires_at < datetime('now')) as is_expired\n            FROM kvstore \n            WHERE key = ?\n        SQLite error: Schema Validation Error: Schema must be a Pydantic BaseModel classStep error: Unknown error'. Use suffixes: s, m, h, d, w, M, y (e.g., 10m, 2h, 1d, 1M)Value cannot be None%Y-%m-%d %H:%M:%S.?add_note and has been moved to archive.cryptography library is required for encryption. Install it with 'pip install cryptography'..csv^(\\d+)([smhdwMy])$disableenableenc:' expired at gc-hisenabled.json.kycli_export_kycli/kycore.pyx~/kydata.dbself._db cannot be converted to a Python object for pickling<stringsource>utf-8AESGCMANALYZEBaseModelCOMMITDictReaderIGNORECASEKycoreKycore.__enter__Kycore.__exit__Kycore.__iter__Kycore.__reduce_cython__Kyco""re.__setstate_cython__Kycore._decryptKycore._encryptKycore._parse_ttlKycore.compactKycore.deleteKycore.export_dataKycore.get_historyKycore.get_replication_streamKycore.getkeyKycore.getkey_asyncKycore.import_dataKycore.listkeysKycore.load_storeKycore.optimize_indexKycore.persistKycore.restoreKycore.restore_toKycore.saveKycore.save_asyncKycore.save_manyKycore.searchKycore.sync_from_streamMOrderedDictPBKDF2HMAC__Pyx_PyDict_NextRefROLLBACKSHA256VACUUMValidationErrorabspathalgorithmasyncioasyncio.coroutines__await__b64decodeb64encodebase64cache_sizeclearcline_in_tracebackclosecollectionscompactcompilecreatedcryptography.hazmat.primitivescryptography.hazmat.primitives.ciphers.aeadcryptography.hazmat.primitives.kdf.pbkdf2csvddatadatetimedb_pathdecodedecrypt_decryptdecrypted_resultsdecrypted_valdeletederivedeserializedirdir_namedirnamedumpdumpseencodeencrypt_encryptencrypted_text__enter__entriesentryenumerateerrorexc_tbexc_typeexc_valexist_okexistingexists__exit__exp_atexpanduserexpires_atexport_dataffdfdopenfile_formatfilepath__func__get_historyget_replication_streamgetkeygetkey_async__getstate__grouphhashesimport_dataindent_is_coroutineis_expiredisdigititems__iter__iterationsjsonkkeykey_patternkeyskeys_onlykycli.kycorelastlast_idlatest_valuelengthlimitlistkeysloadload_storeloadslowerm__main__makedirsmaster_keymatchmatchesmkstempmodel_dumpmodel_validate_json__module__movemove_to_end__name__newlinenextnochangenowopenoptimize_indexosoverwritten_parse_ttlpathpatternpersistplaintextpoppopitemprefixpydantic__pyx_state__pyx_vtable____qualname__queryrraw_valrereader__reduce____reduce_cython____reduce_ex__regexremoverestorerestore_toresultsretention_daysrowss_ttlsaltsavesave_asyncsave_manyschemasearchsecondsselfsend__set_name__setdefault__setstate____setstate_cython__shutilsqlstatusstorage_valstorestore_datastrftimestring_valstripsync_from_streamtemp_pathtempfile__test__throwtimetimedeltatimestamptimezoneto_threadttluniturandomutcvvalvalidatedvaluevalueswwarnwarningswriterwriterow""y\320\0042\260!\330\010\025\220[\240\006\240b\250\006\250a\360\010\000\t\035\230D\320 0\260\001\260\021\360\010\000\016\017\210a\360\n\000\t\014\2101\330\014\026\220g\230Q\230b\240\001\240\021\330\014\025\220W\230A\230R\230q\240\001\330\014\031\230\023\230A\230W\240A\240R\240q\250\007\250w\260a\260r\270\021\270#\270W\300J\310a\360\006\000\r\020\210q\330\020\030\230\005\230Q\230h\240o\260Q\3206_\320_`\340\020\024\220M\240\021\240!\330\020\024\320\024&\240a\320'Y\320YZ\320Z]\320]^\330\020\024\320\024&\240a\320'L\310A\310Q\330\020\024\220M\240\021\240!\330\020\027\220q\360\006\000\r\020\210r\220\023\220D\230\001\330\020\024\220G\230<\240q\250\001\330\020\027\220t\2307\240!\2401\340\014\026\220d\230+\240Q\240a\330\014\022\220!\330\014\017\210q\330\020\021\330\024\032\230$\230f\240A\240Q\340\024\032\230!\360\006\000\r\021\220\007\220q\230\005\230Q\330\014\020\220\007\220|\2401\240A\330\014\017\210s\220!\2204\220y\240\002\240$\240a\330\020\024\220G\2308\2401\240E\250\021\340\014\023\2201\360\006\000\t\023\220$\320\026&\240a\240q\360\006\000\016\017\330\010\t\330\014\024\220B\220h\230a\230}\250B\250a\330\017\021\220\021\330\014\023\2201\340\010\022\220!\330\010\014\210G\2201\330\014\017\210u\220G\2301\230C\230q\240\001\330\020 \240\004\240K\250q\260\003\2601\260A\330\020\023\2201\330\024\025\330\030\037\230q\240\003\2401\240F\250$\250f\260A\260Q\340\030\037\230q\240\003\2401\240F\250!\340\024\033\2301\230C\230q\240\006\240a\340\010\017\210{\230-\240q\320\n3\2601\320\004(\250\001\360\014\000\t\014\2104\210q\330\014\r\340\010\036\230a\330\010\013\2101\330\014\032\230(\240$\240a\240x\250v\260R\260y\300\001\300\030\310\024\310[\320XY\320Y_\320_h\320hi\320ij\340\010\t\330\014\020\220\r\230Q\230a\340\014\020\220\005\220Y\230a\330\020\024\220C\220v\230R\230v\240Q\340\020\023\2204\220q\330\024\027\220z\240\021\240'\250\021\330\030 \240\004\240H\250C\250v\260[\300\001\340\020\023\220:\230Q\230h\240f\250F\260&\270\005\270Q\330\024!\240\024\240V\2501\250A\340\024!\240\023\240A\240Q""\340\020\036\230d\240+\250Q\250a\340\020\024\320\024&\240a\320's\320st\320tw\360\000\000x\001E\002\360\000\000E\002F\002\330\020\024\320\024&\240a\320'[\320[\\\320\\_\320_`\360\006\000\021\025\220G\2301\230E\240\021\330\020\024\220G\230<\240q\250\001\330\020\023\2203\220a\220t\2309\240B\240d\250!\330\024\030\230\007\230x\240q\250\005\250Q\340\014\020\220\r\230Q\230a\330\010\017\210}\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\320\004\"\240!\340\010\013\2104\210s\220%\220s\230$\230c\240\021\330\014\026\220d\320\032*\250!\320+{\320{|\340\014\026\220d\320\032*\250!\360\000\000,J\002\360\000\000J\002K\002\360\000\000K\002N\002\360\000\000N\002T\002\360\000\000T\002V\002\360\000\000V\002\\\002\360\000\000\\\002]\002\340\010&\240a\330\010\014\210G\2201\330\014\035\230W\240A\240Q\240c\250\021\250$\250d\260)\2701\270C\270q\300\005\300S\310\001\310\021\330\010\017\210q\320\004&\320&7\3207G\300q\360\024\000\t\014\2101\330\014\022\220!\360\022\000\r\023\220!\360\022\000\t\023\220$\320\026&\240a\240u\250A\250W\260A\340\010\013\2101\330\014\023\2201\220C\220q\230\003\2304\230w\240a\340\010\022\220!\330\010\014\210G\2201\330\014\034\230D\240\t\250\021\250#\250Q\250a\330\014\017\210q\330\020\021\330\024\033\2301\230C\230q\240\006\240d\250&\260\001\260\021\340\024\033\2301\230C\230q\240\006\240a\340\020\027\220q\230\003\2301\230F\240!\330\010\017\210q\320\0048\270\001\330\010\017\210t\2201\330\010\023\2202\220U\230(\240!\2402\240U\250(\260!\2601\330\010\013\210:\220R\220y\240\001\240\032\2509\260A\340\010\014\210L\230\010\240\010\250\001\250\024\250Z\260w\270a\330\010\t\330\021\023\2207\230!\2304\230u\240H\250G\2601\330\020\023\220;\230f\240C\240s\250!\330\024\030\230\005\230Q\230f\240C\240w\250a\340\024\035\230S\240\007\240q\250\001\330\024\032\230)\2401\240A\240W\250A\330\024\030\230\003\2305\240\004\240F\250!\330\030\036\230i\240q\250\001\250\023\250A\330\014\022\220%\220q\230\013\2401\330\017\020\330\014\017\210r\220\025\220g\230Q\230l\250\"\250G\2601\260A\330\014\r\200A""\200A\330\010\013\2104\210q\330\014\r\330\010\t\330\014\020\220\r\230Q\230a\330\014\020\220\003\2205\230\n\240&\250\001\330\020\024\320\024&\240a\320'd\320de\320ef\320fl\320lp\320pq\330\020\024\320\024&\240a\320'[\320[\\\320\\]\320]c\320cg\320gh\330\014\020\220\r\230Q\230a\330\010\017\210}\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\200A\330\010\013\2104\210q\330\014\031\230\021\230$\230a\330\014\020\220\007\220q\200A\330\010\013\2104\210r\220\025\220g\230Q\230a\330\014\022\320\022#\2401\320$=\270Q\270a\330\010\017\210q\330\010\013\2108\2209\230A\230Q\330\021\025\220Q\220j\240\010\250\003\2507\260$\260e\2701\270A\330\r\025\220Y\230a\230q\330\021\025\220Q\220j\240\010\250\001\330\020\031\230\023\230K\240q\250\001\330\020\027\220q\230\003\2301\230H\240C\240q\250\t\260\024\260W\270A\330\010\014\210K\220q\230\001\200A\330\010\013\2104\210s\220!\330\014\023\2201\330\010\013\210:\220Q\220f\230E\240\021\330\014\023\2203\220a\220q\340\010\031\230\023\230A\230T\240\026\240q\330\010\013\2104\210q\330\014\023\2201\330\010\013\2105\220\010\230\001\330\014\023\2203\220a\220q\340\010\020\220\002\220&\230\001\320\0310\260\001\330\010\013\2104\210q\330\014\r\330\020\027\220s\230!\2301\330\023\024\330\020\026\220j\240\001\320!9\270\021\340\010\030\230\003\2301\230E\240\026\240q\250\001\330\010\030\230\005\230V\2401\240A\340\010\013\2105\220\003\2205\230\007\230q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\013\2105\220\003\2205\230\007\230t\2402\240Q\330\010\017\210q\200A\330\010\014\210L\230\006\230a\200A\340\010\014\210M\230\021\230!\200A\360\010\000\t\n\330\014\020\220\r\230Q\230a\330\014\020\220\t\230\021\340\020\023\2204\220u\230A\230T\240\025\240a\240q\330\020\024\320\024&\240a\320'd\320de\320eh\320hi\340\014\020\220\r\230Q\230a\330\010\017\210}""\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\200A\360\n\000\t\n\330\014\020\220\r\230Q\230a\360\006\000\r\021\220\r\230Q\230a\360\010\000\r\023\220!\360\022\000\r\021\320\020\"\240!\2405\250\001\250\021\340\014\020\220\r\230Q\230a\360\006\000\r\021\220\007\220v\230Q\340\014\023\320\0233\2601\260A\330\010\017\210}\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\200A\340\010\025\220S\230\006\230b\240\006\240a\360\006\000\t\035\230D\320 0\260\001\3201}\320}~\320~\177\340\010\013\2104\210q\330\014\023\2201\340\010 \240\007\240q\250\002\250!\2501\360\006\000\t\023\220$\320\026&\240a\320'R\320RS\320ST\330\010\013\2108\2204\220w\230a\230r\240\021\240#\240S\250\001\330\014\023\2201\360\006\000\t\r\210M\230\021\230!\330\010\014\320\014\036\230a\320\037\\\320\\]\320]`\320`a\330\010\014\320\014\036\230a\320\037S\320ST\320TW\320WX\330\010\014\210M\230\021\230!\330\010\017\210}\230A\200A\330\010\025\220S\230\006\230b\240\006\240a\360\006\000\t\035\230D\320 0\260\001\3201\\\320\\]\320]^\330\010\013\2104\210q\330\014\023\2201\340\010\027\220w\230a\230r\240\021\240!\340\010\t\330\014\020\220\r\230Q\230a\340\014\020\320\020\"\240!\320#U\320UV\320VY\320YZ\340\014\020\320\020\"\240!\320#Z\320Z[\320[\\\340\014\020\320\020\"\240!\320#F\300a\300q\330\014\020\220\r\230Q\230a\340\014\020\220\014\230D\240\001\240\021\360\006\000\r\020\210r\220\023\220D\230\001\330\020\024\220D\230\007\230q\240\001\340\014\023\2201\330\010\017\210}\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\200A\330\010\017\210q\200A\330\010\017\210t\220;\230a\230q\200\001\330\004\n\210+\220Q\320\004-\250Q\360\010\000\t\020\210t\320\023#\2401\320$t\320tu\320uv\210!\320\004)\250\021\360\n\000\t\n\340\014\020\320\020\"\240!\320#p\320pq\320qr\360\006\000\r\021\320\020\"\240!\320#o\320op\320pq\360\006\000\r\021\220\r\230Q\230a\330\014\020\220\r\230Q\230a\340\014\023\2201\330\010\017\210}\230A\330\014\022\220,\230a\320\0374\260A\260Q\320\004'\240q\330\010\013\2104\210t\2203\220d\230#\230V\2401\330\014\022\220*\230A""\230Q\330\010\013\2106\220\023\220A\330\014\022\220*\230A\230Q\340\010\025\220S\230\006\230b\240\006\240a\360\010\000\t\014\2104\210q\330\014\r\330\020\023\220:\230Q\230g\240Q\330\024 \240\004\240H\250C\250q\330\024\034\230I\240[\260\001\360\006\000\025\030\220z\240\021\240'\250\021\330\030$\240D\250\010\3200D\300A\300Q\330\030 \240\t\250\033\260A\330\014\023\320\023&\240a\330\020\026\220j\240\001\320!<\270A\270Q\360\006\000\t\014\210:\220Q\220h\230f\240F\250&\260\005\260Q\330\014\031\230\024\230V\2401\240A\340\014\031\230\023\230A\230Q\360\006\000\t \230t\240;\250a\250q\340\010\034\230D\240\007\240q\250\003\250<\260q\340\010\013\2109\220C\220q\330\014\023\2201\340\010\021\320\021\"\240)\2503\320.C\3001\340\010\036\230a\330\010\013\2101\330\014\032\230(\240$\240a\240x\250v\260R\260y\300\001\300\030\310\024\310[\320XY\320Y_\320_h\320hi\320ij\340\010\t\330\014\020\220\r\230Q\230a\360\006\000\r\021\320\020\"\240!\320#o\320op\320ps\360\000\000t\001A\002\360\000\000A\002B\002\340\014\020\320\020\"\240!\320#W\320WX\320X[\320[\\\340\014\020\220\r\230Q\230a\330\014\020\220\014\230D\240\001\240\021\360\006\000\r\021\220\007\220q\230\005\230Q\330\014\020\220\007\220|\2401\240A\330\014\017\210s\220!\2204\220y\240\002\240$\240a\330\020\024\220G\2308\2401\240E\250\021\340\014\023\2201\330\010\017\210}\230A\330\014\020\220\r\230Q\230a\330\014\022\220!\320\004\037\230q\330\010\022\220$\320\026&\240a\240q\360\006\000\016\017\330\010\017\210q\220\003\2201\220C\220t\2307\240!\330\010\013\2104\210q\330\014\023\2201\340\010\t\330\014\024\220B\220h\230a\230y\250\002\250!\330\014\023\2201\220B\220d\230%\230u\240C\240u\250G\2601\260A\330\017\021\220\021\330\014\023\2201kycli_vault_salt";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
     PyObject **stringtab = __pyx_mstate->__pyx_string_tab;
     Py_ssize_t pos = 0;
-    for (int i = 0; i < 306; i++) {
+    for (int i = 0; i < 324; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyUnicode_DecodeUTF8(bytes + pos, bytes_length, NULL);
-      if (likely(string) && i >= 79) PyUnicode_InternInPlace(&string);
+      if (likely(string) && i >= 88) PyUnicode_InternInPlace(&string);
       if (unlikely(!string)) {
         Py_XDECREF(data);
         __PYX_ERR(0, 1, __pyx_L1_error)
@@ -19308,7 +20155,7 @@ const char* const bytes = "ALTER TABLE kvstore ADD COLUMN expires_at DATETIMEAlr
       stringtab[i] = string;
       pos += bytes_length;
     }
-    for (int i = 306; i < 330; i++) {
+    for (int i = 324; i < 350; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyBytes_FromStringAndSize(bytes + pos, bytes_length);
       stringtab[i] = string;
@@ -19319,15 +20166,15 @@ const char* const bytes = "ALTER TABLE kvstore ADD COLUMN expires_at DATETIMEAlr
       }
     }
     Py_XDECREF(data);
-    for (Py_ssize_t i = 0; i < 330; i++) {
+    for (Py_ssize_t i = 0; i < 350; i++) {
       if (unlikely(PyObject_Hash(stringtab[i]) == -1)) {
         __PYX_ERR(0, 1, __pyx_L1_error)
       }
     }
     #if CYTHON_IMMORTAL_CONSTANTS
     {
-      PyObject **table = stringtab + 306;
-      for (Py_ssize_t i=0; i<24; ++i) {
+      PyObject **table = stringtab + 324;
+      for (Py_ssize_t i=0; i<26; ++i) {
         #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
         #if PY_VERSION_HEX < 0x030E0000
         if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -19346,18 +20193,18 @@ const char* const bytes = "ALTER TABLE kvstore ADD COLUMN expires_at DATETIMEAlr
   }
   {
     PyObject **numbertab = __pyx_mstate->__pyx_number_tab + 0;
-    int8_t const cint_constants_1[] = {0,1,2,4,12,32,100};
+    int8_t const cint_constants_1[] = {0,1,2,4,12,15,32,100};
     int16_t const cint_constants_2[] = {1000};
     int32_t const cint_constants_4[] = {100000L};
-    for (int i = 0; i < 9; i++) {
-      numbertab[i] = PyLong_FromLong((i < 7 ? cint_constants_1[i - 0] : (i < 8 ? cint_constants_2[i - 7] : cint_constants_4[i - 8])));
+    for (int i = 0; i < 10; i++) {
+      numbertab[i] = PyLong_FromLong((i < 8 ? cint_constants_1[i - 0] : (i < 9 ? cint_constants_2[i - 8] : cint_constants_4[i - 9])));
       if (unlikely(!numbertab[i])) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #if CYTHON_IMMORTAL_CONSTANTS
   {
     PyObject **table = __pyx_mstate->__pyx_number_tab;
-    for (Py_ssize_t i=0; i<9; ++i) {
+    for (Py_ssize_t i=0; i<10; ++i) {
       #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
       #if PY_VERSION_HEX < 0x030E0000
       if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -19401,17 +20248,17 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   PyObject* tuple_dedup_map = PyDict_New();
   if (unlikely(!tuple_dedup_map)) return -1;
   {
-    const __Pyx_PyCode_New_function_description descr = {4, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_COROUTINE), 359};
+    const __Pyx_PyCode_New_function_description descr = {4, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_COROUTINE), 362};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_key, __pyx_mstate->__pyx_n_u_value, __pyx_mstate->__pyx_n_u_ttl};
     __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_save_async, __pyx_mstate->__pyx_kp_b_iso88591_31, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_GENERATOR), 385};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_GENERATOR), 388};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_results, __pyx_mstate->__pyx_n_u_row};
     __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_iter, __pyx_mstate->__pyx_kp_b_iso88591_A, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_COROUTINE), 524};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS|CO_COROUTINE), 527};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_key_pattern};
     __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_getkey_async, __pyx_mstate->__pyx_kp_b_iso88591__4, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
   }
@@ -19426,104 +20273,114 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_exit, __pyx_mstate->__pyx_kp_b_iso88591_A_4q_a_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 205};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 208};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_plaintext};
     __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_encrypt_2, __pyx_mstate->__pyx_kp_b_iso88591_A_t_aq, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 208};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 211};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_encrypted_text};
     __pyx_mstate_global->__pyx_codeobj_tab[6] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_decrypt_2, __pyx_mstate->__pyx_kp_b_iso88591_A_t_aq, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[6])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 219};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 222};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_ttl, __pyx_mstate->__pyx_n_u_s_ttl, __pyx_mstate->__pyx_n_u_match, __pyx_mstate->__pyx_n_u_val, __pyx_mstate->__pyx_n_u_unit};
     __pyx_mstate_global->__pyx_codeobj_tab[7] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_parse_ttl, __pyx_mstate->__pyx_kp_b_iso88591_A_4s_1_QfE_3aq_AT_q_4q_1_5_3aq_0, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[7])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {4, 0, 0, 12, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 250};
+    const __Pyx_PyCode_New_function_description descr = {4, 0, 0, 12, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 253};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_key, __pyx_mstate->__pyx_n_u_value, __pyx_mstate->__pyx_n_u_ttl, __pyx_mstate->__pyx_n_u_k, __pyx_mstate->__pyx_n_u_string_val, __pyx_mstate->__pyx_n_u_validated, __pyx_mstate->__pyx_n_u_e, __pyx_mstate->__pyx_n_u_storage_val, __pyx_mstate->__pyx_n_u_existing, __pyx_mstate->__pyx_n_u_status, __pyx_mstate->__pyx_n_u_expires_at};
     __pyx_mstate_global->__pyx_codeobj_tab[8] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_save, __pyx_mstate->__pyx_kp_b_iso88591_q_4t3d_V1_AQ_6_A_AQ_S_b_a_4q_Qg, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[8])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 10, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 315};
+    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 10, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 318};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_items, __pyx_mstate->__pyx_n_u_ttl, __pyx_mstate->__pyx_n_u_expires_at, __pyx_mstate->__pyx_n_u_key, __pyx_mstate->__pyx_n_u_value, __pyx_mstate->__pyx_n_u_k, __pyx_mstate->__pyx_n_u_string_val, __pyx_mstate->__pyx_n_u_storage_val, __pyx_mstate->__pyx_n_u_e};
     __pyx_mstate_global->__pyx_codeobj_tab[9] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_save_many, __pyx_mstate->__pyx_kp_b_iso88591_4q_a_1_axvRy_XYY__hhiij_Qa_Ya_C, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[9])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 13, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 400};
+    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 13, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 403};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_key_pattern, __pyx_mstate->__pyx_n_u_deserialize, __pyx_mstate->__pyx_n_u_k, __pyx_mstate->__pyx_n_u_results, __pyx_mstate->__pyx_n_u_raw_val, __pyx_mstate->__pyx_n_u_exp_at, __pyx_mstate->__pyx_n_u_is_expired, __pyx_mstate->__pyx_n_u_val, __pyx_mstate->__pyx_n_u_regex, __pyx_mstate->__pyx_n_u_matches, __pyx_mstate->__pyx_n_u_row, __pyx_mstate->__pyx_n_u_decrypted_val};
     __pyx_mstate_global->__pyx_codeobj_tab[10] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_getkey, __pyx_mstate->__pyx_kp_b_iso88591_2_b_a_D_0_a_1_gQb_WARq_AWARq_wa, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[10])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {5, 0, 0, 11, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 474};
+    const __Pyx_PyCode_New_function_description descr = {5, 0, 0, 11, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 477};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_query, __pyx_mstate->__pyx_n_u_limit, __pyx_mstate->__pyx_n_u_deserialize, __pyx_mstate->__pyx_n_u_keys_only, __pyx_mstate->__pyx_n_u_sql, __pyx_mstate->__pyx_n_u_results, __pyx_mstate->__pyx_n_u_matches, __pyx_mstate->__pyx_n_u_row, __pyx_mstate->__pyx_n_u_decrypted_val, __pyx_mstate->__pyx_n_u_row};
     __pyx_mstate_global->__pyx_codeobj_tab[11] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_search, __pyx_mstate->__pyx_kp_b_iso88591_77Gq_1_auAWA_1_1Cq_4wa_G1_D_Qa, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[11])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 520};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 523};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self};
     __pyx_mstate_global->__pyx_codeobj_tab[12] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_optimize_index, __pyx_mstate->__pyx_kp_b_iso88591_A_M, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[12])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 576};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 579};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_key, __pyx_mstate->__pyx_n_u_k, __pyx_mstate->__pyx_n_u_results, __pyx_mstate->__pyx_n_u_val, __pyx_mstate->__pyx_n_u_e};
     __pyx_mstate_global->__pyx_codeobj_tab[13] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_delete, __pyx_mstate->__pyx_kp_b_iso88591_A_S_b_a_D_0_1_4q_1_war_Qa_UUVVYY, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[13])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 605};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 610};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_last_id};
     __pyx_mstate_global->__pyx_codeobj_tab[14] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_get_replication_stream, __pyx_mstate->__pyx_kp_b_iso88591_Q_t_1_ttuuv, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[14])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 611};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 616};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_entries, __pyx_mstate->__pyx_n_u_entry, __pyx_mstate->__pyx_n_u_k, __pyx_mstate->__pyx_n_u_v, __pyx_mstate->__pyx_n_u_e};
     __pyx_mstate_global->__pyx_codeobj_tab[15] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_sync_from_stream, __pyx_mstate->__pyx_kp_b_iso88591_A_Qa_4uAT_aq_a_ddeehhi_Qa_A_Qa, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[15])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 627};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_key, __pyx_mstate->__pyx_n_u_k, __pyx_mstate->__pyx_n_u_results, __pyx_mstate->__pyx_n_u_latest_value};
-    __pyx_mstate_global->__pyx_codeobj_tab[16] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_restore, __pyx_mstate->__pyx_kp_b_iso88591_A_S_b_a_D_0_1_4q_1_q_1_a_RRSST_8, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[16])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 632};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_timestamp, __pyx_mstate->__pyx_n_u_sql, __pyx_mstate->__pyx_n_u_e};
+    __pyx_mstate_global->__pyx_codeobj_tab[16] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_restore_to, __pyx_mstate->__pyx_kp_b_iso88591_A_Qa_Qa_5_Qa_vQ_31A_A_Qa, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[16])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 7, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 651};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_pattern, __pyx_mstate->__pyx_n_u_results, __pyx_mstate->__pyx_n_u_keys, __pyx_mstate->__pyx_n_u_regex, __pyx_mstate->__pyx_n_u_row, __pyx_mstate->__pyx_n_u_k};
-    __pyx_mstate_global->__pyx_codeobj_tab[17] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_listkeys, __pyx_mstate->__pyx_kp_b_iso88591_q_aq_q_1Ct7_4q_1_Bhay_1Bd_uCuG1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[17])) goto bad;
-  }
-  {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 666};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_key, __pyx_mstate->__pyx_n_u_results, __pyx_mstate->__pyx_n_u_decrypted_results, __pyx_mstate->__pyx_n_u_row};
-    __pyx_mstate_global->__pyx_codeobj_tab[18] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_get_history, __pyx_mstate->__pyx_kp_b_iso88591_4s_s_c_d_d_J_J_K_K_N_N_T_T_V_V, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[18])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 666};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_retention_days, __pyx_mstate->__pyx_n_u_e};
+    __pyx_mstate_global->__pyx_codeobj_tab[17] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_compact, __pyx_mstate->__pyx_kp_b_iso88591_ppqqr_ooppq_Qa_Qa_1_A_a_4AQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[17])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 686};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_key, __pyx_mstate->__pyx_n_u_k, __pyx_mstate->__pyx_n_u_results, __pyx_mstate->__pyx_n_u_latest_value};
+    __pyx_mstate_global->__pyx_codeobj_tab[18] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_restore, __pyx_mstate->__pyx_kp_b_iso88591_A_S_b_a_D_0_1_4q_1_q_1_a_RRSST_8, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[18])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 7, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 710};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_pattern, __pyx_mstate->__pyx_n_u_results, __pyx_mstate->__pyx_n_u_keys, __pyx_mstate->__pyx_n_u_regex, __pyx_mstate->__pyx_n_u_row, __pyx_mstate->__pyx_n_u_k};
+    __pyx_mstate_global->__pyx_codeobj_tab[19] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_listkeys, __pyx_mstate->__pyx_kp_b_iso88591_q_aq_q_1Ct7_4q_1_Bhay_1Bd_uCuG1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[19])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 725};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_key, __pyx_mstate->__pyx_n_u_results, __pyx_mstate->__pyx_n_u_decrypted_results, __pyx_mstate->__pyx_n_u_row};
+    __pyx_mstate_global->__pyx_codeobj_tab[20] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_get_history, __pyx_mstate->__pyx_kp_b_iso88591_4s_s_c_d_d_J_J_K_K_N_N_T_T_V_V, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[20])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 745};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_store_data, __pyx_mstate->__pyx_n_u_k, __pyx_mstate->__pyx_n_u_v, __pyx_mstate->__pyx_n_u_e};
-    __pyx_mstate_global->__pyx_codeobj_tab[19] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_load_store, __pyx_mstate->__pyx_kp_b_iso88591_A_4q_Qa_5_a_ddeeffllppq_a_ccggh, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[19])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[21] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_load_store, __pyx_mstate->__pyx_kp_b_iso88591_A_4q_Qa_5_a_ddeeffllppq_a_ccggh, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[21])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 11, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 699};
+    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 11, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 758};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_filepath, __pyx_mstate->__pyx_n_u_file_format, __pyx_mstate->__pyx_n_u_data, __pyx_mstate->__pyx_n_u_dir_name, __pyx_mstate->__pyx_n_u_fd, __pyx_mstate->__pyx_n_u_temp_path, __pyx_mstate->__pyx_n_u_f, __pyx_mstate->__pyx_n_u_writer, __pyx_mstate->__pyx_n_u_k, __pyx_mstate->__pyx_n_u_v};
-    __pyx_mstate_global->__pyx_codeobj_tab[20] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_export_data, __pyx_mstate->__pyx_kp_b_iso88591_8_t1_2U_2U_1_Ry_9A_L_Zwa_7_4uHG, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[20])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[22] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_export_data, __pyx_mstate->__pyx_kp_b_iso88591_8_t1_2U_2U_1_Ry_9A_L_Zwa_7_4uHG, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[22])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 719};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 778};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_filepath, __pyx_mstate->__pyx_n_u_data, __pyx_mstate->__pyx_n_u_f, __pyx_mstate->__pyx_n_u_reader, __pyx_mstate->__pyx_n_u_row};
-    __pyx_mstate_global->__pyx_codeobj_tab[21] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_import_data, __pyx_mstate->__pyx_kp_b_iso88591_A_4r_gQa_1_Qa_q_89AQ_Qj_7_e1A_Ya, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[21])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[23] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_import_data, __pyx_mstate->__pyx_kp_b_iso88591_A_4r_gQa_1_Qa_q_89AQ_Qj_7_e1A_Ya, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[23])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 731};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 790};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self};
-    __pyx_mstate_global->__pyx_codeobj_tab[22] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_persist, __pyx_mstate->__pyx_kp_b_iso88591_A_L_a, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[22])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[24] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_kycore_pyx, __pyx_mstate->__pyx_n_u_persist, __pyx_mstate->__pyx_kp_b_iso88591_A_L_a, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[24])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 1};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self};
-    __pyx_mstate_global->__pyx_codeobj_tab[23] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_reduce_cython, __pyx_mstate->__pyx_kp_b_iso88591_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[23])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[25] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_reduce_cython, __pyx_mstate->__pyx_kp_b_iso88591_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[25])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 3};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_pyx_state};
-    __pyx_mstate_global->__pyx_codeobj_tab[24] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_setstate_cython, __pyx_mstate->__pyx_kp_b_iso88591_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[24])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[26] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_setstate_cython, __pyx_mstate->__pyx_kp_b_iso88591_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[26])) goto bad;
   }
   Py_DECREF(tuple_dedup_map);
   return 0;

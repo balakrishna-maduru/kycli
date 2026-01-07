@@ -30,6 +30,10 @@ Available commands:
                                   Ex: kyi backup.csv
   kyc <key> [args...]           - Execute stored command (Static/Dynamic)
                                   Ex: kyc my_script
+  kyrt <timestamp>              - Point-in-Time Recovery (reconstruct state)
+                                  Ex: kyrt "2026-01-01 12:00:00"
+  kyco [days]                   - Compact DB (Cleanup old history/archive)
+                                  Ex: kyco 7 (keep 7 days of history)
   kyshell                       - Open interactive TUI shell
   kyh                           - Help (This message)
 
@@ -126,8 +130,10 @@ def main():
                     print(f"✅ Saved: {key} (New)")
                 elif status == "overwritten":
                     print(f"🔄 Updated: {key}")
+                elif status == "nochange":
+                    print(f"➖ No change: {key} (Value is identical)")
                 else:
-                    print(f"➖ No change: {key}")
+                    print(f"➖ Result: {status}")
     
             elif cmd in ["kyg", "getkey"]:
                 if len(args) != 1:
@@ -186,6 +192,16 @@ def main():
                     return
                 print(kv.restore(args[0]))
     
+            elif cmd in ["kyrt", "restore-to"]:
+                if len(args) < 1:
+                    print("Usage: kyrt <timestamp>")
+                    return
+                ts = " ".join(args)
+                print(kv.restore_to(ts))
+
+            elif cmd in ["kyco", "compact"]:
+                retention = int(args[0]) if args else 15
+                print(kv.compact(retention))
             elif cmd in ["kyl", "listkeys"]:
                 pattern = args[0] if args else None
                 keys = kv.listkeys(pattern)

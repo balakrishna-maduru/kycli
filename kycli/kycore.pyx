@@ -188,6 +188,9 @@ cdef class Kycore:
         return "enc:" + base64.b64encode(nonce + ciphertext).decode('utf-8')
 
     cdef str _decrypt_c(self, str encrypted_text):
+        if encrypted_text is None:
+            return "[DELETED]"
+            
         if not encrypted_text.startswith("enc:"):
             return encrypted_text
             
@@ -587,6 +590,8 @@ cdef class Kycore:
             self._execute_raw("BEGIN TRANSACTION")
             # Move to archive
             self._bind_and_execute("INSERT INTO archive (key, value) VALUES (?, ?)", [k, val])
+            # Record deletion in audit log for PITR
+            self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, NULL)", [k])
             # Remove from active store
             self._bind_and_execute("DELETE FROM kvstore WHERE key=?", [k])
             self._execute_raw("COMMIT")
@@ -623,6 +628,60 @@ cdef class Kycore:
         except Exception as e:
             self._execute_raw("ROLLBACK")
             raise e
+
+    def restore_to(self, str timestamp):
+        """
+        Point-in-Time Recovery: Reconstruct database state at a specific timestamp.
+        :param timestamp: Target timestamp (e.g., '2026-01-01 12:00:00')
+        """
+        try:
+            self._execute_raw("BEGIN TRANSACTION")
+            
+            # 1. Clear current store
+            self._execute_raw("DELETE FROM kvstore")
+            
+            # 2. Find latest non-NULL entry for each key before timestamp
+            # We use a subquery to find the MAX(id) for each key up to the timestamp
+            sql = """
+                INSERT INTO kvstore (key, value)
+                SELECT key, value FROM audit_log
+                WHERE id IN (
+                    SELECT MAX(id) FROM audit_log 
+                    WHERE timestamp <= ? 
+                    GROUP BY key
+                ) AND value IS NOT NULL
+            """
+            self._bind_and_execute(sql, [timestamp])
+            
+            self._execute_raw("COMMIT")
+            
+            # 3. Invalidate cache
+            self._cache.clear()
+            
+            return f"Database restored to state at {timestamp}"
+        except Exception as e:
+            self._execute_raw("ROLLBACK")
+            raise e
+
+    def compact(self, int retention_days=15):
+        """
+        Database Compaction: Cleanup old audit/archive data and reclaim space.
+        :param retention_days: Number of days of history to keep (default 15)
+        """
+        try:
+            # 1. Cleanup Audit Log
+            self._bind_and_execute("DELETE FROM audit_log WHERE (julianday('now') - julianday(timestamp)) > ?", [retention_days])
+            
+            # 2. Cleanup Archive
+            self._bind_and_execute("DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > ?", [retention_days])
+            
+            # 3. SQLite Maintenance
+            self._execute_raw("VACUUM")
+            self._execute_raw("ANALYZE")
+            
+            return "Compaction complete: Space reclaimed and stale history purged."
+        except Exception as e:
+            raise RuntimeError(f"Compaction failed: {e}")
 
     def restore(self, str key):
         """Restore the latest value for a key from the archive."""

@@ -53,8 +53,9 @@ python3 benchmark.py
 2.  **Batch Save (`save_many`)**:
     *   **Atomic Transactions**: Ingest thousands of keys in a single transaction.
     *   **Bypasses Overhead**: Extremely efficient for bulk data loading or state syncing.
-3.  **WAL Replication (Replication Stream)**:
-    *   **Audit-Log Streaming**: Methods `get_replication_stream()` and `sync_from_stream()` allow for streaming changes between instances.
-    *   **Distributed Potential**: Easily synchronize multiple local instances or remote nodes using simple dictionary-based transfer.
+3.  **Point-in-Time Recovery (PITR)**:
+    *   `kyrt <timestamp>`: Reconstruct the entire database state at any specific timestamp using the audit log.
+4.  **Database Compaction**:
+    *   `kyco [days]`: An `optimize` command that runs `VACUUM` and clears out old history/archive data based on a retention policy.
 
 ## Scaling Performance (10,000 Classes/Records)

@@ -50,7 +50,9 @@ pip install kycli
 | `kye` | **Export** data (CSV/JSON) | `kye data.json json` |
 | `kyi` | **Import** data | `kyi backup.csv` |
 | `kyc` | **Execute** stored command | `kyc hello` |
-| `kyshell` | **Interactive TUI** (Real-time view) | `kycli kyshell` |
+| `kyrt` | **Restore-to** (Time Machine) | `kyrt "2026-01-01"` |
+| `kyco` | **Compact** (Cleanup) | `kyco 7` |
+| `kyshell` | **Interactive TUI** | `kycli kyshell` |
 | `kyh` | **Help** library | `kyh` |
 | `Env` | **KYCLI_DB_PATH** | `export KYCLI_DB_PATH="..."` |
 
