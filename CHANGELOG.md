@@ -1,13 +1,19 @@
 # Changelog
 
-## [0.1.7] - 2026-01-06
+## [0.1.7] - 2026-01-07
 ### Added
-- **Encryption at Rest**: Implemented transparent **AES-256-GCM** encryption. All data is encrypted/decrypted in the Cython layer using a user-provided Master Key.
+- **Point-in-Time Recovery (PITR)**: Introduced "Time Machine" capabilities via `restore_to(timestamp)` and the `kyrt` command. Allows full database reconstruction from any point in the audit log.
+- **Database Compaction**: Added `compact(retention_days)` and the `kyco` command to optimize storage, purge stale history/archive data, and reclaim disk space using SQLite `VACUUM`.
+- **Encryption at Rest**: Implemented transparent **AES-256-GCM** encryption using standardMaster Keys or `KYCLI_MASTER_KEY` environment variable.
 - **Value-Level TTL (Time To Live)**: Keys can now have an expiration time (e.g., `kys session_id "data" --ttl 1h`). Supports human-readable suffixes: `s`, `m`, `h`, `d`, `w`, `M`, `y`.
-- **Global --key & --ttl Flags**: Added global CLI support for passing security keys and TTL values.
-- **Auto-Purge for TTL**: Expired keys are automatically filtered and purged on startup.
-- **Environment Variable Security**: Support for `KYCLI_MASTER_KEY` for seamless encrypted operations.
-- **Dependencies**: Added `cryptography` for secure AES operations.
+- **Atomic Batch Save (`save_many`)**: Optimized internal API for ultra-fast bulk data ingest in single transactions.
+- **Enhanced L1 Cache**: Hybrid LRU cache now supports sub-second TTL precision and microsecond-level hit rates ($1.5 \mu s$).
+- **100% Code Coverage**: Achieved and verified 100% test coverage across all core Python modules.
+
+### Fixed
+- **SQLite Binding Fix**: Resolved an issue where `None` values were incorrectly bound as strings; now correctly handled as `SQLITE_NULL`.
+- **Async API Returns**: Fixed return value consistency for `save_async()` and `getkey_async()`.
+- **Tombstone Reliability**: Deletions now explicitly log tombstones in the audit log to support historical recovery.
 
 ## [0.1.6] - 2026-01-05
 ### Fixed

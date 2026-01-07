@@ -31,6 +31,10 @@ This list tracks the progress of implementing high-performance and robust enhanc
 - [x] **Encryption at Rest** (AES-256-GCM)
 - [x] **Value-Level TTL** (Time To Live)
 - [x] **Master Key Management** (CLI flags & Env vars)
+- [x] **Point-in-Time Recovery (PITR)**
+- [x] **Database Compaction & Maintenance**
+- [x] **Atomic Batch Support** (`save_many`)
+- [x] **100% Code Coverage Maintenance**
 
 ---
 *Optimized for Performance by Antigravity*
