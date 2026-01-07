@@ -26,12 +26,13 @@ To test the engine at scale, we simulated a database with **10,000 school class 
 
 | Operation | Scale | Avg Latency | notes |
 | :--- | :--- | :--- | :--- |
-| **Save Class** | 10k Records | **1.8875 ms** | Includes Pydantic validation & JSON serialization |
-| **Get Class** | 10k Records | **0.0054 ms** | microsecond-fast retrieval at scale |
-| **List Keys** | 10k Records | 1.9397 ms | Near-instant listing of entire dataset |
-| **Search (FTS)** | 10k Records | 18.9714 ms | Full-text search across all records |
-| **Save Async** | 10k Records | 1.8699 ms | High-throughput background saves |
-| **Get Async** | 10k Records | 0.0471 ms | Non-blocking retrieval |
+| **Save Class** | 10k Records | **1.7154 ms** | Includes Pydantic validation & JSON serialization |
+| **Get Class** | 10k Records | **0.0057 ms** | microsecond-fast retrieval at scale |
+| **List Keys** | 10k Records | **1.5620 ms** | Near-instant listing of entire dataset |
+| **Search (FTS)** | 10k Records | **21.0670 ms** | Full-text search (no limit) |
+| **Search (Limit)** | 10k Records | **6.0315 ms** | Optimized FTS search |
+| **Save Async** | 10k Records | **1.6988 ms** | High-throughput background saves |
+| **Get Async** | 10k Records | **0.0482 ms** | Non-blocking retrieval |
 
 ### Analysis
 *   **Sync Performance**: The raw C API provides the best latency for CLI usage. A simple key fetch is now performing at near-native hardware speeds (~2.8 microseconds).
@@ -58,4 +59,3 @@ python3 benchmark.py
 4.  **Database Compaction**:
     *   `kyco [days]`: An `optimize` command that runs `VACUUM` and clears out old history/archive data based on a retention policy.
 
-## Scaling Performance (10,000 Classes/Records)

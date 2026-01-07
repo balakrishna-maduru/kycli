@@ -179,6 +179,25 @@ kyr username
 # Result: ✅ Key 'username' restored from history.
 ```
 
+### `kyrt <timestamp>` — Point-in-Time Recovery (PITR)
+Reconstruct the entire database state at a specific moment in time. This is a "Time Machine" for your data.
+- **Mechanism**: Clears the current store and repopulates it with the state as of the given timestamp using the audit log.
+```bash
+# Restore to New Year's Day
+kyrt "2026-01-01 12:00:00"
+# Result: 🕒 Database restored to 2026-01-01 12:00:00
+```
+
+### `kyco [retention_days]` — Database Compaction & Maintenance
+Cleanup old history and optimize the database file.
+- **Retention**: History older than `retention_days` (default 15) is purged.
+- **Optimization**: Runs SQLite `VACUUM` and `ANALYZE` to reclaim space and optimize query paths.
+```bash
+# Cleanup everything older than 7 days
+kyco 7
+# Result: 🧹 Compaction complete: Space reclaimed and stale history purged.
+```
+
 ### `kye <file> [format]` — Export Data
 Exports your entire store to a file.
 - **Format**: `csv` (default) or `json`.
@@ -273,6 +292,20 @@ with Kycore(master_key="secret-pass") as kv:
     kv.save("persistent_secret", "data", ttl="1M")
     
     print(kv.getkey("temp_password")) # 123456
+
+# 5. Batch Operations (save_many)
+with Kycore() as kv:
+    items = [("k1", "v1"), ("k2", "v2"), ("k3", "v3")]
+    kv.save_many(items, ttl="1h")
+    # Result: ⚡ Atomic transaction per batch (extremely fast)
+
+# 6. Maintenance & PITR
+with Kycore() as kv:
+    # Cleanup history older than 30 days
+    kv.compact(retention_days=30)
+    
+    # Point-in-Time Recovery
+    kv.restore_to("2026-01-01 00:00:00")
 ```
 
 ### 2. High-Throughput (Async)

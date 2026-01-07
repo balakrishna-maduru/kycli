@@ -50,6 +50,7 @@ cdef extern from "sqlite3.h":
     const char *sqlite3_column_name(sqlite3_stmt*, int N)
     int sqlite3_changes(sqlite3*)
     const char *sqlite3_errmsg(sqlite3*)
+    int sqlite3_bind_null(sqlite3_stmt*, int)
 
 cdef class Kycore:
     cdef sqlite3* _db
@@ -282,20 +283,18 @@ cdef class Kycore:
         # 3. Encryption
         cdef str storage_val = self._encrypt_c(string_val)
 
+        cdef str expires_at = None
+        if ttl:
+            expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S.%f')
+
         cdef str existing = self.getkey(k, deserialize=False)
-        
         if existing == string_val:
             return "nochange"
         
-        status = "overwritten" if existing != "Key not found" else "created"
-
-        cdef str expires_at = None
-        if ttl:
-            expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
+        cdef str status = "overwritten" if existing != "Key not found" else "created"
 
         try:
             self._execute_raw("BEGIN TRANSACTION")
-            
             # Update kvstore
             self._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)", [k, storage_val, expires_at])
             # Update audit log
@@ -305,7 +304,7 @@ cdef class Kycore:
             self._dirty_keys.add(k)
             
             # Update L1 Cache
-            self._cache[k] = value
+            self._cache[k] = (value, expires_at)
             self._cache.move_to_end(k)
             if len(self._cache) > self._cache_limit:
                 self._cache.popitem(last=False)
@@ -326,7 +325,7 @@ cdef class Kycore:
             
         cdef str expires_at = None
         if ttl:
-            expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S')
+            expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S.%f')
 
         try:
             self._execute_raw("BEGIN TRANSACTION")
@@ -349,19 +348,20 @@ cdef class Kycore:
                 self._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, storage_val])
                 
                 # Update L1 Cache
-                self._cache[k] = value
+                self._cache[k] = (value, expires_at)
                 self._cache.move_to_end(k)
                 if len(self._cache) > self._cache_limit:
                     self._cache.popitem(last=False)
                     
             self._execute_raw("COMMIT")
+            return len(items)
         except Exception as e:
             self._execute_raw("ROLLBACK")
             raise e
 
     async def save_async(self, str key, value, ttl=None):
         """Asynchronous version of save using a thread pool."""
-        return await asyncio.to_thread(self.save, key, value, ttl=ttl)
+        return await asyncio.to_thread(self.save, key, value, ttl)
 
     def __setitem__(self, str key, str value):
         self.save(key, value)
@@ -429,10 +429,16 @@ cdef class Kycore:
                 self._execute_raw("COMMIT")
                 return "Key not found"
                 
-            # Check L1 Cache
-            if k in self._cache:
-                self._cache.move_to_end(k)
-                return self._cache[k]
+            # Check L1 Cache (Only if we want deserialized result)
+            if deserialize and k in self._cache:
+                cached_val, cached_exp = self._cache[k]
+                # Check if cached item is expired
+                if cached_exp is None or datetime.strptime(cached_exp, '%Y-%m-%d %H:%M:%S.%f').replace(tzinfo=timezone.utc) > datetime.now(timezone.utc):
+                    self._cache.move_to_end(k)
+                    return cached_val
+                else:
+                    # Expired in cache, remove it and let DB handle cleanup/archive
+                    del self._cache[k]
 
             raw_val = self._decrypt_c(raw_val)
             val = raw_val
@@ -443,7 +449,7 @@ cdef class Kycore:
                     val = raw_val
             
             # Update L1 Cache
-            self._cache[k] = val
+            self._cache[k] = (val, exp_at)
             self._cache.move_to_end(k)
             if len(self._cache) > self._cache_limit:
                 self._cache.popitem(last=False)
@@ -536,8 +542,11 @@ cdef class Kycore:
         
         cdef bytes p_bytes
         for i, p in enumerate(params):
-            p_bytes = str(p).encode('utf-8')
-            sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
+            if p is None:
+                sqlite3_bind_null(stmt, i + 1)
+            else:
+                p_bytes = str(p).encode('utf-8')
+                sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
             
         if sqlite3_step(stmt) != SQLITE_DONE:
             err = sqlite3_errmsg(self._db)
@@ -554,8 +563,11 @@ cdef class Kycore:
         
         cdef bytes p_bytes
         for i, p in enumerate(params):
-            p_bytes = str(p).encode('utf-8')
-            sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
+            if p is None:
+                sqlite3_bind_null(stmt, i + 1)
+            else:
+                p_bytes = str(p).encode('utf-8')
+                sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
             
         cdef list rows = []
         cdef int col_count
@@ -669,11 +681,11 @@ cdef class Kycore:
         :param retention_days: Number of days of history to keep (default 15)
         """
         try:
-            # 1. Cleanup Audit Log
-            self._bind_and_execute("DELETE FROM audit_log WHERE (julianday('now') - julianday(timestamp)) > ?", [retention_days])
+            # 1. Cleanup Audit Log 
+            self._bind_and_execute("DELETE FROM audit_log WHERE timestamp <= datetime('now', '-' || ? || ' days')", [retention_days])
             
             # 2. Cleanup Archive
-            self._bind_and_execute("DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > ?", [retention_days])
+            self._bind_and_execute("DELETE FROM archive WHERE deleted_at <= datetime('now', '-' || ? || ' days')", [retention_days])
             
             # 3. SQLite Maintenance
             self._execute_raw("VACUUM")
@@ -793,3 +805,8 @@ cdef class Kycore:
     @property
     def data_path(self):
         return self._data_path
+
+    @property
+    def cache_keys(self):
+        """Returns the keys currently in the L1 cache (for testing)."""
+        return list(self._cache.keys())

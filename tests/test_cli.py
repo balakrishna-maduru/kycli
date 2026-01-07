@@ -224,3 +224,29 @@ def test_cli_execute_usage_errors(clean_home_db):
     with patch("sys.argv", ["kyc", "nonexistent"]):
         main()
 
+def test_cli_restore_to(clean_home_db, capsys):
+    from kycli.cli import main
+    import time
+    from datetime import datetime, timezone
+    # Use different keys to avoid confirmation prompt during setup
+    with patch("sys.argv", ["kys", "pre_k1", "v1"]): main()
+    time.sleep(1.1)
+    t1 = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
+    time.sleep(1.1)
+    with patch("sys.argv", ["kys", "post_k1", "v2"]): main()
+    capsys.readouterr()
+    
+    with patch("sys.argv", ["kyrt", t1]): main()
+    assert "Database restored" in capsys.readouterr().out
+
+def test_cli_compact(clean_home_db, capsys):
+    from kycli.cli import main
+    with patch("sys.argv", ["kyco", "0"]): main()
+    assert "Compaction complete" in capsys.readouterr().out
+
+def test_cli_restore_to_usage(clean_home_db, capsys):
+    from kycli.cli import main
+    with patch("sys.argv", ["kyrt"]): 
+        main()
+    assert "Usage: kyrt" in capsys.readouterr().out
+
