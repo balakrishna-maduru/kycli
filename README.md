@@ -160,26 +160,21 @@ kys monthly_archive "data" --ttl 1M
 
 ---
 
-### `kyg <key_or_regex>` — Search & Get
-Retrieves a value. Supports exact matches and regex.
-- **Auto-Deserialization**: If the value is a JSON object or list, it is automatically returned as a Python-friendly structure.
+### `kyg [-s] <key_or_query>` — Get & Search
+- **Get Key**: `kyg <key>` retrieves a value.
+- **Search**: `kyg -s <query>` performs a Google-like search across all values using FTS5.
+
 ```bash
+# Get exact key
 kyg username
 # Result: maduru
 
-kyg user_profile
+# Search for "admin" anywhere in the database
+kyg -s "admin"
 # Result:
 # {
-#   "name": "balakrishna",
-#   "role": "admin"
+#   "user_profile": { "name": "balu", "role": "admin" }
 # }
-```
-
-### `kyf <query>` — Full-Text Search (FTS5)
-Perform blazing-fast Google-like searches across your entire database. Powered by SQLite's FTS5 engine.
-```bash
-kyf "searching terms"
-# Returns all keys and values where the terms appear.
 ```
 
 ### `kyl [pattern]` — List Keys

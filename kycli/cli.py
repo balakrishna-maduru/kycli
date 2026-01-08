@@ -13,16 +13,14 @@ Available commands:
                                   Ex: kys user.profile.age 25
                                   Ex: kys user '{"name": "balu"}' --ttl 1d
 
-  kyg <key>[.path] or <key>[index] - Get current value or sub-key/index
-                                  Supports dot-notation and list slicing.
+  kyg <key>[.path]     - Get value, sub-key, or list index.
+  kyg -s <query>        - Search for values (Full-Text Search).
                                   Ex: kyg user.name
-                                  Ex: kyg logs[0:5]
+                                  Ex: kyg -s "error log"
 
   kypush <key> <val> [--unique]  - Append value to a list (optionally unique)
   kyrem <key> <val>               - Remove value from a list
 
-  kyf <query> [--limit <n>] [--keys-only]
-                                  - Full-text search (fast Google-like search)
 
   kyfo                            - Optimize FTS5 search index (performance)
 
@@ -99,6 +97,7 @@ def main():
         ttl = None
         limit = 100
         keys_only = False
+        search_mode = False
         new_args = []
         skip_next = False
         for i, arg in enumerate(args):
@@ -119,6 +118,8 @@ def main():
                     new_args.append(arg)
             elif arg == "--keys-only":
                 keys_only = True
+            elif arg in ["-s", "--search", "-f", "--find"]:
+                search_mode = True
             else:
                 new_args.append(arg)
         args = new_args
@@ -138,51 +139,100 @@ def main():
                 key = args[0]
                 val = " ".join(args[1:]) # Handle values with spaces if passed via kycli save
                 
-                # Attempt to parse as JSON if it looks like a complex type
-                if (val.startswith("{") and val.endswith("}")) or (val.startswith("[") and val.endswith("]")):
-                    try:
-                        import json
-                        val = json.loads(val)
-                    except:
-                        pass
-
-                existing = kv.getkey(key, deserialize=False)
+                if val.isdigit(): val = int(val)
+                elif val.lower() == "true": val = True
+                elif val.lower() == "false": val = False
+                elif val.startswith("[") or val.startswith("{"):
+                    import json
+                    try: val = json.loads(val)
+                    except: pass 
                 
-                # If key exists and is not a regex result (dict), ask for confirmation
-                if existing != "Key not found" and not isinstance(existing, dict):
-                    if existing == str(val) if not isinstance(val, (dict, list)) else json.dumps(val) == existing:
-                         print(f"➖ No change: {key} (Value is identical)")
-                         return
-                    
-                    choice = input(f"⚠️ Key '{key}' already exists. Overwrite? (y/n): ").lower().strip()
-                    if choice != 'y':
-                        print("❌ Aborted.")
-                        return
-    
-                status = kv.patch(key, val, ttl=ttl) if "." in key or "[" in key else kv.save(key, val, ttl=ttl)
+                # Check for existing key confirmation
+                if key in kv and not ttl: # Don't confirm if TTL is explicitly set (assumes override intent)
+                    if sys.stdin.isatty():
+                        confirm = input(f"⚠️ Key '{key}' already exists. Overwrite? (y/n): ").strip().lower()
+                        if confirm != 'y':
+                            print("❌ Aborted.")
+                            return
+
+                status = kv.save(key, val, ttl=ttl)
+                
                 if status == "created":
-                    print(f"✅ Saved: {key} (New)")
-                elif status == "overwritten":
-                    print(f"🔄 Updated: {key}")
+                    print(f"✅ Saved: {key} (New)" + (f" (Expires in {ttl}s)" if ttl else ""))
                 elif status == "nochange":
-                    print(f"➖ No change: {key} (Value is identical)")
+                    print(f"✅ No Change: {key} already has this value.")
                 else:
-                    print(f"➖ Result: {status}")
+                    print(f"✅ Updated: {key}" + (f" (Expires in {ttl}s)" if ttl else ""))
+
+            elif cmd in ["kypatch", "patch"]:
+                if len(args) < 2:
+                    print("Usage: kypatch <key_path> <value>")
+                    return
+                val = " ".join(args[1:])
+                # Try to parse as JSON/Int/Bool
+                if val.isdigit(): val = int(val)
+                elif val.lower() == "true": val = True
+                elif val.lower() == "false": val = False
+                else:
+                    import json
+                    try: val = json.loads(val)
+                    except: pass
+                    
+                status = kv.patch(args[0], val, ttl=ttl)
+                if status.startswith("Error"):
+                     print(f"❌ {status}")
+                else:
+                    print(f"✅ Patched: {args[0]}")
+
+            elif cmd in ["kypush", "push"]:
+                if len(args) < 2:
+                    print("Usage: kypush <key> <value> [--unique]")
+                    return
+                unique = "--unique" in args
+                val = args[1]
+                # Try to parse as JSON
+                try: val = json.loads(val)
+                except: pass
+                print(kv.push(args[0], val, unique=unique))
+
+            elif cmd in ["kyrem", "remove"]:
+                if len(args) < 2:
+                    print("Usage: kyrem <key> <value>")
+                    return
+                val = args[1]
+                try: val = json.loads(val)
+                except: pass
+                
+                status = kv.remove(args[0], val, ttl=ttl)
+                print(f"➖ Result: {status}")
     
             elif cmd in ["kyg", "getkey"]:
-                if len(args) != 1:
-                    print("Usage: kyg <key>[.path] or <key>[index]")
+                if not args:
+                    print("Usage: kyg <key> OR kyg -s <query>")
                     return
                 
-                result = kv.getkey(args[0])
-                
-                if isinstance(result, (dict, list)):
-                    import json
-                    print(json.dumps(result, indent=2))
+                if search_mode:
+                    query = " ".join(args)
+                    result = kv.search(query, limit=limit, keys_only=keys_only)
+                    if result:
+                        if keys_only:
+                            print(f"🔍 Found {len(result)} keys: {', '.join(result)}")
+                        else:
+                            import json
+                            print(json.dumps(result, indent=2))
+                    else:
+                        print("No matches found.")
                 else:
-                    print(result)
+                    result = kv.getkey(args[0])
+                    if isinstance(result, (dict, list)):
+                        import json
+                        print(json.dumps(result, indent=2))
+                    else:
+                        print(result)
     
             elif cmd in ["kyf", "search"]:
+                # Deprecated alias
+                # print("⚠️ 'kyf' is deprecated. Use 'kyg -s <query>' instead.") 
                 if not args:
                     print("Usage: kyf <query>")
                     return

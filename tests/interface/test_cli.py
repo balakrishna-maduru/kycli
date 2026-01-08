@@ -79,8 +79,14 @@ def test_cli_save_no_change(clean_home_db, capsys):
     with patch("kycli.cli.Kycore") as mock_core:
         mock_core.return_value.__enter__.return_value.getkey.return_value = "v"
         mock_core.return_value.__enter__.return_value.save.return_value = "nochange"
-        with patch("sys.argv", ["kys", "k", "v"]): main()
-    assert "➖ No change: k" in capsys.readouterr().out
+        # Mock containment check
+        mock_core.return_value.__enter__.return_value.__contains__.return_value = True
+        with patch("sys.argv", ["kys", "k", "v"]): 
+            # If we don't mock isatty, it skips prompt (which is fine for this test as value is same)
+            # But wait, logic: if key in kv: prompt. Then save. 
+            # If we skip prompt, we save. save returns nochange. 
+            main()
+    assert "✅ No Change: k" in capsys.readouterr().out
 
 def test_cli_kyv_specific_key(clean_home_db, capsys):
     with patch("sys.argv", ["kys", "log", "entry1"]): main()
@@ -132,13 +138,15 @@ def test_cli_save_identical(clean_home_db, capsys):
     with patch("sys.argv", ["kys", "same", "val"]): main()
     capsys.readouterr()
     with patch("sys.argv", ["kys", "same", "val"]): main()
-    assert "Value is identical" in capsys.readouterr().out
+    assert "✅ No Change" in capsys.readouterr().out
 
 def test_cli_save_aborted(clean_home_db, capsys):
     with patch("sys.argv", ["kys", "abort", "v1"]): main()
     capsys.readouterr()
     with patch("sys.argv", ["kys", "abort", "v2"]):
-        with patch("builtins.input", return_value="n"): main()
+        with patch("builtins.input", return_value="n"):
+            with patch("sys.stdin.isatty", return_value=True):
+                 main()
     assert "Aborted" in capsys.readouterr().out
 
 def test_cli_search(clean_home_db, capsys):
@@ -358,3 +366,28 @@ def test_cli_global_flags_coverage(clean_home_db):
         args, kwargs = mock_kv_class.call_args
         assert kwargs.get('master_key') == 'mypass'
 
+
+def test_cli_kyg_search_success(clean_home_db, capsys):
+    # Setup data
+    with patch("sys.argv", ["kys", "user.1", '{"name": "balu", "role": "admin"}']): main()
+    with patch("sys.argv", ["kys", "user.2", '{"name": "test", "role": "dev"}']): main()
+    capsys.readouterr()
+
+    # Search for 'admin'
+    with patch("sys.argv", ["kyg", "-s", "admin"]): main()
+    output = capsys.readouterr().out
+    assert "user.1" in output
+    assert "balu" in output
+    assert "user.2" not in output
+
+def test_cli_kyg_search_keys_only(clean_home_db, capsys):
+    with patch("sys.argv", ["kys", "prod_db", "secret"]): main()
+    capsys.readouterr()
+    
+    with patch("sys.argv", ["kyg", "-s", "secret", "--keys-only"]): main()
+    output = capsys.readouterr().out
+    assert "Found 1 keys: prod_db" in output
+
+def test_cli_kyg_search_no_match(clean_home_db, capsys):
+    with patch("sys.argv", ["kyg", "-s", "nonexistent"]): main()
+    assert "No matches found" in capsys.readouterr().out
