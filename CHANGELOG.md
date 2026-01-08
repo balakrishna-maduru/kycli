@@ -1,24 +1,21 @@
 # Changelog
 
-## [0.1.9] - 2026-01-08
+## [0.1.8] - 2026-01-08
 ### Added
 - **Community Standards**: Added Code of Conduct, Contributing Guide, Security Policy, Issue Templates, and PR Template.
 - **Branding**: Official KyCLI Logo added to repository and README.
 - **Improved Test Suite**: Modularized test structure (`tests/core`, `tests/interface`, `tests/integration`) and cleaned up root directory.
-
-### Changed
-- **CLI Refactor**: Merged `kyf` (search) into `kyg` using the `-s/--search` flag for a more unified experience.
-- **Project Structure**: Organized resource files into `tests/resources` and split internal Cython modules for better maintainability.
-- **Documentation**: Updated README to reflect new commands and logo.
-
-## [0.1.8] - 2026-01-08
-### Added
 - **JSONPath & Dot-Notation Querying**: Native support for nested object retrieval (e.g., `kyg user.profile.email`).
 - **List-Index & Slicing Support**: Access specific list elements or ranges directly (e.g., `kyg logs[0:10]`).
 - **Atomic Partial Updates (Patching)**: Update specific fields in deep JSON structures without rewriting the entire object via `patch()`.
 - **Advanced Collection Operations**: New `kypush` and `kyrem` commands for managed list operations (append/remove) with optional uniqueness checks.
 - **Enhanced TUI Documentation**: Full feature documentation integrated directly into the `kyshell` results pane.
 - **TUI Feature Parity**: Implemented missing commands (`kyfo`, `kyrt`, `kyco`) in the interactive shell.
+
+### Changed
+- **CLI Refactor**: Merged `kyf` (search) into `kyg` using the `-s/--search` flag for a more unified experience.
+- **Project Structure**: Organized resource files into `tests/resources` and split internal Cython modules for better maintainability.
+- **Documentation**: Updated README to reflect new commands and logo.
 
 ### Fixed
 - **Kycore Type Consistency**: Fixed a Cython type-hinting issue in `save()` for existing key lookups.
