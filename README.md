@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="KyCLI Logo" width="300">
+</p>
+
 # 🔑 kycli — The Microsecond-Fast Key-Value Toolkit
 
 `kycli` is a high-performance, developer-first key-value storage engine. It bridges the gap between the simplicity of a flat-file database and the blazing speed of in-memory caches like Redis, all while remaining completely serverless and lightweight.
