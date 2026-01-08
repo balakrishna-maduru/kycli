@@ -94,13 +94,15 @@ def test_cli_kyv_specific_key(clean_home_db, capsys):
     with patch("sys.argv", ["kyv", "log"]): main()
     assert "entry1" in capsys.readouterr().out
 
-def test_cli_kyf_no_match(clean_home_db, capsys):
-    with patch("sys.argv", ["kyf", "nothing_like_this"]): main()
+def test_cli_kyg_search_no_match(clean_home_db, capsys):
+    with patch("sys.argv", ["kyg", "-s", "nothing_like_this"]): main()
     assert "No matches found" in capsys.readouterr().out
 
-def test_cli_kyf_usage(clean_home_db, capsys):
-    with patch("sys.argv", ["kyf"]): main()
-    assert "Usage: kyf" in capsys.readouterr().out
+def test_cli_search(clean_home_db, capsys):
+    with patch("sys.argv", ["kys", "doc", "hello world"]): main()
+    capsys.readouterr()
+    with patch("sys.argv", ["kyg", "-s", "hello"]): main()
+    assert "doc" in capsys.readouterr().out
 
 def test_cli_import_error(clean_home_db, capsys):
     with patch("sys.argv", ["kyi", "ghost.csv"]): main()
@@ -149,11 +151,7 @@ def test_cli_save_aborted(clean_home_db, capsys):
                  main()
     assert "Aborted" in capsys.readouterr().out
 
-def test_cli_search(clean_home_db, capsys):
-    with patch("sys.argv", ["kys", "doc", "hello world"]): main()
-    capsys.readouterr()
-    with patch("sys.argv", ["kyf", "hello"]): main()
-    assert "doc" in capsys.readouterr().out
+
 
 def test_cli_json_save_and_get(clean_home_db, capsys):
     with patch("sys.argv", ["kys", "user", '{"name": "balu"}']): main()
@@ -308,8 +306,8 @@ def test_cli_argument_combinations(clean_home_db, capsys):
     with patch("sys.argv", ["kys", "k1", "v1"]): main()
     capsys.readouterr()
     
-    # kyf with --limit and --keys-only
-    with patch("sys.argv", ["kyf", "v1", "--limit", "1", "--keys-only"]): main()
+    # kyf with --limit and --keys-only (use kyg -s now)
+    with patch("sys.argv", ["kyg", "v1", "--limit", "1", "--keys-only", "-s"]): main()
     out = capsys.readouterr().out
     assert "k1" in out
     assert "v1" not in out
@@ -335,12 +333,13 @@ def test_cli_argument_parsing_edge_cases(clean_home_db, capsys):
     capsys.readouterr()
     
     # Hit --limit parsing failure (line 118-119)
-    with patch("sys.argv", ["kyf", "query", "--limit", "not_int"]):
+    # Use kyg -s to trigger limit usage
+    with patch("sys.argv", ["kyg", "query", "--limit", "not_int", "-s"]):
         main()
     capsys.readouterr()
     
     # Hit --keys-only (line 121, 193)
-    with patch("sys.argv", ["kyf", "query", "--keys-only"]):
+    with patch("sys.argv", ["kyg", "query", "--keys-only", "-s"]):
         main()
     capsys.readouterr()
 
@@ -391,3 +390,65 @@ def test_cli_kyg_search_keys_only(clean_home_db, capsys):
 def test_cli_kyg_search_no_match(clean_home_db, capsys):
     with patch("sys.argv", ["kyg", "-s", "nonexistent"]): main()
     assert "No matches found" in capsys.readouterr().out
+
+def test_cli_patch_success(clean_home_db, capsys):
+    with patch("sys.argv", ["kys", "user", '{"age": 20}']): main()
+    capsys.readouterr()
+    with patch("sys.argv", ["kypatch", "user.age", "25"]): main()
+    assert "Patched: user.age" in capsys.readouterr().out
+    with patch("sys.argv", ["kyg", "user.age"]): main()
+    assert "25" in capsys.readouterr().out
+
+def test_cli_patch_usage(clean_home_db, capsys):
+    with patch("sys.argv", ["kypatch"]): main()
+    assert "Usage: kypatch" in capsys.readouterr().out
+
+def test_cli_push_usage(clean_home_db, capsys):
+    with patch("sys.argv", ["kypush"]): main()
+    assert "Usage: kypush" in capsys.readouterr().out
+
+def test_cli_remove_usage(clean_home_db, capsys):
+    with patch("sys.argv", ["kyrem"]): main()
+    assert "Usage: kyrem" in capsys.readouterr().out
+
+def test_cli_restore_at(clean_home_db, capsys):
+    import time
+    from datetime import datetime, timezone
+    with patch("sys.argv", ["kys", "k", "v1"]): main()
+    time.sleep(1.5)
+    # Use UTC to match SQLite CURRENT_TIMESTAMP
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    time.sleep(1.5)
+    with patch("sys.argv", ["kys", "k", "v2"]): main()
+    capsys.readouterr()
+    
+    with patch("sys.argv", ["kyrt", "k", "--at", ts]): main()
+    output = capsys.readouterr().out
+    assert "overwritten" in output
+
+def test_cli_patch_types_and_error(clean_home_db, capsys):
+    with patch("sys.argv", ["kys", "obj", '{"a": 1}']): main()
+    capsys.readouterr()
+    
+    # Test True
+    with patch("sys.argv", ["kypatch", "obj.a", "true"]): main()
+    assert "Patched" in capsys.readouterr().out
+    
+def test_cli_patch_error(clean_home_db, capsys):
+    # Mock kv.patch to return error to test CLI path
+    with patch("kycli.cli.Kycore") as mock_core:
+        mock_core.return_value.__enter__.return_value.patch.return_value = "Error: Cannot patch"
+        with patch("sys.argv", ["kypatch", "k", "v"]): main()
+    assert "❌ Error: Cannot patch" in capsys.readouterr().out
+
+def test_cli_kyc_failure(clean_home_db, capsys):
+    import subprocess
+    with patch("sys.argv", ["kys", "fail_cmd", "exit 1"]): main()
+    
+    with patch("sys.argv", ["kyc", "fail_cmd"]): 
+        # We need to ensure subprocess.run actually runs and fails
+        # Using real subprocess might be unsafe or flaky.
+        # Better to mock subprocess.run to raise CalledProcessError
+        with patch("subprocess.run", side_effect=subprocess.CalledProcessError(1, "exit 1")):
+            main()
+    assert "failed with exit code 1" in capsys.readouterr().out

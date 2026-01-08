@@ -127,9 +127,10 @@ def test_tui_shell_more_dispatch(tmp_path):
         
         # Test Search
         mock_kv.search.return_value = {"k1": "v1"}
-        mock_buffer.text = "kyf myquery"
+        mock_buffer.text = "kyg -s myquery"
         shell.handle_command(mock_buffer)
-        assert "k1: v1" in shell.output_area.text
+        assert "k1" in shell.output_area.text
+        assert "v1" in shell.output_area.text
         
         # Test Delete
         mock_buffer.text = "kyd mykey"

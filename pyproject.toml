@@ -2,7 +2,7 @@
 # Note: Build system uses setuptools (see [build-system] below)
 [tool.poetry]
 name = "kycli"
-version = "0.1.7"
+version = "0.1.9"
 description = "**kycli** is a high-performance Python CLI toolkit built with Cython for speed."
 authors = ["Balakrishna maduru <balakrishnamaduru@gmail.com>"]
 readme = "README.md"
@@ -19,7 +19,6 @@ cryptography = ">=42.0.0"
 kycli = "kycli.cli:main"
 kys = "kycli.cli:main"
 kyg = "kycli.cli:main"
-kyf = "kycli.cli:main"
 kyl = "kycli.cli:main"
 kyv = "kycli.cli:main"
 kyd = "kycli.cli:main"

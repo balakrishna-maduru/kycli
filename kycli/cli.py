@@ -230,22 +230,6 @@ def main():
                     else:
                         print(result)
     
-            elif cmd in ["kyf", "search"]:
-                # Deprecated alias
-                # print("⚠️ 'kyf' is deprecated. Use 'kyg -s <query>' instead.") 
-                if not args:
-                    print("Usage: kyf <query>")
-                    return
-                query = " ".join(args)
-                result = kv.search(query, limit=limit, keys_only=keys_only)
-                if result:
-                    if keys_only:
-                        print(f"🔍 Found {len(result)} keys: {', '.join(result)}")
-                    else:
-                        import json
-                        print(json.dumps(result, indent=2))
-                else:
-                    print("No matches found.")
             
             elif cmd in ["kyfo", "optimize"]:
                 kv.optimize_index()
@@ -288,25 +272,7 @@ def main():
                     return
                 print(kv.restore(args[0]))
     
-            elif cmd in ["kypush", "push"]:
-                if len(args) < 2:
-                    print("Usage: kypush <key> <value> [--unique]")
-                    return
-                unique = "--unique" in args
-                val = args[1]
-                # Try to parse as JSON
-                try: val = json.loads(val)
-                except: pass
-                print(kv.push(args[0], val, unique=unique))
 
-            elif cmd in ["kyrem", "remove"]:
-                if len(args) < 2:
-                    print("Usage: kyrem <key> <value>")
-                    return
-                val = args[1]
-                try: val = json.loads(val)
-                except: pass
-                print(kv.remove(args[0], val))
     
             elif cmd in ["kyrt", "restore-to"]:
                 if not args:

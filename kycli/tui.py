@@ -56,8 +56,9 @@ class KycliShell:
                     text=HTML(
                         '<b><style color="yellow">COMMANDS</style></b>\n'
                         '<style color="cyan">kys &lt;k&gt; &lt;v&gt;</style> : Save key/JSON\n'
-                        '<style color="cyan">kyg &lt;k&gt;</style>     : Get/Deserialize\n'
-                        '<style color="cyan">kyf &lt;q&gt;</style>     : FT Search\n'
+                        '<style color="cyan">kyg [-s] &lt;k&gt;</style> : Get or Search\n'
+                        '<style color="cyan">kypush &lt;k&gt; &lt;v&gt;</style> : Push to List\n'
+                        '<style color="cyan">kyrem &lt;k&gt; &lt;v&gt;</style> : Remove from List\n'
                         '<style color="cyan">kyfo</style>         : Optimize Search\n'
                         '<style color="cyan">kyl [p]</style>     : List/Regex keys\n'
                         '<style color="cyan">kyv [-h|k]</style>  : Audit History\n'
@@ -98,33 +99,14 @@ class KycliShell:
 
     def update_history(self):
         try:
-            import shutil
-            term_height = shutil.get_terminal_size().lines
-            # Consumed lines: Results(6), Input(1), Borders/Separators(~5)
-            max_entries = max(5, term_height - 12)
-            
-            history = self.kv.get_history("-h")[:max_entries]
-            self.history_frame.title = f"Audit Trail (Last {len(history)})"
-            
-            term_width = shutil.get_terminal_size().columns
-            content_width = max(40, term_width - 40)
-            
-            table = Table(box=None, padding=(0, 1), expand=True)
-            table.add_column("TS", style="dim cyan")
-            table.add_column("Key", style="yellow")
-            table.add_column("Value", style="green")
-            
-            for key, val, ts in history:
-                # Remove small truncation, allow rich to wrap
-                v_str = str(val)
-                display_val = v_str[:1000] + "..." if len(v_str) > 1000 else v_str
-                table.add_row(ts, key, display_val)
-            
-            sio = StringIO()
-            Console(file=sio, force_terminal=True, width=content_width).print(table)
-            self.history_area.text = ANSI(sio.getvalue())
+            history = self.kv.get_history()
+            # Show last 20 entries
+            lines = []
+            for h in history[:20]:
+                lines.append(f"{h[2]} | {h[0]}: {str(h[1])[:30]}")
+            self.history_area.text = "\n".join(lines)
         except:
-            pass
+            self.history_area.text = "Error loading history"
 
     def handle_command(self, buffer):
         cmd_line = buffer.text.strip()
@@ -165,9 +147,17 @@ class KycliShell:
                                 val_parts.append(a)
                         
                         val = " ".join(val_parts)
+                        if val.isdigit(): val = int(val)
+                        elif val.lower() == "true": val = True
+                        elif val.lower() == "false": val = False
+                        elif val.startswith("[") or val.startswith("{"):
+                            try: val = json.loads(val)
+                            except: pass
+                        
                         kv_to_use = self.kv
-                        if key_val:
-                            kv_to_use = Kycore(db_path=self.db_path, master_key=key_val)
+                        master_key = key_val
+                        if master_key:
+                            kv_to_use = Kycore(db_path=self.db_path, master_key=master_key)
                         
                         key = args[0]
                         if "." in key or "[" in key:
@@ -178,35 +168,58 @@ class KycliShell:
 
                 elif cmd in ["kyg", "get"]:
                     if not args: 
-                        result = "Usage: kyg <key> [--key <k>]"
+                        result = "Usage: kyg <key> OR kyg -s <query>"
                     else:
-                        query_key = args[0]
                         master_key = self.config.get("master_key")
-                        if "--key" in args:
-                            idx = args.index("--key")
-                            if idx + 1 < len(args):
-                                master_key = args[idx+1]
+                        search_mode = False
+                        limit = 100
+                        keys_only = False
+                        new_args = []
+                        skip = False
+                        
+                        for i, a in enumerate(args):
+                            if skip:
+                                skip = False
+                                continue
+                            if a == "--key" and i + 1 < len(args):
+                                master_key = args[i+1]
+                                skip = True
+                            elif a in ["-s", "--search"]:
+                                search_mode = True
+                            elif a == "--limit" and i + 1 < len(args):
+                                try: limit = int(args[i+1])
+                                except: pass
+                                skip = True
+                            elif a == "--keys-only":
+                                keys_only = True
+                            else:
+                                new_args.append(a)
                         
                         kv_to_use = self.kv
                         if master_key:
                             kv_to_use = Kycore(db_path=self.db_path, master_key=master_key)
                         
-                        res_val = kv_to_use.getkey(query_key)
-                        if isinstance(res_val, (dict, list)):
-                            res_val = json.dumps(res_val, indent=2)
-                        result = str(res_val)
+                        if search_mode:
+                            query = " ".join(new_args)
+                            res = kv_to_use.search(query, limit=limit, keys_only=keys_only)
+                            if isinstance(res, (dict, list)):
+                                result = json.dumps(res, indent=2)
+                            else:
+                                result = str(res)
+                            if not result or result == "{}": result = "No matches found"
+                        else:
+                            if not new_args:
+                                result = "Usage: kyg <key>"
+                            else:
+                                res_val = kv_to_use.getkey(new_args[0])
+                                if isinstance(res_val, (dict, list)):
+                                    res_val = json.dumps(res_val, indent=2)
+                                result = str(res_val)
 
                 elif cmd in ["kyl", "list", "ls"]:
                     pattern = args[0] if args else None
                     res = self.kv.listkeys(pattern)
                     result = f"🔑 Keys: {', '.join(res)}" if res else "No keys found"
-
-                elif cmd in ["kyf", "search", "find"]:
-                    if not args: result = "Usage: kyf <query>"
-                    else:
-                        res = self.kv.search(" ".join(args))
-                        result = "\n".join([f"{k}: {v}" for k, v in res.items()])
-                        if not result: result = "No matches found"
 
                 elif cmd in ["kyd", "delete", "rm"]:
                     if not args: result = "Usage: kyd <key>"
