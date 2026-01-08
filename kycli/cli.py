@@ -9,12 +9,17 @@ def get_help_text():
 
 Available commands:
   kys <key> <value> [--ttl <sec>]  - Save key-value (optional TTL in seconds)
-                                  Supports JSON (dicts/lists) automatically.
+                                  Supports nested JSON paths (atomic patching).
+                                  Ex: kys user.profile.age 25
                                   Ex: kys user '{"name": "balu"}' --ttl 1d
 
-  kyg <key>[.subkey]               - Get current value (auto-deserializes JSON)
-                                  Supports subkey retrieval via dot notation.
+  kyg <key>[.path] or <key>[index] - Get current value or sub-key/index
+                                  Supports dot-notation and list slicing.
                                   Ex: kyg user.name
+                                  Ex: kyg logs[0:5]
+
+  kypush <key> <val> [--unique]  - Append value to a list (optionally unique)
+  kyrem <key> <val>               - Remove value from a list
 
   kyf <query> [--limit <n>] [--keys-only]
                                   - Full-text search (fast Google-like search)
@@ -25,7 +30,7 @@ Available commands:
 
   kyd <key>                     - Delete key (requires confirmation)
 
-  kyr <key>                     - Restore a deleted key from history/archive
+  kyr <key>[.path]              - Restore a deleted key or specific sub-path
                                   Ex: kyr my_secret --key "password"
 
   kyv [-h]                      - View full audit history (no args or -h)
@@ -154,7 +159,7 @@ def main():
                         print("❌ Aborted.")
                         return
     
-                status = kv.save(key, val, ttl=ttl)
+                status = kv.patch(key, val, ttl=ttl) if "." in key or "[" in key else kv.save(key, val, ttl=ttl)
                 if status == "created":
                     print(f"✅ Saved: {key} (New)")
                 elif status == "overwritten":
@@ -166,37 +171,11 @@ def main():
     
             elif cmd in ["kyg", "getkey"]:
                 if len(args) != 1:
-                    print("Usage: kyg <key>[.subkey]")
+                    print("Usage: kyg <key>[.path] or <key>[index]")
                     return
                 
-                full_key = args[0]
-                target_key = full_key
-                subkey_path = []
+                result = kv.getkey(args[0])
                 
-                # Handle subkey notation (e.g. user.name)
-                if "." in full_key:
-                    parts = full_key.split(".")
-                    target_key = parts[0]
-                    subkey_path = parts[1:]
-                
-                result = kv.getkey(target_key)
-                
-                if result != "Key not found" and subkey_path:
-                    # Traverse JSON
-                    for part in subkey_path:
-                        if isinstance(result, dict) and part in result:
-                            result = result[part]
-                        elif isinstance(result, list) and part.isdigit():
-                            idx = int(part)
-                            if 0 <= idx < len(result):
-                                result = result[idx]
-                            else:
-                                result = f"Index {idx} out of range"
-                                break
-                        else:
-                            result = f"Subkey '{part}' not found"
-                            break
-
                 if isinstance(result, (dict, list)):
                     import json
                     print(json.dumps(result, indent=2))
@@ -254,17 +233,44 @@ def main():
                 print(f"💡 Tip: If this was accidental, use 'kyr {key}' to restore it.")
     
             elif cmd in ["kyr", "restore"]:
-                if len(args) != 1:
-                    print("Usage: kyr <key>")
+                if len(args) < 1:
+                    print("Usage: kyr <key>[.path]")
                     return
                 print(kv.restore(args[0]))
     
-            elif cmd in ["kyrt", "restore-to"]:
-                if len(args) < 1:
-                    print("Usage: kyrt <timestamp>")
+            elif cmd in ["kypush", "push"]:
+                if len(args) < 2:
+                    print("Usage: kypush <key> <value> [--unique]")
                     return
-                ts = " ".join(args)
-                print(kv.restore_to(ts))
+                unique = "--unique" in args
+                val = args[1]
+                # Try to parse as JSON
+                try: val = json.loads(val)
+                except: pass
+                print(kv.push(args[0], val, unique=unique))
+
+            elif cmd in ["kyrem", "remove"]:
+                if len(args) < 2:
+                    print("Usage: kyrem <key> <value>")
+                    return
+                val = args[1]
+                try: val = json.loads(val)
+                except: pass
+                print(kv.remove(args[0], val))
+    
+            elif cmd in ["kyrt", "restore-to"]:
+                if not args:
+                    print("Usage: kyrt <timestamp> OR kyrt <key.path> --at <timestamp>")
+                    return
+                elif "--at" in args:
+                    idx = args.index("--at")
+                    key_part = " ".join(args[:idx])
+                    ts_part = " ".join(args[idx+1:])
+                    result = kv.restore(key_part, timestamp=ts_part)
+                else:
+                    ts = " ".join(args)
+                    result = kv.restore_to(ts)
+                print(result)
 
             elif cmd in ["kyco", "compact"]:
                 retention = int(args[0]) if args else 15

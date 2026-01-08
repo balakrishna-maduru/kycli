@@ -40,21 +40,24 @@ pip install kycli
 
 | Command | Action | Example |
 | :--- | :--- | :--- |
-| `kys` | **Save** a value (Supports JSON) | `kys user '{"id": 1}'` |
-| `kyg` | **Get** a value (Auto-deserializes) | `kyg user` |
-| `kyf` | **Search** (Full-Text Search) | `kyf "search terms"` |
-| `kyl` | **List** keys (supports Regex) | `kyl "prod_.*"` |
-| `kyv` | **View** history/audit logs | `kyv username` |
-| `kyd` | **Delete** (Double-confirmation) | `kyd old_token` |
-| `kyr` | **Restore** (Recover from history) | `kyr old_token` |
-| `kye` | **Export** data (CSV/JSON) | `kye data.json json` |
-| `kyi` | **Import** data | `kyi backup.csv` |
-| `kyc` | **Execute** stored command | `kyc hello` |
-| `kyrt` | **Restore-to** (Time Machine) | `kyrt "2026-01-01"` |
-| `kyco` | **Compact** (Cleanup) | `kyco 7` |
-| `kyshell` | **Interactive TUI** | `kycli kyshell` |
+| `kys` | **Save** / **Patch** | `kys user.age 25` |
+| `kyg` | **Get** (Sub-paths/Slices) | `kyg user.name` or `logs[0:5]` |
+| `kypush`| **Push** to list | `kypush logs "error"` |
+| `kyrem` | **Remove** from list | `kyrem tags "old"` |
+| `kyf` | **Search** (FTS5) | `kyf "search terms"` |
+| `kyl` | **List** keys (Regex) | `kyl "prod_.*"` |
+| `kyv` | **View** history/audit | `kyv username` |
+| `kyd` | **Delete** (Soft) | `kyd old_token` |
+| `kyr` | **Restore** (Path support) | `kyr user.profile` |
+| `kye` | **Export** (CSV/JSON) | `kye data.json json` |
+| `kyi` | **Import** (CSV/JSON) | `kyi backup.csv` |
+| `kyc` | **Execute** command | `kyc hello` |
+| `kyrt` | **Restore-to** (PITR) | `kyrt "2026-01-01"` |
+| `kyco` | **Compact** (Maintenance) | `kyco 7` |
+| `kyshell`| **Interactive TUI** | `kycli kyshell` |
 | `kyh` | **Help** library | `kyh` |
-| `Env` | **KYCLI_DB_PATH** | `export KYCLI_DB_PATH="..."` |
+
+---
 
 ### `kyh` — The Help Center
 Shows the available commands and basic usage instructions.
@@ -78,6 +81,44 @@ kys username "maduru"
 kys session_id "data" --ttl 1h
 # Result: ✅ Saved: session_id (New) (Expires in 1 hour)
 ```
+
+### 📂 Advanced JSONPath & Dot-Notation
+`kycli` allows you to treat your key-value store like a document database. You can query and update deep nested structures without retrieving the entire object.
+
+#### Nested Retrieval:
+```bash
+# Get a specific field
+kyg user.profile.email
+
+# Access list items by index
+kyg logs[0]
+
+# List slicing (e.g., first 5 logs)
+kyg logs[0:5]
+```
+
+#### Atomic Patching (Partial Updates):
+Instead of rewriting a large JSON object, you can update just one field.
+```bash
+# Update just the 'age' field inside the 'user' object
+kys user.profile.age 25
+```
+
+### 📦 Collection Operations (Lists & Sets)
+Manage lists stored in keys efficiently without manual read-modify-write loops.
+
+```bash
+# Append to a list
+kypush my_list "new_item"
+
+# Append only if the item doesn't exist (Set behavior)
+kypush my_tags "python" --unique
+
+# Remove from a list
+kyrem my_list "old_item"
+```
+
+---
 
 ### 🔐 Enterprise-Grade Security: Encryption at Rest
 `kycli` supports transparent **AES-256-GCM** encryption. When a master key is provided, all data is encrypted before being written to disk and decrypted on retrieval.
@@ -389,7 +430,7 @@ async def fetch_config(key: str, db: Kycore = Depends(get_db)):
 
 Want to test the speed on your own hardware?
 ```bash
-python3 benchmark.py
+PYTHONPATH=. python3 tests/integration/benchmark.py
 ```
 
  ---

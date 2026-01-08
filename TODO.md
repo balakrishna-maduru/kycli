@@ -35,6 +35,12 @@ This list tracks the progress of implementing high-performance and robust enhanc
 - [x] **Database Compaction & Maintenance**
 - [x] **Atomic Batch Support** (`save_many`)
 - [x] **100% Code Coverage Maintenance**
+## Phase 6: Maintenance & Refinement ⚙️
+- [x] **Modular Refactoring** (Core engines split)
+- [ ] **Lock Management**: Retry with exponential backoff for "Database is locked" in multi-process scenarios.
+- [ ] **Activity Logs**: Background logging via Python `logging` module.
+- [ ] **Atomic Rename Exports**: Write-to-temp-then-rename for export safety.
+- [ ] **Compression**: Optional MsgPack/Zstd for large values.
 
 ---
 *Optimized for Performance by Antigravity*

@@ -63,7 +63,7 @@ def test_pitr_restore_to(tmp_path):
         kv.save("k1", "v1")
         time.sleep(1.1)
         # Use UTC for consistency with audit log
-        t1 = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
+        t1 = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S.%f')
         time.sleep(1.1)
         kv.save("k1", "v2")
         kv.save("k2", "v3")
@@ -110,7 +110,7 @@ def test_delete_tombstone_pitr(tmp_path):
     with Kycore(db) as kv:
         kv.save("k1", "v1")
         time.sleep(1.1)
-        t1 = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
+        t1 = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S.%f')
         time.sleep(1.1)
         kv.delete("k1")
         assert kv.getkey("k1") == "Key not found"

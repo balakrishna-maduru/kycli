@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.8] - 2026-01-08
+### Added
+- **JSONPath & Dot-Notation Querying**: Native support for nested object retrieval (e.g., `kyg user.profile.email`).
+- **List-Index & Slicing Support**: Access specific list elements or ranges directly (e.g., `kyg logs[0:10]`).
+- **Atomic Partial Updates (Patching)**: Update specific fields in deep JSON structures without rewriting the entire object via `patch()`.
+- **Advanced Collection Operations**: New `kypush` and `kyrem` commands for managed list operations (append/remove) with optional uniqueness checks.
+- **Enhanced TUI Documentation**: Full feature documentation integrated directly into the `kyshell` results pane.
+- **TUI Feature Parity**: Implemented missing commands (`kyfo`, `kyrt`, `kyco`) in the interactive shell.
+
+### Fixed
+- **Kycore Type Consistency**: Fixed a Cython type-hinting issue in `save()` for existing key lookups.
+- **TUI Help Visibility**: Increased result pane height to accommodate full documentation displays.
+
 ## [0.1.7] - 2026-01-07
 ### Added
 - **Point-in-Time Recovery (PITR)**: Introduced "Time Machine" capabilities via `restore_to(timestamp)` and the `kyrt` command. Allows full database reconstruction from any point in the audit log.

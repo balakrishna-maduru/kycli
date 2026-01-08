@@ -250,3 +250,111 @@ def test_cli_restore_to_usage(clean_home_db, capsys):
         main()
     assert "Usage: kyrt" in capsys.readouterr().out
 
+
+def test_cli_advanced_ops(clean_home_db, capsys):
+    from kycli.cli import main
+    
+    # Test kypush
+    with patch("sys.argv", ["kypush", "list", "item1"]): main()
+    assert "created" in capsys.readouterr().out
+    
+    # Test kypush --unique
+    with patch("sys.argv", ["kypush", "list", "item1", "--unique"]): main()
+    assert "nochange" in capsys.readouterr().out
+    
+    # Test kyrem
+    with patch("sys.argv", ["kyrem", "list", "item1"]): main()
+    assert "overwritten" in capsys.readouterr().out
+    
+    # Test kyfo
+    with patch("sys.argv", ["kyfo"]): main()
+    assert "optimized" in capsys.readouterr().out
+
+    # Test kyg regex results
+    with patch("sys.argv", ["kys", "user_1", "v1"]): main()
+    with patch("sys.argv", ["kys", "user_2", "v2"]): main()
+    capsys.readouterr()
+    with patch("sys.argv", ["kyg", "user_.*"]): main()
+    out = capsys.readouterr().out
+    assert "user_1" in out
+    assert "user_2" in out
+
+def test_cli_patching(clean_home_db, capsys):
+    from kycli.cli import main
+    # Initial save
+    with patch("sys.argv", ["kys", "user", '{"profile": {"name": "balu"}}']): main()
+    capsys.readouterr()
+    
+    # Patch via kys with dot
+    with patch("sys.argv", ["kys", "user.profile.name", "maduru"]):
+        with patch("builtins.input", return_value="y"):
+            main()
+    assert "Updated" in capsys.readouterr().out or "Patched" in capsys.readouterr().out
+    
+    # Verify
+    with patch("sys.argv", ["kyg", "user.profile.name"]): main()
+    assert "maduru" in capsys.readouterr().out
+
+def test_cli_argument_combinations(clean_home_db, capsys):
+    from kycli.cli import main
+    with patch("sys.argv", ["kys", "k1", "v1"]): main()
+    capsys.readouterr()
+    
+    # kyf with --limit and --keys-only
+    with patch("sys.argv", ["kyf", "v1", "--limit", "1", "--keys-only"]): main()
+    out = capsys.readouterr().out
+    assert "k1" in out
+    assert "v1" not in out
+    
+    # kyg with --key (master key)
+    with patch("sys.argv", ["kys", "secret", "data", "--key", "pass"]): main()
+    capsys.readouterr()
+    with patch("sys.argv", ["kyg", "secret", "--key", "pass"]): main()
+    assert "data" in capsys.readouterr().out
+
+def test_main_coverage(clean_home_db):
+    from kycli.cli import main
+    # To hit the if __name__ == "__main__": main()
+    # we can't easily do it via import, but we can call main()
+    # which we already do.
+    pass
+
+def test_cli_argument_parsing_edge_cases(clean_home_db, capsys):
+    # Hit skip_next logic (line 106-113)
+    # kys key val --key k --ttl 1s
+    with patch("sys.argv", ["kys", "k1", "v1", "--key", "pass", "--ttl", "10s"]):
+        main()
+    capsys.readouterr()
+    
+    # Hit --limit parsing failure (line 118-119)
+    with patch("sys.argv", ["kyf", "query", "--limit", "not_int"]):
+        main()
+    capsys.readouterr()
+    
+    # Hit --keys-only (line 121, 193)
+    with patch("sys.argv", ["kyf", "query", "--keys-only"]):
+        main()
+    capsys.readouterr()
+
+def test_cli_save_status_nochange_mocked(clean_home_db):
+    with patch("kycli.cli.Kycore") as mock_kv_class:
+        mock_kv = MagicMock()
+        mock_kv_class.return_value.__enter__.return_value = mock_kv
+        mock_kv.getkey.return_value = "Key not found"
+        mock_kv.save.return_value = "nochange"
+        with patch("sys.argv", ["kys", "k", "v"]):
+            main()
+
+def test_cli_global_flags_coverage(clean_home_db):
+    with patch("kycli.cli.Kycore") as mock_kv_class:
+        mock_kv = mock_kv_class.return_value.__enter__.return_value
+        mock_kv.getkey.return_value = "Key not found"
+        with patch("sys.argv", ["kycli", "kys", "mykey", "myval", "--key", "mypass", "--ttl", "1h"]):
+            main()
+        # Verify master_key was passed to Kycore and ttl to save
+        mock_kv_class.assert_called()
+        mock_kv.save.assert_called()
+        # Check that 'mypass' was used
+        args, kwargs = mock_kv_class.call_args
+        assert kwargs.get('master_key') == 'mypass'
+

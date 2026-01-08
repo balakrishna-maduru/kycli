@@ -13,12 +13,12 @@ KyCLI has been pushed to the absolute limits of performance by integrating direc
 
 | Operation | Implementation | Avg Latency |
 | :--- | :--- | :--- |
-| **Sync (Raw C)** | **0.0028 ms** (2.8 µs) |
-| **L1 Cache Hit** | **Cython LRU** | **0.0015 ms** (1.5 µs) |
-| **Batch Save** | **Atomic C-Loop** | **0.0150 ms** / item |
-| **Get Key** | **Async (Threadpool)** | 0.0432 ms |
-| **Get History** | **Sync (Raw C)** | 0.0050 ms |
-| **List Keys** | **Sync (Raw C)** | 0.1506 ms |
+| **Sync (Raw C)** | **0.0040 ms** (4.0 µs) |
+| **L1 Cache Hit hit** | **Cython LRU** | **0.0038 ms** (3.8 µs) |
+| **Batch Save** | **Atomic C-Loop** | **0.0229 ms** / item |
+| **Get Key** | **Async (Threadpool)** | 0.0461 ms |
+| **Get History** | **Sync (Raw C)** | 0.0037 ms |
+| **List Keys** | **Sync (Raw C)** | 0.1680 ms |
 
 ## Scaling Performance (10,000 Classes/Records)
 
@@ -26,13 +26,13 @@ To test the engine at scale, we simulated a database with **10,000 school class 
 
 | Operation | Scale | Avg Latency | notes |
 | :--- | :--- | :--- | :--- |
-| **Save Class** | 10k Records | **1.7154 ms** | Includes Pydantic validation & JSON serialization |
-| **Get Class** | 10k Records | **0.0057 ms** | microsecond-fast retrieval at scale |
+| **Save Class** | 10k Records | **1.7124 ms** | Includes Pydantic validation & JSON serialization |
+| **Get Class** | 10k Records | **0.0056 ms** | microsecond-fast retrieval at scale |
 | **List Keys** | 10k Records | **1.5620 ms** | Near-instant listing of entire dataset |
-| **Search (FTS)** | 10k Records | **21.0670 ms** | Full-text search (no limit) |
-| **Search (Limit)** | 10k Records | **6.0315 ms** | Optimized FTS search |
-| **Save Async** | 10k Records | **1.6988 ms** | High-throughput background saves |
-| **Get Async** | 10k Records | **0.0482 ms** | Non-blocking retrieval |
+| **Search (FTS)** | 10k Records | **6.6721 ms** | Full-text search (no limit) |
+| **Search (Limit)** | 10k Records | **6.6349 ms** | Optimized FTS search |
+| **Save Async** | 10k Records | **0.2976 ms** | High-throughput background saves |
+| **Get Async** | 10k Records | **0.0461 ms** | Non-blocking retrieval |
 
 ### Analysis
 *   **Sync Performance**: The raw C API provides the best latency for CLI usage. A simple key fetch is now performing at near-native hardware speeds (~2.8 microseconds).
@@ -41,7 +41,7 @@ To test the engine at scale, we simulated a database with **10,000 school class 
 ## How to measure speed
 Run the comprehensive sync + async benchmark:
 ```bash
-python3 benchmark.py
+PYTHONPATH=. python3 tests/integration/benchmark.py
 ```
 
 

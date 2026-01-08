@@ -12,6 +12,7 @@ from prompt_toolkit.formatted_text import ANSI, HTML
 from rich.console import Console
 from rich.table import Table
 from io import StringIO
+import json
 
 from kycli.kycore import Kycore
 from kycli.config import load_config
@@ -164,12 +165,16 @@ class KycliShell:
                                 val_parts.append(a)
                         
                         val = " ".join(val_parts)
-                        # Re-init if key provided
                         kv_to_use = self.kv
                         if key_val:
                             kv_to_use = Kycore(db_path=self.db_path, master_key=key_val)
-                        kv_to_use.save(args[0], val, ttl=ttl_val)
-                        result = f"Saved: {args[0]}"
+                        
+                        key = args[0]
+                        if "." in key or "[" in key:
+                            kv_to_use.patch(key, val, ttl=ttl_val)
+                        else:
+                            kv_to_use.save(key, val, ttl=ttl_val)
+                        result = f"Saved: {key}"
 
                 elif cmd in ["kyg", "get"]:
                     if not args: 
@@ -185,7 +190,11 @@ class KycliShell:
                         kv_to_use = self.kv
                         if master_key:
                             kv_to_use = Kycore(db_path=self.db_path, master_key=master_key)
-                        result = str(kv_to_use.getkey(query_key))
+                        
+                        res_val = kv_to_use.getkey(query_key)
+                        if isinstance(res_val, (dict, list)):
+                            res_val = json.dumps(res_val, indent=2)
+                        result = str(res_val)
 
                 elif cmd in ["kyl", "list", "ls"]:
                     pattern = args[0] if args else None
@@ -217,9 +226,28 @@ class KycliShell:
                             result = f"No history for {args[0]}"
 
                 elif cmd in ["kyr", "restore"]:
-                    if not args: result = "Usage: kyr <key>"
+                    if not args: result = "Usage: kyr <key>[.path]"
                     else:
                         result = self.kv.restore(args[0])
+
+                elif cmd in ["kypush", "push"]:
+                    if len(args) < 2: 
+                        result = "Usage: kypush <key> <value> [--unique]"
+                    else:
+                        unique = "--unique" in args
+                        val = args[1]
+                        try: val = json.loads(val)
+                        except: pass
+                        result = self.kv.push(args[0], val, unique=unique)
+
+                elif cmd in ["kyrem", "remove"]:
+                    if not args: 
+                        result = "Usage: kyrem <key> <value>"
+                    else:
+                        val = args[1]
+                        try: val = json.loads(val)
+                        except: pass
+                        result = self.kv.remove(args[0], val)
 
                 elif cmd in ["kye", "export"]:
                     if len(args) < 1: result = "Usage: kye <file> [format]"
@@ -253,7 +281,12 @@ class KycliShell:
                     result = "⚡ Search index optimized."
 
                 elif cmd in ["kyrt", "restore-to"]:
-                    if not args: result = "Usage: kyrt <timestamp>"
+                    if not args: result = "Usage: kyrt <timestamp> OR kyrt <key.path> --at <timestamp>"
+                    elif "--at" in args:
+                        idx = args.index("--at")
+                        key_part = " ".join(args[:idx])
+                        ts_part = " ".join(args[idx+1:])
+                        result = self.kv.restore(key_part, timestamp=ts_part)
                     else:
                         ts = " ".join(args)
                         result = self.kv.restore_to(ts)

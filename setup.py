@@ -19,24 +19,39 @@ if sys.platform == "darwin":
         include_dirs.append(f"{sqlite_prefix}/include")
         library_dirs.append(f"{sqlite_prefix}/lib")
 
-# Use the C file if available, otherwise use the .pyx file with Cython
-ext_file = "kycli/kycore.c" if os.path.exists("kycli/kycore.c") else "kycli/kycore.pyx"
+# Determine if we use Cython or pre-generated C files
+USE_CYTHON_SOURCE = os.path.exists("kycli/core/storage.pyx")
 
-extensions = [
-    Extension(
-        "kycli.kycore",
-        [ext_file],
-        libraries=["sqlite3"],
-        include_dirs=include_dirs,
-        library_dirs=library_dirs,
-    )
+modules = [
+    "kycli.core.engine",
+    "kycli.core.security",
+    "kycli.core.query",
+    "kycli.core.audit",
+    "kycli.core.storage",
 ]
 
-# Only use cythonize if we're building from .pyx and Cython is available
-if ext_file.endswith(".pyx") and USE_CYTHON:
-    extensions = cythonize(extensions)
-elif ext_file.endswith(".pyx") and not USE_CYTHON:
-    raise RuntimeError("Cython is required to build from .pyx files. Please install Cython or use a source distribution that includes the generated C files.")
+extensions = []
+for mod in modules:
+    rel_path = mod.replace(".", "/")
+    pyx_path = f"{rel_path}.pyx"
+    c_path = f"{rel_path}.c"
+    
+    source = pyx_path if USE_CYTHON_SOURCE and USE_CYTHON else c_path
+    if os.path.exists(source):
+        extensions.append(
+            Extension(
+                mod,
+                [source],
+                libraries=["sqlite3"],
+                include_dirs=include_dirs,
+                library_dirs=library_dirs,
+            )
+        )
+
+if USE_CYTHON and USE_CYTHON_SOURCE:
+    extensions = cythonize(extensions, language_level="3")
+elif USE_CYTHON_SOURCE and not USE_CYTHON:
+    raise RuntimeError("Cython is required to build from source.")
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()

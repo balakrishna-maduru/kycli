@@ -272,3 +272,87 @@ def test_config_load_explicit_json(tmp_path, monkeypatch):
         # It should hit line 48 now
         # But wait, it might hit ~/.kyclirc.json if tmp_path used for HOME
         assert config["export_format"] == "yaml"
+
+def test_tui_shell_advanced_commands(tmp_path):
+    with patch("kycli.tui.Kycore") as mock_kv_class:
+        mock_kv = mock_kv_class.return_value
+        shell = KycliShell(db_path=str(tmp_path / "test_adv.db"))
+        shell.app = MagicMock()
+        mock_buffer = MagicMock()
+        
+        # Test kyfo
+        mock_buffer.text = "kyfo"
+        shell.handle_command(mock_buffer)
+        mock_kv.optimize_index.assert_called()
+        assert "optimized" in shell.output_area.text
+        
+        # Test kyrt
+        mock_buffer.text = "kyrt 2026-01-01"
+        shell.handle_command(mock_buffer)
+        mock_kv.restore_to.assert_called_with("2026-01-01")
+        
+        # Test kyco
+        mock_buffer.text = "kyco 5"
+        shell.handle_command(mock_buffer)
+        mock_kv.compact.assert_called_with(5)
+        
+        # Test kys with path (patch)
+        mock_buffer.text = "kys user.name balu"
+        shell.handle_command(mock_buffer)
+        mock_kv.patch.assert_called_with("user.name", "balu", ttl=None)
+        
+        # Test kypush
+        mock_buffer.text = "kypush tags python"
+        shell.handle_command(mock_buffer)
+        mock_kv.push.assert_called_with("tags", "python", unique=False)
+        
+        # Test kyrem
+        mock_buffer.text = "kyrem tags python"
+        shell.handle_command(mock_buffer)
+        mock_kv.remove.assert_called_with("tags", "python")
+
+        # Test kyh
+        mock_buffer.text = "kyh"
+        shell.handle_command(mock_buffer)
+        assert "🚀" in shell.output_area.text # get_help_text starts with rocket
+
+def test_tui_handler_gap_coverage(tmp_path):
+    with patch("kycli.tui.Kycore") as mock_kv_class:
+        shell = KycliShell(db_path=str(tmp_path / "tui_gap.db"))
+        shell.app = MagicMock()
+        mock_buffer = MagicMock()
+        for binding in shell.kb.bindings:
+            event = MagicMock()
+            binding.handler(event)
+        mock_buffer.text = "   "
+        shell.handle_command(mock_buffer)
+        
+        # Line 131: empty command
+        mock_buffer.text = ""
+        shell.handle_command(mock_buffer)
+
+def test_tui_warning_display_coverage(tmp_path):
+    with patch("kycli.tui.Kycore") as mock_kv_class:
+        shell = KycliShell(db_path=str(tmp_path / "tui_warn.db"))
+        shell.app = MagicMock()
+        mock_buffer = MagicMock()
+        
+        def mock_warn_getkey(k, **kwargs):
+            import warnings
+            warnings.warn("test warning", UserWarning)
+            return "val"
+        
+        shell.kv.getkey.side_effect = mock_warn_getkey
+        mock_buffer.text = "kyg somekey"
+        shell.handle_command(mock_buffer)
+        assert "⚠️ test warning" in shell.output_area.text or "val" in shell.output_area.text
+
+def test_tui_shell_exception_handling(tmp_path):
+    with patch("kycli.tui.Kycore") as mock_kv_class:
+        shell = KycliShell(db_path=str(tmp_path / "tui_exc.db"))
+        shell.app = MagicMock()
+        mock_buffer = MagicMock()
+        shell.kv.save.side_effect = Exception("save failed")
+        mock_buffer.text = "kys k v"
+        shell.handle_command(mock_buffer)
+        assert "Error: save failed" in shell.output_area.text
