@@ -45,10 +45,9 @@ pip install kycli
 | Command | Action | Example |
 | :--- | :--- | :--- |
 | `kys` | **Save** / **Patch** | `kys user.age 25` |
-| `kyg` | **Get** (Sub-paths/Slices) | `kyg user.name` or `logs[0:5]` |
+| `kyg` | **Get** & **Search** | `kyg user` or `kyg -s "query"` |
 | `kypush`| **Push** to list | `kypush logs "error"` |
 | `kyrem` | **Remove** from list | `kyrem tags "old"` |
-| `kyf` | **Search** (FTS5) | `kyf "search terms"` |
 | `kyl` | **List** keys (Regex) | `kyl "prod_.*"` |
 | `kyv` | **View** history/audit | `kyv username` |
 | `kyd` | **Delete** (Soft) | `kyd old_token` |
