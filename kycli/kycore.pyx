@@ -287,7 +287,7 @@ cdef class Kycore:
         if ttl:
             expires_at = (datetime.now(timezone.utc) + timedelta(seconds=self._parse_ttl(ttl))).strftime('%Y-%m-%d %H:%M:%S.%f')
 
-        cdef str existing = self.getkey(k, deserialize=False)
+        cdef object existing = self.getkey(k, deserialize=False)
         if existing == string_val:
             return "nochange"
         

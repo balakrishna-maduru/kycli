@@ -3,47 +3,66 @@ import os
 from kycli.kycore import Kycore
 from kycli.config import load_config
 
-def print_help():
-    print("""
+def get_help_text():
+    return """
 🚀 kycli — The Microsecond-Fast Key-Value Toolkit
 
 Available commands:
   kys <key> <value> [--ttl <sec>]  - Save key-value (optional TTL in seconds)
-                                  Ex: kys session_id "data" --ttl 3600
-  kyg <key>                     - Get current value (auto-deserializes JSON)
-                                  Ex: kyg user
-  kyf <query>                   - Full-text search (fast Google-like search)
-                                  Ex: kyf "search terms"
+                                  Supports JSON (dicts/lists) automatically.
+                                  Ex: kys user '{"name": "balu"}' --ttl 1d
+
+  kyg <key>[.subkey]               - Get current value (auto-deserializes JSON)
+                                  Supports subkey retrieval via dot notation.
+                                  Ex: kyg user.name
+
+  kyf <query> [--limit <n>] [--keys-only]
+                                  - Full-text search (fast Google-like search)
+
+  kyfo                            - Optimize FTS5 search index (performance)
+
   kyl [pattern]                 - List keys (optional regex pattern)
-                                  Ex: kyl "prod_.*"
+
   kyd <key>                     - Delete key (requires confirmation)
-                                  Ex: kyd old_token
-  kyr <key>                     - Restore a deleted key from history
-                                  Ex: kyr old_token
+
+  kyr <key>                     - Restore a deleted key from history/archive
+                                  Ex: kyr my_secret --key "password"
+
   kyv [-h]                      - View full audit history (no args or -h)
-                                  Ex: kyv -h
+
   kyv <key>                     - View latest value from history for a specific key
-                                  Ex: kyv username
-  kye <file> [format]           - Export data to file (CSV or JSON)
-                                  Ex: kye data.json json
+
+  kye <file> [format]           - Export data to file (CSV or JSON, default CSV)
+
   kyi <file>                    - Import data (CSV/JSON supported)
-                                  Ex: kyi backup.csv
+
   kyc <key> [args...]           - Execute stored command (Static/Dynamic)
-                                  Ex: kyc my_script
+
   kyrt <timestamp>              - Point-in-Time Recovery (reconstruct state)
-                                  Ex: kyrt "2026-01-01 12:00:00"
+
   kyco [days]                   - Compact DB (Cleanup old history/archive)
-                                  Ex: kyco 7 (keep 7 days of history)
+
   kyshell                       - Open interactive TUI shell
   kyh                           - Help (This message)
 
-Global Options:
-  --key <master_key>            - Provide master key for encryption/decryption
-  --ttl <seconds>               - Set expiration time for specific operations
+🔐 Encryption & Security:
+  Provide a master key to enable AES-256-GCM encryption/decryption at rest.
+  When encryption is enabled, data is stored as ciphertext and only readable with the correct key.
 
-💡 Tip: Use -h with any command or kyv -h for the full audit trail.
-🌍 Env: Set KYCLI_DB_PATH to customize the database file location.
-""")
+  - Via Global Flag:      `kycli ... --key "your_secret_passphrase"`
+  - Via Env Variable:     `export KYCLI_MASTER_KEY="your_secret_passphrase"` (Recommended)
+
+  Examples:
+    - Save encrypted:      `kys sensitive_token "99-xyz" --key "my-pass"`
+    - Get encrypted:       `kyg sensitive_token --key "my-pass"`
+    - Restore encrypted:   `kyr sensitive_token` (Ciphertext is restored, key still required to view)
+
+💡 Tip: Use `kyv -h` for the full audit trail.
+🌍 Env: Set `KYCLI_DB_PATH` to customize the database file location.
+"""
+
+def print_help():
+    print(get_help_text())
 
 import warnings
 
@@ -70,9 +89,11 @@ def main():
         else:
             cmd = prog
 
-        # Extract --key and --ttl from args
+        # Extract --key, --ttl, --limit, --keys-only from args
         master_key = os.environ.get("KYCLI_MASTER_KEY")
         ttl = None
+        limit = 100
+        keys_only = False
         new_args = []
         skip_next = False
         for i, arg in enumerate(args):
@@ -85,6 +106,14 @@ def main():
             elif arg == "--ttl" and i + 1 < len(args):
                 ttl = args[i+1]
                 skip_next = True
+            elif arg == "--limit" and i + 1 < len(args):
+                try:
+                    limit = int(args[i+1])
+                    skip_next = True
+                except:
+                    new_args.append(arg)
+            elif arg == "--keys-only":
+                keys_only = True
             else:
                 new_args.append(arg)
         args = new_args
@@ -137,9 +166,37 @@ def main():
     
             elif cmd in ["kyg", "getkey"]:
                 if len(args) != 1:
-                    print("Usage: kyg <key>")
+                    print("Usage: kyg <key>[.subkey]")
                     return
-                result = kv.getkey(args[0])
+                
+                full_key = args[0]
+                target_key = full_key
+                subkey_path = []
+                
+                # Handle subkey notation (e.g. user.name)
+                if "." in full_key:
+                    parts = full_key.split(".")
+                    target_key = parts[0]
+                    subkey_path = parts[1:]
+                
+                result = kv.getkey(target_key)
+                
+                if result != "Key not found" and subkey_path:
+                    # Traverse JSON
+                    for part in subkey_path:
+                        if isinstance(result, dict) and part in result:
+                            result = result[part]
+                        elif isinstance(result, list) and part.isdigit():
+                            idx = int(part)
+                            if 0 <= idx < len(result):
+                                result = result[idx]
+                            else:
+                                result = f"Index {idx} out of range"
+                                break
+                        else:
+                            result = f"Subkey '{part}' not found"
+                            break
+
                 if isinstance(result, (dict, list)):
                     import json
                     print(json.dumps(result, indent=2))
@@ -147,15 +204,23 @@ def main():
                     print(result)
     
             elif cmd in ["kyf", "search"]:
-                if len(args) != 1:
+                if not args:
                     print("Usage: kyf <query>")
                     return
-                result = kv.search(args[0])
+                query = " ".join(args)
+                result = kv.search(query, limit=limit, keys_only=keys_only)
                 if result:
-                    import json
-                    print(json.dumps(result, indent=2))
+                    if keys_only:
+                        print(f"🔍 Found {len(result)} keys: {', '.join(result)}")
+                    else:
+                        import json
+                        print(json.dumps(result, indent=2))
                 else:
                     print("No matches found.")
+            
+            elif cmd in ["kyfo", "optimize"]:
+                kv.optimize_index()
+                print("⚡ Search index optimized.")
     
             elif cmd in ["kyv", "history"]:
                 target = args[0] if len(args) > 0 else "-h"
@@ -168,7 +233,9 @@ def main():
                     print(f"{'Timestamp':<21} | {'Key':<15} | {'Value'}")
                     print("-" * 55)
                     for key_name, val, ts in history:
-                        print(f"{ts:<21} | {key_name:<15} | {val}")
+                        # Truncate value for table view
+                        display_val = str(val)[:40] + "..." if len(str(val)) > 40 else str(val)
+                        print(f"{ts:<21} | {key_name:<15} | {display_val}")
                 else:
                     if history:
                         print(history[0][1])

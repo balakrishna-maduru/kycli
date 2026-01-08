@@ -15,6 +15,7 @@ from io import StringIO
 
 from kycli.kycore import Kycore
 from kycli.config import load_config
+from kycli.cli import get_help_text
 
 class KycliShell:
     def __init__(self, db_path=None):
@@ -56,20 +57,25 @@ class KycliShell:
                         '<style color="cyan">kys &lt;k&gt; &lt;v&gt;</style> : Save key/JSON\n'
                         '<style color="cyan">kyg &lt;k&gt;</style>     : Get/Deserialize\n'
                         '<style color="cyan">kyf &lt;q&gt;</style>     : FT Search\n'
+                        '<style color="cyan">kyfo</style>         : Optimize Search\n'
                         '<style color="cyan">kyl [p]</style>     : List/Regex keys\n'
                         '<style color="cyan">kyv [-h|k]</style>  : Audit History\n'
                         '<style color="cyan">kyr &lt;k&gt;</style>     : Recover Deleted\n'
                         '<style color="cyan">kyd &lt;k&gt;</style>     : Secure Delete\n'
-                        '<style color="cyan">kye &lt;f&gt;</style>     : Export Data\n'
-                        '<style color="cyan">kyi &lt;f&gt;</style>     : Import Data\n'
-                        '<style color="cyan">kyc &lt;k&gt; [a]</style>  : Execute Command\n'
-                        '<style color="cyan">kyh</style>         : View Help\n'
+                        '<style color="cyan">kye &lt;f&gt; [fm]</style>  : Export CSV/JSON\n'
+                        '<style color="cyan">kyi &lt;f&gt;</style>     : Import CSV/JSON\n'
+                        '<style color="cyan">kyrt &lt;ts&gt;</style>    : PIT Recovery\n'
+                        '<style color="cyan">kyco [d]</style>     : Compact DB\n'
+                        '<style color="cyan">kyc &lt;k&gt; [a]</style>  : Execute Script\n'
+                        '<style color="cyan">kyh</style>         : Full Help\n'
                         '<style color="red">exit/quit</style>   : Quit Shell\n\n'
-                        '<style color="gray">Env: KYCLI_DB_PATH overrides DB path.</style>'
+                        '<b><style color="yellow">SECURITY</style></b>\n'
+                        '<style color="gray">Use --key &lt;k&gt; or set</style>\n'
+                        '<style color="gray">KYCLI_MASTER_KEY env.</style>'
                     )
-                )), title="Advanced Help", width=35),
+                )), title="Quick Help", width=35),
             ]),
-            Frame(Window(content=self.output_area, wrap_lines=True), title="Results", height=6),
+            Frame(Window(content=self.output_area, wrap_lines=True), title="Results", height=12),
             self.input_field,
         ])
         
@@ -242,8 +248,22 @@ class KycliShell:
                             result = f"Started: {cmd_to_run}"
                             threading.Thread(target=os.system, args=(cmd_to_run,), daemon=True).start()
 
+                elif cmd in ["kyfo", "optimize"]:
+                    self.kv.optimize_index()
+                    result = "⚡ Search index optimized."
+
+                elif cmd in ["kyrt", "restore-to"]:
+                    if not args: result = "Usage: kyrt <timestamp>"
+                    else:
+                        ts = " ".join(args)
+                        result = self.kv.restore_to(ts)
+
+                elif cmd in ["kyco", "compact"]:
+                    retention = int(args[0]) if args else 15
+                    result = self.kv.compact(retention)
+
                 elif cmd == "kyh":
-                    result = "Available commands: kys, kyg, kyl, kyf, kyd, kyv, kyr, kye, kyi, kyc, exit"
+                    result = get_help_text()
                 elif cmd == "kyshell":
                     result = "⚡ You are already in the interactive shell."
                 else:
