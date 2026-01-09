@@ -220,3 +220,24 @@ def test_lazy_workspace_creation(clean_env, capsys):
     capsys.readouterr()
     
     assert db_path.exists()
+
+def test_pyproject_scripts(clean_env):
+    """Ensure all CLI commands are registered in pyproject.toml."""
+    # Locate pyproject.toml relative to tests
+    root = clean_env.parent.parent # clean_env is tmp_path/home
+    # Actually finding the real pyproject is safer via known path or just parsing the one in repo
+    # But clean_env moves us to tmp.
+    # We can assume the test runner CWD is the project root (standard pytest behavior)
+    import tomli
+    
+    pyproject_path = "pyproject.toml"
+    if not os.path.exists(pyproject_path):
+        pytest.skip("pyproject.toml not found in CWD")
+        
+    with open(pyproject_path, "rb") as f:
+        data = tomli.load(f)
+        
+    scripts = data["tool"]["poetry"]["scripts"]
+    required = ["kyuse", "kyws", "kymv", "kycli", "kys", "kyg"]
+    for req in required:
+        assert req in scripts, f"Missing script '{req}' in pyproject.toml"

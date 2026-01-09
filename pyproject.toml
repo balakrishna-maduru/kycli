@@ -28,6 +28,9 @@ kyi = "kycli.cli:main"
 kyc = "kycli.cli:main"
 kyh = "kycli.cli:main"
 kyshell = "kycli.cli:main"
+kyuse = "kycli.cli:main"
+kyws = "kycli.cli:main"
+kymv = "kycli.cli:main"
 
 
 [build-system]
