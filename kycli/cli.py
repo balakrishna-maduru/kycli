@@ -1,6 +1,6 @@
 import sys
 import os
-from kycli.kycore import Kycore
+from kycli import Kycore
 from kycli.config import load_config, save_config, get_workspaces
 
 def get_help_text():

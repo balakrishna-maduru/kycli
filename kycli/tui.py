@@ -14,7 +14,7 @@ from rich.table import Table
 from io import StringIO
 import json
 
-from kycli.kycore import Kycore
+from kycli import Kycore
 from kycli.config import load_config, save_config, get_workspaces
 from kycli.cli import get_help_text
 
