@@ -1,7 +1,7 @@
 import sys
 import os
 from kycli.kycore import Kycore
-from kycli.config import load_config
+from kycli.config import load_config, save_config, get_workspaces
 
 def get_help_text():
     return """
@@ -9,59 +9,32 @@ def get_help_text():
 
 Available commands:
   kys <key> <value> [--ttl <sec>]  - Save key-value (optional TTL in seconds)
-                                  Supports nested JSON paths (atomic patching).
-                                  Ex: kys user.profile.age 25
-                                  Ex: kys user '{"name": "balu"}' --ttl 1d
+  kyg <key>[.path]                 - Get value, sub-key, or list index.
+  kyg -s <query>                   - Search for values (Full-Text Search).
 
-  kyg <key>[.path]     - Get value, sub-key, or list index.
-  kyg -s <query>        - Search for values (Full-Text Search).
-                                  Ex: kyg user.name
-                                  Ex: kyg -s "error log"
+  kypush <key> <val> [--unique]    - Append value to a list
+  kyrem <key> <val>                - Remove value from a list
 
-  kypush <key> <val> [--unique]  - Append value to a list (optionally unique)
-  kyrem <key> <val>               - Remove value from a list
+  kyuse <workspace>                - Switch active workspace (Creates if new)
+  kyws                             - List all workspaces
+  kymv <key> <workspace>           - Move key to another workspace
 
+  kyl [pattern]                    - List keys (optional regex pattern)
+  kyd <key>                        - Delete key (requires confirmation)
+  kyr <key>[.path]                 - Restore a deleted key
+  kyv [-h|key]                     - View audit history
 
-  kyfo                            - Optimize FTS5 search index (performance)
+  kye <file> [format]              - Export data
+  kyi <file>                       - Import data
+  kyc <key> [args...]              - Execute stored command
+  kyrt <timestamp>                 - Point-in-Time Recovery
+  kyco [days]                      - Compact DB
 
-  kyl [pattern]                 - List keys (optional regex pattern)
-
-  kyd <key>                     - Delete key (requires confirmation)
-
-  kyr <key>[.path]              - Restore a deleted key or specific sub-path
-                                  Ex: kyr my_secret --key "password"
-
-  kyv [-h]                      - View full audit history (no args or -h)
-
-  kyv <key>                     - View latest value from history for a specific key
-
-  kye <file> [format]           - Export data to file (CSV or JSON, default CSV)
-
-  kyi <file>                    - Import data (CSV/JSON supported)
-
-  kyc <key> [args...]           - Execute stored command (Static/Dynamic)
-
-  kyrt <timestamp>              - Point-in-Time Recovery (reconstruct state)
-
-  kyco [days]                   - Compact DB (Cleanup old history/archive)
-
-  kyshell                       - Open interactive TUI shell
-  kyh                           - Help (This message)
+  kyshell                          - Open interactive TUI shell
+  kyh                              - Help
 
 🔐 Encryption & Security:
-  Provide a master key to enable AES-256-GCM encryption/decryption at rest.
-  When encryption is enabled, data is stored as ciphertext and only readable with the correct key.
-
-  - Via Global Flag:      `kycli ... --key "your_secret_passphrase"`
-  - Via Env Variable:     `export KYCLI_MASTER_KEY="your_secret_passphrase"` (Recommended)
-
-  Examples:
-    - Save encrypted:      `kys sensitive_token "99-xyz" --key "my-pass"`
-    - Get encrypted:       `kyg sensitive_token --key "my-pass"`
-    - Restore encrypted:   `kyr sensitive_token` (Ciphertext is restored, key still required to view)
-
-💡 Tip: Use `kyv -h` for the full audit trail.
-🌍 Env: Set `KYCLI_DB_PATH` to customize the database file location.
+  Set `KYCLI_MASTER_KEY` env variable or use `--key "pass"` flag.
 """
 
 def print_help():
@@ -75,24 +48,23 @@ def main():
     
     config = load_config()
     db_path = config.get("db_path")
+    active_ws = config.get("active_workspace", "default")
     
     try:
         args = sys.argv[1:]
-        # Get the filename only
         full_prog = sys.argv[0]
         prog = os.path.basename(full_prog)
 
-        # Handle 'kycli <cmd>' or when run via 'python -m kycli.cli' or generic entry points
         if prog in ["kycli", "cli.py", "__main__.py", "python", "python3"]:
             if args:
                 cmd = args[0]
                 args = args[1:]
             else:
-                cmd = "kyh" # Default to help if no args
+                cmd = "kyh"
         else:
             cmd = prog
 
-        # Extract --key, --ttl, --limit, --keys-only from args
+        # Extract flags
         master_key = os.environ.get("KYCLI_MASTER_KEY")
         ttl = None
         limit = 100
@@ -124,6 +96,32 @@ def main():
                 new_args.append(arg)
         args = new_args
 
+        # Global commands that don't need Kycore context
+        if cmd in ["kyuse", "use"]:
+            if not args:
+                print(f"Current workspace: {active_ws}")
+                print("Usage: kyuse <workspace_name>")
+                return
+            target = args[0]
+            if not target.replace("_", "").replace("-", "").isalnum():
+                print("❌ Invalid workspace name. Use alphanumeric characters.")
+                return
+            save_config({"active_workspace": target})
+            print(f"➡️ Switched to workspace: {target}")
+            # Check if exists, if not notify creation
+            new_config = load_config() # Reloads to resolve path
+            if not os.path.exists(new_config["db_path"]):
+                print(f"✨ New workspace '{target}' will be created on first write.")
+            return
+
+        if cmd in ["kyws", "workspaces"]:
+            wss = get_workspaces()
+            print(f"📂 Workspaces:")
+            for ws in wss:
+                marker = "✨ " if ws == active_ws else "   "
+                print(f"{marker}{ws}")
+            return
+
         if cmd in ["kyshell", "shell"]:
             from kycli.tui import start_shell
             start_shell(db_path=db_path)
@@ -131,6 +129,51 @@ def main():
 
 
         with Kycore(db_path=db_path, master_key=master_key) as kv:
+            # Move command needs special handling (inter-db)
+            if cmd in ["kymv", "mv", "move"]:
+                if len(args) < 2:
+                    print("Usage: kymv <key> <target_workspace>")
+                    return
+                
+                key = args[0]
+                target_ws = args[1]
+                
+                if target_ws == active_ws:
+                    print("⚠️ Source and target workspaces are the same.")
+                    return
+
+                # Get value
+                val = kv.getkey(key)
+                if val == "Key not found":
+                    print(f"❌ Key '{key}' not found in '{active_ws}'.")
+                    return
+                
+                # Check target DB
+                from kycli.config import DATA_DIR
+                target_db = os.path.join(DATA_DIR, f"{target_ws}.db")
+                
+                # We need a quick way to write to target without side effects
+                # We can open a second Kycore instance
+                print(f"📦 Moving '{key}' to '{target_ws}'...")
+                
+                try:
+                    with Kycore(db_path=target_db, master_key=master_key) as target_kv:
+                        # Check exist
+                        if key in target_kv:
+                            confirm = input(f"⚠️ Key '{key}' exists in '{target_ws}'. Overwrite? (y/n): ")
+                            if confirm.lower() != 'y':
+                                print("❌ Aborted.")
+                                return
+                        
+                        target_kv.save(key, val)
+                        # Delete from source
+                        kv.delete(key)
+                        print(f"✅ Moved '{key}' to '{target_ws}'.")
+                except Exception as e:
+                    print(f"🔥 Failed to move: {e}")
+                return
+
+            # ... Rest of commands ...
             if cmd in ["kys", "save"]:
                 if len(args) < 2:
                     print("Usage: kys <key> <value>")
@@ -154,11 +197,9 @@ def main():
                         if confirm != 'y':
                             print("❌ Aborted.")
                             return
-
                 status = kv.save(key, val, ttl=ttl)
-                
                 if status == "created":
-                    print(f"✅ Saved: {key} (New)" + (f" (Expires in {ttl}s)" if ttl else ""))
+                    print(f"✅ Saved: {key} (New) [Workspace: {active_ws}]" + (f" (Expires in {ttl}s)" if ttl else ""))
                 elif status == "nochange":
                     print(f"✅ No Change: {key} already has this value.")
                 else:
@@ -242,7 +283,7 @@ def main():
                 if not history:
                     print(f"No history found.")
                 elif target == "-h":
-                    print("📜 Full Audit History (All Keys):")
+                    print(f"📜 Full Audit History [{active_ws}]:")
                     print(f"{'Timestamp':<21} | {'Key':<15} | {'Value'}")
                     print("-" * 55)
                     for key_name, val, ts in history:
@@ -272,8 +313,6 @@ def main():
                     return
                 print(kv.restore(args[0]))
     
-
-    
             elif cmd in ["kyrt", "restore-to"]:
                 if not args:
                     print("Usage: kyrt <timestamp> OR kyrt <key.path> --at <timestamp>")
@@ -295,9 +334,9 @@ def main():
                 pattern = args[0] if args else None
                 keys = kv.listkeys(pattern)
                 if keys:
-                    print(f"🔑 Keys: {', '.join(keys)}")
+                    print(f"🔑 Keys [{active_ws}]: {', '.join(keys)}")
                 else:
-                    print("No keys found.")
+                    print(f"No keys found in workspace '{active_ws}'.")
     
             elif cmd in ["kyh", "help", "--help", "-h"]:
                 print_help()
@@ -320,7 +359,7 @@ def main():
                     print(f"❌ Error: File not found: {import_path}")
                     return
                 kv.import_data(import_path)
-                print(f"📥 Imported data from {import_path}")
+                print(f"📥 Imported data into '{active_ws}'")
     
             elif cmd in ["kyc", "execute"]:
                 if not args:

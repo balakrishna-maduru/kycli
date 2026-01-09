@@ -15,7 +15,7 @@ from io import StringIO
 import json
 
 from kycli.kycore import Kycore
-from kycli.config import load_config
+from kycli.config import load_config, save_config, get_workspaces
 from kycli.cli import get_help_text
 
 class KycliShell:
@@ -59,6 +59,8 @@ class KycliShell:
                         '<style color="cyan">kyg [-s] &lt;k&gt;</style> : Get or Search\n'
                         '<style color="cyan">kypush &lt;k&gt; &lt;v&gt;</style> : Push to List\n'
                         '<style color="cyan">kyrem &lt;k&gt; &lt;v&gt;</style> : Remove from List\n'
+                        '<style color="cyan">kyuse &lt;ws&gt;</style>    : Switch Workspace\n'
+                        '<style color="cyan">kyws</style>            : List Workspaces\n'
                         '<style color="cyan">kyfo</style>         : Optimize Search\n'
                         '<style color="cyan">kyl [p]</style>     : List/Regex keys\n'
                         '<style color="cyan">kyv [-h|k]</style>  : Audit History\n'
@@ -96,6 +98,11 @@ class KycliShell:
         )
         
         self.update_history()
+        self.update_status()
+
+    def update_status(self):
+        ws = self.config.get("active_workspace", "default")
+        self.history_frame.title = f"Audit Trail [{ws}]"
 
     def update_history(self):
         try:
@@ -125,7 +132,34 @@ class KycliShell:
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             try:
-                if cmd in ["kys", "save"]:
+                # Workspace Commands
+                if cmd in ["kyuse", "use"]:
+                    if not args:
+                        result = "Usage: kyuse <workspace>"
+                    else:
+                        target = args[0]
+                        if not target.isalnum():
+                            result = "❌ Invalid name."
+                        else:
+                            save_config({"active_workspace": target})
+                            # Reload config and Kycore
+                            self.config = load_config()
+                            new_db_path = self.config.get("db_path")
+                            self.kv = Kycore(db_path=new_db_path)
+                            self.update_status() # Refresh title
+                            self.update_history() # Refresh history for new DB
+                            result = f"➡️ Switched to workspace: {target}"
+
+                elif cmd in ["kyws", "workspaces"]:
+                    wss = get_workspaces()
+                    ws = self.config.get("active_workspace", "default")
+                    lines = ["📂 Workspaces:"]
+                    for w in wss:
+                        marker = "✨ " if w == ws else "   "
+                        lines.append(f"{marker}{w}")
+                    result = "\n".join(lines)
+                
+                elif cmd in ["kys", "save"]:
                     if len(args) < 2: 
                         result = "Usage: kys <key> <value> [--ttl <sec>] [--key <k>]"
                     else:
