@@ -102,36 +102,29 @@ def main():
                 new_args.append(arg)
         args = new_args
 
-        # Global commands that don't need Kycore context
         if cmd in ["kyuse", "use"]:
             if not args:
-                console.print(f"[yellow]Current workspace:[/yellow] [bold green]{active_ws}[/bold green]")
-                console.print("Usage: kyuse <workspace_name>")
+                print(f"Current workspace: {active_ws}")
+                print("Usage: kyuse <workspace_name>")
                 return
             target = args[0]
             if not target.replace("_", "").replace("-", "").isalnum():
-                console.print("[red]❌ Invalid workspace name. Use alphanumeric characters.[/red]")
+                print("Error: Invalid workspace name. Use alphanumeric characters.")
                 return
             save_config({"active_workspace": target})
-            console.print(f"[bold green]➡️ Switched to workspace:[/bold green] [cyan]{target}[/cyan]")
+            print(f"Switched to workspace: {target}")
             # Check if exists, if not notify creation
             new_config = load_config() # Reloads to resolve path
             if not os.path.exists(new_config["db_path"]):
-                console.print(f"[dim]✨ New workspace '{target}' will be created on first write.[/dim]")
+                print(f"New workspace '{target}' will be created on first write.")
             return
 
         if cmd in ["kyws", "workspaces"]:
             wss = get_workspaces()
-            table = Table(title="📂 Workspaces", show_header=False, box=None)
-            table.add_column("Status", justify="center", width=4)
-            table.add_column("Name", style="cyan")
-            
+            print("Workspaces:")
             for ws in wss:
-                marker = "✨" if ws == active_ws else ""
-                style = "bold cyan" if ws == active_ws else "white"
-                table.add_row(marker, Text(ws, style=style))
-            
-            console.print(table)
+                marker = "* " if ws == active_ws else "  "
+                print(f"{marker}{ws}")
             return
 
         if cmd in ["kyshell", "shell"]:
@@ -144,7 +137,7 @@ def main():
             # Move command needs special handling (inter-db)
             if cmd in ["kymv", "mv", "move"]:
                 if len(args) < 2:
-                    console.print("Usage: kymv <key> <target_workspace>")
+                    print("Usage: kymv <key> <target_workspace>")
                     return
                 
                 key = args[0]
