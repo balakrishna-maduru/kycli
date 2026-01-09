@@ -171,7 +171,52 @@ def test_kymv_overwrite_abort(clean_env, capsys):
     capsys.readouterr()
     
     # Try move, input 'n' to abort
-    with patch("sys.stdin.isatty", return_value=True): # Mock manual overwrite check? kymv uses input()
+    with patch("sys.stdin.isatty", return_value=True):
         with patch("builtins.input", return_value="n"):
             with patch("sys.argv", ["kymv", "k1", "ws2"]): main()
-            assert "Aborted" in capsys.readouterr().out 
+            assert "Aborted" in capsys.readouterr().out
+
+def test_kymv_overwrite_confirm(clean_env, capsys):
+    from kycli.cli import main
+    # Setup: key exists in both
+    with patch("sys.argv", ["kyuse", "ws1"]): main()
+    with patch("sys.argv", ["kys", "k1", "val_original"]): main()
+    capsys.readouterr()
+    
+    with patch("sys.argv", ["kyuse", "ws2"]): main()
+    with patch("sys.argv", ["kys", "k1", "val_conflict"]): main()
+    capsys.readouterr()
+    
+    # Switch back to ws1
+    with patch("sys.argv", ["kyuse", "ws1"]): main()
+    capsys.readouterr()
+    
+    # Try move, input 'y' to confirm
+    with patch("sys.stdin.isatty", return_value=True):
+        with patch("builtins.input", return_value="y"):
+            with patch("sys.argv", ["kymv", "k1", "ws2"]): main()
+            out = capsys.readouterr().out
+            assert "Moved 'k1'" in out
+            
+    # Verify ws2 has new value
+    with patch("sys.argv", ["kyuse", "ws2"]): main()
+    capsys.readouterr()
+    with patch("sys.argv", ["kyg", "k1"]): main()
+    assert "val_original" in capsys.readouterr().out
+
+def test_lazy_workspace_creation(clean_env, capsys):
+    from kycli.cli import main, load_config
+    
+    # Switch to new workspace
+    with patch("sys.argv", ["kyuse", "lazy_ws"]): main()
+    capsys.readouterr()
+    
+    # File should NOT exist yet
+    db_path = clean_env / ".kycli" / "data" / "lazy_ws.db"
+    assert not db_path.exists()
+    
+    # Save a key -> Creates file
+    with patch("sys.argv", ["kys", "k", "v"]): main()
+    capsys.readouterr()
+    
+    assert db_path.exists()
