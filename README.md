@@ -307,11 +307,23 @@ kyc list_files /tmp
 ### `kyshell` — Interactive TUI Shell
 Launch a multi-pane interactive shell to manage your data.
 - **Auto-completion**: Tab-completion for all commands.
-- **Split View**: Real-time audit trail in a separate pane as you execute commands.
-- **Syntax Highlighting**: Beautifully formatted input and output.
+- **Split View**: Real-time audit trail in a separate pane.
+- **Workspace Aware**: Semantic status bar showing active workspace and user.
 ```bash
 kycli kyshell
 ```
+
+---
+
+## 📚 Documentation & Guides
+
+| Topic | Description | Link |
+| :--- | :--- | :--- |
+| **Workspaces** | Managing multiple projects/tenants (`kyuse`, `kymv`). | [docs/WORKSPACES.md](docs/WORKSPACES.md) |
+| **Data Management** | Import, Export, and Backups (`kye`, `kyi`). | [docs/DATA_MGMT.md](docs/DATA_MGMT.md) |
+| **Recovery** | Time travel (PITR), Restore, and Compaction (`kyrt`, `kyco`). | [docs/RECOVERY.md](docs/RECOVERY.md) |
+
+---
 
 
 ### ⚙️ Global Configuration & Env Vars

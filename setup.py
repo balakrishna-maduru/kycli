@@ -58,7 +58,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="kycli",
-    version="0.1.8",
+    version="0.1.9",
     author="Balakrishna Maduru",
     author_email="balakrishnamaduru@gmail.com",
     description="**kycli** is a high-performance Python CLI toolkit built with Cython for speed.",
@@ -92,6 +92,9 @@ setup(
             "kyc=kycli.cli:main",
             "kyh=kycli.cli:main",
             "kyshell=kycli.cli:main",
+            "kyuse=kycli.cli:main",
+            "kyws=kycli.cli:main",
+            "kymv=kycli.cli:main",
         ],
     },
 )
