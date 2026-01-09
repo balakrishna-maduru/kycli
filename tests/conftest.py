@@ -16,6 +16,18 @@ def clean_home_db(tmp_path, monkeypatch):
     """Ensure a clean home directory and DB for each test."""
     fake_home = tmp_path / "home"
     fake_home.mkdir()
-    monkeypatch.setattr("os.path.expanduser", lambda x: str(fake_home / "kydata.db") if x == "~/kydata.db" else x)
+    
+    # Patch module-level constants in kycli.config since they are loaded at import time
+    fake_kycli_dir = fake_home / ".kycli"
+    fake_data_dir = fake_kycli_dir / "data"
+    fake_config_path = fake_kycli_dir / "config.json"
+    
+    # We need to mock them wherever they are imported
+    # But usually patching kycli.config is enough if others use `from kycli import config` or `config.DATA_DIR`
+    monkeypatch.setattr("kycli.config.KYCLI_DIR", str(fake_kycli_dir))
+    monkeypatch.setattr("kycli.config.DATA_DIR", str(fake_data_dir))
+    monkeypatch.setattr("kycli.config.CONFIG_PATH", str(fake_config_path))
+
+    monkeypatch.setattr("os.path.expanduser", lambda x: str(fake_home / "kydata.db") if x == "~/kydata.db" else (str(fake_home / ".kyclirc") if x == "~/.kyclirc" else (str(fake_home) if x == "~" else x)))
     monkeypatch.setenv("HOME", str(fake_home))
     return fake_home

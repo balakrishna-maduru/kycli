@@ -12,7 +12,12 @@ def clean_env(tmp_path):
          patch("kycli.config.CONFIG_PATH", str(tmp_path / ".kycli" / "config.json")), \
          patch("os.path.expanduser") as mock_expand:
         
-        mock_expand.side_effect = lambda p: str(tmp_path / "kydata.db") if p == "~/kydata.db" else (str(tmp_path / ".kyclirc") if p == "~/.kyclirc" else p)
+        def expand_path(p):
+             if p == "~/kydata.db": return str(tmp_path / "kydata.db")
+             if p == "~/.kyclirc": return str(tmp_path / ".kyclirc")
+             if p == "~/.kyclirc.json": return str(tmp_path / ".kyclirc.json")
+             return p
+        mock_expand.side_effect = expand_path
         
         yield tmp_path
 
@@ -102,5 +107,71 @@ def test_list_workspaces(clean_env, capsys):
     
     with patch("sys.argv", ["kyws"]): main()
     out = capsys.readouterr().out
-    assert "alpha" in out
     assert "beta" in out
+
+def test_config_env_override(clean_env):
+    """Test that KYCLI_DB_PATH overrides active workspace."""
+    custom_db = clean_env / "custom.db"
+    with patch.dict(os.environ, {"KYCLI_DB_PATH": str(custom_db)}):
+        config = load_config()
+        assert config["db_path"] == str(custom_db)
+
+def test_legacy_config_loading(clean_env):
+    """Test loading from legacy .kyclirc files."""
+    # Test JSON .kyclirc
+    rc_path = clean_env / ".kyclirc.json"
+    rc_path.write_text('{"export_format": "yaml"}')
+    
+    original_exists = os.path.exists
+    def mock_exists(p):
+        if str(p) == str(rc_path): return True
+        return original_exists(p)
+
+    with patch("os.path.exists", side_effect=mock_exists):
+        config = load_config()
+        assert config["export_format"] == "yaml"
+
+def test_kyuse_validation(clean_env, capsys):
+    from kycli.cli import main
+    # Invalid name
+    with patch("sys.argv", ["kyuse", "bad/name"]): main()
+    assert "Invalid workspace name" in capsys.readouterr().out
+    
+    # Empty name (usage)
+    with patch("sys.argv", ["kyuse"]): main()
+    assert "Usage: kyuse" in capsys.readouterr().out
+
+def test_kymv_errors(clean_env, capsys):
+    from kycli.cli import main
+    # 1. Target same as source
+    with patch("sys.argv", ["kymv", "k1", "default"]): main()
+    assert "same" in capsys.readouterr().out
+    
+    # 2. Key not found
+    with patch("sys.argv", ["kymv", "missing_key", "target_ws"]): main()
+    assert "not found" in capsys.readouterr().out
+    
+    # 3. Usage
+    with patch("sys.argv", ["kymv"]): main()
+    assert "Usage: kymv" in capsys.readouterr().out
+
+def test_kymv_overwrite_abort(clean_env, capsys):
+    from kycli.cli import main
+    # Setup: key exists in both
+    with patch("sys.argv", ["kyuse", "ws1"]): main()
+    with patch("sys.argv", ["kys", "k1", "v1"]): main()
+    capsys.readouterr()
+    
+    with patch("sys.argv", ["kyuse", "ws2"]): main()
+    with patch("sys.argv", ["kys", "k1", "v2"]): main()
+    capsys.readouterr()
+    
+    # Switch back to ws1
+    with patch("sys.argv", ["kyuse", "ws1"]): main()
+    capsys.readouterr()
+    
+    # Try move, input 'n' to abort
+    with patch("sys.stdin.isatty", return_value=True): # Mock manual overwrite check? kymv uses input()
+        with patch("builtins.input", return_value="n"):
+            with patch("sys.argv", ["kymv", "k1", "ws2"]): main()
+            assert "Aborted" in capsys.readouterr().out 

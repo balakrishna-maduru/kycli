@@ -58,7 +58,43 @@ pip install kycli
 | `kyrt` | **Restore-to** (PITR) | `kyrt "2026-01-01"` |
 | `kyco` | **Compact** (Maintenance) | `kyco 7` |
 | `kyshell`| **Interactive TUI** | `kycli kyshell` |
+| `kyuse`| **Switch Workspace** | `kyuse project_alpha` |
+| `kyws` | **List Workspaces** | `kyws` |
+| `kymv` | **Move Key** | `kymv api_key prod` |
 | `kyh` | **Help** library | `kyh` |
+
+---
+
+## 🏢 Multi-Tenancy (Workspaces)
+`kycli` supports isolating data into different **workspaces**. Each workspace is stored in its own focused database file (`~/.kycli/data/<name>.db`), keeping your projects separate and performant.
+
+### `kyuse <workspace>` — Switch Workspace
+Switches the active workspace. If the workspace doesn't exist, it will be created on the first write.
+- **Persistence**: Your choice is remembered across sessions.
+- **Migration**: Old `~/kydata.db` is auto-migrated to the `default` workspace.
+```bash
+kyuse project_alpha
+# Result: ➡️ Switched to workspace: project_alpha
+```
+
+### `kyws` — List Workspaces
+Shows all available workspaces. The active one is marked with `✨`.
+```bash
+kyws
+# Result: 📂 Workspaces:
+#    default
+# ✨ project_alpha
+#    temp_test
+```
+
+### `kymv <key> <target_workspace>` — Move Data
+Moves a key (and its value) from the current workspace to another.
+- **Safety**: Asks for confirmation if the key exists in the target.
+- **Atomic**: Copies to target and deletes from source only on success.
+```bash
+kymv my_api_key project_beta
+# Result: ✅ Moved 'my_api_key' to 'project_beta'.
+```
 
 ---
 

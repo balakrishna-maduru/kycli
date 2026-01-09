@@ -67,7 +67,7 @@ def load_raw_config():
             pass
             
     # Legacy .kyclirc checking (fallback)
-    rc_paths = [".kyclirc", ".kyclirc.json", os.path.expanduser("~/.kyclirc")]
+    rc_paths = [".kyclirc", ".kyclirc.json", os.path.expanduser("~/.kyclirc"), os.path.expanduser("~/.kyclirc.json")]
     for path in rc_paths:
         if os.path.exists(path):
             try:

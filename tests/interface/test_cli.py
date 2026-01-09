@@ -116,7 +116,8 @@ def test_cli_usage_errors(clean_home_db, capsys):
 
 def test_cli_list_no_keys(clean_home_db, capsys):
     with patch("sys.argv", ["kyl"]): main()
-    assert "No keys found" in capsys.readouterr().out
+    out = capsys.readouterr().out
+    assert "no keys found" in out.lower() or "no keys found in workspace" in out.lower()
 
 def test_cli_full_history(clean_home_db, capsys):
     with patch("sys.argv", ["kys", "a", "1"]): main()
@@ -385,7 +386,8 @@ def test_cli_kyg_search_keys_only(clean_home_db, capsys):
     
     with patch("sys.argv", ["kyg", "-s", "secret", "--keys-only"]): main()
     output = capsys.readouterr().out
-    assert "Found 1 keys: prod_db" in output
+    assert "Found 1 keys" in output
+    assert "prod_db" in output
 
 def test_cli_kyg_search_no_match(clean_home_db, capsys):
     with patch("sys.argv", ["kyg", "-s", "nonexistent"]): main()

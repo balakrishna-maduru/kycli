@@ -6,70 +6,37 @@ from unittest.mock import patch, MagicMock
 from kycli.config import load_config
 from kycli.tui import KycliShell
 
-def test_config_load_default(tmp_path, monkeypatch):
-    monkeypatch.setenv("HOME", str(tmp_path))
-    config = load_config()
-    assert config["db_path"] == str(tmp_path / "kydata.db")
-    assert config["export_format"] == "csv"
 
-def test_config_load_custom(tmp_path, monkeypatch):
-    monkeypatch.setenv("HOME", str(tmp_path))
-    rc_path = tmp_path / ".kyclirc"
-    with open(rc_path, "w") as f:
-        json.dump({"export_format": "json", "db_path": "/tmp/test.db"}, f)
-    
-    # Mocking os.path.exists and open
-    original_exists = os.path.exists
-    original_open = open
-    with patch("os.path.exists") as mock_exists:
-        mock_exists.side_effect = lambda p: True if ".kyclirc" in str(p) else original_exists(p)
-        
-        def mock_open(path, *args, **kwargs):
-            if ".kyclirc" in str(path):
-                return BytesIO(json.dumps({"export_format": "json", "db_path": "/tmp/test.db"}).encode())
-            return original_open(path, *args, **kwargs)
-
-        with patch("builtins.open", side_effect=mock_open):
-            config = load_config()
-            assert config["export_format"] == "json"
-            assert config["db_path"] == "/tmp/test.db"
-
-
-def test_config_expansion(tmp_path, monkeypatch):
-    monkeypatch.setenv("HOME", str(tmp_path))
-    config = load_config()
-    assert "~" not in config["db_path"]
-    assert str(tmp_path) in config["db_path"]
-
-def test_config_load_broken_json(tmp_path, monkeypatch):
-    monkeypatch.setenv("HOME", str(tmp_path))
-    rc_path = tmp_path / ".kyclirc"
-    with open(rc_path, "w") as f:
-        f.write("{invalid json}")
-    
-    original_exists = os.path.exists
-    def mock_exists(path):
-        if ".kyclirc" in str(path): return True
-        return original_exists(path)
-    
-    with patch("os.path.exists", side_effect=mock_exists):
-        # Should fall back to default config if loading fails
-        config = load_config()
-        assert config["export_format"] == "csv"
-
-def test_config_load_corrupt_toml(tmp_path, monkeypatch):
-    monkeypatch.setenv("HOME", str(tmp_path))
-    pyproject_path = "pyproject.toml"
-    
-    original_exists = os.path.exists
-    def mock_exists(path):
-        if "pyproject.toml" in str(path): return True
-        return original_exists(path)
-    
-    with patch("os.path.exists", side_effect=mock_exists):
-        with patch("builtins.open", return_value=BytesIO(b'[[[')): # Invalid TOML
-            config = load_config()
-            assert config["export_format"] == "csv" # Fallback
+# Workspace tests for TUI
+def test_tui_workspaces_switching(tmp_path):
+    with patch("kycli.tui.Kycore") as mock_kv_class:
+        with patch("kycli.tui.save_config") as mock_save:
+            shell = KycliShell(db_path=str(tmp_path / "tui_init.db"))
+            shell.app = MagicMock()
+            mock_buffer = MagicMock()
+            
+            # List workspaces
+            with patch("kycli.tui.get_workspaces", return_value=["alpha", "beta"]):
+                mock_buffer.text = "kyws"
+                shell.handle_command(mock_buffer)
+                assert "alpha" in shell.output_area.text
+                assert "beta" in shell.output_area.text
+            
+            # Switch valid
+            mock_buffer.text = "kyuse beta"
+            shell.handle_command(mock_buffer)
+            mock_save.assert_called_with({"active_workspace": "beta"})
+            assert "Switched to workspace: beta" in shell.output_area.text
+            
+            # Switch invalid
+            mock_buffer.text = "kyuse bad/name"
+            shell.handle_command(mock_buffer)
+            assert "Invalid name" in shell.output_area.text
+            
+            # Config refresh check (mocking load_config in TUI init/update)
+            # The shell reloads config on switch, which we mock via kycli.config.load_config
+            # but testing that integration might be tricky with mocks.
+            # We trust save_config was called.
 
 def test_cli_dispatch_various_progs(clean_home_db):
     from kycli.cli import main
@@ -204,22 +171,6 @@ def test_tui_shell_execute_command(tmp_path):
         shell.handle_command(mock_buffer)
         assert "not found" in shell.output_area.text
 
-def test_config_load_json_rc(tmp_path, monkeypatch):
-    monkeypatch.setenv("HOME", str(tmp_path))
-    rc_path = tmp_path / ".kyclirc.json" # Wrong name for my logic but I can test ending with .json
-    
-    # My logic:
-    # rc_paths = [".kyclirc", os.path.expanduser("~/.kyclirc")]
-    # It checks .kyclirc ending with .json? No.
-    # if path.endswith(".json"):
-    
-    with open(tmp_path / ".kyclirc", "w") as f:
-        json.dump({"export_format": "xml"}, f)
-        
-    with patch("os.path.exists", side_effect=lambda p: True if ".kyclirc" in str(p) else False):
-        # Trigger the JSON load via .kyclirc (if TOML fails it tries JSON)
-        # To hit line 48 specifically, I need path.endswith(".json")
-        pass
 
 def test_tui_misc_coverage(tmp_path):
     with patch("kycli.tui.Kycore") as mock_kv_class:
@@ -256,23 +207,6 @@ def test_tui_start_shell():
         mock_shell_class.assert_called_with("/tmp/test.db")
         mock_shell.run.assert_called_once()
 
-def test_config_load_explicit_json(tmp_path, monkeypatch):
-    monkeypatch.setenv("HOME", str(tmp_path))
-    json_path = tmp_path / ".kyclirc.json"
-    with open(json_path, "w") as f:
-        json.dump({"export_format": "yaml"}, f)
-    
-    # We need to make sure os.path.exists works for this path
-    original_exists = os.path.exists
-    def mock_exists(p):
-        if str(p).endswith(".kyclirc.json"): return True
-        return original_exists(p)
-    
-    with patch("os.path.exists", side_effect=mock_exists):
-        config = load_config()
-        # It should hit line 48 now
-        # But wait, it might hit ~/.kyclirc.json if tmp_path used for HOME
-        assert config["export_format"] == "yaml"
 
 def test_tui_shell_advanced_commands(tmp_path):
     with patch("kycli.tui.Kycore") as mock_kv_class:

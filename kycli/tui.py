@@ -354,7 +354,10 @@ class KycliShell:
             
             # Combine warnings and result
             if w:
-                warn_msgs = [f"⚠️ {warn.message}" for warn in w]
+                warn_msgs = []
+                for warn in w:
+                    msg = warn.message if hasattr(warn, 'message') else str(warn)
+                    warn_msgs.append(f"⚠️ {msg}")
                 result = "\n".join(warn_msgs) + ("\n" + result if result else "")
 
         self.output_area.text = result
