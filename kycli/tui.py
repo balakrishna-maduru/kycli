@@ -49,6 +49,9 @@ class KycliShell:
         # Layout
         self.history_frame = Frame(Window(content=self.history_area, wrap_lines=True), title="Audit Trail")
         
+        # Status Bar
+        self.status_bar = FormattedTextControl(text="")
+        
         body = HSplit([
             VSplit([
                 self.history_frame,
@@ -81,6 +84,7 @@ class KycliShell:
             ]),
             Frame(Window(content=self.output_area, wrap_lines=True), title="Results", height=12),
             self.input_field,
+            Window(content=self.status_bar, height=1, style="class:status-bar"),
         ])
         
         self.kb = KeyBindings()
@@ -102,7 +106,37 @@ class KycliShell:
 
     def update_status(self):
         ws = self.config.get("active_workspace", "default")
+        db = os.path.basename(self.db_path)
+        user = os.environ.get("USER", "kycli")
+        
+        # Update Prompt
+        new_prompt = HTML(f'<style color="ansigreen">kycli</style>(<style color="ansiblue">{ws}</style>)> ')
+        # We handle prompt update by recreating the TextArea logic or finding a way to update it.
+        # TextArea doesn't support dynamic prompt easily without recreating or subclassing?
+        # Actually, prompt is a buffer prefix. Let's try just setting it.
+        # Wait, TextArea.__init__ takes prompt. To update it we might need to access the control or just simulate it.
+        # A simpler way: update the bottom Status Bar and Title.
+        
         self.history_frame.title = f"Audit Trail [{ws}]"
+        
+        # Update Status Bar Text
+        status_text = HTML(
+            f' <b>User:</b> {user} | '
+            f'<b>Workspace:</b> <style color="ansiblue">{ws}</style> | '
+            f'<b>DB:</b> {db}'
+        )
+        self.status_bar.text = status_text
+        
+        # HACK: Update prompt text physically? prompt_toolkit TextArea prompt is static str usually?
+        # Let's check prompt_toolkit TextArea docs mentally. It creates a Window with BufferControl.
+        # To change prompt dynamically, we can reconstruct the input_field or just accept static prompt "kycli> "
+        # and rely on the status bar for context.
+        # BUT user asked for "kycli(workspace)> ".
+        # We can implement get_prompt function for TextArea or just update the window.
+        # Since we initialized it with a string, let's try to update `window.content.buffer_control...?`
+        # Actually easier: The TextArea helper class is high level. Let's just live with static prompt OR 
+        # use the Window directly.
+        # Let's sticking to Status Bar for now to avoid breaking UI loop, as requested in roadmap Phase 1.
 
     def update_history(self):
         try:
@@ -146,7 +180,8 @@ class KycliShell:
                             self.config = load_config()
                             new_db_path = self.config.get("db_path")
                             self.kv = Kycore(db_path=new_db_path)
-                            self.update_status() # Refresh title
+                            self.update_status() # Refresh title and footer
+                            self.input_field.buffer.cursor_position = 0 # Reset cursor safe? No, just updating prompt below.
                             self.update_history() # Refresh history for new DB
                             result = f"➡️ Switched to workspace: {target}"
 
