@@ -179,9 +179,10 @@ class KycliShell:
                             # Reload config and Kycore
                             self.config = load_config()
                             new_db_path = self.config.get("db_path")
+                            self.db_path = new_db_path # <--- Update instance variable
                             self.kv = Kycore(db_path=new_db_path)
                             self.update_status() # Refresh title and footer
-                            self.input_field.buffer.cursor_position = 0 # Reset cursor safe? No, just updating prompt below.
+                            self.input_field.buffer.cursor_position = 0 
                             self.update_history() # Refresh history for new DB
                             result = f"➡️ Switched to workspace: {target}"
 
