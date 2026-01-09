@@ -2,6 +2,12 @@ import sys
 import os
 from kycli import Kycore
 from kycli.config import load_config, save_config, get_workspaces
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+from rich.text import Text
+
+console = Console()
 
 def get_help_text():
     return """
@@ -38,7 +44,7 @@ Available commands:
 """
 
 def print_help():
-    print(get_help_text())
+    console.print(Panel(get_help_text(), title="[bold cyan]kycli Help[/bold cyan]", border_style="blue"))
 
 import warnings
 
@@ -99,27 +105,33 @@ def main():
         # Global commands that don't need Kycore context
         if cmd in ["kyuse", "use"]:
             if not args:
-                print(f"Current workspace: {active_ws}")
-                print("Usage: kyuse <workspace_name>")
+                console.print(f"[yellow]Current workspace:[/yellow] [bold green]{active_ws}[/bold green]")
+                console.print("Usage: kyuse <workspace_name>")
                 return
             target = args[0]
             if not target.replace("_", "").replace("-", "").isalnum():
-                print("❌ Invalid workspace name. Use alphanumeric characters.")
+                console.print("[red]❌ Invalid workspace name. Use alphanumeric characters.[/red]")
                 return
             save_config({"active_workspace": target})
-            print(f"➡️ Switched to workspace: {target}")
+            console.print(f"[bold green]➡️ Switched to workspace:[/bold green] [cyan]{target}[/cyan]")
             # Check if exists, if not notify creation
             new_config = load_config() # Reloads to resolve path
             if not os.path.exists(new_config["db_path"]):
-                print(f"✨ New workspace '{target}' will be created on first write.")
+                console.print(f"[dim]✨ New workspace '{target}' will be created on first write.[/dim]")
             return
 
         if cmd in ["kyws", "workspaces"]:
             wss = get_workspaces()
-            print(f"📂 Workspaces:")
+            table = Table(title="📂 Workspaces", show_header=False, box=None)
+            table.add_column("Status", justify="center", width=4)
+            table.add_column("Name", style="cyan")
+            
             for ws in wss:
-                marker = "✨ " if ws == active_ws else "   "
-                print(f"{marker}{ws}")
+                marker = "✨" if ws == active_ws else ""
+                style = "bold cyan" if ws == active_ws else "white"
+                table.add_row(marker, Text(ws, style=style))
+            
+            console.print(table)
             return
 
         if cmd in ["kyshell", "shell"]:
@@ -132,7 +144,7 @@ def main():
             # Move command needs special handling (inter-db)
             if cmd in ["kymv", "mv", "move"]:
                 if len(args) < 2:
-                    print("Usage: kymv <key> <target_workspace>")
+                    console.print("Usage: kymv <key> <target_workspace>")
                     return
                 
                 key = args[0]
