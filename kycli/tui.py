@@ -191,9 +191,9 @@ class KycliShell:
                     wss = get_workspaces()
                     ws = self.config.get("active_workspace", "default")
                     lines = ["📂 Workspaces:"]
-                    for w in wss:
-                        marker = "✨ " if w == ws else "   "
-                        lines.append(f"{marker}{w}")
+                    for ws_item in wss:
+                        marker = "✨ " if ws_item == ws else "   "
+                        lines.append(f"{marker}{ws_item}")
                     result = "\n".join(lines)
                 
                 elif cmd in ["kys", "save"]:
