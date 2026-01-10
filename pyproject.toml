@@ -27,10 +27,11 @@ kye = "kycli.cli:main"
 kyi = "kycli.cli:main"
 kyc = "kycli.cli:main"
 kyh = "kycli.cli:main"
-kyshell = "kycli.cli:main"
+kyshell = "kycli.tui:start_shell"
 kyuse = "kycli.cli:main"
 kyws = "kycli.cli:main"
 kymv = "kycli.cli:main"
+kyinit = "kycli.cli:main"
 
 
 [build-system]

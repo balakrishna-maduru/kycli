@@ -95,6 +95,7 @@ setup(
             "kyuse=kycli.cli:main",
             "kyws=kycli.cli:main",
             "kymv=kycli.cli:main",
+            "kyinit=kycli.cli:main",
         ],
     },
 )

@@ -147,6 +147,56 @@ def main():
             return
 
 
+        if cmd == "init":
+            shell = os.environ.get("SHELL", "/bin/bash")
+            home = os.path.expanduser("~")
+            rc_file = None
+            if "zsh" in shell:
+                rc_file = os.path.join(home, ".zshrc")
+            elif "bash" in shell:
+                rc_file = os.path.join(home, ".bashrc")
+            
+            if not rc_file:
+                print("❌ Could not detect shell configuration file.")
+                return
+
+            snippet = r"""
+# >>> kycli initialize >>>
+ky_prompt_info() {
+    if command -v kyws >/dev/null 2>&1; then
+        local ws=$(kyws --current)
+        # Use cyan color for prompt if supported
+        if [ -n "$ZSH_VERSION" ]; then
+            echo "%F{cyan}($ws)%f "
+        else
+            echo "($ws) "
+        fi
+    fi
+}
+if [ -n "$ZSH_VERSION" ]; then
+    setopt PROMPT_SUBST
+    PROMPT='$(ky_prompt_info)'"${PROMPT}"
+elif [ -n "$BASH_VERSION" ]; then
+    PS1='$(ky_prompt_info)'"${PS1}"
+fi
+# <<< kycli initialize <<<
+"""
+            # Check for existing
+            if os.path.exists(rc_file):
+                with open(rc_file, "r") as f:
+                     if "# >>> kycli initialize >>>" in f.read():
+                         print(f"⚠️  Already initialized in {rc_file}")
+                         return
+            
+            try:
+                with open(rc_file, "a") as f:
+                    f.write(snippet)
+                print(f"✅ Added shell integration to {rc_file}")
+                print(f"🔄 To apply changes, run: source {rc_file}")
+            except Exception as e:
+                print(f"🔥 Error writing to {rc_file}: {e}")
+            return
+
         with Kycore(db_path=db_path, master_key=master_key) as kv:
             # Move command needs special handling (inter-db)
             if cmd in ["kymv", "mv", "move"]:
