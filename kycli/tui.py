@@ -5,6 +5,7 @@ import warnings
 from datetime import datetime
 from prompt_toolkit import Application
 from prompt_toolkit.layout import Layout, HSplit, VSplit, Window, FormattedTextControl
+from prompt_toolkit.layout.dimension import Dimension
 from prompt_toolkit.widgets import Frame, TextArea
 from prompt_toolkit.key_binding import KeyBindings
 from prompt_toolkit.styles import Style
@@ -81,8 +82,9 @@ class KycliShell:
                         '<style color="gray">KYCLI_MASTER_KEY env.</style>'
                     )
                 )), title="Quick Help", width=35),
-            ]),
-            Frame(Window(content=self.output_area, wrap_lines=True), title="Results", height=12),
+                )), title="Quick Help", width=35),
+            ], height=Dimension(weight=1)),
+            Frame(Window(content=self.output_area, wrap_lines=True), title="Results", height=Dimension(weight=1)),
             self.input_field,
             Window(content=self.status_bar, height=1, style="class:status-bar"),
         ])
