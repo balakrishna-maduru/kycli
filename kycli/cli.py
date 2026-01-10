@@ -125,6 +125,10 @@ def main():
             return
 
         if cmd in ["kyws", "workspaces"]:
+            if "--current" in args or "-c" in args:
+                print(active_ws)
+                return
+
             if args:
                 print(f"Computed: kyws {' '.join(args)}")
                 print(f"Did you mean 'kyuse {args[0]}' to switch workspaces?")
