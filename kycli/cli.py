@@ -112,11 +112,16 @@ def main():
                 print("Error: Invalid workspace name. Use alphanumeric characters.")
                 return
             save_config({"active_workspace": target})
+            # Explicitly initialize to create the file immediately
+            new_config = load_config()
+            new_db_path = new_config["db_path"]
+            try:
+                # Open and close to create
+                Kycore(db_path=new_db_path).close()
+            except: 
+                pass # Already exists or will be created normally
+            
             print(f"Switched to workspace: {target}")
-            # Check if exists, if not notify creation
-            new_config = load_config() # Reloads to resolve path
-            if not os.path.exists(new_config["db_path"]):
-                print(f"New workspace '{target}' will be created on first write.")
             return
 
         if cmd in ["kyws", "workspaces"]:
