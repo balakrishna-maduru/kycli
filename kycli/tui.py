@@ -82,7 +82,6 @@ class KycliShell:
                         '<style color="gray">KYCLI_MASTER_KEY env.</style>'
                     )
                 )), title="Quick Help", width=35),
-                )), title="Quick Help", width=35),
             ], height=Dimension(weight=1)),
             Frame(Window(content=self.output_area, wrap_lines=True), title="Results", height=Dimension(weight=1)),
             self.input_field,
