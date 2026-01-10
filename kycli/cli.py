@@ -120,6 +120,11 @@ def main():
             return
 
         if cmd in ["kyws", "workspaces"]:
+            if args:
+                print(f"Computed: kyws {' '.join(args)}")
+                print(f"Did you mean 'kyuse {args[0]}' to switch workspaces?")
+                print("Running 'kyws' to list workspaces:")
+            
             wss = get_workspaces()
             print("Workspaces:")
             for ws in wss:

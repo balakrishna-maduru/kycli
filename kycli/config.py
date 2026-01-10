@@ -104,4 +104,11 @@ def get_workspaces():
     """Return list of available workspaces."""
     ensure_dirs()
     files = [f for f in os.listdir(DATA_DIR) if f.endswith(".db")]
-    return sorted([f[:-3] for f in files])
+    workspaces = set(f[:-3] for f in files)
+    
+    # Ensure active workspace is always listed (resolves lazy creation visibility)
+    config = load_raw_config()
+    active = config.get("active_workspace", "default")
+    workspaces.add(active)
+    
+    return sorted(list(workspaces))
