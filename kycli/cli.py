@@ -158,9 +158,7 @@ def main():
                 return
             
             target = args[0]
-            if target == active_ws:
-                print("❌ Cannot drop the active workspace. Switch to another workspace first.")
-                return
+            is_active = (target == active_ws)
             
             from kycli.config import DATA_DIR
             target_db = os.path.join(DATA_DIR, f"{target}.db")
@@ -168,12 +166,19 @@ def main():
             if not os.path.exists(target_db):
                 print(f"❌ Workspace '{target}' does not exist.")
                 return
-                
-            confirm = input(f"⚠️  DANGER: Are you sure you want to PERMANENTLY delete workspace '{target}'? (y/N): ")
+            
+            msg = f"⚠️  DANGER: Are you sure you want to PERMANENTLY delete workspace '{target}'?"
+            if is_active:
+                msg += " (This is your ACTIVE workspace, you will be moved to 'default')"
+            
+            confirm = input(f"{msg} (y/N): ")
             if confirm.lower() == 'y':
                 try:
                     os.remove(target_db)
                     print(f"✅ Workspace '{target}' deleted.")
+                    if is_active:
+                        save_config({"active_workspace": "default"})
+                        print("🔄 Switched to 'default' workspace.")
                 except Exception as e:
                     print(f"🔥 Error deleting workspace: {e}")
             else:

@@ -1,0 +1,32 @@
+| Test Case # | Command/Option | Test Description | Status |
+|-------------|----------------|------------------|--------|
+| 1 | kys | Basic save | PASS |
+| 2 | kyg | Basic read | PASS |
+| 3 | kys (Update) | Overwrite via --ttl (No Prompt) | PASS |
+| 4 | kyl | List keys | PASS |
+| 5 | --ttl | Save with explicit expiration | PASS |
+| 6 | --key (Save) | Encrypted save | FAIL |
+| 7 | --key (Read) | Encrypted read with key | FAIL |
+| 8 | Encryption Masking | Masked output without key | FAIL |
+| 9 | Env Key | Encryption via Env Var | FAIL |
+| 10 | -s | Basic search | PASS |
+| 11 | --limit | Limit search results | PASS |
+| 12 | --keys-only | Search returning keys only | PASS |
+| 13 | <key>.<path> | Read nested JSON | PASS |
+| 14 | kypatch | Patch value in path | PASS |
+| 15 | kypush | Append to JSON list | FAIL |
+| 16 | kyrem | Remove from JSON list | PASS |
+| 17 | kyuse | Switch workspace | PASS |
+| 18 | kyws --current | Verify active workspace | PASS |
+| 19 | kymv | Move between workspaces | PASS |
+| 20 | kydrop | Delete workspace | FAIL |
+| 21 | kye | Export data | PASS |
+| 22 | kyi | Import data | PASS |
+| 23 | kyc | Execute command | PASS |
+| 24 | kyr | Restore key | FAIL |
+| 25 | kyrt | Full recovery to timestamp | PASS |
+| 26 | kyfo | Index optimization | PASS |
+| 27 | kyco | Compaction | PASS |
+| 28 | kyv | History check | PASS |
+| 29 | Help | Help command | PASS |
+| 30 | init | Integration shell info | PASS |
