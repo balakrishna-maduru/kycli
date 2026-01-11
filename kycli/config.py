@@ -51,6 +51,13 @@ def save_config(updates):
     try:
         with open(CONFIG_PATH, "w") as f:
             json.dump(current, f, indent=4)
+        
+        # Write plain text workspace file for fast shell prompt access
+        if "active_workspace" in current:
+            ws_path = os.path.join(KYCLI_DIR, "workspace")
+            with open(ws_path, "w") as f:
+                f.write(current["active_workspace"])
+            
     except Exception:
         pass
 
@@ -89,14 +96,29 @@ def load_config():
 
     # Environment variables override config
     env_db_path = os.environ.get("KYCLI_DB_PATH")
+    
+    # Determine the data directory to use
+    effective_data_dir = DATA_DIR
+
     if env_db_path:
-        config["db_path"] = os.path.expanduser(env_db_path)
-    else:
-        # Resolve db_path based on active workspace
-        workspace = config.get("active_workspace", "default")
-        safe_ws = "".join(c for c in workspace if c.isalnum() or c in ("_", "-"))
-        if not safe_ws: safe_ws = "default"
-        config["db_path"] = os.path.join(DATA_DIR, f"{safe_ws}.db")
+        expanded_path = os.path.expanduser(env_db_path)
+        # Check if it implies a directory or exists as one
+        # If it's an existing directory OR it ends with a separator, treat as dir
+        if os.path.isdir(expanded_path) or expanded_path.endswith(os.sep):
+            effective_data_dir = expanded_path
+            os.makedirs(effective_data_dir, exist_ok=True)
+        else:
+            # It's likely a file path (Legacy behavior or specific file override)
+            # If it's a file, we can't support workspaces easily unless we assume it's just for the current one.
+            config["db_path"] = expanded_path
+            return config
+
+    # Resolve db_path based on active workspace
+    workspace = config.get("active_workspace", "default")
+    safe_ws = "".join(c for c in workspace if c.isalnum() or c in ("_", "-"))
+    if not safe_ws: safe_ws = "default"
+    
+    config["db_path"] = os.path.join(effective_data_dir, f"{safe_ws}.db")
 
     return config
 

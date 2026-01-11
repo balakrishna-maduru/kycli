@@ -42,42 +42,55 @@ pip install kycli
 
 `kycli` provides a set of ultra-short commands for maximum terminal productivity.
 
-| Command | Action | Example |
+### 📂 Workspace Management
+| Command | Description | Example |
 | :--- | :--- | :--- |
-| `kys` | **Save** / **Patch** | `kys user.age 25` |
-| `kyg` | **Get** & **Search** | `kyg user` or `kyg -s "query"` |
-| `kypush`| **Push** to list | `kypush logs "error"` |
-| `kyrem` | **Remove** from list | `kyrem tags "old"` |
-| `kyl` | **List** keys (Regex) | `kyl "prod_.*"` |
-| `kyv` | **View** history/audit | `kyv username` |
-| `kyd` | **Delete** (Soft) | `kyd old_token` |
-| `kyr` | **Restore** (Path support) | `kyr user.profile` |
-| `kye` | **Export** (CSV/JSON) | `kye data.json json` |
-| `kyi` | **Import** (CSV/JSON) | `kyi backup.csv` |
-| `kyc` | **Execute** command | `kyc hello` |
-| `kyrt` | **Restore-to** (PITR) | `kyrt "2026-01-01"` |
-| `kyco` | **Compact** (Maintenance) | `kyco 7` |
-| `kyshell`| **Interactive TUI** | `kycli kyshell` |
-| `kyuse`| **Switch Workspace** | `kyuse project_alpha` |
-| `kyws` | **List Workspaces** | `kyws` |
-| `kymv` | **Move Key** | `kymv api_key prod` |
-| `kyh` | **Help** library | `kyh` |
+| **`kyuse`** | Switch/Create workspace | `kyuse project_alpha` |
+| **`kyws`** | List workspaces | `kyws` |
+| **`kydrop`**| Delete workspace | `kydrop old_ws` |
+| **`kymv`** | Move key to workspace | `kymv api_key prod` |
+
+### 📝 Basic Operations
+| Command | Description | Example |
+| :--- | :--- | :--- |
+| **`kys`** | Save Key/Value | `kys session "active" --ttl 360` <br> `kys secret "pass" --key "k1"` |
+| **`kyg`** | Get Value | `kyg session` <br> `kyg secret --key "k1"` |
+| **`kypatch`**| Patch JSON | `kypatch user '{"age": 30}'` |
+| **`kyl`** | List Keys | `kyl "user.*"` |
+| **`kyd`** | Delete Key | `kyd host` |
+| **`kypush`**| Push to List | `kypush logs "error"` |
+| **`kyrem`** | Remove from List | `kyrem tags "old"` |
+
+### 🔍 Search & Utility
+| Command | Description | Example |
+| :--- | :--- | :--- |
+| **`kyg -s`**| Search Values | `kyg -s "db_pass"` |
+| **`kyshell`** | Open Interactive TUI | `kyshell` |
+| **`init`** | Shell Setup | `kycli init` |
+| **`kyfo`** | Optimize Index | `kyfo` |
+| **`kyh`** | Help | `kyh` |
+
+### 🛠️ Advanced & Recovery
+| Command | Description | Example |
+| :--- | :--- | :--- |
+| **`kye`** | Export Data | `kye backup.json json` |
+| **`kyi`** | Import Data | `kyi data.csv` |
+| **`kyr`** | Restore Deleted Key | `kyr host` |
+| **`kyrt`** | Point-in-Time Recovery | `kyrt "2023-10-27 10:00:00"` |
+| **`kyc`** | Execute Command | `kyc hello` |
+| **`kyco`** | Compact DB | `kyco 7` |
 
 ---
 
-## 🏢 Multi-Tenancy (Workspaces)
-`kycli` supports isolating data into different **workspaces**. Each workspace is stored in its own focused database file (`~/.kycli/data/<name>.db`), keeping your projects separate and performant.
+### 📂 Workspace Management (Multi-Tenancy)
+`kycli` supports isolated contexts called **Workspaces**. Each workspace is a separate SQLite database.
 
-### `kyuse <workspace>` — Switch Workspace
-Switches the active workspace. If the workspace doesn't exist, it will be created on the first write.
-- **Persistence**: Your choice is remembered across sessions.
-- **Migration**: Old `~/kydata.db` is auto-migrated to the `default` workspace.
+#### `kyuse` — Switch / Create Workspace
 ```bash
 kyuse project_alpha
-# Result: ➡️ Switched to workspace: project_alpha
 ```
 
-### `kyws` — List Workspaces
+#### `kyws` — List Workspaces
 Shows all available workspaces. The active one is marked with `✨`.
 ```bash
 kyws
@@ -87,13 +100,22 @@ kyws
 #    temp_test
 ```
 
-### `kymv <key> <target_workspace>` — Move Data
+#### `kymv` — Move Key
 Moves a key (and its value) from the current workspace to another.
 - **Safety**: Asks for confirmation if the key exists in the target.
-- **Atomic**: Copies to target and deletes from source only on success.
 ```bash
 kymv my_api_key project_beta
 # Result: ✅ Moved 'my_api_key' to 'project_beta'.
+```
+
+#### `kydrop` — Delete Workspace
+Permanently deletes an entire workspace and its database file.
+- **Safety**: Requires explicit confirmation (`y/N`) in CLI.
+- **Restriction**: You cannot drop the currently active workspace.
+```bash
+kydrop temp_test
+# Result: ⚠️ DANGER: Are you sure you want to PERMANENTLY delete workspace 'temp_test'? (y/N): y
+# Result: ✅ Workspace 'temp_test' deleted.
 ```
 
 ---
@@ -159,22 +181,40 @@ kyrem my_list "old_item"
 
 ---
 
-### 🔐 Enterprise-Grade Security: Encryption at Rest
-`kycli` supports transparent **AES-256-GCM** encryption. When a master key is provided, all data is encrypted before being written to disk and decrypted on retrieval.
+### 🔐 Enterprise-Grade Security: Zero-Trust Encryption
+`kycli` takes a **Zero-Trust** approach by encrypting the **Entire Database File**.
+- **Full Database Encryption**: The workspace file (`.db`) is stored as an encrypted binary blob (AES-GCM).
+- **Opaque File**: It **cannot** be opened by `sqlite3`, DB Browser, or any other tool. It appears as random noise without the key.
+- **In-Memory Speed**: On access, `kycli` decrypts the workspace into secure RAM for microsecond-fast operations.
 
 #### Via CLI:
 ```bash
-# Save with encryption
+# Save with encryption (Encrypts entire workspace file)
 kys secret_token "ghp_secure" --key "my-master-password"
 
 # Retrieve with encryption
 kyg secret_token --key "my-master-password"
 ```
 
-#### Via Environment Variable:
+#### Via Environment Variable (Recommended):
+This works for the CLI, TUI (`kyshell`), and Python Library usage.
 ```bash
 export KYCLI_MASTER_KEY="my-master-password"
 kyg secret_token
+```
+
+#### 🔑 Using a Custom Key per Command
+You can use a specific key for individual commands without setting it for the whole session. This is useful for storing records with different keys in the same workspace.
+
+```bash
+# Save 'rec1' with Key A
+kys rec1 "secret" --key "KeyA"
+
+# Save 'rec2' with Key B
+KYCLI_MASTER_KEY="KeyB" kys rec2 "secret"
+
+# To read 'rec1', you must provide Key A
+kyg rec1 --key "KeyA"
 ```
 
 > [!IMPORTANT]
@@ -332,12 +372,13 @@ kycli kyshell
 #### 🌍 Environment Variables (Highest Priority)
 The most direct way to configure `kycli` is via shell environment variables.
 
-- **`KYCLI_DB_PATH`**: Overrides the default database location (`~/kydata.db`).
+- **`KYCLI_DB_PATH`**: Sets the root directory for storing usage data (workspace databases).
 - **`KYCLI_MASTER_KEY`**: Sets the default master key for AES-256 encryption.
   ```bash
-  export KYCLI_DB_PATH="/custom/path/to/database.db"
+  export KYCLI_DB_PATH="/custom/path/to/data_dir/"
   export KYCLI_MASTER_KEY="your-secret-password"
   ```
+  *Note: If `KYCLI_DB_PATH` is a directory, workspaces will be created inside it (e.g. `/custom/path/to/data_dir/default.db`). If it is a file path, it will be used as a single database overriding workspaces.*
 
 #### 📁 Configuration Files
 `kycli` looks for configuration in `.kyclirc` or `.kyclirc.json`.

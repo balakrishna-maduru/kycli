@@ -78,7 +78,7 @@ def test_cli_execution_error(capsys):
 
 def test_tui_gaps(tmp_path):
     from kycli.tui import KycliShell
-    from kycli.kycore import Kycore
+    from kycli import Kycore
     
     with patch("kycli.tui.Kycore") as mock_kv_cls:
         shell = KycliShell()

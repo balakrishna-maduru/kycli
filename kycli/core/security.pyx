@@ -47,3 +47,26 @@ cdef class SecurityManager:
             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
         except Exception:
             return "[DECRYPTION FAILED: Incorrect master key]"
+
+    cdef bytes encrypt_blob(self, bytes blob):
+        if self._aesgcm is None or blob is None:
+            return blob
+        nonce = os.urandom(12)
+        ciphertext = self._aesgcm.encrypt(nonce, blob, None)
+        # Format: <Nonce:12><Ciphertext>
+        return nonce + ciphertext
+
+    cdef bytes decrypt_blob(self, bytes encrypted_blob):
+        if self._aesgcm is None:
+            return encrypted_blob 
+        if len(encrypted_blob) < 12:
+             # Not enough data for nonce, maybe it's unencrypted or corrupted
+             # Check header? The caller handles file header. Here we just decrypt payload.
+             raise ValueError("Invalid blob length")
+        
+        try:
+            nonce = encrypted_blob[:12]
+            ciphertext = encrypted_blob[12:]
+            return self._aesgcm.decrypt(nonce, ciphertext, None)
+        except Exception:
+             raise ValueError("Decryption failed: Incorrect master key or corrupted data")

@@ -14,32 +14,38 @@ def get_help_text():
 🚀 kycli — The Microsecond-Fast Key-Value Toolkit
 
 Available commands:
-  kys <key> <value> [--ttl <sec>]  - Save key-value (optional TTL in seconds)
-  kyg <key>[.path]                 - Get value, sub-key, or list index.
-  kyg -s <query>                   - Search for values (Full-Text Search).
 
-  kypush <key> <val> [--unique]    - Append value to a list
-  kyrem <key> <val>                - Remove value from a list
-
+  📂 Workspace Management:
   kyuse <workspace>                - Switch active workspace (Creates if new)
   kyws                             - List all workspaces
   kymv <key> <workspace>           - Move key to another workspace
+  kydrop <workspace>               - Delete a workspace
 
-  kyl [pattern]                    - List keys (optional regex pattern)
-  kyd <key>                        - Delete key (requires confirmation)
-  kyr <key>[.path]                 - Restore a deleted key
-  kyv [-h|key]                     - View audit history
+  📝 Basic Operations:
+  kys <key> <value> [--ttl 60] [--key "k"] - Save with optional TTL or Encryption
+  kyg <key>[.path] [--key "k"]             - Get value (decrypt if key provided)
+  kypatch <key> <val>                      - Patch JSON/Dict value
+  kyl [pattern]                            - List keys (optional regex pattern)
+  kyd <key>                                - Delete key (requires confirmation)
+  kypush <key> <val> [--unique]            - Append value to a list
+  kyrem <key> <val>                        - Remove value from a list
 
+  🔍 Search & Utility:
+  kyg -s <query>                   - Search for values (Full-Text Search).
+  kyfo                             - Optimize Search Index
+  kyshell                          - Open interactive TUI shell
+  init                             - Initialize shell integration
+  kyh                              - Help
+
+  🛠️  Advanced & Recovery:
   kye <file> [format]              - Export data
   kyi <file>                       - Import data
   kyc <key> [args...]              - Execute stored command
+  kyr <key>[.path]                 - Restore a deleted key
   kyrt <timestamp>                 - Point-in-Time Recovery
   kyco [days]                      - Compact DB
 
-  kyshell                          - Open interactive TUI shell
-  kyh                              - Help
-
-🔐 Encryption & Security:
+  🔐 Security:
   Set `KYCLI_MASTER_KEY` env variable or use `--key "pass"` flag.
 """
 
@@ -146,6 +152,34 @@ def main():
             start_shell(db_path=db_path)
             return
 
+        if cmd in ["kydrop", "drop"]:
+            if not args:
+                print("Usage: kydrop <workspace_name>")
+                return
+            
+            target = args[0]
+            if target == active_ws:
+                print("❌ Cannot drop the active workspace. Switch to another workspace first.")
+                return
+            
+            from kycli.config import DATA_DIR
+            target_db = os.path.join(DATA_DIR, f"{target}.db")
+            
+            if not os.path.exists(target_db):
+                print(f"❌ Workspace '{target}' does not exist.")
+                return
+                
+            confirm = input(f"⚠️  DANGER: Are you sure you want to PERMANENTLY delete workspace '{target}'? (y/N): ")
+            if confirm.lower() == 'y':
+                try:
+                    os.remove(target_db)
+                    print(f"✅ Workspace '{target}' deleted.")
+                except Exception as e:
+                    print(f"🔥 Error deleting workspace: {e}")
+            else:
+                print("❌ Aborted.")
+            return
+
 
         if cmd == "init":
             shell = os.environ.get("SHELL", "/bin/bash")
@@ -163,13 +197,24 @@ def main():
             snippet = r"""
 # >>> kycli initialize >>>
 ky_prompt_info() {
-    if command -v kyws >/dev/null 2>&1; then
-        local ws=$(kyws --current)
+    local ws_file="$HOME/.kycli/workspace"
+    if [ -f "$ws_file" ]; then
+        local ws=$(cat "$ws_file")
         # Use cyan color for prompt if supported
         if [ -n "$ZSH_VERSION" ]; then
             echo "%F{cyan}($ws)%f "
         else
             echo "($ws) "
+        fi
+    elif command -v kyws >/dev/null 2>&1; then
+        # Fallback to slower method if file missing
+        local ws=$(kyws --current 2>/dev/null)
+        if [ -n "$ws" ]; then
+            if [ -n "$ZSH_VERSION" ]; then
+                echo "%F{cyan}($ws)%f "
+            else
+                echo "($ws) "
+            fi
         fi
     fi
 }

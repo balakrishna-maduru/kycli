@@ -26,7 +26,7 @@ cdef class AuditManager:
             final.append((row[0], self._security.decrypt(row[1]), row[2]))
         return final
 
-    cpdef str restore(self, str key, timestamp=None):
+    cpdef restore(self, str key, timestamp=None):
         cdef str k = key.lower().strip()
         cdef str path = ""
         cdef str prefix = ""

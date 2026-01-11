@@ -11,6 +11,8 @@ import re
 import warnings
 import asyncio
 from datetime import datetime, timedelta, timezone
+import zlib
+import struct
 from collections import OrderedDict
 
 try:
@@ -28,6 +30,7 @@ cdef class Kycore:
     cdef object _cache
     cdef int _cache_limit
     cdef set _dirty_keys
+    cdef str _real_db_path
 
     def __init__(self, db_path=None, schema=None, master_key=None, cache_size=1000):
         if db_path is None:
@@ -37,7 +40,11 @@ cdef class Kycore:
         if dir_name:
             os.makedirs(dir_name, exist_ok=True)
 
-        self._engine = DatabaseEngine(db_path)
+        if master_key is None:
+            master_key = os.environ.get("KYCLI_MASTER_KEY")
+
+        self._real_db_path = db_path
+        self._engine = DatabaseEngine(":memory:")
         self._security = SecurityManager(master_key)
         self._query = QueryEngine()
         self._audit = AuditManager(self._engine, self._security, self._query)
@@ -96,6 +103,10 @@ cdef class Kycore:
         # Auto-cleanup: Delete archived items older than 15 days
         self._engine._execute_raw("DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > 15")
 
+        # Load existing data if available
+        if os.path.exists(self._real_db_path):
+            self._load()
+
         # TTL Cleanup: Move expired keys to archive before deleting
         self._engine._execute_raw("""
             INSERT INTO archive (key, value)
@@ -103,6 +114,15 @@ cdef class Kycore:
             WHERE expires_at IS NOT NULL AND expires_at < datetime('now')
         """)
         self._engine._execute_raw("DELETE FROM kvstore WHERE expires_at IS NOT NULL AND expires_at < datetime('now')")
+
+    def _debug_sql(self, str sql):
+        """Internal helper for testing."""
+        self._engine._execute_raw(sql)
+
+    def _debug_fetch(self, str sql, list params=None):
+        """Internal helper for testing."""
+        if params is None: params = []
+        return self._engine._bind_and_fetch(sql, params)
 
     def __enter__(self):
         return self
@@ -115,6 +135,69 @@ cdef class Kycore:
 
     def _encrypt(self, str val): return self._security.encrypt(val)
     def _decrypt(self, str val): return self._security.decrypt(val)
+
+    def _persist(self):
+        # Dump DB to SQL
+        cdef list sql_stmts = ["BEGIN TRANSACTION;"]
+        
+        # Dump KVStore
+        rows = self._engine._bind_and_fetch("SELECT key, value, expires_at FROM kvstore", [])
+        for r in rows:
+            k, v, exp = r[0], r[1], r[2]
+            exp_val = f"'{exp}'" if exp else "NULL"
+            sql_stmts.append(f"INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES ('{k.replace('\'', '\'\'')}', '{v.replace('\'', '\'\'')}', {exp_val});")
+            
+        # Dump Audit Log
+        rows = self._engine._bind_and_fetch("SELECT key, value, timestamp FROM audit_log", [])
+        for r in rows:
+            k, v, ts = r[0], r[1], r[2]
+            v_val = f"'{v.replace('\'', '\'\'')}'" if v else "NULL"
+            sql_stmts.append(f"INSERT INTO audit_log (key, value, timestamp) VALUES ('{k.replace('\'', '\'\'')}', {v_val}, '{ts}');")
+            
+        # Dump Archive
+        rows = self._engine._bind_and_fetch("SELECT key, value, deleted_at FROM archive", [])
+        for r in rows:
+            k, v, da = r[0], r[1], r[2]
+            sql_stmts.append(f"INSERT INTO archive (key, value, deleted_at) VALUES ('{k.replace('\'', '\'\'')}', '{v.replace('\'', '\'\'')}', '{da}');")
+            
+        sql_stmts.append("COMMIT;")
+        full_sql = "\n".join(sql_stmts)
+        
+        # Compress & Encrypt
+        compressed = zlib.compress(full_sql.encode('utf-8'))
+        encrypted = self._security.encrypt_blob(compressed)
+        
+        # Write File: Header + EncryptedBlob
+        header = b'KYCLI\x01'
+        with open(self._real_db_path, "wb") as f:
+            f.write(header + encrypted)
+
+    def _load(self):
+        try:
+            with open(self._real_db_path, "rb") as f:
+                data = f.read()
+            
+            if not data.startswith(b'KYCLI\x01'):
+                # Legacy support? Or duplicate plain DB logic?
+                # For now assumes manual migration or fresh start as per plan "Full Encryption"
+                # But to be safe, if headers missing but looks like SQLite, maybe try to migrate?
+                # Let's fail safe:
+                if data[:15] == b'SQLite format 3':
+                     raise ValueError("Legacy database format detected. Manual migration required.")
+                raise ValueError("Invalid database format or corrupted file.")
+                
+            encrypted_blob = data[6:]
+            compressed = self._security.decrypt_blob(encrypted_blob)
+            sql = zlib.decompress(compressed).decode('utf-8')
+            
+            # Execute
+            self._engine._execute_raw(sql)
+            
+        except Exception as e:
+            # If load fails, we are in empty memory DB.
+            # print(f"Warning: Failed to load database: {e}")
+            raise e
+
 
     def _parse_ttl(self, ttl):
         if ttl is None: return None
@@ -173,6 +256,7 @@ cdef class Kycore:
             self._cache[k] = (value, expires_at)
             self._cache.move_to_end(k)
             if len(self._cache) > self._cache_limit: self._cache.popitem(last=False)
+            self._persist() # Persist to disk
             return status
         except Exception as e:
             try:
@@ -199,6 +283,7 @@ cdef class Kycore:
                 self._cache.move_to_end(k)
                 if len(self._cache) > self._cache_limit: self._cache.popitem(last=False)
             self._engine._execute_raw("COMMIT")
+            self._persist()
             return len(items)
         except Exception as e:
             self._engine._execute_raw("ROLLBACK")
@@ -221,6 +306,7 @@ cdef class Kycore:
                 if v is None: self._engine._bind_and_execute("DELETE FROM kvstore WHERE key=?", [k])
                 else: self._engine._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, v])
             self._engine._execute_raw("COMMIT")
+            self._persist()
         except Exception as e:
             self._engine._execute_raw("ROLLBACK")
             raise e
@@ -332,7 +418,8 @@ cdef class Kycore:
         for row in results:
             if regex.search(row[0]):
                 d_val = self._security.decrypt(row[1])
-                matches[row[0]] = json.loads(d_val) if deserialize else d_val
+                try: matches[row[0]] = json.loads(d_val) if deserialize else d_val
+                except: matches[row[0]] = d_val
         return matches if matches else "Key not found"
 
     def list_keys(self, str pattern=None):
@@ -395,6 +482,7 @@ cdef class Kycore:
             self._engine._bind_and_execute("DELETE FROM kvstore WHERE key=?", [k])
             self._engine._execute_raw("COMMIT")
             if k in self._cache: del self._cache[k]
+            self._persist()
             return "Deleted"
         except Exception as e:
             self._engine._execute_raw("ROLLBACK")
@@ -431,8 +519,12 @@ cdef class Kycore:
     def restore_to(self, str ts):
         res = self._audit.restore_to(ts)
         self._cache.clear()
+        self._persist()
         return res
-    def compact(self, int retention_days=15): return self._audit.compact(retention_days)
+    def compact(self, int retention_days=15): 
+        res = self._audit.compact(retention_days)
+        self._persist()
+        return res
     def optimize_index(self): self._engine._execute_raw("INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')")
 
     def __contains__(self, str key):

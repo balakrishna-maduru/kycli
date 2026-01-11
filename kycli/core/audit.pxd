@@ -9,6 +9,6 @@ cdef class AuditManager:
     cdef QueryEngine _query
     
     cpdef list get_history(self, str key=*)
-    cpdef str restore(self, str key, timestamp=*)
+    cpdef restore(self, str key, timestamp=*)
     cpdef str restore_to(self, str timestamp)
     cpdef str compact(self, int retention_days=*)

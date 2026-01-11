@@ -18,6 +18,8 @@ def clean_env(tmp_path):
              if p == "~/.kyclirc.json": return str(tmp_path / ".kyclirc.json")
              return p
         mock_expand.side_effect = expand_path
+        if "KYCLI_DB_PATH" in os.environ:
+            del os.environ["KYCLI_DB_PATH"]
         
         yield tmp_path
 
@@ -42,30 +44,30 @@ def test_workspace_isolation(clean_env, capsys):
     from kycli.cli import main
     
     # 1. Save in default workspace
-    with patch("sys.argv", ["kys", "k1", "val1"]): main()
-    assert "Saved: k1" in capsys.readouterr().out
+    with patch("sys.argv", ["kys", "k1_iso", "val1_iso"]): main()
+    assert "Saved" in capsys.readouterr().out
     
     # 2. Switch to 'project_a'
     with patch("sys.argv", ["kyuse", "project_a"]): main()
     assert "Switched to workspace: project_a" in capsys.readouterr().out
     
-    # 3. Verify k1 is NOT here
-    with patch("sys.argv", ["kyg", "k1"]): main()
+    # 3. Verify k1 NOT here
+    with patch("sys.argv", ["kyg", "k1_iso"]): main()
     out = capsys.readouterr().out
     assert "Key not found" in out or "None" in out
     
     # 4. Save k2 in project_a
-    with patch("sys.argv", ["kys", "k2", "val2"]): main()
-    assert "Saved: k2" in capsys.readouterr().out
+    with patch("sys.argv", ["kys", "k2_iso", "val2_iso"]): main()
+    assert "Saved" in capsys.readouterr().out
     
     # 5. Switch back to default
     with patch("sys.argv", ["kyuse", "default"]): main()
     
     # 6. Verify k1 exists and k2 does not
-    with patch("sys.argv", ["kyg", "k1"]): main()
-    assert "val1" in capsys.readouterr().out
+    with patch("sys.argv", ["kyg", "k1_iso"]): main()
+    assert "val1_iso" in capsys.readouterr().out
     
-    with patch("sys.argv", ["kyg", "k2"]): main()
+    with patch("sys.argv", ["kyg", "k2_iso"]): main()
     assert "Key not found" in capsys.readouterr().out
 
 def test_workspace_move(clean_env, capsys):

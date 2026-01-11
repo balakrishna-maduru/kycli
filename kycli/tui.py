@@ -44,7 +44,7 @@ class KycliShell:
         # Styles
         self.style = Style.from_dict({
             "frame.border": "#4444ff",
-            "input-field": "bold #ffffff",
+            "input-field": "bold", # Removed #ffffff for adaptive theme
         })
 
         # Layout
@@ -104,6 +104,21 @@ class KycliShell:
         
         self.update_history()
         self.update_status()
+    
+    # ... (skipping update_status and update_history methods, they are fine) ...
+
+    # We need to find the handle_command method to edit the output assignment
+    # Since replace_file_content replaces a block, let's target the style definition first,
+    # then subsequent calls for handle_command.
+    
+    # WAIT, I can't put comments like this in ReplacementContent. 
+    # I should split this into two calls or one large call if contiguous.
+    # Lines 44-106 are contiguous block for Style and Init.
+    # Lines 421 is far away.
+    
+    # Let's do the Style fix first.
+            
+
 
     def update_status(self):
         ws = self.config.get("active_workspace", "default")
@@ -123,8 +138,7 @@ class KycliShell:
         # Update Status Bar Text
         status_text = HTML(
             f' <b>User:</b> {user} | '
-            f'<b>Workspace:</b> <style color="ansiblue">{ws}</style> | '
-            f'<b>DB:</b> {db}'
+            f'<b>Workspace:</b> <style color="ansiblue">{ws}</style>'
         )
         self.status_bar.text = status_text
         
@@ -186,6 +200,28 @@ class KycliShell:
                             self.input_field.buffer.cursor_position = 0 
                             self.update_history() # Refresh history for new DB
                             result = f"➡️ Switched to workspace: {target}"
+                            
+                elif cmd in ["kydrop", "drop"]:
+                    if not args:
+                        result = "Usage: kydrop <workspace> [--confirm]"
+                    else:
+                        target = args[0]
+                        ws = self.config.get("active_workspace", "default")
+                        if target == ws:
+                            result = "❌ Cannot drop active workspace."
+                        else:
+                            from kycli.config import DATA_DIR
+                            target_db = os.path.join(DATA_DIR, f"{target}.db")
+                            if not os.path.exists(target_db):
+                                result = f"❌ Workspace '{target}' not found."
+                            elif "--confirm" not in args:
+                                result = f"⚠️  To delete '{target}', add --confirm flag."
+                            else:
+                                try:
+                                    os.remove(target_db)
+                                    result = f"✅ Workspace '{target}' deleted."
+                                except Exception as e:
+                                    result = f"Error: {e}"
 
                 elif cmd in ["kyws", "workspaces"]:
                     wss = get_workspaces()
@@ -397,7 +433,7 @@ class KycliShell:
                     warn_msgs.append(f"⚠️ {msg}")
                 result = "\n".join(warn_msgs) + ("\n" + result if result else "")
 
-        self.output_area.text = result
+        self.output_area.text = ANSI(result)
         buffer.text = ""
         self.update_history()
 

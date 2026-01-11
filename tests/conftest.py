@@ -1,6 +1,6 @@
 import os
 import pytest
-from kycli.kycore import Kycore
+from kycli.core.storage import Kycore
 
 @pytest.fixture
 def temp_db(tmp_path):
@@ -30,4 +30,5 @@ def clean_home_db(tmp_path, monkeypatch):
 
     monkeypatch.setattr("os.path.expanduser", lambda x: str(fake_home / "kydata.db") if x == "~/kydata.db" else (str(fake_home / ".kyclirc") if x == "~/.kyclirc" else (str(fake_home) if x == "~" else x)))
     monkeypatch.setenv("HOME", str(fake_home))
+    monkeypatch.delenv("KYCLI_DB_PATH", raising=False)
     return fake_home
