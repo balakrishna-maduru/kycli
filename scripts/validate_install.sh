@@ -20,20 +20,38 @@ W_DESC=45
 W_STAT=8
 
 # Table Header
+printf "|-%-${W_ID}s-|-%-${W_CMD}s-|-%-${W_DESC}s-|-%-${W_STAT}s-|\n" "$(printf '%0.s-' $(seq 1 $W_ID))" "$(printf '%0.s-' $(seq 1 $W_CMD))" "$(printf '%0.s-' $(seq 1 $W_DESC))" "$(printf '%0.s-' $(seq 1 $W_STAT))" | sed 's/ /-/g'
 printf "| %-${W_ID}s | %-${W_CMD}s | %-${W_DESC}s | %-${W_STAT}s |\n" "Test Case #" "Command/Option" "Test Description" "Status"
 printf "|-%-${W_ID}s-|-%-${W_CMD}s-|-%-${W_DESC}s-|-%-${W_STAT}s-|\n" "$(printf '%0.s-' $(seq 1 $W_ID))" "$(printf '%0.s-' $(seq 1 $W_CMD))" "$(printf '%0.s-' $(seq 1 $W_DESC))" "$(printf '%0.s-' $(seq 1 $W_STAT))" | sed 's/ /-/g'
 
 count=1
+last_output=""
+last_status=0
+
+run_cmd() {
+    local cmd="$1"
+    last_output=$(eval "$cmd" 2>&1)
+    last_status=$?
+}
 
 check_test() {
     local cmd_label=$1
     local description=$2
-    local exit_condition=$3
+    local actual_exit=$3
     local match_pattern=$4
     local actual_output=$5
+    local expected_exit=${6:-0}
 
     local status="FAIL"
-    if echo "$actual_output" | grep -Ei "$match_pattern" > /dev/null; then
+    local pattern_ok=1
+    if [[ -n "$match_pattern" ]]; then
+        echo "$actual_output" | grep -Ei "$match_pattern" > /dev/null
+        pattern_ok=$?
+    fi
+
+    if [[ "$actual_exit" -eq "$expected_exit" && "$pattern_ok" -eq 0 ]]; then
+        status="PASS"
+    elif [[ -z "$match_pattern" && "$actual_exit" -eq "$expected_exit" ]]; then
         status="PASS"
     fi
 
@@ -45,54 +63,54 @@ check_test() {
 export HOME="$BASE_TEST_DIR/standard"
 mkdir -p "$HOME"
 
-out=$($KY_CLI kys k1 v1 --ttl 3600 2>&1)
-check_test "kys" "Save basic key" $? "Saved" "$out"
+run_cmd "$KY_CLI kys k1 v1 --ttl 3600"
+check_test "kys" "Save basic key" $last_status "Saved" "$last_output"
 
-out=$($KY_CLI kyg k1 2>&1)
-check_test "kyg" "Read basic key" $? "v1" "$out"
+run_cmd "$KY_CLI kyg k1"
+check_test "kyg" "Read basic key" $last_status "v1" "$last_output"
 
-out=$($KY_CLI kys k1 v2 --ttl 3600 2>&1)
-check_test "kys (Update)" "Overwrite key" $? "Updated|No Change" "$out"
+run_cmd "$KY_CLI kys k1 v2 --ttl 3600"
+check_test "kys (Update)" "Overwrite key" $last_status "Updated|No Change" "$last_output"
 
-out=$($KY_CLI kyl 2>&1)
-check_test "kyl" "List all keys" $? "k1" "$out"
+run_cmd "$KY_CLI kyl"
+check_test "kyl" "List all keys" $last_status "k1" "$last_output"
 
-out=$($KY_CLI kyg -s "v2" 2>&1)
-check_test "kyg -s" "Full-text search" $? "k1" "$out"
+run_cmd "$KY_CLI kyg -s \"v2\""
+check_test "kyg -s" "Full-text search" $last_status "k1" "$last_output"
 
-out=$($KY_CLI kyg -s "v2" --limit 1 2>&1)
-check_test "--limit" "Search with limit" $? "k1" "$out"
+run_cmd "$KY_CLI kyg -s \"v2\" --limit 1"
+check_test "--limit" "Search with limit" $last_status "k1" "$last_output"
 
-out=$($KY_CLI kyg -s "v2" --keys-only 2>&1)
-check_test "--keys-only" "Search for keys only" $? "k1" "$out"
+run_cmd "$KY_CLI kyg -s \"v2\" --keys-only"
+check_test "--keys-only" "Search for keys only" $last_status "k1" "$last_output"
 
-out=$($KY_CLI kys j '{"x": 1}' --ttl 3600 2>&1)
-out=$($KY_CLI kypatch j.x 5 2>&1)
-check_test "kypatch" "Patch JSON path" $? "Patched" "$out"
+run_cmd "$KY_CLI kys j '{\"x\": 1}' --ttl 3600"
+run_cmd "$KY_CLI kypatch j.x 5"
+check_test "kypatch" "Patch JSON path" $last_status "Patched" "$last_output"
 
-out=$($KY_CLI kys l '[1]' --ttl 3600 2>&1)
-out=$($KY_CLI kypush l 2 2>&1)
-check_test "kypush" "Append to list" $? "Updated|Result|overwritten" "$out"
+run_cmd "$KY_CLI kys l '[1]' --ttl 3600"
+run_cmd "$KY_CLI kypush l 2"
+check_test "kypush" "Append to list" $last_status "Updated|Result|overwritten" "$last_output"
 
-out=$($KY_CLI kyrem l 1 2>&1)
-check_test "kyrem" "Remove from list" $? "Updated|Result|overwritten" "$out"
+run_cmd "$KY_CLI kyrem l 1"
+check_test "kyrem" "Remove from list" $last_status "Updated|Result|overwritten" "$last_output"
 
 # --- SECTION 2: Scenarios & Flags ---
-out=$($KY_CLI kys k_ttl v --ttl 10 2>&1)
-check_test "--ttl" "Save with expiration" $? "Expires" "$out"
+run_cmd "$KY_CLI kys k_ttl v --ttl 10"
+check_test "--ttl" "Save with expiration" $last_status "Expires" "$last_output"
 
 # Encryption (Isolated HOME to avoid decryption fail on load)
 export HOME="$BASE_TEST_DIR/enc"
 mkdir -p "$HOME"
-out=$($KY_CLI kys s1 "secret" --key "pass" --ttl 3600 2>&1)
-check_test "--key (Save)" "Encrypted save" $? "Saved" "$out"
+run_cmd "$KY_CLI kys s1 \"secret\" --key \"pass\" --ttl 3600"
+check_test "--key (Save)" "Encrypted save" $last_status "Saved" "$last_output"
 
-out=$($KY_CLI kyg s1 --key "pass" 2>&1)
-check_test "--key (Read)" "Encrypted read" $? "secret" "$out"
+run_cmd "$KY_CLI kyg s1 --key \"pass\""
+check_test "--key (Read)" "Encrypted read" $last_status "secret" "$last_output"
 
 export KYCLI_MASTER_KEY="pass"
-out=$($KY_CLI kyg s1 2>&1)
-check_test "KYCLI_MASTER_KEY" "Read via environment variable" $? "secret" "$out"
+run_cmd "$KY_CLI kyg s1"
+check_test "KYCLI_MASTER_KEY" "Read via environment variable" $last_status "secret" "$last_output"
 unset KYCLI_MASTER_KEY
 
 # Workspaces
@@ -100,15 +118,15 @@ export HOME="$BASE_TEST_DIR/standard"
 $KY_CLI kyuse ws1 > /dev/null
 $KY_CLI kys mk "v" --ttl 3600 > /dev/null
 $KY_CLI kyuse default > /dev/null
-out=$(echo "y" | $KY_CLI kydrop ws1 2>&1)
-check_test "kydrop" "Delete non-active workspace" $? "deleted" "$out"
+run_cmd "echo \"y\" | $KY_CLI kydrop ws1"
+check_test "kydrop" "Delete non-active workspace" $last_status "deleted" "$last_output"
 
 # Drop active
 $KY_CLI kyuse active_to_drop > /dev/null
 $KY_CLI kys k "v" --ttl 3600 > /dev/null
-out=$(echo "y" | $KY_CLI kydrop active_to_drop 2>&1)
+run_cmd "echo \"y\" | $KY_CLI kydrop active_to_drop"
 curr_ws=$($KY_CLI kyws --current 2>&1)
-if [[ "$out" == *"deleted"* ]] && [[ "$out" == *"Switched to 'default'"* ]] && [[ "$curr_ws" == "default" ]]; then
+if [[ "$last_output" == *"deleted"* ]] && [[ "$last_output" == *"Switched to 'default'"* ]] && [[ "$curr_ws" == "default" ]]; then
     status_ws="PASS"
 else
     status_ws="FAIL"
@@ -116,36 +134,135 @@ fi
 printf "| %-${W_ID}s | %-${W_CMD}s | %-${W_DESC}s | %-${W_STAT}s |\n" "$count" "kydrop (Active)" "Delete active workspace & move to default" "$status_ws"
 ((count++))
 
-out=$($KY_CLI kyws --current 2>&1)
-check_test "kyws --current" "Verify current workspace" $? "default" "$out"
+run_cmd "$KY_CLI kyws --current"
+check_test "kyws --current" "Verify current workspace" $last_status "default" "$last_output"
 
 $KY_CLI kys move_me "val" --ttl 3600 > /dev/null
-out=$(echo "y" | $KY_CLI kymv move_me ws_new --ttl 3600 2>&1)
-check_test "kymv" "Move key to new workspace" $? "Moved" "$out"
+run_cmd "echo \"y\" | $KY_CLI kymv move_me ws_new --ttl 3600"
+check_test "kymv" "Move key to new workspace" $last_status "Moved" "$last_output"
 
 # Recovery
 echo "k1" | $KY_CLI kyd k1 > /dev/null
-out=$($KY_CLI kyr k1 2>&1)
-check_test "kyr" "Restore deleted key" $? "Restored" "$out"
+run_cmd "$KY_CLI kyr k1"
+check_test "kyr" "Restore deleted key" $last_status "Restored" "$last_output"
 
 ts=$(date "+%Y-%m-%d %H:%M:%S")
 sleep 1
 $KY_CLI kys p1 "v" --ttl 3600 > /dev/null
-out=$($KY_CLI kyrt "$ts" 2>&1)
-check_test "kyrt" "Recovery to timestamp" $? "restored" "$out"
+run_cmd "$KY_CLI kyrt \"$ts\""
+check_test "kyrt" "Recovery to timestamp" $last_status "restored" "$last_output"
 
 # Meta
-out=$($KY_CLI kyh 2>&1)
-check_test "kyh" "Help command" $? "Available" "$out"
+run_cmd "$KY_CLI kyh"
+check_test "kyh" "Help command" $last_status "Available" "$last_output"
 
-out=$($KY_CLI init 2>&1)
-check_test "init" "Integration info" $? "Integration|Already" "$out"
+run_cmd "$KY_CLI init"
+check_test "init" "Integration info" $last_status "Integration|Already" "$last_output"
 
-out=$($KY_CLI kyfo 2>&1)
-check_test "kyfo" "Index optimization" $? "optimized" "$out"
+run_cmd "$KY_CLI kyfo"
+check_test "kyfo" "Index optimization" $last_status "optimized" "$last_output"
 
-out=$($KY_CLI kyco 0 2>&1)
-check_test "kyco" "Compaction" $? "complete" "$out"
+run_cmd "$KY_CLI kyco 0"
+check_test "kyco" "Compaction" $last_status "complete" "$last_output"
+
+# --- SECTION 3: Usage Errors & Corner Cases ---
+run_cmd "$KY_CLI kyuse"
+check_test "kyuse" "Usage with no args" $last_status "Usage: kyuse" "$last_output"
+
+run_cmd "$KY_CLI kyuse bad/name"
+check_test "kyuse" "Reject invalid workspace name" $last_status "Invalid workspace name|Invalid" "$last_output"
+
+run_cmd "$KY_CLI kyws extra_arg"
+check_test "kyws" "Extra args suggestion" $last_status "Did you mean|Workspaces" "$last_output"
+
+run_cmd "$KY_CLI kyg"
+check_test "kyg" "Usage with no args" $last_status "Usage" "$last_output"
+
+run_cmd "$KY_CLI kypatch"
+check_test "kypatch" "Usage with no args" $last_status "Usage" "$last_output"
+
+run_cmd "$KY_CLI kypush"
+check_test "kypush" "Usage with no args" $last_status "Usage" "$last_output"
+
+run_cmd "$KY_CLI kyrem"
+check_test "kyrem" "Usage with no args" $last_status "Usage" "$last_output"
+
+# Missing key
+run_cmd "$KY_CLI kyg missing_key"
+check_test "kyg" "Missing key returns error" $last_status "not found|Key not found" "$last_output"
+
+# Abort deletion
+run_cmd "$KY_CLI kys delme v --ttl 3600"
+run_cmd "echo \"n\" | $KY_CLI kyd delme"
+check_test "kyd" "Delete abort" $last_status "Aborted|Cancelled" "$last_output"
+run_cmd "$KY_CLI kyg delme"
+check_test "kyd" "Abort keeps key" $last_status "delme|v" "$last_output"
+
+# kymv error cases
+run_cmd "$KY_CLI kymv missing_key ws_missing"
+check_test "kymv" "Move missing key" $last_status "not found|Key not found" "$last_output"
+
+run_cmd "$KY_CLI kymv delme default"
+check_test "kymv" "Move to same workspace" $last_status "same" "$last_output"
+
+# kypush unique
+run_cmd "$KY_CLI kys uniq '[1]' --ttl 3600"
+run_cmd "$KY_CLI kypush uniq 1 --unique"
+check_test "kypush" "Unique append avoids duplicates" $last_status "overwritten|nochange|No Change|Updated|Result" "$last_output"
+
+# kyrem non-list
+run_cmd "$KY_CLI kys notlist v --ttl 3600"
+run_cmd "$KY_CLI kyrem notlist 1"
+check_test "kyrem" "Remove from non-list" $last_status "Unexpected Error|Not a list" "$last_output" 1
+
+# Search invalid regex
+run_cmd "$KY_CLI kyl '\\['"
+check_test "kyl" "Invalid regex pattern" $last_status "No keys found" "$last_output"
+
+run_cmd "$KY_CLI kyg -s \"no_such_value\""
+check_test "kyg -s" "Search no results" $last_status "No matches found" "$last_output"
+
+# Export / Import
+export HOME="$BASE_TEST_DIR/io"
+mkdir -p "$HOME"
+run_cmd "$KY_CLI kys expk v --ttl 3600"
+run_cmd "$KY_CLI kye $BASE_TEST_DIR/io/export.csv csv"
+check_test "kye" "Export CSV" $last_status "Exported" "$last_output"
+
+run_cmd "$KY_CLI kye $BASE_TEST_DIR/io/export.json json"
+check_test "kye" "Export JSON" $last_status "Exported" "$last_output"
+
+run_cmd "$KY_CLI kyi $BASE_TEST_DIR/io/export.csv"
+check_test "kyi" "Import CSV" $last_status "Imported" "$last_output"
+
+run_cmd "$KY_CLI kyi $BASE_TEST_DIR/io/missing.csv"
+check_test "kyi" "Import missing file" $last_status "File not found" "$last_output"
+
+# Execute
+run_cmd "$KY_CLI kyc missing_cmd"
+check_test "kyc" "Execute missing key" $last_status "not found" "$last_output"
+
+# TTL expiry
+run_cmd "$KY_CLI kys ttl_short v --ttl 1"
+sleep 2
+run_cmd "$KY_CLI kyg ttl_short"
+check_test "--ttl" "Expired key not returned" $last_status "Key not found|not found" "$last_output"
+
+# KYCLI_DB_PATH overrides
+export HOME="$BASE_TEST_DIR/env_override"
+mkdir -p "$HOME"
+export KYCLI_DB_PATH="$BASE_TEST_DIR/env_override/"
+run_cmd "$KY_CLI kys envkey v --ttl 3600"
+check_test "KYCLI_DB_PATH" "Directory override" $last_status "Saved" "$last_output"
+unset KYCLI_DB_PATH
+
+export KYCLI_DB_PATH="$BASE_TEST_DIR/env_override/specific.db"
+run_cmd "$KY_CLI kys envkey2 v --ttl 3600"
+check_test "KYCLI_DB_PATH" "File override" $last_status "Saved" "$last_output"
+unset KYCLI_DB_PATH
+
+# Bottom Line
+printf "|-%-${W_ID}s-|-%-${W_CMD}s-|-%-${W_DESC}s-|-%-${W_STAT}s-|\n" "$(printf '%0.s-' $(seq 1 $W_ID))" "$(printf '%0.s-' $(seq 1 $W_CMD))" "$(printf '%0.s-' $(seq 1 $W_DESC))" "$(printf '%0.s-' $(seq 1 $W_STAT))" | sed 's/ /-/g'
 
 # Cleanup
 rm -rf "$BASE_TEST_DIR"
