@@ -10,8 +10,6 @@ import json
 import re
 import warnings
 import asyncio
-import sqlite3
-import shutil
 from datetime import datetime, timedelta, timezone
 import zlib
 import struct
@@ -185,8 +183,7 @@ cdef class Kycore:
                 # But to be safe, if headers missing but looks like SQLite, maybe try to migrate?
                 # Let's fail safe:
                 if data[:15] == b'SQLite format 3':
-                    self._migrate_legacy_sqlite()
-                    return
+                    raise ValueError("Legacy database format detected. Manual migration required.")
                 raise ValueError("Invalid database format or corrupted file.")
                 
             encrypted_blob = data[6:]
@@ -200,97 +197,6 @@ cdef class Kycore:
             # If load fails, we are in empty memory DB.
             # print(f"Warning: Failed to load database: {e}")
             raise e
-
-    def _migrate_legacy_sqlite(self):
-        legacy_path = self._real_db_path
-        backup_path = legacy_path + ".legacy.sqlite"
-
-        try:
-            if os.path.exists(legacy_path) and not os.path.exists(backup_path):
-                shutil.copy2(legacy_path, backup_path)
-        except Exception:
-            pass
-
-        conn = sqlite3.connect(legacy_path)
-        cur = conn.cursor()
-
-        def _table_exists(name):
-            cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (name,))
-            return cur.fetchone() is not None
-
-        def _encrypt_legacy_value(v):
-            if v is None:
-                v = ""
-            elif not isinstance(v, str):
-                v = str(v)
-            return self._security.encrypt(v)
-
-        try:
-            if _table_exists("kvstore"):
-                cur.execute("PRAGMA table_info(kvstore)")
-                cols = [row[1] for row in cur.fetchall()]
-                has_expires = "expires_at" in cols
-
-                if has_expires:
-                    cur.execute("SELECT key, value, expires_at FROM kvstore")
-                    rows = cur.fetchall()
-                    for k, v, exp in rows:
-                        if k is None:
-                            continue
-                        enc_val = _encrypt_legacy_value(v)
-                        self._engine._bind_and_execute(
-                            "INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)",
-                            [str(k).lower().strip(), enc_val, exp]
-                        )
-                else:
-                    cur.execute("SELECT key, value FROM kvstore")
-                    rows = cur.fetchall()
-                    for k, v in rows:
-                        if k is None:
-                            continue
-                        enc_val = _encrypt_legacy_value(v)
-                        self._engine._bind_and_execute(
-                            "INSERT OR REPLACE INTO kvstore (key, value, expires_at) VALUES (?, ?, ?)",
-                            [str(k).lower().strip(), enc_val, None]
-                        )
-
-            if _table_exists("audit_log"):
-                try:
-                    cur.execute("SELECT key, value, timestamp FROM audit_log")
-                    rows = cur.fetchall()
-                    for k, v, ts in rows:
-                        if k is None:
-                            continue
-                        enc_val = _encrypt_legacy_value(v)
-                        self._engine._bind_and_execute(
-                            "INSERT INTO audit_log (key, value, timestamp) VALUES (?, ?, ?)",
-                            [str(k).lower().strip(), enc_val, ts]
-                        )
-                except Exception:
-                    pass
-
-            if _table_exists("archive"):
-                try:
-                    cur.execute("SELECT key, value, deleted_at FROM archive")
-                    rows = cur.fetchall()
-                    for k, v, deleted_at in rows:
-                        if k is None:
-                            continue
-                        enc_val = _encrypt_legacy_value(v)
-                        self._engine._bind_and_execute(
-                            "INSERT INTO archive (key, value, deleted_at) VALUES (?, ?, ?)",
-                            [str(k).lower().strip(), enc_val, deleted_at]
-                        )
-                except Exception:
-                    pass
-
-            self._persist()
-        finally:
-            try:
-                conn.close()
-            except Exception:
-                pass
-
 
     def _parse_ttl(self, ttl):
         if ttl is None: return None
