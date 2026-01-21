@@ -1,5 +1,8 @@
 import sys
 import os
+import sqlite3
+import shutil
+from datetime import datetime, timezone
 from kycli import Kycore
 from kycli.config import load_config, save_config, get_workspaces
 from rich.console import Console
@@ -54,6 +57,109 @@ def print_help():
 
 import warnings
 
+def _parse_legacy_expires_at(raw):
+    if raw is None:
+        return None
+    if isinstance(raw, (int, float)):
+        return datetime.fromtimestamp(float(raw), tz=timezone.utc)
+    if isinstance(raw, str):
+        s = raw.strip()
+        if not s:
+            return None
+        try:
+            dt = datetime.fromisoformat(s)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt
+        except Exception:
+            pass
+        for fmt in ("%Y-%m-%d %H:%M:%S.%f", "%Y-%m-%d %H:%M:%S"):
+            try:
+                dt = datetime.strptime(s, fmt)
+                return dt.replace(tzinfo=timezone.utc)
+            except Exception:
+                continue
+    return None
+
+def _next_backup_path(base_path):
+    if not os.path.exists(base_path):
+        return base_path
+    i = 1
+    while True:
+        candidate = f"{base_path}.{i}"
+        if not os.path.exists(candidate):
+            return candidate
+        i += 1
+
+def _maybe_migrate_legacy_sqlite(db_path, master_key=None):
+    if not db_path or not os.path.exists(db_path):
+        return False
+    try:
+        with open(db_path, "rb") as f:
+            header = f.read(16)
+    except Exception:
+        return False
+
+    if not header.startswith(b"SQLite format 3"):
+        return False
+
+    backup_path = _next_backup_path(db_path + ".legacy.sqlite")
+    try:
+        shutil.copy2(db_path, backup_path)
+    except Exception:
+        pass
+
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+
+    def _table_exists(name):
+        cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (name,))
+        return cur.fetchone() is not None
+
+    rows = []
+    if _table_exists("kvstore"):
+        cur.execute("PRAGMA table_info(kvstore)")
+        cols = [row[1] for row in cur.fetchall()]
+        has_expires = "expires_at" in cols
+        if has_expires:
+            cur.execute("SELECT key, value, expires_at FROM kvstore")
+            rows = cur.fetchall()
+        else:
+            cur.execute("SELECT key, value FROM kvstore")
+            rows = [(k, v, None) for (k, v) in cur.fetchall()]
+
+    try:
+        conn.close()
+    except Exception:
+        pass
+
+    # Move legacy DB out of the way so Kycore can create the new encrypted DB
+    try:
+        if os.path.exists(db_path):
+            shutil.move(db_path, backup_path)
+    except Exception:
+        # If move fails, avoid destructive changes
+        return False
+
+    if Kycore is None:
+        return False
+
+    with Kycore(db_path=db_path, master_key=master_key) as kv:
+        now = datetime.now(timezone.utc)
+        for k, v, exp in rows:
+            if k is None:
+                continue
+            ttl = None
+            exp_dt = _parse_legacy_expires_at(exp)
+            if exp_dt:
+                delta = (exp_dt - now).total_seconds()
+                if delta <= 0:
+                    continue
+                ttl = int(delta)
+            kv.save(str(k).lower().strip(), v if v is not None else "", ttl=ttl)
+
+    return True
+
 def main():
     # Make warnings visible in CLI
     warnings.simplefilter("always", UserWarning)
@@ -107,6 +213,9 @@ def main():
             else:
                 new_args.append(arg)
         args = new_args
+
+        # Auto-migrate legacy SQLite DBs before any Kycore access
+        _maybe_migrate_legacy_sqlite(db_path, master_key=master_key)
 
         if cmd in ["kyuse", "use"]:
             if not args:
