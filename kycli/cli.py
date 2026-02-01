@@ -30,8 +30,12 @@ Available commands:
   kypatch <key> <val>                      - Patch JSON/Dict value
   kyl [pattern]                            - List keys (optional regex pattern)
   kyd <key>                                - Delete key (requires confirmation)
-  kypush <key> <val> [--unique]            - Append value to a list
-  kyrem <key> <val>                        - Remove value from a list
+  kypush <val> [--key <k>] [--priority <n>] - Push to queue/stack OR append to KV list
+  kypop                                  - Pop item from queue/stack
+  kypeek                                 - Peek at next item in queue/stack
+  kycount                                - Count items in workspace
+  kyclear                                - Clear all items in workspace
+  kyrem <key> <val>                      - Remove value from a list
 
   🔍 Search & Utility:
   kyg -s <query>                   - Search for values (Full-Text Search).
@@ -47,7 +51,7 @@ Available commands:
   kyr <key>[.path]                 - Restore a deleted key
   kyrt <timestamp>                 - Point-in-Time Recovery
   kyco [days]                      - Compact DB
-    kyrotate --new-key <k>           - Rotate encryption master key
+  kyrotate --new-key <k>           - Rotate encryption master key
 
   🔐 Security:
   Set `KYCLI_MASTER_KEY` env variable or use `--key "pass"` flag.
@@ -287,6 +291,26 @@ def main():
                 print(active_ws)
                 return
 
+            if len(args) >= 2 and args[0] == "create":
+                name = args[1]
+                wtype = "kv"
+                # Check for --type in all args
+                if "--type" in args:
+                    idx = args.index("--type")
+                    if idx + 1 < len(args):
+                        wtype = args[idx+1]
+                
+                # Switch to it
+                save_config({"active_workspace": name})
+                
+                # Initialize with correct type
+                new_config = load_config()
+                with Kycore(new_config["db_path"]) as new_kv:
+                    new_kv.set_type(wtype)
+                
+                print(f"✅ Workspace '{name}' created/switched ({wtype}).")
+                return
+
             if args:
                 print(f"Computed: kyws {' '.join(args)}")
                 print(f"Did you mean 'kyuse {args[0]}' to switch workspaces?")
@@ -497,15 +521,65 @@ fi
                     print(f"✅ Patched: {args[0]}")
 
             elif cmd in ["kypush", "push"]:
-                if len(args) < 2:
-                    print("Usage: kypush <key> <value> [--unique]")
+                if not args:
+                    print("Usage: kypush <val> [--key <k>] [--priority <n>] [--unique]")
                     return
+                # Handle args/kwargs
                 unique = "--unique" in args
-                val = args[1]
+                priority = 0
+                if "--priority" in args:
+                    idx = args.index("--priority")
+                    if idx + 1 < len(args):
+                        priority = args[idx+1]
+                        # Remove priority from args for later indexing
+                        args.pop(idx+1)
+                        args.pop(idx)
+                
+                key = None
+                if "--key" in args:
+                    idx = args.index("--key")
+                    if idx + 1 < len(args):
+                        key = args[idx+1]
+                        args.pop(idx+1)
+                        args.pop(idx)
+                
+                # Check type
+                wtype = kv.get_type()
+                if not key and wtype == "kv":
+                    # Backward compatibility or fallback? 
+                    # If we have 1 arg in KV, it must be an error or we need a key.
+                    if len(args) < 2:
+                        print("Usage: kypush <key> <value> [--unique]")
+                        return
+                    key = args[0]
+                    val = args[1]
+                elif not key:
+                    val = args[0]
+                else:
+                    # key provided via --key, val is args[0]
+                    val = args[0]
+
                 # Try to parse as JSON
                 try: val = json.loads(val)
                 except: pass
-                print(kv.push(args[0], val, unique=unique))
+                
+                print(kv.push(val, key=key, unique=unique, priority=priority))
+
+            elif cmd in ["kypop", "pop"]:
+                print(kv.pop())
+
+            elif cmd in ["kypeek", "peek"]:
+                print(kv.peek())
+
+            elif cmd in ["kycount", "count"]:
+                print(kv.count())
+
+            elif cmd in ["kyclear", "clear"]:
+                confirm = input("⚠️ DANGER: Clear entire workspace? (y/N): ").lower()
+                if confirm == 'y':
+                    print(kv.clear())
+                else:
+                    print("Aborted.")
 
             elif cmd in ["kyrem", "remove"]:
                 if len(args) < 2:
@@ -632,6 +706,7 @@ fi
                 kv.import_data(import_path)
                 print(f"📥 Imported data into '{active_ws}'")
     
+
             elif cmd in ["kyc", "execute"]:
                 if not args:
                     print("Usage: kyc <key> [args...]")
@@ -664,8 +739,6 @@ fi
         print(f"⚠️ Validation Error: {e}")
     except Exception as e:
         print(f"🔥 Unexpected Error: {e}")
-        # import traceback
-        # traceback.print_exc()
         sys.exit(1)
 
 if __name__ == "__main__":

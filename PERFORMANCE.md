@@ -1,61 +1,37 @@
-## Overview
-KyCLI has been pushed to the absolute limits of performance by integrating directly with the **SQLite C API (`libsqlite3`)** and introducing **Asynchronous I/O** support.
+# ⚡ KyCLI Performance Benchmarks
 
-1.  **C-level SQLite Integration**:
-    *   **Raw C API**: We removed the Python `sqlite3` wrapper entirely. KyCLI now calls `sqlite3_prepare_v2`, `sqlite3_step`, and `sqlite3_bind_text` directly using Cython `cdef` externs.
-    *   **Zero Overhead Fetch**: Reads now bypass Python's database abstraction layer, leading to ultra-low latency key retrieval.
-    *   **Pointer Management**: Direct C-string handling and manual statement finalization ensure minimal memory allocations.
-2.  **Asynchronous I/O Support**:
-    *   **Non-blocking API**: Added `save_async()` and `getkey_async()` methods.
-    *   **Thread Pool Execution**: Uses `asyncio.to_thread` to offload database I/O, allowing high-throughput integrations in web servers (like FastAPI or Sanic) without blocking the event loop.
+`kycli` is built for high-performance secure storage. It uses **Record-Level Encryption**, ensuring that while your data is secure at rest, operations remain O(1) and scale efficiently with database size.
 
-## Benchmark Results (Avg task for 1,000 calls)
+## 📊 Summary Results (100,000 Records)
+Benchmarks run on Apple Silicon (M-series), record-level encryption enabled.
 
-| Operation | Implementation | Avg Latency |
-| :--- | :--- | :--- |
-| **Sync (Raw C)** | **0.0040 ms** (4.0 µs) |
-| **L1 Cache Hit hit** | **Cython LRU** | **0.0038 ms** (3.8 µs) |
-| **Batch Save** | **Atomic C-Loop** | **0.0229 ms** / item |
-| **Get Key** | **Async (Threadpool)** | 0.0461 ms |
-| **Get History** | **Sync (Raw C)** | 0.0037 ms |
-| **List Keys** | **Sync (Raw C)** | 0.1680 ms |
-
-## Scaling Performance (10,000 Classes/Records)
-
-To test the engine at scale, we simulated a database with **10,000 school class records**, each validated using a **Pydantic schema**.
-
-| Operation | Scale | Avg Latency | notes |
+| Operation | Throughput | Latency per Op | Implementation |
 | :--- | :--- | :--- | :--- |
-| **Save Class** | 10k Records | **1.7124 ms** | Includes Pydantic validation & JSON serialization |
-| **Get Class** | 10k Records | **0.0056 ms** | microsecond-fast retrieval at scale |
-| **List Keys** | 10k Records | **1.5620 ms** | Near-instant listing of entire dataset |
-| **Search (FTS)** | 10k Records | **6.6721 ms** | Full-text search (no limit) |
-| **Search (Limit)** | 10k Records | **6.6349 ms** | Optimized FTS search |
-| **Save Async** | 10k Records | **0.2976 ms** | High-throughput background saves |
-| **Get Async** | 10k Records | **0.0461 ms** | Non-blocking retrieval |
+| **KV Batch Save** | **~53,000 ops/sec** | **0.019 ms** | SQL Transaction (O(1)) |
+| **KV Random Get** | **~85,000 ops/sec** | **0.012 ms** | Indexed Lookup + Record Decrypt |
+| **Queue Push (Bulk)** | **~290,000 ops/sec** | **0.003 ms** | SQL Transaction (WAL) |
+| **Stack Push (Bulk)** | **~310,000 ops/sec** | **0.003 ms** | SQL Transaction (WAL) |
+| **Queue Pop (Bulk)** | **~280,000 ops/sec** | **0.003 ms** | Atomic `BEGIN IMMEDIATE` + Batch Delete |
+| **Stack Pop (Bulk)** | **~110,000 ops/sec** | **0.009 ms** | Atomic `BEGIN IMMEDIATE` + Batch Delete |
 
-### Analysis
-*   **Sync Performance**: The raw C API provides the best latency for CLI usage. A simple key fetch is now performing at near-native hardware speeds (~2.8 microseconds).
-*   **Async Trade-off**: Asynchronous calls add slight overhead (~40µs) due to thread switching. This is highly beneficial for high-throughput applications where you want to handle multiple I/O tasks concurrently, even though single-task latency is higher.
+## 🚀 Concurrency & Stress Tests
+`kycli` leverages SQLite **WAL Mode**, providing excellent performance under high concurrency and multi-process safety.
 
-## How to measure speed
-Run the comprehensive sync + async benchmark:
+| Scenario | Throughput | Description |
+| :--- | :--- | :--- |
+| **Parallel Queue (5 Threads)** | **~36,000 ops/sec** | Concurrent `push` + `pop`. No global locks. |
+| **Parallel KV (5 Threads)** | **~10,000 ops/sec** | Concurrent individual `save` operations. O(1) performance. |
+
+### 🧠 Performance Insights
+
+1.  **O(1) Scalability**: Write latency is constant regardless of database size. `kycli` no longer rewrites the entire file for every store operation.
+2.  **Optimized Reads**: Simple key lookups skip full-table scans. Regex search is only triggered for patterns containing metacharacters.
+3.  **Durability**: Every write is committed to disk using SQLite's Write-Ahead Log (WAL), ensuring data integrity in the event of a crash.
+4.  **Concurrency**: WAL mode allows multiple readers and one writer simultaneously, making `kycli` suitable for multi-threading and multi-process environments.
+
+## 🛠️ Reproduction
+Run the benchmark suite yourself:
 ```bash
-PYTHONPATH=. python3 tests/integration/benchmark.py
+PYTHONPATH=. python3 tests/performance/kycli_benchmark.py
 ```
-
-
-## Performance & Scaling Features
-
-1.  **Hybrid Memory Cache (L1 Cache)**:
-    *   **LRU Cache**: A high-speed memory cache built using `collections.OrderedDict` in Cython.
-    *   **Nanosecond Hits**: Frequent reads bypass the SQLite engine entirely, hitting memory in ~1-2 microseconds.
-    *   **Auto-Invalidation**: Writes and deletes automatically update or prune the cache to ensure consistency.
-2.  **Batch Save (`save_many`)**:
-    *   **Atomic Transactions**: Ingest thousands of keys in a single transaction.
-    *   **Bypasses Overhead**: Extremely efficient for bulk data loading or state syncing.
-3.  **Point-in-Time Recovery (PITR)**:
-    *   `kyrt <timestamp>`: Reconstruct the entire database state at any specific timestamp using the audit log.
-4.  **Database Compaction**:
-    *   `kyco [days]`: An `optimize` command that runs `VACUUM` and clears out old history/archive data based on a retention policy.
-
+*(Ensure you have rebuilt the Cython extension with `python setup.py build_ext --inplace`)*

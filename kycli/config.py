@@ -39,7 +39,6 @@ def migrate_legacy_db():
         try:
             ensure_dirs()
             shutil.move(legacy_path, default_db_path)
-            # print(f"📦 Migrated legacy database to {default_db_path}")
         except Exception:
             pass
 

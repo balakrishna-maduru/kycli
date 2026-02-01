@@ -86,6 +86,16 @@ cdef class Kycore:
         """)
         self._engine._execute_raw("CREATE INDEX IF NOT EXISTS idx_audit_key ON audit_log(key)")
         
+        # Queue/Stack Table
+        self._engine._execute_raw("""
+            CREATE TABLE IF NOT EXISTS queue_items (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                value TEXT,
+                priority INTEGER DEFAULT 0,
+                created_at DATETIME DEFAULT (STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW'))
+            )
+        """)
+        
         # FTS5
         self._engine._execute_raw("CREATE VIRTUAL TABLE IF NOT EXISTS fts_kvstore USING fts5(key, value, content='kvstore')")
         self._engine._execute_raw("""
@@ -100,6 +110,12 @@ cdef class Kycore:
                 INSERT INTO fts_kvstore(rowid, key, value) VALUES (new.rowid, new.key, new.value);
             END;
         """)
+        
+        if os.path.exists(self._real_db_path) and os.path.getsize(self._real_db_path) > 0:
+            try:
+                self._load()
+            except:
+                pass
 
         # Auto-cleanup: Delete archived items older than 15 days
         self._engine._execute_raw("DELETE FROM archive WHERE (julianday('now') - julianday(deleted_at)) > 15")
@@ -137,9 +153,38 @@ cdef class Kycore:
     def _encrypt(self, str val): return self._security.encrypt(val)
     def _decrypt(self, str val): return self._security.decrypt(val)
 
+    def get_type(self):
+        # We need a way to get this without causing getkey recursion
+        rows = self._engine._bind_and_fetch("SELECT value FROM kvstore WHERE key = '_sys_type'", [])
+        if not rows: return "kv"
+        val_str = self._security.decrypt(rows[0][0])
+        try: return json.loads(val_str)
+        except: return val_str
+
+    def set_type(self, str wtype):
+        valid = ["kv", "queue", "stack", "priority_queue"]
+        if wtype not in valid: raise ValueError(f"Invalid type: {wtype}")
+        current = self.get_type()
+        if current == wtype: return
+        
+        if current != "kv":
+            raise ValueError(f"Cannot change type of a {current} workspace")
+            
+        if self.count() > 0:
+            raise ValueError("Cannot change type of non-empty workspace")
+        
+        # Save directly to bypass set_type check in save()
+        storage_val = self._security.encrypt(json.dumps(wtype))
+        self._engine._execute_raw("BEGIN TRANSACTION")
+        self._engine._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", ["_sys_type", storage_val])
+        self._engine._execute_raw("COMMIT")
+        # _persist is called inside __exit__ or manually if needed, 
+        # but here we definitely want it on disk.
+        self._persist()
+
     def _persist(self):
         # Dump DB to SQL
-        cdef list sql_stmts = ["BEGIN TRANSACTION;"]
+        cdef list sql_stmts = ["BEGIN TRANSACTION;", "DELETE FROM kvstore;", "DELETE FROM audit_log;", "DELETE FROM archive;", "DELETE FROM queue_items;"]
         
         # Dump KVStore
         rows = self._engine._bind_and_fetch("SELECT key, value, expires_at FROM kvstore", [])
@@ -160,6 +205,12 @@ cdef class Kycore:
         for r in rows:
             k, v, da = r[0], r[1], r[2]
             sql_stmts.append(f"INSERT INTO archive (key, value, deleted_at) VALUES ('{k.replace('\'', '\'\'')}', '{v.replace('\'', '\'\'')}', '{da}');")
+            
+        # Dump Queue Items
+        rows = self._engine._bind_and_fetch("SELECT value, priority, created_at FROM queue_items", [])
+        for r in rows:
+            v, p, ca = r[0], r[1], r[2]
+            sql_stmts.append(f"INSERT INTO queue_items (value, priority, created_at) VALUES ('{v.replace('\'', '\'\'')}', {p}, '{ca}');")
             
         sql_stmts.append("COMMIT;")
         full_sql = "\n".join(sql_stmts)
@@ -223,6 +274,12 @@ cdef class Kycore:
     def save(self, str key, value, ttl=None):
         if not key or not key.strip(): raise ValueError("Empty key")
         k = key.lower().strip()
+        
+        if k != "_sys_type":
+            wtype = self.get_type()
+            if wtype != "kv":
+                raise TypeError(f"Operation 'kys' not supported on {wtype} workspace")
+
         
         if self._schema:
             try:
@@ -365,6 +422,12 @@ cdef class Kycore:
 
     def getkey(self, str key_pattern, deserialize=True):
         k = key_pattern.lower().strip()
+        
+        if k != "_sys_type":
+            wtype = self.get_type()
+            if wtype != "kv":
+                raise TypeError(f"Operation 'kyg' not supported on {wtype} workspace")
+
         results = self._engine._bind_and_fetch("""
             SELECT value, expires_at, (expires_at < datetime('now')) as is_expired
             FROM kvstore WHERE key = ?
@@ -454,13 +517,129 @@ cdef class Kycore:
         updated = self._query.patch_value(existing, path, value)
         return self.save(prefix, updated, ttl=ttl)
 
-    def push(self, str key, value, unique=False, ttl=None):
-        data = self.getkey(key, deserialize=True)
-        if data == "Key not found": data = []
-        if not isinstance(data, list): raise TypeError("Not a list")
-        if unique and value in data: return "nochange"
-        data.append(value)
-        return self.save(key, data, ttl=ttl)
+    def push(self, *args, **kwargs):
+        # Polymorphic: push(val) for queues, push(key, val) for list-kv
+        wtype = self.get_type()
+        unique = kwargs.get('unique', False)
+        priority = kwargs.get('priority', 0)
+        ttl = kwargs.get('ttl')
+        
+        if len(args) == 2 or (len(args) == 1 and kwargs.get('key')):
+            # KV behavior
+            key = kwargs.get('key') or args[0]
+            val = args[1] if len(args) == 2 else args[0]
+            
+            data = self.getkey(key, deserialize=True)
+            if data == "Key not found": data = []
+            if not isinstance(data, list): raise TypeError("Not a list")
+            if unique and val in data: return "nochange"
+            data.append(val)
+            return self.save(key, data, ttl=ttl)
+        else:
+            # Queue behavior
+            if wtype == "kv":
+                # Check if it was supposed to be KV but missing key?
+                # Usually kypush requires key in KV.
+                raise TypeError("Queue 'push' requires a 'key' argument in KV workspace")
+            
+            val = args[0]
+            s_val = json.dumps(val) if isinstance(val, (dict, list, bool, int, float)) else str(val)
+            st_val = self._security.encrypt(s_val)
+            
+            self._engine._bind_and_execute("INSERT INTO queue_items (value, priority) VALUES (?, ?)", [st_val, int(priority)])
+            self._persist()
+            return "pushed"
+
+    def pop(self):
+        wtype = self.get_type()
+        if wtype == "kv": raise TypeError("'pop' not supported on kv workspace")
+        
+        # Determine order
+        order = "id ASC" # queue (FIFO)
+        if wtype == "stack": order = "id DESC" # LIFO
+        elif wtype == "priority_queue": order = "priority DESC, id ASC"
+        
+        results = self._engine._bind_and_fetch(f"SELECT id, value FROM queue_items ORDER BY {order} LIMIT 1", [])
+        if not results: return None
+        
+        id, st_val = results[0][0], results[0][1]
+        val_str = self._security.decrypt(st_val)
+        try: val = json.loads(val_str)
+        except: val = val_str
+        
+        self._engine._bind_and_execute("DELETE FROM queue_items WHERE id = ?", [id])
+        self._persist()
+        return val
+
+    def peek(self):
+        wtype = self.get_type()
+        if wtype == "kv": raise TypeError("'peek' not supported on kv workspace")
+        
+        order = "id ASC"
+        if wtype == "stack": order = "id DESC"
+        elif wtype == "priority_queue": order = "priority DESC, id ASC"
+        
+        results = self._engine._bind_and_fetch(f"SELECT value FROM queue_items ORDER BY {order} LIMIT 1", [])
+        if not results: return None
+        
+        val_str = self._security.decrypt(results[0][0])
+        try: return json.loads(val_str)
+        except: return val_str
+
+    def push_many(self, list values, priority=0):
+        wtype = self.get_type()
+        if wtype == "kv":
+            raise TypeError("Queue 'push_many' not supported in KV workspace")
+            
+        self._engine._execute_raw("BEGIN TRANSACTION")
+        for val in values:
+            s_val = json.dumps(val) if isinstance(val, (dict, list, bool, int, float)) else str(val)
+            st_val = self._security.encrypt(s_val)
+            self._engine._bind_and_execute("INSERT INTO queue_items (value, priority) VALUES (?, ?)", [st_val, int(priority)])
+        self._engine._execute_raw("COMMIT")
+        self._persist()
+        return f"Pushed {len(values)} items"
+
+    def pop_many(self, int count=1):
+        wtype = self.get_type()
+        if wtype == "kv": raise TypeError("'pop_many' not supported on kv workspace")
+        
+        order = "id ASC"
+        if wtype == "stack": order = "id DESC"
+        elif wtype == "priority_queue": order = "priority DESC, id ASC"
+        
+        results = self._engine._bind_and_fetch(f"SELECT id, value FROM queue_items ORDER BY {order} LIMIT ?", [count])
+        if not results: return []
+        
+        ids = [row[0] for row in results]
+        items = []
+        for row in results:
+            val_str = self._security.decrypt(row[1])
+            try: items.append(json.loads(val_str))
+            except: items.append(val_str)
+            
+        self._engine._execute_raw("BEGIN TRANSACTION")
+        placeholders = ",".join(["?"] * len(ids))
+        self._engine._bind_and_execute(f"DELETE FROM queue_items WHERE id IN ({placeholders})", ids)
+        self._engine._execute_raw("COMMIT")
+        self._persist()
+        return items
+
+    def count(self):
+        wtype = self.get_type()
+        if wtype == "kv":
+            res = self._engine._bind_and_fetch("SELECT count(*) FROM kvstore WHERE key != '_sys_type'", [])
+        else:
+            res = self._engine._bind_and_fetch("SELECT count(*) FROM queue_items", [])
+        return int(res[0][0])
+
+    def clear(self):
+        self._engine._execute_raw("DELETE FROM kvstore WHERE key != '_sys_type'")
+        self._engine._execute_raw("DELETE FROM queue_items")
+        self._cache.clear()
+        self._persist()
+        return "cleared"
+
 
     def remove(self, str key, value, ttl=None):
         data = self.getkey(key, deserialize=True)
@@ -627,8 +806,7 @@ cdef class Kycore:
         for row in res: yield row[0]
 
     def __len__(self):
-        res = self._engine._bind_and_fetch("SELECT COUNT(*) FROM kvstore WHERE (expires_at IS NULL OR expires_at > datetime('now'))", [])
-        return int(res[0][0]) if res else 0
+        return self.count()
 
     def __getitem__(self, str k):
         v = self.getkey(k)

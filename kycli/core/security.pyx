@@ -26,29 +26,30 @@ cdef class SecurityManager:
             key = kdf.derive(master_key.encode('utf-8'))
             self._aesgcm = AESGCM(key)
 
-    cdef str encrypt(self, str plaintext):
+    cpdef str encrypt(self, str plaintext):
         if self._aesgcm is None:
             return plaintext
         nonce = os.urandom(12)
         ciphertext = self._aesgcm.encrypt(nonce, plaintext.encode('utf-8'), None)
         return "enc:" + base64.b64encode(nonce + ciphertext).decode('utf-8')
 
-    cdef str decrypt(self, str encrypted_text):
+    cpdef str decrypt(self, str encrypted_text):
         if encrypted_text is None:
             return "[DELETED]"
-        if not encrypted_text.startswith("enc:"):
-            return encrypted_text
+        t_val = encrypted_text.strip()
+        if not t_val.startswith("enc:"):
+            return t_val
         if self._aesgcm is None:
             return "[ENCRYPTED: Provide a master key to view this value]"
         try:
-            data = base64.b64decode(encrypted_text[4:].encode('utf-8'))
+            data = base64.b64decode(t_val[4:].encode('utf-8'))
             nonce = data[:12]
             ciphertext = data[12:]
             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
         except Exception:
             return "[DECRYPTION FAILED: Incorrect master key]"
 
-    cdef bytes encrypt_blob(self, bytes blob):
+    cpdef bytes encrypt_blob(self, bytes blob):
         if self._aesgcm is None or blob is None:
             return blob
         nonce = os.urandom(12)
@@ -56,7 +57,7 @@ cdef class SecurityManager:
         # Format: <Nonce:12><Ciphertext>
         return nonce + ciphertext
 
-    cdef bytes decrypt_blob(self, bytes encrypted_blob):
+    cpdef bytes decrypt_blob(self, bytes encrypted_blob):
         if self._aesgcm is None:
             return encrypted_blob 
         if len(encrypted_blob) < 12:

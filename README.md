@@ -60,6 +60,16 @@ pip install kycli
 | **`kyd`** | Delete Key | `kyd host` |
 | **`kypush`**| Push to List | `kypush logs "error"` |
 | **`kyrem`** | Remove from List | `kyrem tags "old"` |
+| **`kyrem`** | Remove from List | `kyrem tags "old"` |
+### 🧱 Queues & Stacks Operations
+| Command | Description | Example |
+| :--- | :--- | :--- |
+| **`kypush`** | Push to Queue/Stack | `kypush "task" --priority 10` |
+| **`kypop`** | Pop item (Atomic) | `kypop` |
+| **`kypeek`** | Peek next item | `kypeek` |
+| **`kycount`** | Count items | `kycount` |
+| **`kyclear`** | Clear implementation | `kyclear` |
+| **`kyws`** | Create Typed WS | `kyws create q --type queue` |
 
 ### 🔍 Search & Utility
 | Command | Description | Example |
@@ -143,6 +153,40 @@ kys username "maduru"
 kys session_id "data" --ttl 1h
 # Result: ✅ Saved: session_id (New) (Expires in 1 hour)
 ```
+
+### 🧱 Typed Workspaces: Queues & Stacks
+Optimize your workspace for specific data structures with strict concurrency guarantees (`BEGIN IMMEDIATE` locking).
+
+#### 1. Queue (FIFO)
+```bash
+# Create
+kyws create jobs --type queue
+kyuse jobs
+
+# Push & Pop (Atomic)
+kypush "job_1"
+kypop
+# Result: job_1
+```
+
+#### 2. Stack (LIFO)
+```bash
+kyws create undo_log --type stack
+kypush "cmd1"
+kypush "cmd2"
+kypop
+# Result: cmd2
+```
+
+#### 3. Priority Queue
+```bash
+kyws create triage --type priority_queue
+kypush "low" --priority 1
+kypush "high" --priority 100
+kypop
+# Result: high
+```
+See [docs/QUEUES_STACKS.md](docs/QUEUES_STACKS.md) for full details.
 
 ### 📂 Advanced JSONPath & Dot-Notation
 `kycli` allows you to treat your key-value store like a document database. You can query and update deep nested structures without retrieving the entire object.
@@ -440,6 +484,24 @@ with Kycore() as kv:
     kv.save_many(items, ttl="1h")
     # Result: ⚡ Atomic transaction per batch (extremely fast)
 
+# 5. Queues & Stacks (API)
+use `set_type` to separate queues from KV stores.
+```python
+from kycli import Kycore
+
+# Initialize and set type
+with Kycore("jobs.db") as q:
+    q.set_type("queue")
+    
+    # Push (Atomic & Durable)
+    q.push("task_1")
+    q.push({"id": 2, "action": "email"})
+    
+    # Pop (Thread-Safe)
+    item = q.pop()
+    print(item) # task_1
+```
+
 # 6. Maintenance & PITR
 with Kycore() as kv:
     # Cleanup history older than 30 days
@@ -530,7 +592,7 @@ async def fetch_config(key: str, db: Kycore = Depends(get_db)):
 
 Want to test the speed on your own hardware?
 ```bash
-PYTHONPATH=. python3 tests/integration/benchmark.py
+PYTHONPATH=. python3 tests/performance/kycli_benchmark.py
 ```
 
  ---

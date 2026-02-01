@@ -17,7 +17,8 @@ RED="${ESC}[0;31m"
 NC="${ESC}[0m"
 
 # Helper
-KY_CLI="python3 -m kycli.cli"
+PYTHON_CMD=${PYTHON_EXECUTABLE:-"$(pwd)/.venv/bin/python"}
+KY_CLI="$PYTHON_CMD -m kycli.cli"
 
 # Column Widths
 W_ID=13
@@ -327,6 +328,56 @@ export KYCLI_DB_PATH="$BASE_TEST_DIR/env_override/specific.db"
 run_cmd "$KY_CLI kys envkey2 v --ttl 3600"
 check_test "KYCLI_DB_PATH" "File override" $last_status "Saved" "$last_output"
 unset KYCLI_DB_PATH
+
+# --- SECTION 6: Queues and Stacks ---
+export HOME="$BASE_TEST_DIR/queues"
+mkdir -p "$HOME"
+
+# 1. Queue (FIFO)
+$KY_CLI kyws create q_fifo --type queue > /dev/null
+$KY_CLI kyuse q_fifo > /dev/null
+run_cmd "$KY_CLI kypush q_item1"
+check_test "kypush" "Push to queue" $last_status "pushed" "$last_output"
+
+$KY_CLI kypush q_item2 > /dev/null
+run_cmd "$KY_CLI kypeek"
+check_test "kypeek" "Peek head of queue" $last_status "q_item1" "$last_output"
+
+run_cmd "$KY_CLI kypop"
+check_test "kypop" "Pop head (FIFO)" $last_status "q_item1" "$last_output"
+
+run_cmd "$KY_CLI kycount"
+check_test "kycount" "Count remaining items" $last_status "1" "$last_output"
+
+# 2. Stack (LIFO)
+$KY_CLI kyws create s_lifo --type stack > /dev/null
+$KY_CLI kyuse s_lifo > /dev/null
+$KY_CLI kypush bottom > /dev/null
+$KY_CLI kypush top > /dev/null
+
+run_cmd "$KY_CLI kypop"
+check_test "kypop (Stack)" "Pop top (LIFO)" $last_status "top" "$last_output"
+
+# 3. Priority Queue
+$KY_CLI kyws create pq_prio --type priority_queue > /dev/null
+$KY_CLI kyuse pq_prio > /dev/null
+$KY_CLI kypush low --priority 1 > /dev/null
+$KY_CLI kypush high --priority 100 > /dev/null
+$KY_CLI kypush med --priority 50 > /dev/null
+
+run_cmd "$KY_CLI kypop"
+check_test "kypop (Priority)" "Pop highest priority" $last_status "high" "$last_output"
+
+# 4. Clear
+run_cmd "echo \"y\" | $KY_CLI kyclear"
+check_test "kyclear" "Clear workspace" $last_status "cleared" "$last_output"
+run_cmd "$KY_CLI kycount"
+check_test "kycount" "Verify empty after clear" $last_status "0" "$last_output"
+
+# 5. Type Safety (Negative)
+# Trying to use kykys on a queue
+run_cmd "$KY_CLI kys key val"
+check_test "kys (Negative)" "Block KV command on Queue" $last_status "not supported" "$last_output" 1
 
 # Bottom Line
 printf "|-%-${W_ID}s-|-%-${W_CMD}s-|-%-${W_DESC}s-|-%-${W_STAT}s-|\n" "$(printf '%0.s-' $(seq 1 $W_ID))" "$(printf '%0.s-' $(seq 1 $W_CMD))" "$(printf '%0.s-' $(seq 1 $W_DESC))" "$(printf '%0.s-' $(seq 1 $W_STAT))" | sed 's/ /-/g'

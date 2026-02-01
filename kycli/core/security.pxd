@@ -3,7 +3,7 @@
 cdef class SecurityManager:
     cdef object _aesgcm
     cdef str _master_key
-    cdef str encrypt(self, str plaintext)
-    cdef str decrypt(self, str encrypted_text)
-    cdef bytes encrypt_blob(self, bytes blob)
-    cdef bytes decrypt_blob(self, bytes encrypted_blob)
+    cpdef str encrypt(self, str plaintext)
+    cpdef str decrypt(self, str encrypted_text)
+    cpdef bytes encrypt_blob(self, bytes blob)
+    cpdef bytes decrypt_blob(self, bytes encrypted_blob)

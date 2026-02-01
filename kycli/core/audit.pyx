@@ -84,7 +84,7 @@ cdef class AuditManager:
         self._engine._bind_and_execute("INSERT OR REPLACE INTO kvstore (key, value) VALUES (?, ?)", [k, latest_value])
         self._engine._bind_and_execute("INSERT INTO audit_log (key, value) VALUES (?, ?)", [k, latest_value])
         self._engine._execute_raw("COMMIT")
-        return f"Restored: {k}"
+        return f"Restored {k}"
 
     cpdef str restore_to(self, str timestamp):
         try:
