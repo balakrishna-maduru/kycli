@@ -8,7 +8,13 @@ export BASE_TEST_DIR="/tmp/kycli_matrix_final"
 rm -rf "$BASE_TEST_DIR"
 mkdir -p "$BASE_TEST_DIR"
 export PYTHONPATH=.
-export TERM=dumb
+export TERM=xterm-256color
+
+# Colors
+ESC=$(printf '\033')
+GREEN="${ESC}[0;32m"
+RED="${ESC}[0;31m"
+NC="${ESC}[0m"
 
 # Helper
 KY_CLI="python3 -m kycli.cli"
@@ -25,6 +31,8 @@ printf "| %-${W_ID}s | %-${W_CMD}s | %-${W_DESC}s | %-${W_STAT}s |\n" "Test Case
 printf "|-%-${W_ID}s-|-%-${W_CMD}s-|-%-${W_DESC}s-|-%-${W_STAT}s-|\n" "$(printf '%0.s-' $(seq 1 $W_ID))" "$(printf '%0.s-' $(seq 1 $W_CMD))" "$(printf '%0.s-' $(seq 1 $W_DESC))" "$(printf '%0.s-' $(seq 1 $W_STAT))" | sed 's/ /-/g'
 
 count=1
+total=0
+passed=0
 last_output=""
 last_status=0
 
@@ -55,7 +63,18 @@ check_test() {
         status="PASS"
     fi
 
-    printf "| %-${W_ID}s | %-${W_CMD}s | %-${W_DESC}s | %-${W_STAT}s |\n" "$count" "$cmd_label" "$description" "$status"
+    ((total++))
+    if [[ "$status" == "PASS" ]]; then
+        ((passed++))
+    fi
+
+    local status_display="${RED}${status}${NC}"
+    if [[ "$status" == "PASS" ]]; then
+        status_display="${GREEN}${status}${NC}"
+    fi
+
+    # Width 19 = 8 (original width) + 11 (color codes)
+    printf "| %-${W_ID}s | %-${W_CMD}s | %-${W_DESC}s | %-19s |\n" "$count" "$cmd_label" "$description" "$status_display"
     ((count++))
 }
 
@@ -131,7 +150,15 @@ if [[ "$last_output" == *"deleted"* ]] && [[ "$last_output" == *"Switched to 'de
 else
     status_ws="FAIL"
 fi
-printf "| %-${W_ID}s | %-${W_CMD}s | %-${W_DESC}s | %-${W_STAT}s |\n" "$count" "kydrop (Active)" "Delete active workspace & move to default" "$status_ws"
+
+((total++))
+status_display_ws="${RED}${status_ws}${NC}"
+if [[ "$status_ws" == "PASS" ]]; then
+    ((passed++))
+    status_display_ws="${GREEN}${status_ws}${NC}"
+fi
+
+printf "| %-${W_ID}s | %-${W_CMD}s | %-${W_DESC}s | %-19s |\n" "$count" "kydrop (Active)" "Delete active workspace & move to default" "$status_display_ws"
 ((count++))
 
 run_cmd "$KY_CLI kyws --current"
@@ -165,7 +192,47 @@ check_test "kyfo" "Index optimization" $last_status "optimized" "$last_output"
 run_cmd "$KY_CLI kyco 0"
 check_test "kyco" "Compaction" $last_status "complete" "$last_output"
 
-# --- SECTION 3: Usage Errors & Corner Cases ---
+# --- SECTION 4: Security & Migration ---
+export HOME="$BASE_TEST_DIR/security_migration"
+mkdir -p "$HOME"
+
+# Rotation
+run_cmd "$KY_CLI kys r1 v1 --key \"oldpass\" --ttl 3600"
+run_cmd "$KY_CLI kyrotate --new-key \"newpass\" --old-key \"oldpass\" --backup"
+check_test "kyrotate" "Rotate master key" $last_status "Rotation complete|Re-encrypted 1" "$last_output"
+
+run_cmd "$KY_CLI kyg r1 --key \"newpass\""
+check_test "kyrotate (Verify)" "Read with new key after rotation" $last_status "v1" "$last_output"
+
+# Migration
+LEGACY_DB="$HOME/.kycli/data/default.db"
+mkdir -p "$(dirname "$LEGACY_DB")"
+rm -f "$LEGACY_DB" # Ensure fresh file for SQLite
+# Create legacy SQLite DB
+python3 -c "import sqlite3; conn=sqlite3.connect('$LEGACY_DB'); conn.execute('CREATE TABLE kvstore (key TEXT PRIMARY KEY, value TEXT, expires_at DATETIME)'); conn.execute('INSERT INTO kvstore (key, value) VALUES (\"mig1\", \"val1\")'); conn.commit(); conn.close()"
+
+run_cmd "$KY_CLI kyg mig1 --key \"migpass\""
+check_test "migration" "Auto-migration from legacy SQLite" $last_status "val1" "$last_output"
+
+# Verify rotation backup exists
+if ls "$HOME/.kycli/data/default.db.bak"* 1> /dev/null 2>&1; then
+    status_bak="PASS"
+else
+    status_bak="FAIL"
+fi
+
+((total++))
+status_display_bak="${RED}${status_bak}${NC}"
+if [[ "$status_bak" == "PASS" ]]; then
+    ((passed++))
+    status_display_bak="${GREEN}${status_bak}${NC}"
+fi
+
+printf "| %-${W_ID}s | %-${W_CMD}s | %-${W_DESC}s | %-19s |\n" "$count" "rotation backup" "Verify backup created during rotation" "$status_display_bak"
+((count++))
+
+# --- SECTION 5: Usage Errors & Corner Cases ---
+export HOME="$BASE_TEST_DIR/standard"
 run_cmd "$KY_CLI kyuse"
 check_test "kyuse" "Usage with no args" $last_status "Usage: kyuse" "$last_output"
 
@@ -264,5 +331,33 @@ unset KYCLI_DB_PATH
 # Bottom Line
 printf "|-%-${W_ID}s-|-%-${W_CMD}s-|-%-${W_DESC}s-|-%-${W_STAT}s-|\n" "$(printf '%0.s-' $(seq 1 $W_ID))" "$(printf '%0.s-' $(seq 1 $W_CMD))" "$(printf '%0.s-' $(seq 1 $W_DESC))" "$(printf '%0.s-' $(seq 1 $W_STAT))" | sed 's/ /-/g'
 
+# Final Summary
+failed=$((total - passed))
+accuracy=0
+if [ "$total" -gt 0 ]; then
+    accuracy=$(( (passed * 100) / total ))
+fi
+
+printf "\n"
+printf "${GREEN}Test Summary Matrix${NC}\n"
+printf "|----------------------|------------|\n"
+printf "| %-20s | %-10s |\n" "Total Tests" "$total"
+printf "| ${GREEN}%-20s${NC} | ${GREEN}%-10s${NC} |\n" "Passed" "$passed"
+printf "| ${RED}%-20s${NC} | ${RED}%-10s${NC} |\n" "Failed" "$failed"
+printf "| %-20s | %-10s |\n" "Accuracy" "$accuracy%"
+printf "|----------------------|------------|\n"
+
+if [ "$failed" -eq 0 ]; then
+    printf "\n✅ ${GREEN}OVERALL STATUS: SUCCESS${NC}\n"
+    printf "Message: All system components are healthy and validated.\n"
+else
+    printf "\n❌ ${RED}OVERALL STATUS: FAILED${NC}\n"
+    printf "Message: Some validation tests failed. Please check the table above.\n"
+    exit_status=1
+fi
+printf "\n"
+
 # Cleanup
 rm -rf "$BASE_TEST_DIR"
+
+exit ${exit_status:-0}

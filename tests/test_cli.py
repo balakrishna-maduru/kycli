@@ -221,6 +221,24 @@ def test_cli_help_default(clean_home_db):
             mock_help.assert_called()
 
 
+def test_cli_kyrotate_usage(clean_home_db, capsys):
+    from kycli.cli import main
+    with patch("sys.argv", ["kyrotate"]):
+        main()
+    out = capsys.readouterr().out
+    assert "Usage: kyrotate" in out
+
+
+def test_cli_kyrotate_dry_run(clean_home_db, capsys):
+    from kycli.cli import main
+    with patch("kycli.cli.Kycore") as mock_core:
+        mock_core.return_value.__enter__.return_value.rotate_master_key.return_value = 3
+        with patch("sys.argv", ["kyrotate", "--new-key", "newpass", "--old-key", "oldpass", "--dry-run"]):
+            main()
+    out = capsys.readouterr().out
+    assert "Dry run complete" in out
+
+
 def test_cli_execute_usage_errors(clean_home_db):
     from kycli.cli import main
     # Hit line 178-179

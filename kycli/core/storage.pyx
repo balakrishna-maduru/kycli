@@ -10,6 +10,7 @@ import json
 import re
 import warnings
 import asyncio
+import shutil
 from datetime import datetime, timedelta, timezone
 import zlib
 import struct
@@ -525,6 +526,97 @@ cdef class Kycore:
         self._persist()
         return res
     def optimize_index(self): self._engine._execute_raw("INSERT INTO fts_kvstore(fts_kvstore) VALUES('optimize')")
+
+    def rotate_master_key(self, new_key, old_key=None, dry_run=False, backup=False, batch=500, verify=True):
+        if not new_key or not str(new_key).strip():
+            raise ValueError("New master key is required")
+
+        if old_key:
+            old_sec = SecurityManager(old_key)
+        else:
+            old_sec = SecurityManager("")
+        new_sec = SecurityManager(new_key)
+
+        tables = ["kvstore", "audit_log", "archive"]
+        enc_counts = []
+        total_enc = 0
+
+        for tbl in tables:
+            try:
+                rows = self._engine._bind_and_fetch(f"SELECT COUNT(*) FROM {tbl} WHERE value LIKE 'enc:%'", [])
+                if rows:
+                    enc_counts.append(int(rows[0][0]))
+                    total_enc += int(rows[0][0])
+                else:
+                    enc_counts.append(0)
+            except Exception:
+                enc_counts.append(0)
+
+        if total_enc > 0 and (old_key is None or not str(old_key).strip()):
+            raise ValueError("Old master key is required to rotate encrypted values")
+
+        if backup and not dry_run and os.path.exists(self._real_db_path):
+            backup_path = self._real_db_path + ".bak"
+            if os.path.exists(backup_path):
+                idx = 1
+                while True:
+                    candidate = f"{backup_path}.{idx}"
+                    if not os.path.exists(candidate):
+                        backup_path = candidate
+                        break
+                    idx += 1
+            shutil.copy2(self._real_db_path, backup_path)
+
+        rotated = 0
+        try:
+            if not dry_run:
+                self._engine._execute_raw("BEGIN TRANSACTION")
+
+            for tbl in tables:
+                offset = 0
+                while True:
+                    rows = self._engine._bind_and_fetch(f"SELECT rowid, value FROM {tbl} LIMIT ? OFFSET ?", [batch, offset])
+                    if not rows:
+                        break
+                    for row in rows:
+                        if row[1] is None:
+                            continue
+                        val = str(row[1])
+                        if val.startswith("enc:"):
+                            plain = old_sec.decrypt(val)
+                            if plain == "[DECRYPTION FAILED: Incorrect master key]" or plain == "[ENCRYPTED: Provide a master key to view this value]":
+                                raise ValueError("Old master key is invalid")
+                        else:
+                            plain = val
+
+                        new_val = new_sec.encrypt(plain)
+                        if not dry_run:
+                            self._engine._bind_and_execute(f"UPDATE {tbl} SET value = ? WHERE rowid = ?", [new_val, row[0]])
+                        rotated += 1
+                    offset += batch
+
+            if not dry_run:
+                self._engine._execute_raw("COMMIT")
+                self._security = new_sec
+                self._cache.clear()
+                self._persist()
+        except Exception as e:
+            if not dry_run:
+                try: self._engine._execute_raw("ROLLBACK")
+                except: pass
+            raise e
+
+        if verify and not dry_run:
+            for i in range(len(tables)):
+                tbl = tables[i]
+                rows = self._engine._bind_and_fetch(f"SELECT value FROM {tbl} WHERE value LIKE 'enc:%' LIMIT 10", [])
+                for row in rows:
+                    val = row[0]
+                    plain = new_sec.decrypt(val)
+                    if plain == "[DECRYPTION FAILED: Incorrect master key]" or plain == "[ENCRYPTED: Provide a master key to view this value]":
+                        raise ValueError("Verification failed after rotation")
+
+        return rotated
 
     def __contains__(self, str key):
         res = self._engine._bind_and_fetch("SELECT 1 FROM kvstore WHERE key = ? AND (expires_at IS NULL OR expires_at > datetime('now'))", [key.lower().strip()])

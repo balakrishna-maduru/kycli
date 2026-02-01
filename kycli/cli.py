@@ -47,6 +47,7 @@ Available commands:
   kyr <key>[.path]                 - Restore a deleted key
   kyrt <timestamp>                 - Point-in-Time Recovery
   kyco [days]                      - Compact DB
+    kyrotate --new-key <k>           - Rotate encryption master key
 
   🔐 Security:
   Set `KYCLI_MASTER_KEY` env variable or use `--key "pass"` flag.
@@ -99,6 +100,9 @@ def _maybe_migrate_legacy_sqlite(db_path, master_key=None):
             header = f.read(16)
     except Exception:
         return False
+
+    if isinstance(header, str):
+        header = header.encode("utf-8", errors="ignore")
 
     if not header.startswith(b"SQLite format 3"):
         return False
@@ -184,10 +188,15 @@ def main():
 
         # Extract flags
         master_key = os.environ.get("KYCLI_MASTER_KEY")
+        old_key = None
+        new_key = None
         ttl = None
         limit = 100
         keys_only = False
         search_mode = False
+        dry_run = False
+        backup = False
+        batch = 500
         new_args = []
         skip_next = False
         for i, arg in enumerate(args):
@@ -196,6 +205,12 @@ def main():
                 continue
             if arg == "--key" and i + 1 < len(args):
                 master_key = args[i+1]
+                skip_next = True
+            elif arg == "--old-key" and i + 1 < len(args):
+                old_key = args[i+1]
+                skip_next = True
+            elif arg == "--new-key" and i + 1 < len(args):
+                new_key = args[i+1]
                 skip_next = True
             elif arg == "--ttl" and i + 1 < len(args):
                 ttl = args[i+1]
@@ -206,8 +221,18 @@ def main():
                     skip_next = True
                 except:
                     new_args.append(arg)
+            elif arg == "--batch" and i + 1 < len(args):
+                try:
+                    batch = int(args[i+1])
+                    skip_next = True
+                except:
+                    new_args.append(arg)
             elif arg == "--keys-only":
                 keys_only = True
+            elif arg == "--dry-run":
+                dry_run = True
+            elif arg == "--backup":
+                backup = True
             elif arg in ["-s", "--search", "-f", "--find"]:
                 search_mode = True
             else:
@@ -237,6 +262,24 @@ def main():
                 pass # Already exists or will be created normally
             
             print(f"Switched to workspace: {target}")
+            return
+
+        if cmd in ["kyrotate", "rotate"]:
+            if not new_key:
+                print("Usage: kyrotate --new-key <key> [--old-key <key>] [--dry-run] [--backup] [--batch N]")
+                return
+            if old_key is None:
+                old_key = master_key
+
+            try:
+                with Kycore(db_path=db_path, master_key=old_key) as kv:
+                    count = kv.rotate_master_key(new_key, old_key=old_key, dry_run=dry_run, backup=backup, batch=batch, verify=True)
+                if dry_run:
+                    print(f"🧪 Dry run complete. {count} values would be re-encrypted.")
+                else:
+                    print(f"✅ Rotation complete. Re-encrypted {count} values.")
+            except Exception as e:
+                print(f"❌ Rotation failed: {e}")
             return
 
         if cmd in ["kyws", "workspaces"]:

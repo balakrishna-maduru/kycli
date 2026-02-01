@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="KyCLI Logo" width="300">
+    <img src="https://raw.githubusercontent.com/balakrishna-maduru/kycli/master/assets/logo.png" alt="KyCLI Logo" width="300">
 </p>
 
 # kycli — The Microsecond-Fast Key-Value Toolkit
@@ -79,6 +79,7 @@ pip install kycli
 | **`kyrt`** | Point-in-Time Recovery | `kyrt "2023-10-27 10:00:00"` |
 | **`kyc`** | Execute Command | `kyc hello` |
 | **`kyco`** | Compact DB | `kyco 7` |
+| **`kyrotate`** | Rotate Master Key | `kyrotate --new-key "newpass" --old-key "oldpass" --backup` |
 
 ---
 
@@ -198,6 +199,18 @@ kyg secret_token --key "my-master-password"
 
 #### Via Environment Variable (Recommended):
 This works for the CLI, TUI (`kyshell`), and Python Library usage.
+```
+export KYCLI_MASTER_KEY="my-master-password"
+```
+
+#### Master Key Rotation
+Rotate all stored values to a new master key.
+```bash
+kyrotate --new-key "newpass" --old-key "oldpass" --backup
+
+# Dry-run to see how many values would rotate
+kyrotate --new-key "newpass" --old-key "oldpass" --dry-run
+```
 ```bash
 export KYCLI_MASTER_KEY="my-master-password"
 kyg secret_token
