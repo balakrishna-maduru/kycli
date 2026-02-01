@@ -559,17 +559,25 @@ cdef class Kycore:
         if wtype == "stack": order = "id DESC" # LIFO
         elif wtype == "priority_queue": order = "priority DESC, id ASC"
         
-        results = self._engine._bind_and_fetch(f"SELECT id, value FROM queue_items ORDER BY {order} LIMIT 1", [])
-        if not results: return None
-        
-        id, st_val = results[0][0], results[0][1]
-        val_str = self._security.decrypt(st_val)
-        try: val = json.loads(val_str)
-        except: val = val_str
-        
-        self._engine._bind_and_execute("DELETE FROM queue_items WHERE id = ?", [id])
-        self._persist()
-        return val
+        self._engine._execute_raw("BEGIN IMMEDIATE TRANSACTION")
+        try:
+            results = self._engine._bind_and_fetch(f"SELECT id, value FROM queue_items ORDER BY {order} LIMIT 1", [])
+            if not results:
+                self._engine._execute_raw("COMMIT")
+                return None
+            
+            id, st_val = results[0][0], results[0][1]
+            val_str = self._security.decrypt(st_val)
+            try: val = json.loads(val_str)
+            except: val = val_str
+            
+            self._engine._bind_and_execute("DELETE FROM queue_items WHERE id = ?", [id])
+            self._engine._execute_raw("COMMIT")
+            self._persist()
+            return val
+        except Exception:
+            self._engine._execute_raw("ROLLBACK")
+            raise
 
     def peek(self):
         wtype = self.get_type()

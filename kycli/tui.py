@@ -207,21 +207,32 @@ class KycliShell:
                     else:
                         target = args[0]
                         ws = self.config.get("active_workspace", "default")
-                        if target == ws:
-                            result = "❌ Cannot drop active workspace."
+                        is_active = (target == ws)
+                        
+                        from kycli.config import DATA_DIR
+                        target_db = os.path.join(DATA_DIR, f"{target}.db")
+                        
+                        if not os.path.exists(target_db):
+                            result = f"❌ Workspace '{target}' not found."
+                        elif "--confirm" not in args:
+                            msg = f"⚠️  To delete '{target}', add --confirm flag."
+                            if is_active:
+                                msg += " (Active workspace will be switched to 'default')"
+                            result = msg
                         else:
-                            from kycli.config import DATA_DIR
-                            target_db = os.path.join(DATA_DIR, f"{target}.db")
-                            if not os.path.exists(target_db):
-                                result = f"❌ Workspace '{target}' not found."
-                            elif "--confirm" not in args:
-                                result = f"⚠️  To delete '{target}', add --confirm flag."
-                            else:
-                                try:
-                                    os.remove(target_db)
-                                    result = f"✅ Workspace '{target}' deleted."
-                                except Exception as e:
-                                    result = f"Error: {e}"
+                            try:
+                                os.remove(target_db)
+                                result = f"✅ Workspace '{target}' deleted."
+                                if is_active:
+                                    save_config({"active_workspace": "default"})
+                                    self.config = load_config()
+                                    self.db_path = self.config.get("db_path")
+                                    self.kv = Kycore(db_path=self.db_path)
+                                    self.update_status()
+                                    self.update_history()
+                                    result += "\n🔄 Switched to 'default' workspace."
+                            except Exception as e:
+                                result = f"Error: {e}"
 
                 elif cmd in ["kyws", "workspaces"]:
                     wss = get_workspaces()

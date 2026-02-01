@@ -70,12 +70,18 @@ def test_kydrop_cli_confirm_no(capsys):
 
 def test_kydrop_active_workspace(capsys):
     with patch("sys.argv", ["kycli", "kydrop", "active_ws"]), \
+         patch("os.path.exists", return_value=True), \
          patch("kycli.cli.load_config", return_value={"active_workspace": "active_ws", "db_path": ":memory:", "export_format": "csv"}):
          
-         cli.main()
+         # Mock input to abort so we don't hang
+         with patch("builtins.input", return_value="n") as mock_input:
+            cli.main()
+            input_prompt = mock_input.call_args[0][0]
+            assert "DANGER" in input_prompt
+            assert "ACTIVE workspace" in input_prompt
          
     out, _ = capsys.readouterr()
-    assert "Cannot drop the active workspace" in out
+    assert "Aborted" in out
 
 def test_kydrop_missing_workspace(capsys):
     with patch("sys.argv", ["kycli", "kydrop", "missing_ws"]), \
@@ -119,8 +125,10 @@ def test_tui_kydrop_usage(tui_shell):
     assert "Usage: kydrop" in tui_shell.output_area.text
 
 def test_tui_kydrop_active(tui_shell):
-    tui_shell.handle_command(MockBuffer("kydrop default"))
-    assert "Cannot drop active workspace" in tui_shell.output_area.text
+    with patch("os.path.exists", return_value=True):
+        tui_shell.handle_command(MockBuffer("kydrop default"))
+    assert "add --confirm flag" in tui_shell.output_area.text
+    assert "Active workspace will be switched" in tui_shell.output_area.text
 
 def test_tui_kydrop_missing(tui_shell):
     with patch("os.path.exists", return_value=False):
