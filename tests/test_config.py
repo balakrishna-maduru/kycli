@@ -1,4 +1,6 @@
 import os
+import sys
+import types
 import pytest
 from kycli.config import load_config
 import importlib
@@ -8,15 +10,26 @@ def test_config_env_variable(monkeypatch):
     config = load_config()
     assert config["db_path"] == "/tmp/env_db.db"
 
-def test_config_tomli_fallback():
+def test_config_tomli_fallback(monkeypatch):
     import builtins
+    import kycli.config as config
+
+    tomli_mod = types.SimpleNamespace(load=lambda f: {})
+    monkeypatch.setitem(sys.modules, "tomli", tomli_mod)
+
     real_import = builtins.__import__
+
     def mock_import(name, *args, **kwargs):
-        if name == "tomllib": raise ImportError
+        if name == "tomllib":
+            raise ImportError("forced")
         return real_import(name, *args, **kwargs)
-    with patch("builtins.__import__", side_effect=mock_import):
-        import kycli.config
-        importlib.reload(kycli.config)
+
+    monkeypatch.setattr(builtins, "__import__", mock_import)
+    importlib.reload(config)
+    assert config.toml is tomli_mod
+
+    monkeypatch.setattr(builtins, "__import__", real_import)
+    importlib.reload(config)
 
 from unittest.mock import patch
 
@@ -125,3 +138,22 @@ def test_config_toml_import_errors(tmp_path):
                      # Should NOT try to load toml if toml is None
                      data = config.load_raw_config()
                      assert "foo" not in data
+
+
+def test_config_toml_import_failure_sets_none(monkeypatch):
+    import builtins
+    import kycli.config as config
+
+    real_import = builtins.__import__
+
+    def mock_import(name, *args, **kwargs):
+        if name in ("tomllib", "tomli"):
+            raise ImportError("forced")
+        return real_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", mock_import)
+    importlib.reload(config)
+    assert config.toml is None
+
+    monkeypatch.setattr(builtins, "__import__", real_import)
+    importlib.reload(config)

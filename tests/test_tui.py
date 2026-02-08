@@ -296,6 +296,71 @@ def test_tui_shell_exception_handling(tmp_path):
         shell.handle_command(mock_buffer)
         assert "Error: save failed" in shell.output_area.text
 
+
+def test_tui_additional_gap_coverage(tmp_path):
+    with patch("kycli.tui.Kycore") as mock_kv_class, \
+         patch("kycli.tui.save_config") as mock_save:
+        mock_kv = mock_kv_class.return_value
+        mock_kv.get_history.return_value = []
+
+        with patch("kycli.tui.load_config") as mock_load:
+            mock_load.side_effect = [
+                {"active_workspace": "ws1", "db_path": str(tmp_path / "ws1.db")},
+                {"active_workspace": "default", "db_path": str(tmp_path / "default.db")},
+            ]
+
+            shell = KycliShell(db_path=str(tmp_path / "ws1.db"))
+            shell.app = MagicMock()
+            mock_buffer = MagicMock()
+
+            # kyuse usage
+            mock_buffer.text = "kyuse"
+            shell.handle_command(mock_buffer)
+            assert "Usage: kyuse" in shell.output_area.text
+
+            # kydrop active with confirm
+            with patch("kycli.tui.os.path.exists", return_value=True), \
+                 patch("kycli.tui.os.remove"):
+                mock_buffer.text = "kydrop ws1 --confirm"
+                shell.handle_command(mock_buffer)
+                assert "Switched to 'default' workspace" in shell.output_area.text
+                mock_save.assert_called_with({"active_workspace": "default"})
+
+            # kys with JSON value
+            mock_buffer.text = "kys user {\"a\": 1}"
+            shell.handle_command(mock_buffer)
+            mock_kv.save.assert_any_call("user", {"a": 1}, ttl=None)
+
+            # kys with invalid JSON (parse error path)
+            mock_buffer.text = "kys bad {oops"
+            shell.handle_command(mock_buffer)
+            mock_kv.save.assert_any_call("bad", "{oops", ttl=None)
+
+            # kyg with empty args after flags
+            mock_buffer.text = "kyg --keys-only"
+            shell.handle_command(mock_buffer)
+            assert "Usage: kyg <key>" in shell.output_area.text
+
+            # kyv with missing history
+            mock_buffer.text = "kyv missing"
+            shell.handle_command(mock_buffer)
+            assert "No history for missing" in shell.output_area.text
+
+            # kypush usage
+            mock_buffer.text = "kypush"
+            shell.handle_command(mock_buffer)
+            assert "Usage: kypush" in shell.output_area.text
+
+            # kyshell in TUI
+            mock_buffer.text = "kyshell"
+            shell.handle_command(mock_buffer)
+            assert "already in the interactive shell" in shell.output_area.text
+
+            # run wrapper
+            shell.app = MagicMock()
+            shell.run()
+            shell.app.run.assert_called_once()
+
 # --- Gap Coverage Tests ---
 
 def test_tui_gaps(tmp_path):

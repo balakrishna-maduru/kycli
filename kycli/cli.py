@@ -2,6 +2,7 @@ import sys
 import os
 import sqlite3
 import shutil
+import json
 from datetime import datetime, timezone
 from kycli import Kycore
 from kycli.config import load_config, save_config, get_workspaces
@@ -20,7 +21,8 @@ Available commands:
 
   📂 Workspace Management:
   kyuse <workspace>                - Switch active workspace (Creates if new)
-  kyws                             - List all workspaces
+    kyws                             - List all workspaces
+    kyws create <workspace> --type <queue|stack|priority_queue>
   kymv <key> <workspace>           - Move key to another workspace
   kydrop <workspace>               - Delete a workspace
 
@@ -30,12 +32,15 @@ Available commands:
   kypatch <key> <val>                      - Patch JSON/Dict value
   kyl [pattern]                            - List keys (optional regex pattern)
   kyd <key>                                - Delete key (requires confirmation)
-  kypush <val> [--key <k>] [--priority <n>] - Push to queue/stack OR append to KV list
-  kypop                                  - Pop item from queue/stack
-  kypeek                                 - Peek at next item in queue/stack
-  kycount                                - Count items in workspace
-  kyclear                                - Clear all items in workspace
-  kyrem <key> <val>                      - Remove value from a list
+  kypush <key> <val> [--unique]            - Append value to a list
+  kyrem <key> <val>                        - Remove value from a list
+
+    🧱 Queue & Stack Operations:
+    kypush <val> [--priority N]      - Push item to queue/stack
+    kypeek                           - Peek next item
+    kypop                            - Pop next item
+    kycount                          - Count remaining items
+    kyclear                          - Clear queue/stack
 
   🔍 Search & Utility:
   kyg -s <query>                   - Search for values (Full-Text Search).
@@ -51,7 +56,7 @@ Available commands:
   kyr <key>[.path]                 - Restore a deleted key
   kyrt <timestamp>                 - Point-in-Time Recovery
   kyco [days]                      - Compact DB
-  kyrotate --new-key <k>           - Rotate encryption master key
+    kyrotate --new-key <k>           - Rotate encryption master key
 
   🔐 Security:
   Set `KYCLI_MASTER_KEY` env variable or use `--key "pass"` flag.
@@ -201,6 +206,7 @@ def main():
         dry_run = False
         backup = False
         batch = 500
+        priority = None
         new_args = []
         skip_next = False
         for i, arg in enumerate(args):
@@ -228,6 +234,12 @@ def main():
             elif arg == "--batch" and i + 1 < len(args):
                 try:
                     batch = int(args[i+1])
+                    skip_next = True
+                except:
+                    new_args.append(arg)
+            elif arg == "--priority" and i + 1 < len(args):
+                try:
+                    priority = int(args[i+1])
                     skip_next = True
                 except:
                     new_args.append(arg)
@@ -291,24 +303,29 @@ def main():
                 print(active_ws)
                 return
 
-            if len(args) >= 2 and args[0] == "create":
-                name = args[1]
+            if args and args[0] == "create":
+                if len(args) < 2:
+                    print("Usage: kyws create <workspace> --type <queue|stack|priority_queue>")
+                    return
+                target = args[1]
+                if not target.replace("_", "").replace("-", "").isalnum():
+                    print("Error: Invalid workspace name. Use alphanumeric characters.")
+                    return
                 wtype = "kv"
-                # Check for --type in all args
                 if "--type" in args:
                     idx = args.index("--type")
-                    if idx + 1 < len(args):
-                        wtype = args[idx+1]
-                
-                # Switch to it
-                save_config({"active_workspace": name})
-                
-                # Initialize with correct type
-                new_config = load_config()
-                with Kycore(new_config["db_path"]) as new_kv:
-                    new_kv.set_type(wtype)
-                
-                print(f"✅ Workspace '{name}' created/switched ({wtype}).")
+                    if idx + 1 >= len(args):
+                        print("Usage: kyws create <workspace> --type <queue|stack|priority_queue>")
+                        return
+                    wtype = args[idx + 1]
+                from kycli.config import DATA_DIR
+                target_db = os.path.join(DATA_DIR, f"{target}.db")
+                try:
+                    with Kycore(db_path=target_db, master_key=master_key) as target_kv:
+                        target_kv.set_type(wtype)
+                    print(f"✅ Workspace '{target}' created with type '{wtype}'.")
+                except Exception as e:
+                    print(f"❌ Failed to create workspace: {e}")
                 return
 
             if args:
@@ -521,65 +538,42 @@ fi
                     print(f"✅ Patched: {args[0]}")
 
             elif cmd in ["kypush", "push"]:
-                if not args:
-                    print("Usage: kypush <val> [--key <k>] [--priority <n>] [--unique]")
-                    return
-                # Handle args/kwargs
-                unique = "--unique" in args
-                priority = 0
-                if "--priority" in args:
-                    idx = args.index("--priority")
-                    if idx + 1 < len(args):
-                        priority = args[idx+1]
-                        # Remove priority from args for later indexing
-                        args.pop(idx+1)
-                        args.pop(idx)
-                
-                key = None
-                if "--key" in args:
-                    idx = args.index("--key")
-                    if idx + 1 < len(args):
-                        key = args[idx+1]
-                        args.pop(idx+1)
-                        args.pop(idx)
-                
-                # Check type
                 wtype = kv.get_type()
-                if not key and wtype == "kv":
-                    # Backward compatibility or fallback? 
-                    # If we have 1 arg in KV, it must be an error or we need a key.
+                if wtype != "kv":
+                    value_args = [a for a in args if a != "--unique"]
+                    if len(value_args) < 1:
+                        print("Usage: kypush <value> [--priority N]")
+                        return
+                    val = " ".join(value_args)
+                    try: val = json.loads(val)
+                    except: pass
+                    print(kv.push(val, priority=priority))
+                else:
                     if len(args) < 2:
                         print("Usage: kypush <key> <value> [--unique]")
                         return
-                    key = args[0]
+                    unique = "--unique" in args
                     val = args[1]
-                elif not key:
-                    val = args[0]
-                else:
-                    # key provided via --key, val is args[0]
-                    val = args[0]
-
-                # Try to parse as JSON
-                try: val = json.loads(val)
-                except: pass
-                
-                print(kv.push(val, key=key, unique=unique, priority=priority))
-
-            elif cmd in ["kypop", "pop"]:
-                print(kv.pop())
+                    # Try to parse as JSON
+                    try: val = json.loads(val)
+                    except: pass
+                    print(kv.push(args[0], val, unique=unique))
 
             elif cmd in ["kypeek", "peek"]:
                 print(kv.peek())
+
+            elif cmd in ["kypop", "pop"]:
+                print(kv.pop())
 
             elif cmd in ["kycount", "count"]:
                 print(kv.count())
 
             elif cmd in ["kyclear", "clear"]:
-                confirm = input("⚠️ DANGER: Clear entire workspace? (y/N): ").lower()
-                if confirm == 'y':
-                    print(kv.clear())
-                else:
-                    print("Aborted.")
+                confirm = input("⚠️  This will clear the current queue/stack. Continue? (y/N): ")
+                if confirm.lower() != "y":
+                    print("❌ Aborted.")
+                    return
+                print(kv.clear())
 
             elif cmd in ["kyrem", "remove"]:
                 if len(args) < 2:
@@ -706,7 +700,6 @@ fi
                 kv.import_data(import_path)
                 print(f"📥 Imported data into '{active_ws}'")
     
-
             elif cmd in ["kyc", "execute"]:
                 if not args:
                     print("Usage: kyc <key> [args...]")
@@ -739,6 +732,8 @@ fi
         print(f"⚠️ Validation Error: {e}")
     except Exception as e:
         print(f"🔥 Unexpected Error: {e}")
+        # import traceback
+        # traceback.print_exc()
         sys.exit(1)
 
 if __name__ == "__main__":

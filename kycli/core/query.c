@@ -3,6 +3,16 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
+        "define_macros": [
+            [
+                "CYTHON_TRACE",
+                "1"
+            ],
+            [
+                "CYTHON_TRACE_NOGIL",
+                "1"
+            ]
+        ],
         "include_dirs": [
             "/opt/homebrew/opt/sqlite/include"
         ],
@@ -1358,6 +1368,62 @@ static const char* const __pyx_f[] = {
   "<stringsource>",
 };
 /* #### Code section: utility_code_proto_before_types ### */
+/* Profile_config.proto (used by Profile) */
+#ifndef CYTHON_PROFILE
+#if CYTHON_COMPILING_IN_LIMITED_API || CYTHON_COMPILING_IN_PYPY
+  #define CYTHON_PROFILE 0
+#else
+  #define CYTHON_PROFILE 1
+#endif
+#endif
+#ifndef CYTHON_TRACE_NOGIL
+  #define CYTHON_TRACE_NOGIL 0
+#else
+  #if CYTHON_TRACE_NOGIL && !defined(CYTHON_TRACE)
+    #define CYTHON_TRACE 1
+  #endif
+#endif
+#ifndef CYTHON_TRACE
+  #define CYTHON_TRACE 0
+#endif
+#if CYTHON_PROFILE || CYTHON_TRACE
+#if CYTHON_USE_SYS_MONITORING
+    typedef enum {
+        __Pyx_Monitoring_PY_START = 0,
+        __Pyx_Monitoring_PY_RETURN,
+        __Pyx_Monitoring_PY_UNWIND,
+        __Pyx_Monitoring_LINE,
+        __Pyx_Monitoring_RAISE,
+        __Pyx_Monitoring_RERAISE,
+        __Pyx_Monitoring_EXCEPTION_HANDLED,
+        __Pyx_Monitoring_PY_RESUME,
+        __Pyx_Monitoring_PY_YIELD,
+        __Pyx_Monitoring_STOP_ITERATION,
+    } __Pyx_Monitoring_Event_Index;
+    static const unsigned char __Pyx_MonitoringEventTypes[] = {
+        PY_MONITORING_EVENT_PY_START,
+        PY_MONITORING_EVENT_PY_RETURN,
+        PY_MONITORING_EVENT_PY_UNWIND,
+        PY_MONITORING_EVENT_LINE,
+        PY_MONITORING_EVENT_RAISE,
+        PY_MONITORING_EVENT_RERAISE,
+        PY_MONITORING_EVENT_EXCEPTION_HANDLED,
+        PY_MONITORING_EVENT_PY_RESUME,
+        PY_MONITORING_EVENT_PY_YIELD,
+        PY_MONITORING_EVENT_STOP_ITERATION,
+    };
+    #define __Pyx_MonitoringEventTypes_CyFunc_count (sizeof(__Pyx_MonitoringEventTypes) - 3)
+    #define __Pyx_MonitoringEventTypes_CyGen_count (sizeof(__Pyx_MonitoringEventTypes))
+#endif
+#endif
+
+/* NoFastGil.proto */
+#define __Pyx_PyGILState_Ensure PyGILState_Ensure
+#define __Pyx_PyGILState_Release PyGILState_Release
+#define __Pyx_FastGIL_Remember()
+#define __Pyx_FastGIL_Forget()
+#define __Pyx_FastGilFuncInit()
+
 /* Atomics.proto (used by UnpackUnboundCMethod) */
 #include <pythread.h>
 #ifndef CYTHON_ATOMICS
@@ -1637,6 +1703,475 @@ static struct __pyx_vtabstruct_5kycli_4core_5query_QueryEngine *__pyx_vtabptr_5k
 #define __Pyx_CLEAR(r)    do { PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);} while(0)
 #define __Pyx_XCLEAR(r)   do { if((r) != NULL) {PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);}} while(0)
 
+/* PyThreadStateGet.proto (used by PyErrFetchRestore) */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
+#define __Pyx_PyThreadState_assign  __pyx_tstate = __Pyx_PyThreadState_Current;
+#if PY_VERSION_HEX >= 0x030C00A6
+#define __Pyx_PyErr_Occurred()  (__pyx_tstate->current_exception != NULL)
+#define __Pyx_PyErr_CurrentExceptionType()  (__pyx_tstate->current_exception ? (PyObject*) Py_TYPE(__pyx_tstate->current_exception) : (PyObject*) NULL)
+#else
+#define __Pyx_PyErr_Occurred()  (__pyx_tstate->curexc_type != NULL)
+#define __Pyx_PyErr_CurrentExceptionType()  (__pyx_tstate->curexc_type)
+#endif
+#else
+#define __Pyx_PyThreadState_declare
+#define __Pyx_PyThreadState_assign
+#define __Pyx_PyErr_Occurred()  (PyErr_Occurred() != NULL)
+#define __Pyx_PyErr_CurrentExceptionType()  PyErr_Occurred()
+#endif
+
+/* PyErrFetchRestore.proto (used by Profile) */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_PyErr_Clear() __Pyx_ErrRestore(NULL, NULL, NULL)
+#define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
+#define __Pyx_ErrFetchWithState(type, value, tb)    __Pyx_ErrFetchInState(PyThreadState_GET(), type, value, tb)
+#define __Pyx_ErrRestore(type, value, tb)  __Pyx_ErrRestoreInState(__pyx_tstate, type, value, tb)
+#define __Pyx_ErrFetch(type, value, tb)    __Pyx_ErrFetchInState(__pyx_tstate, type, value, tb)
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
+#if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX < 0x030C00A6
+#define __Pyx_PyErr_SetNone(exc) (Py_INCREF(exc), __Pyx_ErrRestore((exc), NULL, NULL))
+#else
+#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
+#endif
+#else
+#define __Pyx_PyErr_Clear() PyErr_Clear()
+#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
+#define __Pyx_ErrRestoreWithState(type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetchWithState(type, value, tb)  PyErr_Fetch(type, value, tb)
+#define __Pyx_ErrRestoreInState(tstate, type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetchInState(tstate, type, value, tb)  PyErr_Fetch(type, value, tb)
+#define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
+#endif
+
+/* Profile.proto */
+#if CYTHON_TRACE
+  #undef CYTHON_PROFILE_REUSE_FRAME
+#endif
+#if CYTHON_USE_MODULE_STATE
+  #undef CYTHON_PROFILE_REUSE_CODEOBJ
+  #define CYTHON_PROFILE_REUSE_CODEOBJ 0
+  #undef CYTHON_PROFILE_REUSE_FRAME
+#endif
+#ifndef CYTHON_PROFILE_REUSE_CODEOBJ
+  #define CYTHON_PROFILE_REUSE_CODEOBJ 1
+#endif
+#ifndef CYTHON_PROFILE_REUSE_FRAME
+  #define CYTHON_PROFILE_REUSE_FRAME 0
+#endif
+#if CYTHON_USE_SYS_MONITORING && (CYTHON_PROFILE || CYTHON_TRACE)
+  #define __PYX_MONITORING_ABI_SUFFIX  "_mon"
+#else
+  #define __PYX_MONITORING_ABI_SUFFIX
+#endif
+#if CYTHON_PROFILE || CYTHON_TRACE
+#if CYTHON_USE_SYS_MONITORING
+  typedef uint64_t __pyx_monitoring_version_type;
+  #define __Pyx_TraceDeclarationsFunc\
+      PyObject *__pyx_frame_code = NULL;\
+      PyMonitoringState __pyx_pymonitoring_state[__Pyx_MonitoringEventTypes_CyFunc_count];\
+      int __pyx_exception_already_reported = 0;\
+      const int __pyx_sys_monitoring_disabled_in_parallel = 0; CYTHON_UNUSED_VAR(__pyx_sys_monitoring_disabled_in_parallel);
+  #define __Pyx_TraceDeclarationsGen\
+      PyObject *__pyx_frame_code = Py_NewRef(__pyx_generator->gi_code);\
+      PyMonitoringState* __pyx_pymonitoring_state = __pyx_generator->__pyx_pymonitoring_state;\
+      __pyx_monitoring_version_type __pyx_pymonitoring_version = __pyx_generator->__pyx_pymonitoring_version;\
+      int __pyx_exception_already_reported = 0;\
+      const int __pyx_sys_monitoring_disabled_in_parallel = 0; CYTHON_UNUSED_VAR(__pyx_sys_monitoring_disabled_in_parallel);
+  #define __Pyx_IsTracing(event_id)  ((!__pyx_sys_monitoring_disabled_in_parallel) && (__pyx_pymonitoring_state[event_id]).active)
+  #define __Pyx_TraceFrameInit(codeobj)\
+      if (codeobj) __pyx_frame_code = codeobj;
+  #define __Pyx_TurnOffSysMonitoringInParallel\
+    const int __pyx_sys_monitoring_disabled_in_parallel = 1;\
+    CYTHON_UNUSED_VAR(__pyx_sys_monitoring_disabled_in_parallel);
+  CYTHON_UNUSED static PyCodeObject *__Pyx_createFrameCodeObject(const char *funcname, const char *srcfile, int firstlineno);
+  CYTHON_UNUSED static int __Pyx__TraceStartFunc(PyMonitoringState *state_array, PyObject *code_obj, int offset, int skip_event);
+  CYTHON_UNUSED static int __Pyx__TraceStartGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset);
+  CYTHON_UNUSED static int __Pyx__TraceResumeGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset);
+  CYTHON_UNUSED static void __Pyx__TraceException(PyMonitoringState *monitoring_state, PyObject *code_obj, int offset, int reraised);
+  #define __Pyx_PyMonitoring_ExitScope(nogil)\
+    if (nogil) {\
+        (void) __pyx_exception_already_reported;\
+        if (CYTHON_TRACE_NOGIL) {\
+            PyGILState_STATE state = PyGILState_Ensure();\
+            PyMonitoring_ExitScope();\
+            Py_XDECREF(__pyx_frame_code);\
+            PyGILState_Release(state);\
+        }\
+    } else {\
+        PyMonitoring_ExitScope();\
+        Py_XDECREF(__pyx_frame_code);\
+    }
+  #define __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)\
+  if ((0) ); else {\
+      int ret = 0;\
+      memset(__pyx_pymonitoring_state, 0, sizeof(__pyx_pymonitoring_state));\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              if (!__Pyx_PyThreadState_Current->tracing) {\
+                  if (likely(__pyx_frame_code)) Py_INCREF(__pyx_frame_code);\
+                  else __pyx_frame_code = (PyObject*) __Pyx_createFrameCodeObject(funcname, srcfile, firstlineno);\
+                  if (unlikely(!__pyx_frame_code)) ret = -1;\
+                  else ret = __Pyx__TraceStartFunc(__pyx_pymonitoring_state, __pyx_frame_code, offset, skip_event);\
+              } else __pyx_frame_code = NULL;\
+              PyGILState_Release(state);\
+          } else __pyx_frame_code = NULL;\
+      } else {\
+          if (!__Pyx_PyThreadState_Current->tracing) {\
+              if (likely(__pyx_frame_code)) Py_INCREF(__pyx_frame_code);\
+              else __pyx_frame_code = (PyObject*) __Pyx_createFrameCodeObject(funcname, srcfile, firstlineno);\
+              if (unlikely(!__pyx_frame_code)) ret = -1;\
+              else ret = __Pyx__TraceStartFunc(__pyx_pymonitoring_state, __pyx_frame_code, offset, skip_event);\
+          } else __pyx_frame_code = NULL;\
+      }\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceStartGen(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)\
+  if ((0) ); else {\
+      int ret = __Pyx__TraceStartGen(__pyx_pymonitoring_state, &__pyx_pymonitoring_version, __pyx_frame_code, offset);\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceResumeGen(funcname, srcfile, firstlineno, offset, goto_error)\
+  if ((0) ); else {\
+      int ret = __Pyx__TraceResumeGen(__pyx_pymonitoring_state, &__pyx_pymonitoring_version, __pyx_frame_code, offset);\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceYield(result, offset, goto_error)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_YIELD)); else {\
+      int ret = PyMonitoring_FirePyYieldEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, result);\
+      PyMonitoring_ExitScope();\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceException(offset, reraised, fresh)\
+  if (!__Pyx_IsTracing((reraised) ? __Pyx_Monitoring_RERAISE : __Pyx_Monitoring_RAISE)); else {\
+      if (fresh || reraised || !__pyx_exception_already_reported) {\
+          __Pyx__TraceException(&__pyx_pymonitoring_state[(reraised) ? __Pyx_Monitoring_RERAISE : __Pyx_Monitoring_RAISE], __pyx_frame_code, offset, reraised);\
+      }\
+      __pyx_exception_already_reported = 1;\
+  }
+  #define __Pyx_TraceExceptionDone()  __pyx_exception_already_reported = 0
+  #define __Pyx_TraceExceptionHandled(offset)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_EXCEPTION_HANDLED)); else {\
+      (void) PyMonitoring_FireExceptionHandledEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_EXCEPTION_HANDLED], __pyx_frame_code, offset);\
+      __pyx_exception_already_reported = 0;\
+  }
+  #define __Pyx_TraceReturnValue(result, offset, nogil, goto_error)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_RETURN)); else {\
+      int ret = 0;\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, result);\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, result);\
+      }\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceReturnCValue(cresult, convert_function, offset, nogil, goto_error)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_RETURN)); else {\
+      int ret = 0;\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              PyObject *pyvalue = convert_function(cresult);\
+              if (unlikely(!pyvalue)) {\
+                  PyErr_Clear();\
+                  pyvalue = Py_None; Py_INCREF(Py_None);\
+              }\
+              ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, pyvalue);\
+              Py_DECREF(pyvalue);\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          PyObject *pyvalue = convert_function(cresult);\
+          if (unlikely(!pyvalue)) {\
+              PyErr_Clear();\
+              pyvalue = Py_None; Py_INCREF(Py_None);\
+          }\
+          ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, pyvalue);\
+          Py_DECREF(pyvalue);\
+      }\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceExceptionUnwind(offset, nogil)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_UNWIND)); else {\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              (void) PyMonitoring_FirePyUnwindEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_UNWIND], __pyx_frame_code, offset);\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          (void) PyMonitoring_FirePyUnwindEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_UNWIND], __pyx_frame_code, offset);\
+      }\
+  }
+  #if CYTHON_TRACE
+  CYTHON_UNUSED static int __Pyx__TraceLine(PyMonitoringState *monitoring_state, PyObject *code_obj, int line, int offset);
+  #define __Pyx_TraceLine(line, offset, nogil, goto_error)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_LINE)); else {\
+      int ret = 0;\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              ret = __Pyx__TraceLine(&__pyx_pymonitoring_state[__Pyx_Monitoring_LINE], __pyx_frame_code, line, offset);\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          ret = __Pyx__TraceLine(&__pyx_pymonitoring_state[__Pyx_Monitoring_LINE], __pyx_frame_code, line, offset);\
+      }\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #endif
+#else
+  #include "compile.h"
+  #include "frameobject.h"
+  #include "traceback.h"
+#if PY_VERSION_HEX >= 0x030b00a6 && !defined(PYPY_VERSION)
+  #ifndef Py_BUILD_CORE
+    #define Py_BUILD_CORE 1
+  #endif
+  #include "internal/pycore_frame.h"
+#endif
+  #if CYTHON_PROFILE_REUSE_FRAME
+    #define CYTHON_FRAME_MODIFIER static
+    #define CYTHON_FRAME_DEL(frame)
+  #else
+    #define CYTHON_FRAME_MODIFIER
+    #define CYTHON_FRAME_DEL(frame) Py_CLEAR(frame)
+  #endif
+  #if CYTHON_PROFILE_REUSE_CODEOBJ
+    #define CYTHON_CODEOBJ_MODIFIER static
+  #else
+    #define CYTHON_CODEOBJ_MODIFIER
+  #endif
+  #define __Pyx_TraceDeclarationsFunc\
+      CYTHON_CODEOBJ_MODIFIER PyCodeObject *__pyx_frame_code = NULL;\
+      CYTHON_FRAME_MODIFIER PyFrameObject *__pyx_frame = NULL;\
+      int __Pyx_use_tracing = 0;
+  #define __Pyx_TraceDeclarationsGen\
+      PyObject *__pyx_frame_code = __pyx_generator->gi_code;\
+      CYTHON_FRAME_MODIFIER PyFrameObject *__pyx_frame = NULL;\
+      int __Pyx_use_tracing = 0;
+  #define __Pyx_TraceFrameInit(codeobj)\
+      if (codeobj) __pyx_frame_code = (PyCodeObject*) codeobj;
+  #define __Pyx_PyMonitoring_ExitScope(nogil)\
+    if (!CYTHON_PROFILE_REUSE_FRAME && nogil) {\
+        PyGILState_STATE state = PyGILState_Ensure();\
+        CYTHON_FRAME_DEL(__pyx_frame);\
+        PyGILState_Release(state);\
+    } else {\
+        CYTHON_FRAME_DEL(__pyx_frame);\
+    }
+  #define __Pyx_TraceException(offset, reraised, fresh)  {}
+  #define __Pyx_TraceExceptionHandled(offset)  {}
+  #define __Pyx_TraceExceptionDone()  {}
+  #define __Pyx_TurnOffSysMonitoringInParallel {} // Only needed for freethreading
+#if PY_VERSION_HEX >= 0x030b00a2
+  #if PY_VERSION_HEX >= 0x030C00b1
+  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
+     ((!(check_tracing) || !(tstate)->tracing) &&\
+         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
+  #else
+  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
+     (unlikely((tstate)->cframe->use_tracing) &&\
+         (!(check_tracing) || !(tstate)->tracing) &&\
+         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
+  #endif
+  #define __Pyx_EnterTracing(tstate)  PyThreadState_EnterTracing(tstate)
+  #define __Pyx_LeaveTracing(tstate)  PyThreadState_LeaveTracing(tstate)
+#elif PY_VERSION_HEX >= 0x030a00b1
+  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
+     (unlikely((tstate)->cframe->use_tracing) &&\
+         (!(check_tracing) || !(tstate)->tracing) &&\
+         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
+  #define __Pyx_EnterTracing(tstate)\
+      do { tstate->tracing++; tstate->cframe->use_tracing = 0; } while (0)
+  #define __Pyx_LeaveTracing(tstate)\
+      do {\
+          tstate->tracing--;\
+          tstate->cframe->use_tracing = ((CYTHON_TRACE && tstate->c_tracefunc != NULL)\
+                                 || tstate->c_profilefunc != NULL);\
+      } while (0)
+#else
+  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
+     (unlikely((tstate)->use_tracing) &&\
+         (!(check_tracing) || !(tstate)->tracing) &&\
+         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
+  #define __Pyx_EnterTracing(tstate)\
+      do { tstate->tracing++; tstate->use_tracing = 0; } while (0)
+  #define __Pyx_LeaveTracing(tstate)\
+      do {\
+          tstate->tracing--;\
+          tstate->use_tracing = ((CYTHON_TRACE && tstate->c_tracefunc != NULL)\
+                                         || tstate->c_profilefunc != NULL);\
+      } while (0)
+#endif
+  #define __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)\
+  if (nogil) {\
+      if (CYTHON_TRACE_NOGIL) {\
+          PyThreadState *tstate;\
+          PyGILState_STATE state = PyGILState_Ensure();\
+          tstate = __Pyx_PyThreadState_Current;\
+          if (__Pyx_IsTracing(tstate, 1, 1)) {\
+              __Pyx_use_tracing = __Pyx_TraceSetupAndCall((PyCodeObject**)&__pyx_frame_code, &__pyx_frame, tstate, funcname, srcfile, firstlineno, skip_event);\
+          }\
+          PyGILState_Release(state);\
+          if (unlikely(__Pyx_use_tracing < 0)) goto_error;\
+      }\
+  } else {\
+      PyThreadState* tstate = PyThreadState_GET();\
+      if (__Pyx_IsTracing(tstate, 1, 1)) {\
+          __Pyx_use_tracing = __Pyx_TraceSetupAndCall((PyCodeObject**)&__pyx_frame_code, &__pyx_frame, tstate, funcname, srcfile, firstlineno, skip_event);\
+          if (unlikely(__Pyx_use_tracing < 0)) goto_error;\
+      }\
+  }
+  #define __Pyx_TraceStartGen __Pyx_TraceStartFunc
+  #define __Pyx_TraceYield(result, offset, goto_error)\
+  if (likely(!__Pyx_use_tracing)); else {\
+      PyThreadState* tstate = __Pyx_PyThreadState_Current;\
+      if (__Pyx_IsTracing(tstate, 0, 0)) {\
+          __Pyx_call_return_trace_func(tstate, __pyx_frame, (PyObject*)result);\
+      }\
+      if ((1)); else goto_error;\
+  }
+  #define __Pyx_TraceResumeGen(funcname, srcfile, firstlineno, offset, goto_error)\
+      __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, 0, 0, goto_error)
+  CYTHON_UNUSED static void __Pyx_call_return_trace_func(PyThreadState *tstate, PyFrameObject *frame, PyObject *result) {
+      PyObject *type, *value, *traceback;
+      __Pyx_ErrFetchInState(tstate, &type, &value, &traceback);
+      __Pyx_EnterTracing(tstate);
+      if (CYTHON_TRACE && tstate->c_tracefunc)
+          tstate->c_tracefunc(tstate->c_traceobj, frame, PyTrace_RETURN, result);
+      if (tstate->c_profilefunc)
+          tstate->c_profilefunc(tstate->c_profileobj, frame, PyTrace_RETURN, result);
+      __Pyx_LeaveTracing(tstate);
+      __Pyx_ErrRestoreInState(tstate, type, value, traceback);
+  }
+  #define __Pyx_TraceReturnValue(result, offset, nogil, goto_error)\
+  if (likely(!__Pyx_use_tracing)); else {\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyThreadState *tstate;\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              tstate = __Pyx_PyThreadState_Current;\
+              if (__Pyx_IsTracing(tstate, 0, 0)) {\
+                  __Pyx_call_return_trace_func(tstate, __pyx_frame, (PyObject*)result);\
+              }\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
+          if (__Pyx_IsTracing(tstate, 0, 0)) {\
+              __Pyx_call_return_trace_func(tstate, __pyx_frame, (PyObject*)result);\
+          }\
+      }\
+      if ((1)); else goto_error;\
+  }
+  #define __Pyx_TraceReturnCValue(cresult, convert_function, offset, nogil, goto_error)\
+  if (likely(!__Pyx_use_tracing)); else {\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyThreadState *tstate;\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              tstate = __Pyx_PyThreadState_Current;\
+              if (__Pyx_IsTracing(tstate, 0, 0)) {\
+                  PyObject *pyvalue = convert_function(cresult);\
+                  if (unlikely(!pyvalue)) {\
+                    PyErr_Clear();\
+                    pyvalue = Py_None; Py_INCREF(Py_None);\
+                  }\
+                  __Pyx_call_return_trace_func(tstate, __pyx_frame, pyvalue);\
+                  Py_DECREF(pyvalue);\
+              }\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
+          if (__Pyx_IsTracing(tstate, 0, 0)) {\
+              PyObject *pyvalue = convert_function(cresult);\
+              if (unlikely(!pyvalue)) {\
+                  PyErr_Clear();\
+                  pyvalue = Py_None; Py_INCREF(Py_None);\
+              }\
+              __Pyx_call_return_trace_func(tstate, __pyx_frame, pyvalue);\
+              Py_DECREF(pyvalue);\
+          }\
+      }\
+      if ((1)); else goto_error;\
+  }
+  #define __Pyx_TraceExceptionUnwind(offset, nogil)\
+  if (likely(!__Pyx_use_tracing)); else {\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyThreadState *tstate;\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              tstate = __Pyx_PyThreadState_Current;\
+              if (__Pyx_IsTracing(tstate, 0, 0)) {\
+                  __Pyx_call_return_trace_func(tstate, __pyx_frame, Py_None);\
+              }\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
+          if (__Pyx_IsTracing(tstate, 0, 0)) {\
+              __Pyx_call_return_trace_func(tstate, __pyx_frame, Py_None);\
+          }\
+      }\
+  }
+  static int __Pyx_TraceSetupAndCall(PyCodeObject** code, PyFrameObject** frame, PyThreadState* tstate, const char *funcname, const char *srcfile, int firstlineno, int skip_event);
+#if CYTHON_TRACE
+  CYTHON_UNUSED static int __Pyx_call_line_trace_func(PyThreadState *tstate, PyFrameObject *frame, int line);
+  #define __Pyx_TraceLine(line, offset, nogil, goto_error)\
+  if (likely(!__Pyx_use_tracing)); else {\
+      int ret = 0;\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyThreadState *tstate;\
+              PyGILState_STATE state = __Pyx_PyGILState_Ensure();\
+              tstate = __Pyx_PyThreadState_Current;\
+              if (__Pyx_IsTracing(tstate, 0, 0) && tstate->c_tracefunc && __pyx_frame->f_trace) {\
+                  ret = __Pyx_call_line_trace_func(tstate, __pyx_frame, line);\
+              }\
+              __Pyx_PyGILState_Release(state);\
+          }\
+      } else {\
+          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
+          if (__Pyx_IsTracing(tstate, 0, 0) && tstate->c_tracefunc && __pyx_frame->f_trace) {\
+              ret = __Pyx_call_line_trace_func(tstate, __pyx_frame, line);\
+          }\
+      }\
+      if (unlikely(ret)) goto_error;\
+  }
+#endif
+#endif
+#else
+  #define __Pyx_TraceDeclarationsFunc
+  #define __Pyx_TraceDeclarationsGen
+  #define __Pyx_TraceExceptionDone()  {}
+  #define __Pyx_TraceFrameInit(codeobj)  {}
+  #define __Pyx_TurnOffSysMonitoringInParallel {}
+  #define __Pyx_PyMonitoring_ExitScope(nogil)  {}
+  #define __Pyx_TraceException(offset, reraised, fresh)  {}
+  #define __Pyx_TraceExceptionUnwind(offset, nogil)  {}
+  #define __Pyx_TraceExceptionHandled(offset)  {}
+  #define __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)   if ((1)); else goto_error;
+  #define __Pyx_TraceStartGen __Pyx_TraceStartFunc
+  #define __Pyx_TraceResumeGen(funcname, srcfile, firstlineno, offset, goto_error)   if ((1)); else goto_error;
+  #define __Pyx_TraceYield(result, offset, goto_error)   if ((1)); else goto_error;
+  #define __Pyx_TraceReturnValue(result, offset, nogil, goto_error)\
+      if ((1)); else goto_error;
+  #define __Pyx_TraceReturnCValue(cresult, convert_function, offset, nogil, goto_error)\
+      if ((1)); else { (void) convert_function; goto_error }
+#endif
+#if !CYTHON_TRACE
+  #define __Pyx_TraceLine(line, offset, nogil, goto_error)   if ((1)); else goto_error;
+#endif
+
 /* PyDictVersioning.proto */
 #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
 #define __PYX_DICT_VERSION_INIT  ((PY_UINT64_T) -1)
@@ -1692,49 +2227,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_FastCallDict(PyObject *func, PyObj
 static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tstate, PyObject* err);
 #else
 #define __Pyx_PyErr_ExceptionMatches(err)  PyErr_ExceptionMatches(err)
-#endif
-
-/* PyThreadStateGet.proto (used by PyErrFetchRestore) */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
-#define __Pyx_PyThreadState_assign  __pyx_tstate = __Pyx_PyThreadState_Current;
-#if PY_VERSION_HEX >= 0x030C00A6
-#define __Pyx_PyErr_Occurred()  (__pyx_tstate->current_exception != NULL)
-#define __Pyx_PyErr_CurrentExceptionType()  (__pyx_tstate->current_exception ? (PyObject*) Py_TYPE(__pyx_tstate->current_exception) : (PyObject*) NULL)
-#else
-#define __Pyx_PyErr_Occurred()  (__pyx_tstate->curexc_type != NULL)
-#define __Pyx_PyErr_CurrentExceptionType()  (__pyx_tstate->curexc_type)
-#endif
-#else
-#define __Pyx_PyThreadState_declare
-#define __Pyx_PyThreadState_assign
-#define __Pyx_PyErr_Occurred()  (PyErr_Occurred() != NULL)
-#define __Pyx_PyErr_CurrentExceptionType()  PyErr_Occurred()
-#endif
-
-/* PyErrFetchRestore.proto (used by PyObjectGetAttrStrNoError) */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_PyErr_Clear() __Pyx_ErrRestore(NULL, NULL, NULL)
-#define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
-#define __Pyx_ErrFetchWithState(type, value, tb)    __Pyx_ErrFetchInState(PyThreadState_GET(), type, value, tb)
-#define __Pyx_ErrRestore(type, value, tb)  __Pyx_ErrRestoreInState(__pyx_tstate, type, value, tb)
-#define __Pyx_ErrFetch(type, value, tb)    __Pyx_ErrFetchInState(__pyx_tstate, type, value, tb)
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
-#if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX < 0x030C00A6
-#define __Pyx_PyErr_SetNone(exc) (Py_INCREF(exc), __Pyx_ErrRestore((exc), NULL, NULL))
-#else
-#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
-#endif
-#else
-#define __Pyx_PyErr_Clear() PyErr_Clear()
-#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
-#define __Pyx_ErrRestoreWithState(type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetchWithState(type, value, tb)  PyErr_Fetch(type, value, tb)
-#define __Pyx_ErrRestoreInState(tstate, type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetchInState(tstate, type, value, tb)  PyErr_Fetch(type, value, tb)
-#define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
 #endif
 
 /* PyObjectGetAttrStrNoError.proto (used by GetBuiltinName) */
@@ -2523,8 +3015,8 @@ typedef struct {
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_items;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_pop;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_values;
-  PyObject *__pyx_codeobj_tab[5];
-  PyObject *__pyx_string_tab[74];
+  PyObject *__pyx_codeobj_tab[6];
+  PyObject *__pyx_string_tab[76];
   PyObject *__pyx_number_tab[2];
 /* #### Code section: module_state_contents ### */
 /* CommonTypesMetaclass.module_state_decls */
@@ -2617,29 +3109,31 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_n_u_pyx_state __pyx_string_tab[48]
 #define __pyx_n_u_pyx_type __pyx_string_tab[49]
 #define __pyx_n_u_pyx_unpickle_QueryEngine __pyx_string_tab[50]
-#define __pyx_n_u_pyx_vtable __pyx_string_tab[51]
-#define __pyx_n_u_qualname __pyx_string_tab[52]
-#define __pyx_n_u_re __pyx_string_tab[53]
-#define __pyx_n_u_reduce __pyx_string_tab[54]
-#define __pyx_n_u_reduce_cython __pyx_string_tab[55]
-#define __pyx_n_u_reduce_ex __pyx_string_tab[56]
-#define __pyx_n_u_self __pyx_string_tab[57]
-#define __pyx_n_u_set_name __pyx_string_tab[58]
-#define __pyx_n_u_setdefault __pyx_string_tab[59]
-#define __pyx_n_u_setstate __pyx_string_tab[60]
-#define __pyx_n_u_setstate_cython __pyx_string_tab[61]
-#define __pyx_n_u_split __pyx_string_tab[62]
-#define __pyx_n_u_state __pyx_string_tab[63]
-#define __pyx_n_u_test __pyx_string_tab[64]
-#define __pyx_n_u_update __pyx_string_tab[65]
-#define __pyx_n_u_use_setstate __pyx_string_tab[66]
-#define __pyx_n_u_value __pyx_string_tab[67]
-#define __pyx_n_u_values __pyx_string_tab[68]
-#define __pyx_kp_b_iso88591_A_4q_1_81_a_4q_1_5_5_4z_q_6_q_81 __pyx_string_tab[69]
-#define __pyx_kp_b_iso88591_A_4q_1_81_a_F_q_Qiq_uCq_AQ_4AQ_Q __pyx_string_tab[70]
-#define __pyx_kp_b_iso88591_A_G1F_a_vWE_Q_q_q_q_D_7_D_1 __pyx_string_tab[71]
-#define __pyx_kp_b_iso88591__5 __pyx_string_tab[72]
-#define __pyx_kp_b_iso88591_q_0_kQR_haq_7_QnN_1 __pyx_string_tab[73]
+#define __pyx_n_u_pyx_unpickle_QueryEngine__set __pyx_string_tab[51]
+#define __pyx_n_u_pyx_vtable __pyx_string_tab[52]
+#define __pyx_n_u_qualname __pyx_string_tab[53]
+#define __pyx_n_u_re __pyx_string_tab[54]
+#define __pyx_n_u_reduce __pyx_string_tab[55]
+#define __pyx_n_u_reduce_cython __pyx_string_tab[56]
+#define __pyx_n_u_reduce_ex __pyx_string_tab[57]
+#define __pyx_n_u_self __pyx_string_tab[58]
+#define __pyx_n_u_set_name __pyx_string_tab[59]
+#define __pyx_n_u_setdefault __pyx_string_tab[60]
+#define __pyx_n_u_setstate __pyx_string_tab[61]
+#define __pyx_n_u_setstate_cython __pyx_string_tab[62]
+#define __pyx_n_u_split __pyx_string_tab[63]
+#define __pyx_n_u_state __pyx_string_tab[64]
+#define __pyx_n_u_test __pyx_string_tab[65]
+#define __pyx_n_u_update __pyx_string_tab[66]
+#define __pyx_n_u_use_setstate __pyx_string_tab[67]
+#define __pyx_n_u_value __pyx_string_tab[68]
+#define __pyx_n_u_values __pyx_string_tab[69]
+#define __pyx_kp_b_iso88591_A_4q_1_81_a_4q_1_5_5_4z_q_6_q_81 __pyx_string_tab[70]
+#define __pyx_kp_b_iso88591_A_4q_1_81_a_F_q_Qiq_uCq_AQ_4AQ_Q __pyx_string_tab[71]
+#define __pyx_kp_b_iso88591_A_G1F_a_vWE_Q_q_q_q_D_7_D_1 __pyx_string_tab[72]
+#define __pyx_kp_b_iso88591_RRS_QnM __pyx_string_tab[73]
+#define __pyx_kp_b_iso88591__5 __pyx_string_tab[74]
+#define __pyx_kp_b_iso88591_q_0_kQR_haq_7_QnN_1 __pyx_string_tab[75]
 #define __pyx_int_1 __pyx_number_tab[0]
 #define __pyx_int_238750788 __pyx_number_tab[1]
 /* #### Code section: module_state_clear ### */
@@ -2658,8 +3152,8 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   #endif
   Py_CLEAR(clear_module_state->__pyx_ptype_5kycli_4core_5query_QueryEngine);
   Py_CLEAR(clear_module_state->__pyx_type_5kycli_4core_5query_QueryEngine);
-  for (int i=0; i<5; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<74; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<6; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<76; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
   for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_clear_contents ### */
 /* CommonTypesMetaclass.module_state_clear */
@@ -2685,8 +3179,8 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   __Pyx_VISIT_CONST(traverse_module_state->__pyx_empty_unicode);
   Py_VISIT(traverse_module_state->__pyx_ptype_5kycli_4core_5query_QueryEngine);
   Py_VISIT(traverse_module_state->__pyx_type_5kycli_4core_5query_QueryEngine);
-  for (int i=0; i<5; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<74; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<6; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<76; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
   for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_traverse_contents ### */
 /* CommonTypesMetaclass.module_state_traverse */
@@ -2726,6 +3220,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
   PyObject *__pyx_v_end = NULL;
   PyObject *__pyx_v_i = NULL;
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -2747,7 +3242,9 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0]))
   __Pyx_RefNannySetupContext("navigate", 0);
+  __Pyx_TraceStartFunc("navigate", __pyx_f[0], 5, 0, 0, __pyx_skip_dispatch, __PYX_ERR(0, 5, __pyx_L1_error));
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
@@ -2793,6 +3290,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
         }
         __pyx_r = __pyx_t_2;
         __pyx_t_2 = 0;
+        __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(0, 5, __pyx_L1_error));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         goto __pyx_L0;
       }
@@ -2816,6 +3314,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *             return data
  *         tokens = re.findall(r'\.?([^.\[\]\s]+)|\[([^\]]+)\]', path)
 */
+  __Pyx_TraceLine(6,3,0,__PYX_ERR(0, 6, __pyx_L1_error))
   if (__pyx_v_path == Py_None) __pyx_t_6 = 0;
   else
   {
@@ -2834,9 +3333,11 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *         tokens = re.findall(r'\.?([^.\[\]\s]+)|\[([^\]]+)\]', path)
  *         current = data
 */
+    __Pyx_TraceLine(7,4,0,__PYX_ERR(0, 7, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_v_data);
     __pyx_r = __pyx_v_data;
+    __Pyx_TraceReturnValue(__pyx_r, 4, 0, __PYX_ERR(0, 7, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "kycli/core/query.pyx":6
@@ -2855,6 +3356,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *         current = data
  *         for attr, idx in tokens:
 */
+  __Pyx_TraceLine(8,9,0,__PYX_ERR(0, 8, __pyx_L1_error))
   __pyx_t_2 = NULL;
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -2891,6 +3393,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *         for attr, idx in tokens:
  *             if attr:
 */
+  __Pyx_TraceLine(9,13,0,__PYX_ERR(0, 9, __pyx_L1_error))
   __Pyx_INCREF(__pyx_v_data);
   __pyx_v_current = __pyx_v_data;
 
@@ -2901,6 +3404,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *             if attr:
  *                 if isinstance(current, dict):
 */
+  __Pyx_TraceLine(10,17,0,__PYX_ERR(0, 10, __pyx_L1_error))
   if (likely(PyList_CheckExact(__pyx_v_tokens)) || PyTuple_CheckExact(__pyx_v_tokens)) {
     __pyx_t_1 = __pyx_v_tokens; __Pyx_INCREF(__pyx_t_1);
     __pyx_t_8 = 0;
@@ -3004,6 +3508,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
     __pyx_t_2 = 0;
     __Pyx_XDECREF_SET(__pyx_v_idx, __pyx_t_4);
     __pyx_t_4 = 0;
+    __Pyx_TraceLine(10,14,0,__PYX_ERR(0, 10, __pyx_L1_error))
 
     /* "kycli/core/query.pyx":11
  *         current = data
@@ -3012,6 +3517,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                 if isinstance(current, dict):
  *                     if attr in current:
 */
+    __Pyx_TraceLine(11,19,0,__PYX_ERR(0, 11, __pyx_L1_error))
     __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_attr); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 11, __pyx_L1_error)
     if (__pyx_t_7) {
 
@@ -3022,6 +3528,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                     if attr in current:
  *                         current = current[attr]
 */
+      __Pyx_TraceLine(12,24,0,__PYX_ERR(0, 12, __pyx_L1_error))
       __pyx_t_7 = PyDict_Check(__pyx_v_current); 
       if (__pyx_t_7) {
 
@@ -3032,6 +3539,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                         current = current[attr]
  *                     else:
 */
+        __Pyx_TraceLine(13,28,0,__PYX_ERR(0, 13, __pyx_L1_error))
         __pyx_t_7 = (__Pyx_PySequence_ContainsTF(__pyx_v_attr, __pyx_v_current, Py_EQ)); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 13, __pyx_L1_error)
         if (__pyx_t_7) {
 
@@ -3042,6 +3550,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                     else:
  *                         return f"KeyError: '{attr}' not found"
 */
+          __Pyx_TraceLine(14,31,0,__PYX_ERR(0, 14, __pyx_L1_error))
           __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_current, __pyx_v_attr); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 14, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF_SET(__pyx_v_current, __pyx_t_3);
@@ -3064,6 +3573,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                 else:
  *                     return f"TypeError: Cannot get '{attr}' from non-dict"
 */
+        __Pyx_TraceLine(16,33,0,__PYX_ERR(0, 16, __pyx_L1_error))
         /*else*/ {
           __Pyx_XDECREF(__pyx_r);
           __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_v_attr, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 16, __pyx_L1_error)
@@ -3077,6 +3587,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           __pyx_r = __pyx_t_4;
           __pyx_t_4 = 0;
+          __Pyx_TraceReturnValue(__pyx_r, 33, 0, __PYX_ERR(0, 16, __pyx_L1_error));
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           goto __pyx_L0;
         }
@@ -3099,6 +3610,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *             elif idx:
  *                 if isinstance(current, list):
 */
+      __Pyx_TraceLine(18,37,0,__PYX_ERR(0, 18, __pyx_L1_error))
       /*else*/ {
         __Pyx_XDECREF(__pyx_r);
         __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_v_attr, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
@@ -3112,6 +3624,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __pyx_r = __pyx_t_3;
         __pyx_t_3 = 0;
+        __Pyx_TraceReturnValue(__pyx_r, 37, 0, __PYX_ERR(0, 18, __pyx_L1_error));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         goto __pyx_L0;
       }
@@ -3134,6 +3647,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                 if isinstance(current, list):
  *                     if ":" in idx:
 */
+    __Pyx_TraceLine(19,41,0,__PYX_ERR(0, 19, __pyx_L1_error))
     __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_idx); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 19, __pyx_L1_error)
     if (__pyx_t_7) {
 
@@ -3144,6 +3658,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                     if ":" in idx:
  *                         try:
 */
+      __Pyx_TraceLine(20,46,0,__PYX_ERR(0, 20, __pyx_L1_error))
       __pyx_t_7 = PyList_Check(__pyx_v_current); 
       if (__pyx_t_7) {
 
@@ -3154,6 +3669,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                         try:
  *                             parts = idx.split(':')
 */
+        __Pyx_TraceLine(21,50,0,__PYX_ERR(0, 21, __pyx_L1_error))
         __pyx_t_7 = (__Pyx_PySequence_ContainsTF(__pyx_mstate_global->__pyx_kp_u_, __pyx_v_idx, Py_EQ)); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 21, __pyx_L1_error)
         if (__pyx_t_7) {
 
@@ -3164,6 +3680,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                             parts = idx.split(':')
  *                             start = int(parts[0]) if parts[0] else None
 */
+          __Pyx_TraceLine(22,51,0,__PYX_ERR(0, 22, __pyx_L1_error))
           {
             __Pyx_PyThreadState_declare
             __Pyx_PyThreadState_assign
@@ -3180,6 +3697,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                             start = int(parts[0]) if parts[0] else None
  *                             end = int(parts[1]) if parts[1] else None
 */
+              __Pyx_TraceLine(23,53,0,__PYX_ERR(0, 23, __pyx_L13_error))
               __pyx_t_4 = __pyx_v_idx;
               __Pyx_INCREF(__pyx_t_4);
               __pyx_t_5 = 0;
@@ -3200,6 +3718,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                             end = int(parts[1]) if parts[1] else None
  *                             current = current[slice(start, end)]
 */
+              __Pyx_TraceLine(24,64,0,__PYX_ERR(0, 24, __pyx_L13_error))
               __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_parts, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 24, __pyx_L13_error)
               __Pyx_GOTREF(__pyx_t_4);
               __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 24, __pyx_L13_error)
@@ -3226,6 +3745,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                             current = current[slice(start, end)]
  *                         except:
 */
+              __Pyx_TraceLine(25,74,0,__PYX_ERR(0, 25, __pyx_L13_error))
               __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_parts, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L13_error)
               __Pyx_GOTREF(__pyx_t_2);
               __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 25, __pyx_L13_error)
@@ -3252,6 +3772,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                         except:
  *                             return f"SliceError: '{idx}'"
 */
+              __Pyx_TraceLine(26,80,0,__PYX_ERR(0, 26, __pyx_L13_error))
               __pyx_t_3 = PySlice_New(__pyx_v_start, __pyx_v_end, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L13_error)
               __Pyx_GOTREF(__pyx_t_3);
               __pyx_t_4 = __Pyx_PyObject_GetItem(__pyx_v_current, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 26, __pyx_L13_error)
@@ -3277,6 +3798,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
             __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+            __Pyx_TraceException(__pyx_lineno, 0, 0);
 
             /* "kycli/core/query.pyx":27
  *                             end = int(parts[1]) if parts[1] else None
@@ -3285,12 +3807,15 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                             return f"SliceError: '{idx}'"
  *                     else:
 */
+            __Pyx_TraceLine(27,0,0,__PYX_ERR(0, 27, __pyx_L15_except_error))
             /*except:*/ {
               __Pyx_AddTraceback("kycli.core.query.QueryEngine.navigate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+              __Pyx_TraceExceptionHandled(0);
               if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_3, &__pyx_t_2) < 0) __PYX_ERR(0, 27, __pyx_L15_except_error)
               __Pyx_XGOTREF(__pyx_t_4);
               __Pyx_XGOTREF(__pyx_t_3);
               __Pyx_XGOTREF(__pyx_t_2);
+              __Pyx_TraceExceptionDone();
 
               /* "kycli/core/query.pyx":28
  *                             current = current[slice(start, end)]
@@ -3299,6 +3824,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                     else:
  *                         try:
 */
+              __Pyx_TraceLine(28,83,0,__PYX_ERR(0, 28, __pyx_L15_except_error))
               __Pyx_XDECREF(__pyx_r);
               __pyx_t_10 = __Pyx_PyObject_FormatSimple(__pyx_v_idx, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 28, __pyx_L15_except_error)
               __Pyx_GOTREF(__pyx_t_10);
@@ -3311,6 +3837,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
               __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
               __pyx_r = __pyx_t_16;
               __pyx_t_16 = 0;
+              __Pyx_TraceReturnValue(__pyx_r, 83, 0, __PYX_ERR(0, 28, __pyx_L15_except_error));
               __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
               __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -3357,6 +3884,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                             i = int(idx)
  *                             current = current[i]
 */
+        __Pyx_TraceLine(30,87,0,__PYX_ERR(0, 30, __pyx_L1_error))
         /*else*/ {
           {
             __Pyx_PyThreadState_declare
@@ -3374,6 +3902,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                             current = current[i]
  *                         except (ValueError, IndexError):
 */
+              __Pyx_TraceLine(31,90,0,__PYX_ERR(0, 31, __pyx_L23_error))
               __pyx_t_2 = __Pyx_PyNumber_Int(__pyx_v_idx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L23_error)
               __Pyx_GOTREF(__pyx_t_2);
               __Pyx_XDECREF_SET(__pyx_v_i, ((PyObject*)__pyx_t_2));
@@ -3386,6 +3915,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                         except (ValueError, IndexError):
  *                             return f"IndexError: '{idx}'"
 */
+              __Pyx_TraceLine(32,94,0,__PYX_ERR(0, 32, __pyx_L23_error))
               __pyx_t_2 = __Pyx_PyObject_GetItem(__pyx_v_current, __pyx_v_i); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 32, __pyx_L23_error)
               __Pyx_GOTREF(__pyx_t_2);
               __Pyx_DECREF_SET(__pyx_v_current, __pyx_t_2);
@@ -3409,6 +3939,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
             __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+            __Pyx_TraceException(__pyx_lineno, 0, 0);
 
             /* "kycli/core/query.pyx":33
  *                             i = int(idx)
@@ -3417,13 +3948,16 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                             return f"IndexError: '{idx}'"
  *                 else:
 */
+            __Pyx_TraceLine(33,97,0,__PYX_ERR(0, 33, __pyx_L25_except_error))
             __pyx_t_17 = __Pyx_PyErr_ExceptionMatches2(((PyObject *)(((PyTypeObject*)PyExc_ValueError))), ((PyObject *)(((PyTypeObject*)PyExc_IndexError))));
             if (__pyx_t_17) {
               __Pyx_AddTraceback("kycli.core.query.QueryEngine.navigate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+              __Pyx_TraceExceptionHandled(0);
               if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_3, &__pyx_t_4) < 0) __PYX_ERR(0, 33, __pyx_L25_except_error)
               __Pyx_XGOTREF(__pyx_t_2);
               __Pyx_XGOTREF(__pyx_t_3);
               __Pyx_XGOTREF(__pyx_t_4);
+              __Pyx_TraceExceptionDone();
 
               /* "kycli/core/query.pyx":34
  *                             current = current[i]
@@ -3432,6 +3966,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *                 else:
  *                     return f"TypeError: Cannot index non-list with '{idx}'"
 */
+              __Pyx_TraceLine(34,98,0,__PYX_ERR(0, 34, __pyx_L25_except_error))
               __Pyx_XDECREF(__pyx_r);
               __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_idx, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 34, __pyx_L25_except_error)
               __Pyx_GOTREF(__pyx_t_16);
@@ -3444,6 +3979,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
               __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
               __pyx_r = __pyx_t_10;
               __pyx_t_10 = 0;
+              __Pyx_TraceReturnValue(__pyx_r, 98, 0, __PYX_ERR(0, 34, __pyx_L25_except_error));
               __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
               __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -3493,6 +4029,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *         return current
  * 
 */
+      __Pyx_TraceLine(36,102,0,__PYX_ERR(0, 36, __pyx_L1_error))
       /*else*/ {
         __Pyx_XDECREF(__pyx_r);
         __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_v_idx, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 36, __pyx_L1_error)
@@ -3506,6 +4043,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __pyx_r = __pyx_t_3;
         __pyx_t_3 = 0;
+        __Pyx_TraceReturnValue(__pyx_r, 102, 0, __PYX_ERR(0, 36, __pyx_L1_error));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         goto __pyx_L0;
       }
@@ -3528,6 +4066,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  *             if attr:
  *                 if isinstance(current, dict):
 */
+    __Pyx_TraceLine(10,14,0,__PYX_ERR(0, 10, __pyx_L1_error))
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -3538,9 +4077,11 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
  * 
  *     cpdef patch_value(self, data, str path, value):
 */
+  __Pyx_TraceLine(37,106,0,__PYX_ERR(0, 37, __pyx_L1_error))
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_current);
   __pyx_r = __pyx_v_current;
+  __Pyx_TraceReturnValue(__pyx_r, 106, 0, __PYX_ERR(0, 37, __pyx_L1_error));
   goto __pyx_L0;
 
   /* "kycli/core/query.pyx":5
@@ -3559,6 +4100,12 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_10);
   __Pyx_XDECREF(__pyx_t_16);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 5, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.query.QueryEngine.navigate", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
@@ -3571,6 +4118,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_navigate(CYTHON_UNUSE
   __Pyx_XDECREF(__pyx_v_end);
   __Pyx_XDECREF(__pyx_v_i);
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -3680,12 +4228,15 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_navigate(struct __pyx_obj_5kycli_4core_5query_QueryEngine *__pyx_v_self, PyObject *__pyx_v_data, PyObject *__pyx_v_path) {
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0]))
   __Pyx_RefNannySetupContext("navigate", 0);
+  __Pyx_TraceStartFunc("navigate (wrapper)", __pyx_f[0], 5, 0, 0, 0, __PYX_ERR(0, 5, __pyx_L1_error));
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_f_5kycli_4core_5query_11QueryEngine_navigate(__pyx_v_self, __pyx_v_data, __pyx_v_path, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -3696,10 +4247,17 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_navigate(struct __py
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 5, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.query.QueryEngine.navigate", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -3729,6 +4287,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
   CYTHON_UNUSED PyObject *__pyx_v_next_idx = NULL;
   PyObject *__pyx_v_i_idx = NULL;
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -3746,7 +4305,9 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1]))
   __Pyx_RefNannySetupContext("patch_value", 0);
+  __Pyx_TraceStartFunc("patch_value", __pyx_f[0], 39, 0, 0, __pyx_skip_dispatch, __PYX_ERR(0, 39, __pyx_L1_error));
   __Pyx_INCREF(__pyx_v_data);
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
@@ -3793,6 +4354,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
         }
         __pyx_r = __pyx_t_2;
         __pyx_t_2 = 0;
+        __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(0, 39, __pyx_L1_error));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         goto __pyx_L0;
       }
@@ -3816,6 +4378,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             return value
  *         tokens = re.findall(r'\.?([^.\[\]\s]+)|\[([^\]]+)\]', path)
 */
+  __Pyx_TraceLine(40,3,0,__PYX_ERR(0, 40, __pyx_L1_error))
   if (__pyx_v_path == Py_None) __pyx_t_6 = 0;
   else
   {
@@ -3834,9 +4397,11 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *         tokens = re.findall(r'\.?([^.\[\]\s]+)|\[([^\]]+)\]', path)
  *         if not tokens:
 */
+    __Pyx_TraceLine(41,4,0,__PYX_ERR(0, 41, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_v_value);
     __pyx_r = __pyx_v_value;
+    __Pyx_TraceReturnValue(__pyx_r, 4, 0, __PYX_ERR(0, 41, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "kycli/core/query.pyx":40
@@ -3855,6 +4420,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *         if not tokens:
  *             return value
 */
+  __Pyx_TraceLine(42,9,0,__PYX_ERR(0, 42, __pyx_L1_error))
   __pyx_t_2 = NULL;
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_re); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -3891,6 +4457,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             return value
  *         if data is None or not isinstance(data, (dict, list)):
 */
+  __Pyx_TraceLine(43,14,0,__PYX_ERR(0, 43, __pyx_L1_error))
   __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_tokens); if (unlikely((__pyx_t_7 < 0))) __PYX_ERR(0, 43, __pyx_L1_error)
   __pyx_t_6 = (!__pyx_t_7);
   if (__pyx_t_6) {
@@ -3902,9 +4469,11 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *         if data is None or not isinstance(data, (dict, list)):
  *             data = {} if tokens[0][0] else []
 */
+    __Pyx_TraceLine(44,15,0,__PYX_ERR(0, 44, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_v_value);
     __pyx_r = __pyx_v_value;
+    __Pyx_TraceReturnValue(__pyx_r, 15, 0, __PYX_ERR(0, 44, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "kycli/core/query.pyx":43
@@ -3923,6 +4492,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             data = {} if tokens[0][0] else []
  *         current = data
 */
+  __Pyx_TraceLine(45,20,0,__PYX_ERR(0, 45, __pyx_L1_error))
   __pyx_t_7 = (__pyx_v_data == Py_None);
   if (!__pyx_t_7) {
   } else {
@@ -3950,6 +4520,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *         current = data
  *         for i in range(len(tokens) - 1):
 */
+    __Pyx_TraceLine(46,31,0,__PYX_ERR(0, 46, __pyx_L1_error))
     __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_tokens, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
@@ -3987,6 +4558,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *         for i in range(len(tokens) - 1):
  *             attr, idx = tokens[i]
 */
+  __Pyx_TraceLine(47,37,0,__PYX_ERR(0, 47, __pyx_L1_error))
   __Pyx_INCREF(__pyx_v_data);
   __pyx_v_current = __pyx_v_data;
 
@@ -3997,6 +4569,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             attr, idx = tokens[i]
  *             next_attr, next_idx = tokens[i+1]
 */
+  __Pyx_TraceLine(48,41,0,__PYX_ERR(0, 48, __pyx_L1_error))
   __pyx_t_2 = NULL;
   __pyx_t_9 = PyObject_Length(__pyx_v_tokens); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 48, __pyx_L1_error)
   __pyx_t_3 = PyLong_FromSsize_t((__pyx_t_9 - 1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
@@ -4029,6 +4602,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
     __pyx_t_1 = 0;
+    __Pyx_TraceLine(48,38,0,__PYX_ERR(0, 48, __pyx_L1_error))
 
     /* "kycli/core/query.pyx":49
  *         current = data
@@ -4037,6 +4611,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             next_attr, next_idx = tokens[i+1]
  *             if attr:
 */
+    __Pyx_TraceLine(49,50,0,__PYX_ERR(0, 49, __pyx_L1_error))
     __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_tokens, __pyx_v_i); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     if ((likely(PyTuple_CheckExact(__pyx_t_1))) || (PyList_CheckExact(__pyx_t_1))) {
@@ -4101,6 +4676,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             if attr:
  *                 if attr not in current or not isinstance(current[attr], (dict, list)):
 */
+    __Pyx_TraceLine(50,57,0,__PYX_ERR(0, 50, __pyx_L1_error))
     __pyx_t_1 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_4 = __Pyx_PyObject_GetItem(__pyx_v_tokens, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
@@ -4168,6 +4744,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *                 if attr not in current or not isinstance(current[attr], (dict, list)):
  *                     current[attr] = {} if next_attr else []
 */
+    __Pyx_TraceLine(51,60,0,__PYX_ERR(0, 51, __pyx_L1_error))
     __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_attr); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 51, __pyx_L1_error)
     if (__pyx_t_6) {
 
@@ -4178,6 +4755,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *                     current[attr] = {} if next_attr else []
  *                 current = current[attr]
 */
+      __Pyx_TraceLine(52,64,0,__PYX_ERR(0, 52, __pyx_L1_error))
       __pyx_t_8 = (__Pyx_PySequence_ContainsTF(__pyx_v_attr, __pyx_v_current, Py_NE)); if (unlikely((__pyx_t_8 < 0))) __PYX_ERR(0, 52, __pyx_L1_error)
       if (!__pyx_t_8) {
       } else {
@@ -4208,6 +4786,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *                 current = current[attr]
  *             elif idx:
 */
+        __Pyx_TraceLine(53,78,0,__PYX_ERR(0, 53, __pyx_L1_error))
         __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_next_attr); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 53, __pyx_L1_error)
         if (__pyx_t_6) {
           __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 53, __pyx_L1_error)
@@ -4239,6 +4818,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             elif idx:
  *                 i_idx = int(idx)
 */
+      __Pyx_TraceLine(54,82,0,__PYX_ERR(0, 54, __pyx_L1_error))
       __pyx_t_4 = __Pyx_PyObject_GetItem(__pyx_v_current, __pyx_v_attr); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 54, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF_SET(__pyx_v_current, __pyx_t_4);
@@ -4261,6 +4841,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *                 i_idx = int(idx)
  *                 while len(current) <= i_idx:
 */
+    __Pyx_TraceLine(55,84,0,__PYX_ERR(0, 55, __pyx_L1_error))
     __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_idx); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 55, __pyx_L1_error)
     if (__pyx_t_6) {
 
@@ -4271,6 +4852,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *                 while len(current) <= i_idx:
  *                     current.append(None)
 */
+      __Pyx_TraceLine(56,87,0,__PYX_ERR(0, 56, __pyx_L1_error))
       __pyx_t_4 = __Pyx_PyNumber_Int(__pyx_v_idx); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 56, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_XDECREF_SET(__pyx_v_i_idx, ((PyObject*)__pyx_t_4));
@@ -4283,6 +4865,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *                     current.append(None)
  *                 if current[i_idx] is None or not isinstance(current[i_idx], (dict, list)):
 */
+      __Pyx_TraceLine(57,89,0,__PYX_ERR(0, 57, __pyx_L1_error))
       while (1) {
         __pyx_t_9 = PyObject_Length(__pyx_v_current); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 57, __pyx_L1_error)
         __pyx_t_4 = PyLong_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 57, __pyx_L1_error)
@@ -4300,6 +4883,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *                 if current[i_idx] is None or not isinstance(current[i_idx], (dict, list)):
  *                     current[i_idx] = {} if next_attr else []
 */
+        __Pyx_TraceLine(58,97,0,__PYX_ERR(0, 58, __pyx_L1_error))
         __pyx_t_13 = __Pyx_PyObject_Append(__pyx_v_current, Py_None); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 58, __pyx_L1_error)
       }
 
@@ -4310,6 +4894,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *                     current[i_idx] = {} if next_attr else []
  *                 current = current[i_idx]
 */
+      __Pyx_TraceLine(59,101,0,__PYX_ERR(0, 59, __pyx_L1_error))
       __pyx_t_2 = __Pyx_PyObject_GetItem(__pyx_v_current, __pyx_v_i_idx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_7 = (__pyx_t_2 == Py_None);
@@ -4343,6 +4928,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *                 current = current[i_idx]
  *         attr, idx = tokens[-1]
 */
+        __Pyx_TraceLine(60,118,0,__PYX_ERR(0, 60, __pyx_L1_error))
         __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_next_attr); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 60, __pyx_L1_error)
         if (__pyx_t_6) {
           __pyx_t_4 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 60, __pyx_L1_error)
@@ -4374,6 +4960,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *         attr, idx = tokens[-1]
  *         if attr:
 */
+      __Pyx_TraceLine(61,122,0,__PYX_ERR(0, 61, __pyx_L1_error))
       __pyx_t_2 = __Pyx_PyObject_GetItem(__pyx_v_current, __pyx_v_i_idx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF_SET(__pyx_v_current, __pyx_t_2);
@@ -4396,6 +4983,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             attr, idx = tokens[i]
  *             next_attr, next_idx = tokens[i+1]
 */
+    __Pyx_TraceLine(48,38,0,__PYX_ERR(0, 48, __pyx_L1_error))
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
@@ -4406,6 +4994,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *         if attr:
  *             current[attr] = value
 */
+  __Pyx_TraceLine(62,127,0,__PYX_ERR(0, 62, __pyx_L1_error))
   __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_tokens, -1L, long, 1, __Pyx_PyLong_From_long, 0, 1, 1, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if ((likely(PyTuple_CheckExact(__pyx_t_3))) || (PyList_CheckExact(__pyx_t_3))) {
@@ -4470,6 +5059,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             current[attr] = value
  *         elif idx:
 */
+  __Pyx_TraceLine(63,130,0,__PYX_ERR(0, 63, __pyx_L1_error))
   __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_attr); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 63, __pyx_L1_error)
   if (__pyx_t_6) {
 
@@ -4480,6 +5070,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *         elif idx:
  *             i_idx = int(idx)
 */
+    __Pyx_TraceLine(64,133,0,__PYX_ERR(0, 64, __pyx_L1_error))
     if (unlikely((PyObject_SetItem(__pyx_v_current, __pyx_v_attr, __pyx_v_value) < 0))) __PYX_ERR(0, 64, __pyx_L1_error)
 
     /* "kycli/core/query.pyx":63
@@ -4499,6 +5090,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             i_idx = int(idx)
  *             while len(current) <= i_idx:
 */
+  __Pyx_TraceLine(65,135,0,__PYX_ERR(0, 65, __pyx_L1_error))
   __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_idx); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 65, __pyx_L1_error)
   if (__pyx_t_6) {
 
@@ -4509,6 +5101,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             while len(current) <= i_idx:
  *                 current.append(None)
 */
+    __Pyx_TraceLine(66,138,0,__PYX_ERR(0, 66, __pyx_L1_error))
     __pyx_t_3 = __Pyx_PyNumber_Int(__pyx_v_idx); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_XDECREF_SET(__pyx_v_i_idx, ((PyObject*)__pyx_t_3));
@@ -4521,6 +5114,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *                 current.append(None)
  *             current[i_idx] = value
 */
+    __Pyx_TraceLine(67,140,0,__PYX_ERR(0, 67, __pyx_L1_error))
     while (1) {
       __pyx_t_9 = PyObject_Length(__pyx_v_current); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 67, __pyx_L1_error)
       __pyx_t_3 = PyLong_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
@@ -4538,6 +5132,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             current[i_idx] = value
  *         return data
 */
+      __Pyx_TraceLine(68,148,0,__PYX_ERR(0, 68, __pyx_L1_error))
       __pyx_t_13 = __Pyx_PyObject_Append(__pyx_v_current, Py_None); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 68, __pyx_L1_error)
     }
 
@@ -4547,6 +5142,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             current[i_idx] = value             # <<<<<<<<<<<<<<
  *         return data
 */
+    __Pyx_TraceLine(69,152,0,__PYX_ERR(0, 69, __pyx_L1_error))
     if (unlikely((PyObject_SetItem(__pyx_v_current, __pyx_v_i_idx, __pyx_v_value) < 0))) __PYX_ERR(0, 69, __pyx_L1_error)
 
     /* "kycli/core/query.pyx":65
@@ -4564,9 +5160,11 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
  *             current[i_idx] = value
  *         return data             # <<<<<<<<<<<<<<
 */
+  __Pyx_TraceLine(70,154,0,__PYX_ERR(0, 70, __pyx_L1_error))
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_data);
   __pyx_r = __pyx_v_data;
+  __Pyx_TraceReturnValue(__pyx_r, 154, 0, __PYX_ERR(0, 70, __pyx_L1_error));
   goto __pyx_L0;
 
   /* "kycli/core/query.pyx":39
@@ -4584,6 +5182,12 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 39, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.query.QueryEngine.patch_value", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
@@ -4597,6 +5201,7 @@ static PyObject *__pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(CYTHON_UN
   __Pyx_XDECREF(__pyx_v_i_idx);
   __Pyx_XDECREF(__pyx_v_data);
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -4714,12 +5319,15 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_2patch_value(struct __pyx_obj_5kycli_4core_5query_QueryEngine *__pyx_v_self, PyObject *__pyx_v_data, PyObject *__pyx_v_path, PyObject *__pyx_v_value) {
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1]))
   __Pyx_RefNannySetupContext("patch_value", 0);
+  __Pyx_TraceStartFunc("patch_value (wrapper)", __pyx_f[0], 39, 0, 0, 0, __PYX_ERR(0, 39, __pyx_L1_error));
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_f_5kycli_4core_5query_11QueryEngine_patch_value(__pyx_v_self, __pyx_v_data, __pyx_v_path, __pyx_v_value, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -4730,10 +5338,17 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_2patch_value(struct 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 39, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.query.QueryEngine.patch_value", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -4791,6 +5406,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_t_2;
@@ -4800,7 +5416,9 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2]))
   __Pyx_RefNannySetupContext("__reduce_cython__", 0);
+  __Pyx_TraceStartFunc("__reduce_cython__", __pyx_f[1], 1, 0, 0, 0, __PYX_ERR(1, 1, __pyx_L1_error));
 
   /* "(tree fragment)":5
  *     cdef object _dict
@@ -4809,6 +5427,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None and _dict:
 */
+  __Pyx_TraceLine(5,2,0,__PYX_ERR(1, 5, __pyx_L1_error))
   __Pyx_INCREF(__pyx_mstate_global->__pyx_empty_tuple);
   __pyx_v_state = __pyx_mstate_global->__pyx_empty_tuple;
 
@@ -4819,6 +5438,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
  *     if _dict is not None and _dict:
  *         state += (_dict,)
 */
+  __Pyx_TraceLine(6,5,0,__PYX_ERR(1, 6, __pyx_L1_error))
   __pyx_t_1 = __Pyx_GetAttr3(((PyObject *)__pyx_v_self), __pyx_mstate_global->__pyx_n_u_dict, Py_None); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v__dict = __pyx_t_1;
@@ -4831,6 +5451,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
  *         state += (_dict,)
  *         use_setstate = True
 */
+  __Pyx_TraceLine(7,12,0,__PYX_ERR(1, 7, __pyx_L1_error))
   __pyx_t_3 = (__pyx_v__dict != Py_None);
   if (__pyx_t_3) {
   } else {
@@ -4849,6 +5470,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
  *         use_setstate = True
  *     else:
 */
+    __Pyx_TraceLine(8,16,0,__PYX_ERR(1, 8, __pyx_L1_error))
     __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 8, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_INCREF(__pyx_v__dict);
@@ -4867,6 +5489,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
  *     else:
  *         use_setstate = False
 */
+    __Pyx_TraceLine(9,18,0,__PYX_ERR(1, 9, __pyx_L1_error))
     __pyx_v_use_setstate = 1;
 
     /* "(tree fragment)":7
@@ -4886,6 +5509,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
  *     if use_setstate:
  *         return __pyx_unpickle_QueryEngine, (type(self), 0xe3b0c44, None), state
 */
+  __Pyx_TraceLine(11,20,0,__PYX_ERR(1, 11, __pyx_L1_error))
   /*else*/ {
     __pyx_v_use_setstate = 0;
   }
@@ -4898,6 +5522,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
  *         return __pyx_unpickle_QueryEngine, (type(self), 0xe3b0c44, None), state
  *     else:
 */
+  __Pyx_TraceLine(12,22,0,__PYX_ERR(1, 12, __pyx_L1_error))
   if (__pyx_v_use_setstate) {
 
     /* "(tree fragment)":13
@@ -4907,6 +5532,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
  *     else:
  *         return __pyx_unpickle_QueryEngine, (type(self), 0xe3b0c44, state)
 */
+    __Pyx_TraceLine(13,23,0,__PYX_ERR(1, 13, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_QueryEngine); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 13, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
@@ -4934,6 +5560,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
     __pyx_t_1 = 0;
     __pyx_r = __pyx_t_5;
     __pyx_t_5 = 0;
+    __Pyx_TraceReturnValue(__pyx_r, 23, 0, __PYX_ERR(1, 13, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "(tree fragment)":12
@@ -4952,6 +5579,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
  * def __setstate_cython__(self, __pyx_state):
  *     __pyx_unpickle_QueryEngine__set_state(self, __pyx_state)
 */
+  __Pyx_TraceLine(15,31,0,__PYX_ERR(1, 15, __pyx_L1_error))
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
     __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_QueryEngine); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 15, __pyx_L1_error)
@@ -4977,6 +5605,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
     __pyx_t_1 = 0;
     __pyx_r = __pyx_t_4;
     __pyx_t_4 = 0;
+    __Pyx_TraceReturnValue(__pyx_r, 31, 0, __PYX_ERR(1, 15, __pyx_L1_error));
     goto __pyx_L0;
   }
 
@@ -4991,12 +5620,19 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_4__reduce_cython__(s
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(1, 1, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.query.QueryEngine.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
   __Pyx_XDECREF(__pyx_v__dict);
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5095,19 +5731,23 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_6__setstate_cython__(struct __pyx_obj_5kycli_4core_5query_QueryEngine *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3]))
   __Pyx_RefNannySetupContext("__setstate_cython__", 0);
+  __Pyx_TraceStartFunc("__setstate_cython__", __pyx_f[1], 16, 0, 0, 0, __PYX_ERR(1, 16, __pyx_L1_error));
 
   /* "(tree fragment)":17
  *         return __pyx_unpickle_QueryEngine, (type(self), 0xe3b0c44, state)
  * def __setstate_cython__(self, __pyx_state):
  *     __pyx_unpickle_QueryEngine__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
 */
+  __Pyx_TraceLine(17,4,0,__PYX_ERR(1, 17, __pyx_L1_error))
   __pyx_t_1 = __pyx_v___pyx_state;
   __Pyx_INCREF(__pyx_t_1);
   if (!(likely(PyTuple_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_t_1))) __PYX_ERR(1, 17, __pyx_L1_error)
@@ -5129,14 +5769,22 @@ static PyObject *__pyx_pf_5kycli_4core_5query_11QueryEngine_6__setstate_cython__
 
   /* function exit code */
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(1, 16, __pyx_L1_error));
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(1, 16, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.query.QueryEngine.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5263,6 +5911,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 static PyObject *__pyx_pf_5kycli_4core_5query___pyx_unpickle_QueryEngine(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
@@ -5272,7 +5921,9 @@ static PyObject *__pyx_pf_5kycli_4core_5query___pyx_unpickle_QueryEngine(CYTHON_
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4]))
   __Pyx_RefNannySetupContext("__pyx_unpickle_QueryEngine", 0);
+  __Pyx_TraceStartFunc("__pyx_unpickle_QueryEngine", __pyx_f[1], 4, 0, 0, 0, __PYX_ERR(1, 4, __pyx_L1_error));
 
   /* "(tree fragment)":6
  * def __pyx_unpickle_QueryEngine(__pyx_type, long __pyx_checksum, tuple __pyx_state):
@@ -5281,6 +5932,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query___pyx_unpickle_QueryEngine(CYTHON_
  *     __pyx_result = QueryEngine.__new__(__pyx_type)
  *     if __pyx_state is not None:
 */
+  __Pyx_TraceLine(6,2,0,__PYX_ERR(1, 6, __pyx_L1_error))
   __pyx_t_1 = __Pyx_CheckUnpickleChecksum(__pyx_v___pyx_checksum, 0xe3b0c44, 0xda39a3e, 0xd41d8cd, __pyx_k__3); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(1, 6, __pyx_L1_error)
 
   /* "(tree fragment)":7
@@ -5290,6 +5942,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query___pyx_unpickle_QueryEngine(CYTHON_
  *     if __pyx_state is not None:
  *         __pyx_unpickle_QueryEngine__set_state(<QueryEngine> __pyx_result, __pyx_state)
 */
+  __Pyx_TraceLine(7,9,0,__PYX_ERR(1, 7, __pyx_L1_error))
   __pyx_t_3 = ((PyObject *)__pyx_mstate_global->__pyx_ptype_5kycli_4core_5query_QueryEngine);
   __Pyx_INCREF(__pyx_t_3);
   __pyx_t_4 = 0;
@@ -5310,6 +5963,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query___pyx_unpickle_QueryEngine(CYTHON_
  *         __pyx_unpickle_QueryEngine__set_state(<QueryEngine> __pyx_result, __pyx_state)
  *     return __pyx_result
 */
+  __Pyx_TraceLine(8,16,0,__PYX_ERR(1, 8, __pyx_L1_error))
   __pyx_t_5 = (__pyx_v___pyx_state != ((PyObject*)Py_None));
   if (__pyx_t_5) {
 
@@ -5320,6 +5974,7 @@ static PyObject *__pyx_pf_5kycli_4core_5query___pyx_unpickle_QueryEngine(CYTHON_
  *     return __pyx_result
  * cdef __pyx_unpickle_QueryEngine__set_state(QueryEngine __pyx_result, __pyx_state: tuple):
 */
+    __Pyx_TraceLine(9,21,0,__PYX_ERR(1, 9, __pyx_L1_error))
     if (unlikely(__pyx_v___pyx_state == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "cannot pass None into a C function argument that is declared 'not None'");
       __PYX_ERR(1, 9, __pyx_L1_error)
@@ -5344,9 +5999,11 @@ static PyObject *__pyx_pf_5kycli_4core_5query___pyx_unpickle_QueryEngine(CYTHON_
  * cdef __pyx_unpickle_QueryEngine__set_state(QueryEngine __pyx_result, __pyx_state: tuple):
  *     __Pyx_UpdateUnpickledDict(__pyx_result, __pyx_state, 0)
 */
+  __Pyx_TraceLine(10,22,0,__PYX_ERR(1, 10, __pyx_L1_error))
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v___pyx_result);
   __pyx_r = __pyx_v___pyx_result;
+  __Pyx_TraceReturnValue(__pyx_r, 22, 0, __PYX_ERR(1, 10, __pyx_L1_error));
   goto __pyx_L0;
 
   /* "(tree fragment)":4
@@ -5361,11 +6018,18 @@ static PyObject *__pyx_pf_5kycli_4core_5query___pyx_unpickle_QueryEngine(CYTHON_
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(1, 4, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.query.__pyx_unpickle_QueryEngine", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_result);
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5379,18 +6043,22 @@ static PyObject *__pyx_pf_5kycli_4core_5query___pyx_unpickle_QueryEngine(CYTHON_
 
 static PyObject *__pyx_f_5kycli_4core_5query___pyx_unpickle_QueryEngine__set_state(struct __pyx_obj_5kycli_4core_5query_QueryEngine *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5]))
   __Pyx_RefNannySetupContext("__pyx_unpickle_QueryEngine__set_state", 0);
+  __Pyx_TraceStartFunc("__pyx_unpickle_QueryEngine__set_state", __pyx_f[1], 11, 0, 0, 0, __PYX_ERR(1, 11, __pyx_L1_error));
 
   /* "(tree fragment)":12
  *     return __pyx_result
  * cdef __pyx_unpickle_QueryEngine__set_state(QueryEngine __pyx_result, __pyx_state: tuple):
  *     __Pyx_UpdateUnpickledDict(__pyx_result, __pyx_state, 0)             # <<<<<<<<<<<<<<
 */
+  __Pyx_TraceLine(12,3,0,__PYX_ERR(1, 12, __pyx_L1_error))
   __pyx_t_1 = __Pyx_UpdateUnpickledDict(((PyObject *)__pyx_v___pyx_result), __pyx_v___pyx_state, 0); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(1, 12, __pyx_L1_error)
 
   /* "(tree fragment)":11
@@ -5402,12 +6070,20 @@ static PyObject *__pyx_f_5kycli_4core_5query___pyx_unpickle_QueryEngine__set_sta
 
   /* function exit code */
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(1, 11, __pyx_L1_error));
   goto __pyx_L0;
   __pyx_L1_error:;
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(1, 11, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.query.__pyx_unpickle_QueryEngine__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5831,6 +6507,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_query(PyObject *__pyx_pyinit_modul
   int pystate_addmodule_run = 0;
   #endif
   __pyx_mstatetype *__pyx_mstate = NULL;
+  __Pyx_TraceDeclarationsFunc
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
@@ -5918,6 +6595,7 @@ __Pyx_RefNannySetupContext("PyInit_query", 0);
   (void)__Pyx_modinit_variable_import_code(__pyx_mstate);
   (void)__Pyx_modinit_function_import_code(__pyx_mstate);
   /*--- Execution code ---*/
+  __Pyx_TraceStartFunc("PyInit_query", __pyx_f[0], 1, 1, 0, 0, __PYX_ERR(0, 1, __pyx_L1_error));
 
   /* "kycli/core/query.pyx":2
  * # cython: language_level=3
@@ -5925,6 +6603,7 @@ __Pyx_RefNannySetupContext("PyInit_query", 0);
  * 
  * cdef class QueryEngine:
 */
+  __Pyx_TraceLine(2,3,0,__PYX_ERR(0, 2, __pyx_L1_error))
   __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_re, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __pyx_t_2 = __pyx_t_1;
   __Pyx_GOTREF(__pyx_t_2);
@@ -5938,6 +6617,8 @@ __Pyx_RefNannySetupContext("PyInit_query", 0);
  *         if not path:
  *             return data
 */
+  __Pyx_TraceLine(5,6,0,__PYX_ERR(0, 5, __pyx_L1_error))
+
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_5query_11QueryEngine_1navigate, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_QueryEngine_navigate, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_query, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
@@ -5953,6 +6634,8 @@ __Pyx_RefNannySetupContext("PyInit_query", 0);
  *         if not path:
  *             return value
 */
+  __Pyx_TraceLine(39,9,0,__PYX_ERR(0, 39, __pyx_L1_error))
+
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_5query_11QueryEngine_3patch_value, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_QueryEngine_patch_value, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_query, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
@@ -5966,6 +6649,7 @@ __Pyx_RefNannySetupContext("PyInit_query", 0);
  *     cdef tuple state
  *     cdef object _dict
 */
+  __Pyx_TraceLine(1,2,0,__PYX_ERR(1, 1, __pyx_L1_error))
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_5query_11QueryEngine_5__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_QueryEngine___reduce_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_query, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
@@ -5980,6 +6664,7 @@ __Pyx_RefNannySetupContext("PyInit_query", 0);
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_QueryEngine__set_state(self, __pyx_state)
 */
+  __Pyx_TraceLine(16,8,0,__PYX_ERR(1, 16, __pyx_L1_error))
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_5query_11QueryEngine_7__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_QueryEngine___setstate_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_query, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
@@ -5995,6 +6680,7 @@ __Pyx_RefNannySetupContext("PyInit_query", 0);
  *     cdef object __pyx_result
  *     __Pyx_CheckUnpickleChecksum(__pyx_checksum, 0xe3b0c44, 0xda39a3e, 0xd41d8cd, b'')
 */
+  __Pyx_TraceLine(4,4,0,__PYX_ERR(1, 4, __pyx_L1_error))
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_5query_1__pyx_unpickle_QueryEngine, 0, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_QueryEngine, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_query, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
@@ -6003,21 +6689,35 @@ __Pyx_RefNannySetupContext("PyInit_query", 0);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_QueryEngine, __pyx_t_2) < (0)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
+  /* "(tree fragment)":11
+ *         __pyx_unpickle_QueryEngine__set_state(<QueryEngine> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ * cdef __pyx_unpickle_QueryEngine__set_state(QueryEngine __pyx_result, __pyx_state: tuple):             # <<<<<<<<<<<<<<
+ *     __Pyx_UpdateUnpickledDict(__pyx_result, __pyx_state, 0)
+*/
+  __Pyx_TraceLine(11,7,0,__PYX_ERR(1, 11, __pyx_L1_error))
+
+
   /* "kycli/core/query.pyx":1
  * # cython: language_level=3             # <<<<<<<<<<<<<<
  * import re
  * 
 */
+  __Pyx_TraceLine(1,1,0,__PYX_ERR(0, 1, __pyx_L1_error))
   __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_test, __pyx_t_2) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_TraceReturnValue(Py_None, 1, 0, __PYX_ERR(0, 1, __pyx_L1_error));
+  __Pyx_PyMonitoring_ExitScope(0);
 
   /*--- Wrapped vars code ---*/
 
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  __Pyx_TraceExceptionUnwind(1, 0);
   if (__pyx_m) {
     if (__pyx_mstate->__pyx_d && stringtab_initialized) {
       __Pyx_AddTraceback("init kycli.core.query", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -6073,31 +6773,31 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 9; } index[] = {{1},{13},{11},{179},{13},{23},{39},{1},{1},{8},{7},{6},{15},{2},{9},{20},{11},{29},{14},{20},{11},{29},{31},{20},{23},{6},{18},{17},{18},{4},{8},{5},{7},{8},{12},{13},{5},{16},{8},{10},{8},{8},{7},{11},{4},{3},{14},{12},{11},{10},{26},{14},{12},{2},{10},{17},{13},{4},{12},{10},{12},{19},{5},{5},{8},{6},{12},{5},{6},{345},{246},{89},{11},{55}};
-    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1203 bytes) */
-const char* const cstring = "BZh91AY&SY\037k\256\361\000\000\274\377\377\377\317\377\374\375\357\377\335\257\351\177\217\277\377\377\376@@@@@@@@@@@@@\000@\000P\003\376v\255\251'Ikp`\324\324\rP\311\352\031\030\236\t\224\320\001\352\000\0324\006\200h\003@\006\232\003\324\3654\311\210d\032\"h\247\246I\352a\246S'\250z\203\324h\000\003@\000\000\000\000\000\000\000\003M\010\t4\211\232j4\323\324d\332\200\320\000\006\200\000\000\000\032\000h\003A\2408\000\000\000\000\000\003 \000\000\000\000\000\000\0002\000\tD\321\023!\352dj\236Q\352zOQ\352\032bh\320\001\223@\000\006@\000\000\000\031\251\246J\335\264MME5L\177\275U1\343a\337\3415\326\304\360\241\027b\002\022(\212\243\342\205\233#\301\030{\255\265\355\201\306\314R\010\202\225\342Y\007OL\022R\203\000\3440*\244lA\212\036\262\212\342\377\2522\304%\001m*L\032\334!\204u\002\210$\223 0\273/_,\324g\234\351\004\237\320\177[\322\214\223\221\004\351P\250\232\226O\036\252B\235\264\004PQD\240\347\307\022\004\205\303Nk\304\014U\313\305\345\225%\021\020PYC7\316\355\354\374\202\202u\023\237s\335\317\020\314\321\013L\321:(\301[\336\023\304(6\200l\221(Pk\342D5\251\242(\323J&\0242`\347L\340\350\234\2728eG\364\3359YQ\344\331L4\323\344\241\335\2025\3721\031\233\211\213dcj<\201HIRE\354/\300c\340`\231\247\025,\245UE\026\226\343B\344\266\314\330\230\2743-\t\270\334\335Ps\226\265\026\242\026\030h\2777\341^\365\004>U\253+o\352\335\032g\003^\277{;/\021\2312<\274\211V\027%\365D\320\333\205D\373+\24114\337\375e\370;\010\215?\324\250\3501\356\346\263\275\254\320\250\265\300PJ\252\207\"\371\010 P9S\025%s\302\305\311\226\343\361\303\266\314\375\0350(\2273\264M\3455^J\362\253\034\273b\250R\367=n\3307\331\246Q\234+\262\310\324rp\205S\332|\002\026L\022R\371&\205\363\010\355\267\251\316\221\t\006\013s\262\354\224\376\335\261\032`Lg\264\302r\262e\203+2\240jF\021t4\242\216\2430\210A\242^\004\222\362\311j\313\367l\354p(\272W\231\354h\245&\366\334\206\255@\016\036\220\2442\242\204\222\216\306\025\027\264\264\262\3624\2611\215^\014\3347\000R\225\252\242&\205R\364\240\310\314\212\255\260&zJx""\304\002e\025C\221H\232\t\265\305\313.\265\311Q^P\310\3333f\352\0041\244\232\312q(\351\255\303yR\216\017\tv\030\367\322CX\240K\\^\363\246\007X,T\002A*\036\330\354L\366tZL\346\024L\222$x\241\014\221\312\022U\023\323C\025\354A\023 \300T\245\210:\002\200\210\344C\002\341\346\235\220\354\226J9\264q\234\224\313 \236\236\230\2040\304hF\"V*\010@XPJ\362e\220\234\211i\024sL8&!\200\373\350$0 \250\002\2067\324o\313\261\313\266\306qq\200\264\353vk\222\004\253p9\002\177U\037\223+\256Uu\237q\035k\211\210\2703\344\336\262$\254=\316\001V\202Z\030p\321\014\264\017\\\200\264\224D\352\031\305\n<\016%\232s\031\300\\\r\307\010Tg<-8'Pm\230i!\";\0010\313S\214\"I\231\230#u\312|S\004\261\276)\031\370\023\212\361\360'\306 h*\312\266F\\\325\325.\243u\203M\3465\327g\000\230b\024:\003\275\306\022\351\370\030w\221\267\323\010\033\257\367\016)\236\237\345\221#\314b\220\014w\\>W\334Qi}\310%\236\014 \277h\357\016\242\213\343\346\252\372d'\016'9\237\247Q\260\345\027\005\326\276K\251\335\350\270\032\372i\262\271J\262\014\261\036J\030A\237\260\3325J?=F\231\303\0142\310\337E%\345/\016\262\303\371\204\006\026\332\313V\257pf4\371\177'Wi%\314\341F\363\025\343\\\216\017\201\n\030\330v\035\255\2463\332Z\202z\241\265eY\2531_'\304\tp\024\260q\010\3260\344\330zf\344D\2305\205\210vk+\2757\356\374o,\010\234\023\010\223$\031\303n$\355\024\035\2032\335ui\261\234\226\t\206\241\177\324\243\262\315\254\234\2510\305\377\342\356H\247\n\022\003\355u\336 ";
-    PyObject *data = __Pyx_DecompressString(cstring, 1203, 2);
+    const struct { const unsigned int length: 9; } index[] = {{1},{13},{11},{179},{13},{23},{39},{1},{1},{8},{7},{6},{15},{2},{9},{20},{11},{29},{14},{20},{11},{29},{31},{20},{23},{6},{18},{17},{18},{4},{8},{5},{7},{8},{12},{13},{5},{16},{8},{10},{8},{8},{7},{11},{4},{3},{14},{12},{11},{10},{26},{37},{14},{12},{2},{10},{17},{13},{4},{12},{10},{12},{19},{5},{5},{8},{6},{12},{5},{6},{345},{246},{89},{17},{11},{55}};
+    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1221 bytes) */
+const char* const cstring = "BZh91AY&SYDG\2510\000\000\276\377\377\377\317\377\376\375\357\377\335\257\353\177\217\277\377\377\376@@@@@@@@@@@@@\000@\000P\004\036(h\001A\202\360\324@SF\217P\304\323a56P\006OP\000\320h\310\001\2104\3204\006M\032mM0!\351\010\202P\336\232\221\243\322=4\010dmL\21510\004\0004i\210\304\302\003\021\223F\004\323@\320\034\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\3108\000\000\000\000\000\000\000\000\000\000\000\000\000\000\001\220%\004\023I\210\002h44\206\2324L\232\014\2316\246\200\00044\000\000\036\240\311\203(\365*\343\355\242x\274Jx\316/\007\215N.'\033\375D\377\226\332\343\205\027\222\"\022Q\025H_B\333H\0029\006\306\371\360\214g\024\212!6/\\Z\r\0141I\230\r\201\220\330UK\257!\200\205s\223`\344\254\333#8\226\322\265X\275\274\261\311a(\204\322\245\007.\021\241\034\225g\242\211\300\346\365\333\217F\254TJP}j\226OB\347\345\033G\013\027\327F\230\202\007;\325\\2\031P\331\323\270Ed\320XJ\023\327\233\022\"\302\273\016\377\335\331;9U\n\253*\253\343\375\275r:xF\247T\3745\016~\267\016/\341N\356\333\033j\353\212\316L\251}2\307F\216\211\022I\022s\214\311\274\327\346\370&\220\365\232\262\245H\024\336q\351^\352\037\024Q\365\260n\034\37541\027]~\356\260\244e\221.\203\231\242c\320\350\234\245\300\227\251[1F\245\270\243d\372\016\367\360U\3475_m t\256aw\310\0078\227\034\001i@\271H\031\334\1772\251\350\220dZE\021\225\362j\207H?\375[Gc[L\035\230H\003\024L\332Y6\005D\373\272C\"\177\215\004U\222\323\253\336\237\205y\2628\374s\244\004\307w1\310B\327x\326[\000aU\231\210)\231Q\010\250\220V\203I\325F\340\032\020U\237O\303\330\266\367\007\017\030Q,\350\360\234\33495\022\364\325\316\326!U\0140h.k\016\227\220o\036H\255\316.\310v6\203%w\341\020\215\246\304\260\302E#\254m\r\263\367\263I\t\016\030\253u\312\247\026k.\303\022\207\236\364\023\203Vz5\364\326\032\207,\270y\310 \306\225#\026y;<UU^z\257\\\370\255\252\364\002\215\324\310\360\274\362JU\013l\216\263 @\205#H\353\310\025UR\016\261\254\311\340\357\355\345\357\337\304\265\352\024\352Y\240\214c\326\210\027\215\311j\212\212\250\234""\253\0031\336\307\250\246\2035[W\367p\353\"Y\"\313\327=\223\243Bq\313\320w\345a#\212a\261N\275 \233<\263#% /Y\271\230\363$\315\206\t\355,2A4A\242\322`U\025X\205\262\335Z\267\250\324\251t\250\032\252M{\010\2134\202iH\324g\317\254U\275V\215\332\305\010\344\202\031\203\030\001Q\244\333?\034\024:i&\274\302\311\031\300h\256\3151\204%\035\025Pl\242\243!7J\200\243\220\200\201\327yb\310\206\273dr\355e/\231\232f|\350L\320\205h\024Yfc\314X:\355\333y\340X\350Z\273;\315\252\023\256\302\002\205]\325!\2736\307\2233\303\0325\377/p\306<\to\270\023r\014\310\n\270\t\340q\207\2706\320\205yF\244\344UX\360(\251\010\255\373\334u\033\341`\374\010\212\306\374#j\350\252\264[\024\274\343\226\314}9#~m\211UU\021r\337\331\355*$\0279\202\236#]<\334\341\316\255Q,\273\263\205\373}\315{\227\347O\240N\347q7;\245\016R\024};\021'\020G\257\342A\340Rr\036\014'o\356WI)zz\3473<4P\025\234\372\231q\245\277\253Y\222\247\360\0251N\361\3402\3156\230n\312\233E\036A\276f&S\257b\021\030\373`3#A\243\3616\030\013\324^\021S9\303 \255\205\024\310b\ra\010\333%^m\210+D\n\254\260\222i\312l\250\361\304\307\362\246\010|)\246\345\267\304Vv\334\313^n.r\244`\260(\007 &%\374\207\217F\373OoR\315\245\033p[\240\220a(\327\211JIf\303\275\353\253\204X,\007Ob\334Q\324\317~\214\221 \030\032\233MstJ\375#\351>5\002\207H\023\024T\351\027\200\3759\301\344\207\302\265+\366\331\352u\252m\024\335\254nJR\016\325=\352\247J\207\014'\370\273\222)\302\204\202\"=I\200";
+    PyObject *data = __Pyx_DecompressString(cstring, 1221, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (1102 bytes) */
-const char* const cstring = "x\332}R\317O\033G\024\256\033\322X\202$\230P\240\tR\306!\302EM\234nC\nJ\252 \213\000A\225P\234_=`:\032v\307\366\204e\326\336\231%\270M%\216>\356q\216s\334\343\036\367\350#G\216{\364\237\320?\241ov\201\200\022\325\222\307\357\347\367\336\373>?\335\344\016=\\\363}\317\177\212*\277\323\336\231\271\345I\212d\233H\264\332\223m\217#&\220C]\266K}\"\251\333CB\372\314\226\3247E\034\275Z{\365pqy\021\021\356 \237~\240\266\024H\004\273\266K\204\240\002yM\264\0330W2\216d\257CE\025m6Q\317\013\020\247\324A\322C\035\250\273\330 \333\224#A\2451P\205p\356I\"\231\3071\2643\336\252 \207\3710\204\035P\323\275N\\A\253o\\f\323\263\375\337\302\230S{5kG-@\373J\230\031\002\020\367\370C\227\t\211>2\331F\225\312\nq\034\014i\3520Av]J\271y+\250\351{\373Y\261\003\307\267l&\362\204\263\327\263]\366\310\366|\372\250\033P\277W\355\364\016+\310\3407\275\200;\215\352\312\217\333\177V\033\333\215\235\206\330\371i\341Sc\033\374\306\016\230\215\235\337\014\225\274%\274\300\267\351s\214_\365\016\341\373\002\006\340-z(_\323f\335@\256\361\026\343\364\202Y\305\330\247N`Slg\022a|9\t\364\t`\355\353iN\016X\013\222\027c\035\"\3556> n@I\247C\271CD\217\333\314\253\302]^\000\342Q\201q\246\020\0062\231\244\373\306\2050f \214Ol\272K\354=\207H\202\261\341\007\347?M\240\230\270.\306\315\200\333\0203\315\371b\0303\201\317\301\r\240\310\2104\003i5#\022\343}\002\350\360\331\367\234\3005=\230\223}j\336\374\002\260\350G\214/,\017f\273\343u \006L\332mj\357\211`?\367|*\002W\346\366\351\016\3064\177\312\334\nx\207\331{0\347\0021y\346@\032\245\315\374n@\334|\007\237\236k\200\277P\343<@\017\215\030n3\223\344t{\260\034\332$\3312\3423\037_\212&:.;KK*\240<\350\000\3054\020\364\2748\273:{\304Q--\216\366\027\373\335t\354Vh\245\305R8\021.+\353d\366yB.gF\373O\302+\341\023uE-\252\277\242RT\211\247\342,\367\253\232R]\375\255.\353\345\010\352&\302rZ\034\353\257\205\337\207$\024\252\254\226\365/\272\236\216M\204\363\352;E\024\364L\207\177\353\371\250\000 e\350\030\273\t3\306o\001\3645u\250Et?\372\220\024\222\351Aa0s<u\334M'\357(K\275\324""\353\321\243\244\224\216\337V\025]\322\345\2644\221\216\317\3002\226\252\245\343S\241\255JjA?\326\304\224/\301.\226\201\\\202\361KzN\277\213\346\242\267\361\355\304J6\006\326`\363\370\375\311\233\2679\356\246~\037\255$\345\317\270\305\033\375f\270\256\356\251\214\030+;>|\t\336\365\033\351\330d\270\032vU\301\0343\027\326C\246\004t\214O\207\037\363\273L\351\246\252\247E\270\350\377\211=%i=\254\250\3229\001OU]1\r\007O\207\201Z\005\300\231{\272bH\032\316\334U\377D\265\250>\234\274srg1\256\305\365\354\376K-R=V$\235\371!\235\275\257W\365AT\217Hnv\243\253\340\264\342wI9Y\036X\351\354=`\244\256idE\033\361\023\240zfPJg\347u+z\037[\361Fb\rg\347\364J\\\216\255\241AC\372\212\266t-\2570\240\350A\004\336Y\211\331\350\305\24068\275\272\360o\361\233\253\327\373\265td\254\277\001t\254\253\007\240\311\310\265\243\203\376\037\341\232\2324\354d\307O\207\335\241yL\256\013\275'7\037D/\342B<\235\214\016\226\216\313\303\313\021\353\250\220\216,\000\027\363q\341\2500\034\271\253\272'\350\347x4y6\330;\251\277NGn\205\317T[\023\235\341}2\302\247\305\207\260.O\266\216\313\351\010(\371\037\212\357\243f";
-    PyObject *data = __Pyx_DecompressString(cstring, 1102, 1);
+    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (1124 bytes) */
+const char* const cstring = "x\332}R\317O\033G\024\216\033\247\261\004I0\241@\023\252\214C\204\0335\230nC\nJ\252 \213\000AU\243\030Hz\210\351h\330\035\333\023\226Y{g\227\3406\2258\372\270\3079\316q\217{\334\243\217\034}\334\243\377\204\376\t}\263\013\004\224(\226<\373\346\375\370\336\373\2767O7\271E\217\326\\\327q\237\242\362\357\264{f\276r<\212\274\026\361\320j\327k9\0341\201,j\263=\352\022\217\332]$<\227\231\036uu\022G\257\327^\317/./\"\302-\344\322\367\324\364\004\022\376\236i\023!\250@N\003\355\371\314\366\030G^\267ME\005m6P\327\361\021\247\324B\236\203\332\220w\261\300kQ\216\004\365\264\201\312\204s\307#\036s8\206r\306\233ed1\027\232\260C\252\253\327\211-he\333f&=\233\177\007\332\234\332\253i9j\002\332\027\334L\013\200\270\303\347m&<\364\201y-T.\257\020\313\302\020\246\026\023d\317\246\224\353\263\214\032\256s\220&[@\276i2\221\005\254\375\256i\263\005\323q\351B\307\247n\267\322\356\036\225\221\306o8>\267\352\225\225\037\337\375U\251\277\253\357\326\305\356O\017?\326\337\301\275\276\013f}\3677-%o\n\307wM\372\034\343\327\335#\370\277\200\006\370\025=\362\266h\243\246!\327x\223qz\301\254`\354R\3137)6\323\025a|9\010\362\tP\355\313aN\016Y\023\202\027}m\342\231-|Hl\237\222v\233r\213\210.7\231S\001^\216\017\313\243\002\343tC\030\304d\036=\320Wpc\006\213q\211I\367\210\271o\021\217`\254\365\301\331\247\001\022\023\333\306\270\341s\023|\2728\033\014c&\3609\270\006\024\251\220\272!\255\244Bb|@\000\035~\007\216\345\333\272\006sr@\365\2311\000\213~\300\370\302\360`\266\332N\033|\240\244\331\242\346\276\360\017\262\233K\205o{\231}:\2036\365\243\314,\237\267\231\271\017}.\010\363\265\010\210|\021\350\320\323\317A\017\331\361\211\235\r\352\322\363E\341\317Vv\356\240G\032\314nd\220Y%X\026m\220tb\361I\264\3177+\3326;\013{T@\272\337\206=P_\320\363\344T\232\364\020\307\325\2440\322[\354u\222\321\333\201\221\024\212\301x\260,\215\301\314\363\230\\\216\214\364\236\004W\203'\362\252\\\224\177\207\305\260\034MFi\354W9);\352\033UR\313!\344\215\007\245\2440\332[\013\276\013H dI.\253_T-\031\035\017\346\344\267\222H""\250\231\n\376Qsa\016@JP1z\013z\214\335\006\350\353\362H\211\360A\370>\316\305S\375\\\177\372d\362\244\223L\334\225\206|\251\326\303\205\270\230\214\335\221eUT\245\2448\236\214M\3030\206\254&c\223\201)\213\362\241z\254\210N_\202Y\014\r\271\004\355\227\324\254z\023\316\206;\321\235\330\2107\372F\177\363\344\355`{'\303\335To\303\225\270\364\t\267p\263\327\010\326\345}\231\nc\244\344\203\227p\273q3\031\235\010V\203\216\314i2\263A-`R@\305\330T\360!\343\245S7e-)\000\243\257\013{*\322zP\226\305s\001\236\312\232d\n\010O\005\276\\\005\300\351\373\252\254E\032N\337\223\377\206\325\2606\234\270;\270\273\030U\243Z\312\377R\211'\037K\222L\177\237\314<P\253\3520\254\205$3;\3415\2704\2437q)^\356\033\311\314}P\244\246hh\204\033\321\023\220z\272_Lf\346T3|\033\031\321Fl\014gf\325JT\212\214\241FC\352\2522T5\313\320\240\350Q\010\267\263\024=\321\213~\265\177\312:\367_\341\312\265\033\275j\222\037\355m\200\034\353\362\021\354$\177\375\370\260\367g\260&'\264:)\371\251\2403\324\207\216u\240vp\353Q\370\"\312ES\361H\177\351\2444\274\3541\006W\266\006[\333I\376\007 \314\303?\342\342q.\311?\004q\346\242\334qn\230\277';\003\364s4\022?\353\357\017j[I\376v\360L\266\024Qi\203\217\372%$\205y\230\237\307\257NJI\036V\373?\343f\271\321";
+    PyObject *data = __Pyx_DecompressString(cstring, 1124, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (1723 bytes) */
-const char* const bytes = ":IndexError: 'KeyError: 'Note that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.SliceError: 'TypeError: Cannot get 'TypeError: Cannot index non-list with ''?add_notedisableenable' from non-dictgcisenabledkycli/core/query.pyx' not found\\.?([^.\\[\\]\\s]+)|\\[([^\\]]+)\\]<stringsource>__Pyx_PyDict_NextRefQueryEngineQueryEngine.__reduce_cython__QueryEngine.__setstate_cython__QueryEngine.navigateQueryEngine.patch_valueappendasyncio.coroutines__class_getitem__cline_in_tracebackdata__dict___dictfindall__func____getstate___is_coroutineitemskycli.core.query__main____module____name__navigate__new__patch_valuepathpop__pyx_checksum__pyx_result__pyx_state__pyx_type__pyx_unpickle_QueryEngine__pyx_vtable____qualname__re__reduce____reduce_cython____reduce_ex__self__set_name__setdefault__setstate____setstate_cython__splitstate__test__updateuse_setstatevaluevalues\200A\330\010\013\2104\210q\330\014\023\2201\330\010\021\220\022\2208\2301\320\034>\270a\330\010\013\2104\210q\330\014\023\2201\330\010\013\2105\220\003\2205\230\003\2304\230z\250\021\250'\260\026\260q\330\014\023\2206\230\026\230q\240\002\240!\2408\2501\330\010\022\220!\330\010\014\210E\220\025\220a\220s\230!\2308\2402\240Q\330\014\022\220&\230\006\230a\230q\330\014\027\220{\240&\250\001\250\021\250!\2501\330\014\017\210q\330\020\023\2205\230\007\230x\240s\250$\250j\270\001\270\027\300\001\300\030\310\026\310q\330\024\033\2301\230H\240F\250/\270\021\330\020\032\230'\240\021\240!\330\021\022\330\020\030\230\003\2301\230A\330\020\026\220c\230\021\230)\2403\240a\330\024\033\2307\240!\2401\330\020\023\2207\230!\2307\240#\240U\250#\250T\260\032\2701\270G\3001\300I\310V\320ST\330\024\033\2301\230I\240V\250?\270!\330\020\032\230'\240\021\240!\330\010\016\210f\220F\230\"\230A\330\010\013\2101\330\014\023\2201\220H\230A\330\r\016\330\014\024\220C\220q\230\001\330\014\022\220#\220Q\220i\230s\240!\330\020\027""\220w\230a\230q\330\014\023\2201\220I\230Q\330\010\017\210q\200A\330\010\013\2104\210q\330\014\023\2201\330\010\021\220\022\2208\2301\320\034>\270a\330\010\022\220!\330\010\014\210F\220'\230\021\330\014\017\210q\330\020\023\220:\230Q\230i\240q\330\024\027\220u\230C\230q\330\030\"\240'\250\021\250!\340\030\037\230}\250A\250Q\340\024\033\320\0334\260A\260Q\330\021\022\330\020\023\220:\230Q\230i\240q\330\024\027\220t\2303\230a\330\030\031\330\034$\240C\240v\250Q\250a\330\034$\240C\240q\250\005\250Q\250g\260U\270!\2708\3001\330\034\"\240#\240Q\240e\2501\250G\2605\270\001\270\030\300\021\330\034&\240g\250V\2601\260G\2701\340\034#\240?\260!\2601\340\030\031\330\034 \240\003\2401\240A\330\034&\240g\250Q\250a\330 ,\250A\330\034#\240?\260!\2601\340\024\033\320\033D\300A\300Q\330\010\017\210q\200\001\360\010\000\005\r\210A\330\004\014\210G\2201\220F\230,\240a\330\004\007\200v\210W\220E\230\024\230Q\330\010\022\220!\330\010\027\220q\340\010\027\220q\330\004\007\200q\330\010\017\320\017,\250D\260\001\260\027\270\013\3007\310!\340\010\017\320\017,\250D\260\001\260\027\270\013\3001\200\001\330\004)\250\021\250&\260\001\200\001\340\004\037\230q\320 0\260\013\270;\300k\320QR\330\004\023\220;\230h\240a\240q\330\004\007\200|\2207\230!\330\010-\250Q\250n\270N\310!\330\004\013\2101";
+    #else /* compression: none (1777 bytes) */
+const char* const bytes = ":IndexError: 'KeyError: 'Note that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.SliceError: 'TypeError: Cannot get 'TypeError: Cannot index non-list with ''?add_notedisableenable' from non-dictgcisenabledkycli/core/query.pyx' not found\\.?([^.\\[\\]\\s]+)|\\[([^\\]]+)\\]<stringsource>__Pyx_PyDict_NextRefQueryEngineQueryEngine.__reduce_cython__QueryEngine.__setstate_cython__QueryEngine.navigateQueryEngine.patch_valueappendasyncio.coroutines__class_getitem__cline_in_tracebackdata__dict___dictfindall__func____getstate___is_coroutineitemskycli.core.query__main____module____name__navigate__new__patch_valuepathpop__pyx_checksum__pyx_result__pyx_state__pyx_type__pyx_unpickle_QueryEngine__pyx_unpickle_QueryEngine__set_state__pyx_vtable____qualname__re__reduce____reduce_cython____reduce_ex__self__set_name__setdefault__setstate____setstate_cython__splitstate__test__updateuse_setstatevaluevalues\200A\330\010\013\2104\210q\330\014\023\2201\330\010\021\220\022\2208\2301\320\034>\270a\330\010\013\2104\210q\330\014\023\2201\330\010\013\2105\220\003\2205\230\003\2304\230z\250\021\250'\260\026\260q\330\014\023\2206\230\026\230q\240\002\240!\2408\2501\330\010\022\220!\330\010\014\210E\220\025\220a\220s\230!\2308\2402\240Q\330\014\022\220&\230\006\230a\230q\330\014\027\220{\240&\250\001\250\021\250!\2501\330\014\017\210q\330\020\023\2205\230\007\230x\240s\250$\250j\270\001\270\027\300\001\300\030\310\026\310q\330\024\033\2301\230H\240F\250/\270\021\330\020\032\230'\240\021\240!\330\021\022\330\020\030\230\003\2301\230A\330\020\026\220c\230\021\230)\2403\240a\330\024\033\2307\240!\2401\330\020\023\2207\230!\2307\240#\240U\250#\250T\260\032\2701\270G\3001\300I\310V\320ST\330\024\033\2301\230I\240V\250?\270!\330\020\032\230'\240\021\240!\330\010\016\210f\220F\230\"\230A\330\010\013\2101\330\014\023\2201\220H\230A\330\r\016\330\014\024\220C\220q\230\001\330\014\022""\220#\220Q\220i\230s\240!\330\020\027\220w\230a\230q\330\014\023\2201\220I\230Q\330\010\017\210q\200A\330\010\013\2104\210q\330\014\023\2201\330\010\021\220\022\2208\2301\320\034>\270a\330\010\022\220!\330\010\014\210F\220'\230\021\330\014\017\210q\330\020\023\220:\230Q\230i\240q\330\024\027\220u\230C\230q\330\030\"\240'\250\021\250!\340\030\037\230}\250A\250Q\340\024\033\320\0334\260A\260Q\330\021\022\330\020\023\220:\230Q\230i\240q\330\024\027\220t\2303\230a\330\030\031\330\034$\240C\240v\250Q\250a\330\034$\240C\240q\250\005\250Q\250g\260U\270!\2708\3001\330\034\"\240#\240Q\240e\2501\250G\2605\270\001\270\030\300\021\330\034&\240g\250V\2601\260G\2701\340\034#\240?\260!\2601\340\030\031\330\034 \240\003\2401\240A\330\034&\240g\250Q\250a\330 ,\250A\330\034#\240?\260!\2601\340\024\033\320\033D\300A\300Q\330\010\017\210q\200\001\360\010\000\005\r\210A\330\004\014\210G\2201\220F\230,\240a\330\004\007\200v\210W\220E\230\024\230Q\330\010\022\220!\330\010\027\220q\340\010\027\220q\330\004\007\200q\330\010\017\320\017,\250D\260\001\260\027\270\013\3007\310!\340\010\017\320\017,\250D\260\001\260\027\270\013\3001\320\000R\320RS\330\004\035\230Q\230n\250M\270\021\200\001\330\004)\250\021\250&\260\001\200\001\340\004\037\230q\320 0\260\013\270;\300k\320QR\330\004\023\220;\230h\240a\240q\330\004\007\200|\2207\230!\330\010-\250Q\250n\270N\310!\330\004\013\2101";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
     PyObject **stringtab = __pyx_mstate->__pyx_string_tab;
     Py_ssize_t pos = 0;
-    for (int i = 0; i < 69; i++) {
+    for (int i = 0; i < 70; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyUnicode_DecodeUTF8(bytes + pos, bytes_length, NULL);
       if (likely(string) && i >= 19) PyUnicode_InternInPlace(&string);
@@ -6108,7 +6808,7 @@ const char* const bytes = ":IndexError: 'KeyError: 'Note that Cython is delibera
       stringtab[i] = string;
       pos += bytes_length;
     }
-    for (int i = 69; i < 74; i++) {
+    for (int i = 70; i < 76; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyBytes_FromStringAndSize(bytes + pos, bytes_length);
       stringtab[i] = string;
@@ -6119,15 +6819,15 @@ const char* const bytes = ":IndexError: 'KeyError: 'Note that Cython is delibera
       }
     }
     Py_XDECREF(data);
-    for (Py_ssize_t i = 0; i < 74; i++) {
+    for (Py_ssize_t i = 0; i < 76; i++) {
       if (unlikely(PyObject_Hash(stringtab[i]) == -1)) {
         __PYX_ERR(0, 1, __pyx_L1_error)
       }
     }
     #if CYTHON_IMMORTAL_CONSTANTS
     {
-      PyObject **table = stringtab + 69;
-      for (Py_ssize_t i=0; i<5; ++i) {
+      PyObject **table = stringtab + 70;
+      for (Py_ssize_t i=0; i<6; ++i) {
         #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
         #if PY_VERSION_HEX < 0x030E0000
         if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -6224,6 +6924,11 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_pyx_type, __pyx_mstate->__pyx_n_u_pyx_checksum, __pyx_mstate->__pyx_n_u_pyx_state, __pyx_mstate->__pyx_n_u_pyx_result};
     __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_pyx_unpickle_QueryEngine, __pyx_mstate->__pyx_kp_b_iso88591_q_0_kQR_haq_7_QnN_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
   }
+  {
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 11};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_pyx_result, __pyx_mstate->__pyx_n_u_pyx_state};
+    __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_pyx_unpickle_QueryEngine__set, __pyx_mstate->__pyx_kp_b_iso88591_RRS_QnM, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
+  }
   Py_DECREF(tuple_dedup_map);
   return 0;
   bad:
@@ -6299,6 +7004,183 @@ end:
     Py_XDECREF(m);
     return (__Pyx_RefNannyAPIStruct *)r;
 }
+#endif
+
+/* PyErrFetchRestore (used by Profile) */
+#if CYTHON_FAST_THREAD_STATE
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
+#if PY_VERSION_HEX >= 0x030C00A6
+    PyObject *tmp_value;
+    assert(type == NULL || (value != NULL && type == (PyObject*) Py_TYPE(value)));
+    if (value) {
+        #if CYTHON_COMPILING_IN_CPYTHON
+        if (unlikely(((PyBaseExceptionObject*) value)->traceback != tb))
+        #endif
+            PyException_SetTraceback(value, tb);
+    }
+    tmp_value = tstate->current_exception;
+    tstate->current_exception = value;
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(type);
+    Py_XDECREF(tb);
+#else
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+    tmp_type = tstate->curexc_type;
+    tmp_value = tstate->curexc_value;
+    tmp_tb = tstate->curexc_traceback;
+    tstate->curexc_type = type;
+    tstate->curexc_value = value;
+    tstate->curexc_traceback = tb;
+    Py_XDECREF(tmp_type);
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(tmp_tb);
+#endif
+}
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
+#if PY_VERSION_HEX >= 0x030C00A6
+    PyObject* exc_value;
+    exc_value = tstate->current_exception;
+    tstate->current_exception = 0;
+    *value = exc_value;
+    *type = NULL;
+    *tb = NULL;
+    if (exc_value) {
+        *type = (PyObject*) Py_TYPE(exc_value);
+        Py_INCREF(*type);
+        #if CYTHON_COMPILING_IN_CPYTHON
+        *tb = ((PyBaseExceptionObject*) exc_value)->traceback;
+        Py_XINCREF(*tb);
+        #else
+        *tb = PyException_GetTraceback(exc_value);
+        #endif
+    }
+#else
+    *type = tstate->curexc_type;
+    *value = tstate->curexc_value;
+    *tb = tstate->curexc_traceback;
+    tstate->curexc_type = 0;
+    tstate->curexc_value = 0;
+    tstate->curexc_traceback = 0;
+#endif
+}
+#endif
+
+/* Profile */
+#if CYTHON_PROFILE || CYTHON_TRACE
+#if CYTHON_TRACE && !CYTHON_USE_SYS_MONITORING
+static int __Pyx_call_line_trace_func(PyThreadState *tstate, PyFrameObject *frame, int line) {
+    int ret;
+    PyObject *type, *value, *traceback;
+    __Pyx_ErrFetchInState(tstate, &type, &value, &traceback);
+    __Pyx_PyFrame_SetLineNumber(frame, line);
+    __Pyx_EnterTracing(tstate);
+    ret = tstate->c_tracefunc(tstate->c_traceobj, frame, PyTrace_LINE, NULL);
+    __Pyx_LeaveTracing(tstate);
+    if (likely(!ret)) {
+        __Pyx_ErrRestoreInState(tstate, type, value, traceback);
+    } else {
+        Py_XDECREF(type);
+        Py_XDECREF(value);
+        Py_XDECREF(traceback);
+    }
+    return ret;
+}
+#endif
+CYTHON_UNUSED static PyCodeObject *__Pyx_createFrameCodeObject(const char *funcname, const char *srcfile, int firstlineno) {
+    PyCodeObject *py_code = PyCode_NewEmpty(srcfile, funcname, firstlineno);
+    if (likely(py_code)) {
+        py_code->co_flags |= CO_OPTIMIZED | CO_NEWLOCALS;
+    }
+    return py_code;
+}
+#if CYTHON_USE_SYS_MONITORING
+CYTHON_UNUSED static int __Pyx__TraceStartFunc(PyMonitoringState *state_array, PyObject *code_obj, int offset, int skip_event) {
+    int ret;
+    __pyx_monitoring_version_type version = 0;
+    ret = PyMonitoring_EnterScope(state_array, &version, __Pyx_MonitoringEventTypes, __Pyx_MonitoringEventTypes_CyFunc_count);
+    if (unlikely(ret == -1)) return -1;
+    return skip_event ? 0 : PyMonitoring_FirePyStartEvent(&state_array[__Pyx_Monitoring_PY_START], code_obj, offset);
+}
+CYTHON_UNUSED static int __Pyx__TraceStartGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset) {
+    int ret;
+    ret = PyMonitoring_EnterScope(state_array, version, __Pyx_MonitoringEventTypes, __Pyx_MonitoringEventTypes_CyGen_count);
+    if (unlikely(ret == -1)) return -1;
+    return PyMonitoring_FirePyStartEvent(&state_array[__Pyx_Monitoring_PY_START], code_obj, offset);
+}
+CYTHON_UNUSED static int __Pyx__TraceResumeGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset) {
+    int ret;
+    ret = PyMonitoring_EnterScope(state_array, version, __Pyx_MonitoringEventTypes, __Pyx_MonitoringEventTypes_CyGen_count);
+    if (unlikely(ret == -1)) return -1;
+    return PyMonitoring_FirePyResumeEvent(&state_array[__Pyx_Monitoring_PY_RESUME], code_obj, offset);
+}
+CYTHON_UNUSED static void __Pyx__TraceException(PyMonitoringState *monitoring_state, PyObject *code_obj, int offset, int reraised) {
+    if (reraised) {
+        (void) PyMonitoring_FireReraiseEvent(monitoring_state, code_obj, offset);
+    } else {
+        (void) PyMonitoring_FireRaiseEvent(monitoring_state, code_obj, offset);
+    }
+}
+#if CYTHON_TRACE
+CYTHON_UNUSED static int __Pyx__TraceLine(PyMonitoringState *monitoring_state, PyObject *code_obj, int line, int offset) {
+    int ret;
+    PyObject *exc = PyErr_GetRaisedException();
+    ret = PyMonitoring_FireLineEvent(monitoring_state, code_obj, offset, line);
+    if (exc) PyErr_SetRaisedException(exc);
+    return ret;
+}
+#endif
+#else
+static int __Pyx_TraceSetupAndCall(PyCodeObject** code,
+                                   PyFrameObject** frame,
+                                   PyThreadState* tstate,
+                                   const char *funcname,
+                                   const char *srcfile,
+                                   int firstlineno,
+                                   int skip_event) {
+    if (*frame == NULL || !CYTHON_PROFILE_REUSE_FRAME) {
+        int needs_new_code_obj = (*code == NULL);
+        if (needs_new_code_obj) {
+            *code = __Pyx_createFrameCodeObject(funcname, srcfile, firstlineno);
+            if (*code == NULL) return 0;
+        }
+        *frame = PyFrame_New(
+            tstate,                          /*PyThreadState *tstate*/
+            *code,                           /*PyCodeObject *code*/
+            __pyx_mstate_global->__pyx_d,    /*PyObject *globals*/
+            0                                /*PyObject *locals*/
+        );
+        if (needs_new_code_obj && !CYTHON_PROFILE_REUSE_CODEOBJ)
+            Py_CLEAR(*code); // otherwise the reference is owned externally
+        if (*frame == NULL) return 0;
+        if (CYTHON_TRACE && (*frame)->f_trace == NULL) {
+            Py_INCREF(Py_None);
+            (*frame)->f_trace = Py_None;
+        }
+    }
+    if (!skip_event) {
+        PyObject *type, *value, *traceback;
+        int retval = 1;
+        __Pyx_PyFrame_SetLineNumber(*frame, firstlineno);
+        __Pyx_EnterTracing(tstate);
+        __Pyx_ErrFetchInState(tstate, &type, &value, &traceback);
+        #if CYTHON_TRACE
+        if (tstate->c_tracefunc)
+            retval = tstate->c_tracefunc(tstate->c_traceobj, *frame, PyTrace_CALL, NULL) == 0;
+        if (retval && tstate->c_profilefunc)
+        #endif
+            retval = tstate->c_profilefunc(tstate->c_profileobj, *frame, PyTrace_CALL, NULL) == 0;
+        __Pyx_LeaveTracing(tstate);
+        if (unlikely(!retval)) {
+            Py_XDECREF(type);
+            Py_XDECREF(value);
+            Py_XDECREF(traceback);
+            return -1;
+        }
+        __Pyx_ErrRestoreInState(tstate, type, value, traceback);
+    }
+    return __Pyx_IsTracing(tstate, 0, 0);
+}
+#endif
 #endif
 
 /* PyDictVersioning */
@@ -6492,65 +7374,6 @@ static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tsta
     Py_DECREF(exc_type);
     #endif
     return result;
-}
-#endif
-
-/* PyErrFetchRestore (used by PyObjectGetAttrStrNoError) */
-#if CYTHON_FAST_THREAD_STATE
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
-#if PY_VERSION_HEX >= 0x030C00A6
-    PyObject *tmp_value;
-    assert(type == NULL || (value != NULL && type == (PyObject*) Py_TYPE(value)));
-    if (value) {
-        #if CYTHON_COMPILING_IN_CPYTHON
-        if (unlikely(((PyBaseExceptionObject*) value)->traceback != tb))
-        #endif
-            PyException_SetTraceback(value, tb);
-    }
-    tmp_value = tstate->current_exception;
-    tstate->current_exception = value;
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(type);
-    Py_XDECREF(tb);
-#else
-    PyObject *tmp_type, *tmp_value, *tmp_tb;
-    tmp_type = tstate->curexc_type;
-    tmp_value = tstate->curexc_value;
-    tmp_tb = tstate->curexc_traceback;
-    tstate->curexc_type = type;
-    tstate->curexc_value = value;
-    tstate->curexc_traceback = tb;
-    Py_XDECREF(tmp_type);
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(tmp_tb);
-#endif
-}
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
-#if PY_VERSION_HEX >= 0x030C00A6
-    PyObject* exc_value;
-    exc_value = tstate->current_exception;
-    tstate->current_exception = 0;
-    *value = exc_value;
-    *type = NULL;
-    *tb = NULL;
-    if (exc_value) {
-        *type = (PyObject*) Py_TYPE(exc_value);
-        Py_INCREF(*type);
-        #if CYTHON_COMPILING_IN_CPYTHON
-        *tb = ((PyBaseExceptionObject*) exc_value)->traceback;
-        Py_XINCREF(*tb);
-        #else
-        *tb = PyException_GetTraceback(exc_value);
-        #endif
-    }
-#else
-    *type = tstate->curexc_type;
-    *value = tstate->curexc_value;
-    *tb = tstate->curexc_traceback;
-    tstate->curexc_type = 0;
-    tstate->curexc_value = 0;
-    tstate->curexc_traceback = 0;
-#endif
 }
 #endif
 

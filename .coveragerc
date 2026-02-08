@@ -1,0 +1,19 @@
+[run]
+plugins = Cython.Coverage
+source = kycli, .
+omit = 
+    kycli/core/ref_impl.py
+    */ref_impl.py
+
+[report]
+show_missing = True
+omit = 
+    kycli/core/ref_impl.py
+    */ref_impl.py
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    if __name__ == .__main__.:
+    raise AssertionError
+    raise NotImplementedError

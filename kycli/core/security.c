@@ -3,6 +3,16 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
+        "define_macros": [
+            [
+                "CYTHON_TRACE",
+                "1"
+            ],
+            [
+                "CYTHON_TRACE_NOGIL",
+                "1"
+            ]
+        ],
         "include_dirs": [
             "/opt/homebrew/opt/sqlite/include"
         ],
@@ -1524,6 +1534,62 @@ static const char* const __pyx_f[] = {
 #define __Pyx_END_CRITICAL_SECTION Py_END_CRITICAL_SECTION
 #endif
 
+/* Profile_config.proto (used by Profile) */
+#ifndef CYTHON_PROFILE
+#if CYTHON_COMPILING_IN_LIMITED_API || CYTHON_COMPILING_IN_PYPY
+  #define CYTHON_PROFILE 0
+#else
+  #define CYTHON_PROFILE 1
+#endif
+#endif
+#ifndef CYTHON_TRACE_NOGIL
+  #define CYTHON_TRACE_NOGIL 0
+#else
+  #if CYTHON_TRACE_NOGIL && !defined(CYTHON_TRACE)
+    #define CYTHON_TRACE 1
+  #endif
+#endif
+#ifndef CYTHON_TRACE
+  #define CYTHON_TRACE 0
+#endif
+#if CYTHON_PROFILE || CYTHON_TRACE
+#if CYTHON_USE_SYS_MONITORING
+    typedef enum {
+        __Pyx_Monitoring_PY_START = 0,
+        __Pyx_Monitoring_PY_RETURN,
+        __Pyx_Monitoring_PY_UNWIND,
+        __Pyx_Monitoring_LINE,
+        __Pyx_Monitoring_RAISE,
+        __Pyx_Monitoring_RERAISE,
+        __Pyx_Monitoring_EXCEPTION_HANDLED,
+        __Pyx_Monitoring_PY_RESUME,
+        __Pyx_Monitoring_PY_YIELD,
+        __Pyx_Monitoring_STOP_ITERATION,
+    } __Pyx_Monitoring_Event_Index;
+    static const unsigned char __Pyx_MonitoringEventTypes[] = {
+        PY_MONITORING_EVENT_PY_START,
+        PY_MONITORING_EVENT_PY_RETURN,
+        PY_MONITORING_EVENT_PY_UNWIND,
+        PY_MONITORING_EVENT_LINE,
+        PY_MONITORING_EVENT_RAISE,
+        PY_MONITORING_EVENT_RERAISE,
+        PY_MONITORING_EVENT_EXCEPTION_HANDLED,
+        PY_MONITORING_EVENT_PY_RESUME,
+        PY_MONITORING_EVENT_PY_YIELD,
+        PY_MONITORING_EVENT_STOP_ITERATION,
+    };
+    #define __Pyx_MonitoringEventTypes_CyFunc_count (sizeof(__Pyx_MonitoringEventTypes) - 3)
+    #define __Pyx_MonitoringEventTypes_CyGen_count (sizeof(__Pyx_MonitoringEventTypes))
+#endif
+#endif
+
+/* NoFastGil.proto */
+#define __Pyx_PyGILState_Ensure PyGILState_Ensure
+#define __Pyx_PyGILState_Release PyGILState_Release
+#define __Pyx_FastGIL_Remember()
+#define __Pyx_FastGIL_Forget()
+#define __Pyx_FastGilFuncInit()
+
 /* IncludeStructmemberH.proto (used by FixUpExtensionType) */
 #include <structmember.h>
 
@@ -1849,14 +1915,6 @@ static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *nam
     ((likely(__Pyx_IS_TYPE(obj, type) | (none_allowed && (obj == Py_None)))) ? 1 :\
         __Pyx__ArgTypeTest(obj, type, name, exact))
 
-/* PyErrExceptionMatches.proto (used by PyObjectGetAttrStrNoError) */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_PyErr_ExceptionMatches(err) __Pyx_PyErr_ExceptionMatchesInState(__pyx_tstate, err)
-static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tstate, PyObject* err);
-#else
-#define __Pyx_PyErr_ExceptionMatches(err)  PyErr_ExceptionMatches(err)
-#endif
-
 /* PyThreadStateGet.proto (used by PyErrFetchRestore) */
 #if CYTHON_FAST_THREAD_STATE
 #define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
@@ -1875,7 +1933,7 @@ static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tsta
 #define __Pyx_PyErr_CurrentExceptionType()  PyErr_Occurred()
 #endif
 
-/* PyErrFetchRestore.proto (used by PyObjectGetAttrStrNoError) */
+/* PyErrFetchRestore.proto (used by Profile) */
 #if CYTHON_FAST_THREAD_STATE
 #define __Pyx_PyErr_Clear() __Pyx_ErrRestore(NULL, NULL, NULL)
 #define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
@@ -1898,6 +1956,440 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
 #define __Pyx_ErrFetchInState(tstate, type, value, tb)  PyErr_Fetch(type, value, tb)
 #define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
 #define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
+#endif
+
+/* Profile.proto */
+#if CYTHON_TRACE
+  #undef CYTHON_PROFILE_REUSE_FRAME
+#endif
+#if CYTHON_USE_MODULE_STATE
+  #undef CYTHON_PROFILE_REUSE_CODEOBJ
+  #define CYTHON_PROFILE_REUSE_CODEOBJ 0
+  #undef CYTHON_PROFILE_REUSE_FRAME
+#endif
+#ifndef CYTHON_PROFILE_REUSE_CODEOBJ
+  #define CYTHON_PROFILE_REUSE_CODEOBJ 1
+#endif
+#ifndef CYTHON_PROFILE_REUSE_FRAME
+  #define CYTHON_PROFILE_REUSE_FRAME 0
+#endif
+#if CYTHON_USE_SYS_MONITORING && (CYTHON_PROFILE || CYTHON_TRACE)
+  #define __PYX_MONITORING_ABI_SUFFIX  "_mon"
+#else
+  #define __PYX_MONITORING_ABI_SUFFIX
+#endif
+#if CYTHON_PROFILE || CYTHON_TRACE
+#if CYTHON_USE_SYS_MONITORING
+  typedef uint64_t __pyx_monitoring_version_type;
+  #define __Pyx_TraceDeclarationsFunc\
+      PyObject *__pyx_frame_code = NULL;\
+      PyMonitoringState __pyx_pymonitoring_state[__Pyx_MonitoringEventTypes_CyFunc_count];\
+      int __pyx_exception_already_reported = 0;\
+      const int __pyx_sys_monitoring_disabled_in_parallel = 0; CYTHON_UNUSED_VAR(__pyx_sys_monitoring_disabled_in_parallel);
+  #define __Pyx_TraceDeclarationsGen\
+      PyObject *__pyx_frame_code = Py_NewRef(__pyx_generator->gi_code);\
+      PyMonitoringState* __pyx_pymonitoring_state = __pyx_generator->__pyx_pymonitoring_state;\
+      __pyx_monitoring_version_type __pyx_pymonitoring_version = __pyx_generator->__pyx_pymonitoring_version;\
+      int __pyx_exception_already_reported = 0;\
+      const int __pyx_sys_monitoring_disabled_in_parallel = 0; CYTHON_UNUSED_VAR(__pyx_sys_monitoring_disabled_in_parallel);
+  #define __Pyx_IsTracing(event_id)  ((!__pyx_sys_monitoring_disabled_in_parallel) && (__pyx_pymonitoring_state[event_id]).active)
+  #define __Pyx_TraceFrameInit(codeobj)\
+      if (codeobj) __pyx_frame_code = codeobj;
+  #define __Pyx_TurnOffSysMonitoringInParallel\
+    const int __pyx_sys_monitoring_disabled_in_parallel = 1;\
+    CYTHON_UNUSED_VAR(__pyx_sys_monitoring_disabled_in_parallel);
+  CYTHON_UNUSED static PyCodeObject *__Pyx_createFrameCodeObject(const char *funcname, const char *srcfile, int firstlineno);
+  CYTHON_UNUSED static int __Pyx__TraceStartFunc(PyMonitoringState *state_array, PyObject *code_obj, int offset, int skip_event);
+  CYTHON_UNUSED static int __Pyx__TraceStartGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset);
+  CYTHON_UNUSED static int __Pyx__TraceResumeGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset);
+  CYTHON_UNUSED static void __Pyx__TraceException(PyMonitoringState *monitoring_state, PyObject *code_obj, int offset, int reraised);
+  #define __Pyx_PyMonitoring_ExitScope(nogil)\
+    if (nogil) {\
+        (void) __pyx_exception_already_reported;\
+        if (CYTHON_TRACE_NOGIL) {\
+            PyGILState_STATE state = PyGILState_Ensure();\
+            PyMonitoring_ExitScope();\
+            Py_XDECREF(__pyx_frame_code);\
+            PyGILState_Release(state);\
+        }\
+    } else {\
+        PyMonitoring_ExitScope();\
+        Py_XDECREF(__pyx_frame_code);\
+    }
+  #define __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)\
+  if ((0) ); else {\
+      int ret = 0;\
+      memset(__pyx_pymonitoring_state, 0, sizeof(__pyx_pymonitoring_state));\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              if (!__Pyx_PyThreadState_Current->tracing) {\
+                  if (likely(__pyx_frame_code)) Py_INCREF(__pyx_frame_code);\
+                  else __pyx_frame_code = (PyObject*) __Pyx_createFrameCodeObject(funcname, srcfile, firstlineno);\
+                  if (unlikely(!__pyx_frame_code)) ret = -1;\
+                  else ret = __Pyx__TraceStartFunc(__pyx_pymonitoring_state, __pyx_frame_code, offset, skip_event);\
+              } else __pyx_frame_code = NULL;\
+              PyGILState_Release(state);\
+          } else __pyx_frame_code = NULL;\
+      } else {\
+          if (!__Pyx_PyThreadState_Current->tracing) {\
+              if (likely(__pyx_frame_code)) Py_INCREF(__pyx_frame_code);\
+              else __pyx_frame_code = (PyObject*) __Pyx_createFrameCodeObject(funcname, srcfile, firstlineno);\
+              if (unlikely(!__pyx_frame_code)) ret = -1;\
+              else ret = __Pyx__TraceStartFunc(__pyx_pymonitoring_state, __pyx_frame_code, offset, skip_event);\
+          } else __pyx_frame_code = NULL;\
+      }\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceStartGen(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)\
+  if ((0) ); else {\
+      int ret = __Pyx__TraceStartGen(__pyx_pymonitoring_state, &__pyx_pymonitoring_version, __pyx_frame_code, offset);\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceResumeGen(funcname, srcfile, firstlineno, offset, goto_error)\
+  if ((0) ); else {\
+      int ret = __Pyx__TraceResumeGen(__pyx_pymonitoring_state, &__pyx_pymonitoring_version, __pyx_frame_code, offset);\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceYield(result, offset, goto_error)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_YIELD)); else {\
+      int ret = PyMonitoring_FirePyYieldEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, result);\
+      PyMonitoring_ExitScope();\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceException(offset, reraised, fresh)\
+  if (!__Pyx_IsTracing((reraised) ? __Pyx_Monitoring_RERAISE : __Pyx_Monitoring_RAISE)); else {\
+      if (fresh || reraised || !__pyx_exception_already_reported) {\
+          __Pyx__TraceException(&__pyx_pymonitoring_state[(reraised) ? __Pyx_Monitoring_RERAISE : __Pyx_Monitoring_RAISE], __pyx_frame_code, offset, reraised);\
+      }\
+      __pyx_exception_already_reported = 1;\
+  }
+  #define __Pyx_TraceExceptionDone()  __pyx_exception_already_reported = 0
+  #define __Pyx_TraceExceptionHandled(offset)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_EXCEPTION_HANDLED)); else {\
+      (void) PyMonitoring_FireExceptionHandledEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_EXCEPTION_HANDLED], __pyx_frame_code, offset);\
+      __pyx_exception_already_reported = 0;\
+  }
+  #define __Pyx_TraceReturnValue(result, offset, nogil, goto_error)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_RETURN)); else {\
+      int ret = 0;\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, result);\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, result);\
+      }\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceReturnCValue(cresult, convert_function, offset, nogil, goto_error)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_RETURN)); else {\
+      int ret = 0;\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              PyObject *pyvalue = convert_function(cresult);\
+              if (unlikely(!pyvalue)) {\
+                  PyErr_Clear();\
+                  pyvalue = Py_None; Py_INCREF(Py_None);\
+              }\
+              ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, pyvalue);\
+              Py_DECREF(pyvalue);\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          PyObject *pyvalue = convert_function(cresult);\
+          if (unlikely(!pyvalue)) {\
+              PyErr_Clear();\
+              pyvalue = Py_None; Py_INCREF(Py_None);\
+          }\
+          ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, pyvalue);\
+          Py_DECREF(pyvalue);\
+      }\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #define __Pyx_TraceExceptionUnwind(offset, nogil)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_UNWIND)); else {\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              (void) PyMonitoring_FirePyUnwindEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_UNWIND], __pyx_frame_code, offset);\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          (void) PyMonitoring_FirePyUnwindEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_UNWIND], __pyx_frame_code, offset);\
+      }\
+  }
+  #if CYTHON_TRACE
+  CYTHON_UNUSED static int __Pyx__TraceLine(PyMonitoringState *monitoring_state, PyObject *code_obj, int line, int offset);
+  #define __Pyx_TraceLine(line, offset, nogil, goto_error)\
+  if (!__Pyx_IsTracing(__Pyx_Monitoring_LINE)); else {\
+      int ret = 0;\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              ret = __Pyx__TraceLine(&__pyx_pymonitoring_state[__Pyx_Monitoring_LINE], __pyx_frame_code, line, offset);\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          ret = __Pyx__TraceLine(&__pyx_pymonitoring_state[__Pyx_Monitoring_LINE], __pyx_frame_code, line, offset);\
+      }\
+      if (unlikely(ret == -1)) goto_error;\
+  }
+  #endif
+#else
+  #include "compile.h"
+  #include "frameobject.h"
+  #include "traceback.h"
+#if PY_VERSION_HEX >= 0x030b00a6 && !defined(PYPY_VERSION)
+  #ifndef Py_BUILD_CORE
+    #define Py_BUILD_CORE 1
+  #endif
+  #include "internal/pycore_frame.h"
+#endif
+  #if CYTHON_PROFILE_REUSE_FRAME
+    #define CYTHON_FRAME_MODIFIER static
+    #define CYTHON_FRAME_DEL(frame)
+  #else
+    #define CYTHON_FRAME_MODIFIER
+    #define CYTHON_FRAME_DEL(frame) Py_CLEAR(frame)
+  #endif
+  #if CYTHON_PROFILE_REUSE_CODEOBJ
+    #define CYTHON_CODEOBJ_MODIFIER static
+  #else
+    #define CYTHON_CODEOBJ_MODIFIER
+  #endif
+  #define __Pyx_TraceDeclarationsFunc\
+      CYTHON_CODEOBJ_MODIFIER PyCodeObject *__pyx_frame_code = NULL;\
+      CYTHON_FRAME_MODIFIER PyFrameObject *__pyx_frame = NULL;\
+      int __Pyx_use_tracing = 0;
+  #define __Pyx_TraceDeclarationsGen\
+      PyObject *__pyx_frame_code = __pyx_generator->gi_code;\
+      CYTHON_FRAME_MODIFIER PyFrameObject *__pyx_frame = NULL;\
+      int __Pyx_use_tracing = 0;
+  #define __Pyx_TraceFrameInit(codeobj)\
+      if (codeobj) __pyx_frame_code = (PyCodeObject*) codeobj;
+  #define __Pyx_PyMonitoring_ExitScope(nogil)\
+    if (!CYTHON_PROFILE_REUSE_FRAME && nogil) {\
+        PyGILState_STATE state = PyGILState_Ensure();\
+        CYTHON_FRAME_DEL(__pyx_frame);\
+        PyGILState_Release(state);\
+    } else {\
+        CYTHON_FRAME_DEL(__pyx_frame);\
+    }
+  #define __Pyx_TraceException(offset, reraised, fresh)  {}
+  #define __Pyx_TraceExceptionHandled(offset)  {}
+  #define __Pyx_TraceExceptionDone()  {}
+  #define __Pyx_TurnOffSysMonitoringInParallel {} // Only needed for freethreading
+#if PY_VERSION_HEX >= 0x030b00a2
+  #if PY_VERSION_HEX >= 0x030C00b1
+  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
+     ((!(check_tracing) || !(tstate)->tracing) &&\
+         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
+  #else
+  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
+     (unlikely((tstate)->cframe->use_tracing) &&\
+         (!(check_tracing) || !(tstate)->tracing) &&\
+         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
+  #endif
+  #define __Pyx_EnterTracing(tstate)  PyThreadState_EnterTracing(tstate)
+  #define __Pyx_LeaveTracing(tstate)  PyThreadState_LeaveTracing(tstate)
+#elif PY_VERSION_HEX >= 0x030a00b1
+  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
+     (unlikely((tstate)->cframe->use_tracing) &&\
+         (!(check_tracing) || !(tstate)->tracing) &&\
+         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
+  #define __Pyx_EnterTracing(tstate)\
+      do { tstate->tracing++; tstate->cframe->use_tracing = 0; } while (0)
+  #define __Pyx_LeaveTracing(tstate)\
+      do {\
+          tstate->tracing--;\
+          tstate->cframe->use_tracing = ((CYTHON_TRACE && tstate->c_tracefunc != NULL)\
+                                 || tstate->c_profilefunc != NULL);\
+      } while (0)
+#else
+  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
+     (unlikely((tstate)->use_tracing) &&\
+         (!(check_tracing) || !(tstate)->tracing) &&\
+         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
+  #define __Pyx_EnterTracing(tstate)\
+      do { tstate->tracing++; tstate->use_tracing = 0; } while (0)
+  #define __Pyx_LeaveTracing(tstate)\
+      do {\
+          tstate->tracing--;\
+          tstate->use_tracing = ((CYTHON_TRACE && tstate->c_tracefunc != NULL)\
+                                         || tstate->c_profilefunc != NULL);\
+      } while (0)
+#endif
+  #define __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)\
+  if (nogil) {\
+      if (CYTHON_TRACE_NOGIL) {\
+          PyThreadState *tstate;\
+          PyGILState_STATE state = PyGILState_Ensure();\
+          tstate = __Pyx_PyThreadState_Current;\
+          if (__Pyx_IsTracing(tstate, 1, 1)) {\
+              __Pyx_use_tracing = __Pyx_TraceSetupAndCall((PyCodeObject**)&__pyx_frame_code, &__pyx_frame, tstate, funcname, srcfile, firstlineno, skip_event);\
+          }\
+          PyGILState_Release(state);\
+          if (unlikely(__Pyx_use_tracing < 0)) goto_error;\
+      }\
+  } else {\
+      PyThreadState* tstate = PyThreadState_GET();\
+      if (__Pyx_IsTracing(tstate, 1, 1)) {\
+          __Pyx_use_tracing = __Pyx_TraceSetupAndCall((PyCodeObject**)&__pyx_frame_code, &__pyx_frame, tstate, funcname, srcfile, firstlineno, skip_event);\
+          if (unlikely(__Pyx_use_tracing < 0)) goto_error;\
+      }\
+  }
+  #define __Pyx_TraceStartGen __Pyx_TraceStartFunc
+  #define __Pyx_TraceYield(result, offset, goto_error)\
+  if (likely(!__Pyx_use_tracing)); else {\
+      PyThreadState* tstate = __Pyx_PyThreadState_Current;\
+      if (__Pyx_IsTracing(tstate, 0, 0)) {\
+          __Pyx_call_return_trace_func(tstate, __pyx_frame, (PyObject*)result);\
+      }\
+      if ((1)); else goto_error;\
+  }
+  #define __Pyx_TraceResumeGen(funcname, srcfile, firstlineno, offset, goto_error)\
+      __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, 0, 0, goto_error)
+  CYTHON_UNUSED static void __Pyx_call_return_trace_func(PyThreadState *tstate, PyFrameObject *frame, PyObject *result) {
+      PyObject *type, *value, *traceback;
+      __Pyx_ErrFetchInState(tstate, &type, &value, &traceback);
+      __Pyx_EnterTracing(tstate);
+      if (CYTHON_TRACE && tstate->c_tracefunc)
+          tstate->c_tracefunc(tstate->c_traceobj, frame, PyTrace_RETURN, result);
+      if (tstate->c_profilefunc)
+          tstate->c_profilefunc(tstate->c_profileobj, frame, PyTrace_RETURN, result);
+      __Pyx_LeaveTracing(tstate);
+      __Pyx_ErrRestoreInState(tstate, type, value, traceback);
+  }
+  #define __Pyx_TraceReturnValue(result, offset, nogil, goto_error)\
+  if (likely(!__Pyx_use_tracing)); else {\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyThreadState *tstate;\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              tstate = __Pyx_PyThreadState_Current;\
+              if (__Pyx_IsTracing(tstate, 0, 0)) {\
+                  __Pyx_call_return_trace_func(tstate, __pyx_frame, (PyObject*)result);\
+              }\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
+          if (__Pyx_IsTracing(tstate, 0, 0)) {\
+              __Pyx_call_return_trace_func(tstate, __pyx_frame, (PyObject*)result);\
+          }\
+      }\
+      if ((1)); else goto_error;\
+  }
+  #define __Pyx_TraceReturnCValue(cresult, convert_function, offset, nogil, goto_error)\
+  if (likely(!__Pyx_use_tracing)); else {\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyThreadState *tstate;\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              tstate = __Pyx_PyThreadState_Current;\
+              if (__Pyx_IsTracing(tstate, 0, 0)) {\
+                  PyObject *pyvalue = convert_function(cresult);\
+                  if (unlikely(!pyvalue)) {\
+                    PyErr_Clear();\
+                    pyvalue = Py_None; Py_INCREF(Py_None);\
+                  }\
+                  __Pyx_call_return_trace_func(tstate, __pyx_frame, pyvalue);\
+                  Py_DECREF(pyvalue);\
+              }\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
+          if (__Pyx_IsTracing(tstate, 0, 0)) {\
+              PyObject *pyvalue = convert_function(cresult);\
+              if (unlikely(!pyvalue)) {\
+                  PyErr_Clear();\
+                  pyvalue = Py_None; Py_INCREF(Py_None);\
+              }\
+              __Pyx_call_return_trace_func(tstate, __pyx_frame, pyvalue);\
+              Py_DECREF(pyvalue);\
+          }\
+      }\
+      if ((1)); else goto_error;\
+  }
+  #define __Pyx_TraceExceptionUnwind(offset, nogil)\
+  if (likely(!__Pyx_use_tracing)); else {\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyThreadState *tstate;\
+              PyGILState_STATE state = PyGILState_Ensure();\
+              tstate = __Pyx_PyThreadState_Current;\
+              if (__Pyx_IsTracing(tstate, 0, 0)) {\
+                  __Pyx_call_return_trace_func(tstate, __pyx_frame, Py_None);\
+              }\
+              PyGILState_Release(state);\
+          }\
+      } else {\
+          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
+          if (__Pyx_IsTracing(tstate, 0, 0)) {\
+              __Pyx_call_return_trace_func(tstate, __pyx_frame, Py_None);\
+          }\
+      }\
+  }
+  static int __Pyx_TraceSetupAndCall(PyCodeObject** code, PyFrameObject** frame, PyThreadState* tstate, const char *funcname, const char *srcfile, int firstlineno, int skip_event);
+#if CYTHON_TRACE
+  CYTHON_UNUSED static int __Pyx_call_line_trace_func(PyThreadState *tstate, PyFrameObject *frame, int line);
+  #define __Pyx_TraceLine(line, offset, nogil, goto_error)\
+  if (likely(!__Pyx_use_tracing)); else {\
+      int ret = 0;\
+      if (nogil) {\
+          if (CYTHON_TRACE_NOGIL) {\
+              PyThreadState *tstate;\
+              PyGILState_STATE state = __Pyx_PyGILState_Ensure();\
+              tstate = __Pyx_PyThreadState_Current;\
+              if (__Pyx_IsTracing(tstate, 0, 0) && tstate->c_tracefunc && __pyx_frame->f_trace) {\
+                  ret = __Pyx_call_line_trace_func(tstate, __pyx_frame, line);\
+              }\
+              __Pyx_PyGILState_Release(state);\
+          }\
+      } else {\
+          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
+          if (__Pyx_IsTracing(tstate, 0, 0) && tstate->c_tracefunc && __pyx_frame->f_trace) {\
+              ret = __Pyx_call_line_trace_func(tstate, __pyx_frame, line);\
+          }\
+      }\
+      if (unlikely(ret)) goto_error;\
+  }
+#endif
+#endif
+#else
+  #define __Pyx_TraceDeclarationsFunc
+  #define __Pyx_TraceDeclarationsGen
+  #define __Pyx_TraceExceptionDone()  {}
+  #define __Pyx_TraceFrameInit(codeobj)  {}
+  #define __Pyx_TurnOffSysMonitoringInParallel {}
+  #define __Pyx_PyMonitoring_ExitScope(nogil)  {}
+  #define __Pyx_TraceException(offset, reraised, fresh)  {}
+  #define __Pyx_TraceExceptionUnwind(offset, nogil)  {}
+  #define __Pyx_TraceExceptionHandled(offset)  {}
+  #define __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)   if ((1)); else goto_error;
+  #define __Pyx_TraceStartGen __Pyx_TraceStartFunc
+  #define __Pyx_TraceResumeGen(funcname, srcfile, firstlineno, offset, goto_error)   if ((1)); else goto_error;
+  #define __Pyx_TraceYield(result, offset, goto_error)   if ((1)); else goto_error;
+  #define __Pyx_TraceReturnValue(result, offset, nogil, goto_error)\
+      if ((1)); else goto_error;
+  #define __Pyx_TraceReturnCValue(cresult, convert_function, offset, nogil, goto_error)\
+      if ((1)); else { (void) convert_function; goto_error }
+#endif
+#if !CYTHON_TRACE
+  #define __Pyx_TraceLine(line, offset, nogil, goto_error)   if ((1)); else goto_error;
+#endif
+
+/* PyErrExceptionMatches.proto (used by PyObjectGetAttrStrNoError) */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_PyErr_ExceptionMatches(err) __Pyx_PyErr_ExceptionMatchesInState(__pyx_tstate, err)
+static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tstate, PyObject* err);
+#else
+#define __Pyx_PyErr_ExceptionMatches(err)  PyErr_ExceptionMatches(err)
 #endif
 
 /* PyObjectGetAttrStrNoError.proto (used by GetBuiltinName) */
@@ -2471,8 +2963,8 @@ typedef struct {
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_values;
   __Pyx_CachedCFunction __pyx_umethod_PyUnicode_Type__strip;
   PyObject *__pyx_slice[2];
-  PyObject *__pyx_codeobj_tab[7];
-  PyObject *__pyx_string_tab[96];
+  PyObject *__pyx_codeobj_tab[9];
+  PyObject *__pyx_string_tab[102];
   PyObject *__pyx_number_tab[4];
 /* #### Code section: module_state_contents ### */
 /* CommonTypesMetaclass.module_state_decls */
@@ -2566,50 +3058,56 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_n_u_func __pyx_string_tab[49]
 #define __pyx_n_u_getstate __pyx_string_tab[50]
 #define __pyx_n_u_hashes __pyx_string_tab[51]
-#define __pyx_n_u_is_coroutine __pyx_string_tab[52]
-#define __pyx_n_u_items __pyx_string_tab[53]
-#define __pyx_n_u_iterations __pyx_string_tab[54]
-#define __pyx_n_u_kycli_core_security __pyx_string_tab[55]
-#define __pyx_n_u_length __pyx_string_tab[56]
-#define __pyx_n_u_main __pyx_string_tab[57]
-#define __pyx_n_u_master_key __pyx_string_tab[58]
-#define __pyx_n_u_module __pyx_string_tab[59]
-#define __pyx_n_u_name __pyx_string_tab[60]
-#define __pyx_n_u_new __pyx_string_tab[61]
-#define __pyx_n_u_os __pyx_string_tab[62]
-#define __pyx_n_u_plaintext __pyx_string_tab[63]
-#define __pyx_n_u_pop __pyx_string_tab[64]
-#define __pyx_n_u_pyx_checksum __pyx_string_tab[65]
-#define __pyx_n_u_pyx_result __pyx_string_tab[66]
-#define __pyx_n_u_pyx_state __pyx_string_tab[67]
-#define __pyx_n_u_pyx_type __pyx_string_tab[68]
-#define __pyx_n_u_pyx_unpickle_SecurityManager __pyx_string_tab[69]
-#define __pyx_n_u_pyx_vtable __pyx_string_tab[70]
-#define __pyx_n_u_qualname __pyx_string_tab[71]
-#define __pyx_n_u_reduce __pyx_string_tab[72]
-#define __pyx_n_u_reduce_cython __pyx_string_tab[73]
-#define __pyx_n_u_reduce_ex __pyx_string_tab[74]
-#define __pyx_n_u_salt __pyx_string_tab[75]
-#define __pyx_n_u_self __pyx_string_tab[76]
-#define __pyx_n_u_set_name __pyx_string_tab[77]
-#define __pyx_n_u_setdefault __pyx_string_tab[78]
-#define __pyx_n_u_setstate __pyx_string_tab[79]
-#define __pyx_n_u_setstate_cython __pyx_string_tab[80]
-#define __pyx_n_u_state __pyx_string_tab[81]
-#define __pyx_n_u_strip __pyx_string_tab[82]
-#define __pyx_n_u_test __pyx_string_tab[83]
-#define __pyx_n_u_update __pyx_string_tab[84]
-#define __pyx_n_u_urandom __pyx_string_tab[85]
-#define __pyx_n_u_use_setstate __pyx_string_tab[86]
-#define __pyx_n_u_values __pyx_string_tab[87]
-#define __pyx_kp_b_iso88591_A_4y_1_1_1_T_A_wb_j_r_G1A __pyx_string_tab[88]
-#define __pyx_kp_b_iso88591_A_4y_1_1_3a_r_Qa_N_A_q_4xxq_1_Qa __pyx_string_tab[89]
-#define __pyx_kp_b_iso88591_A_4y_5_5_1_1_1_T_q_vRq __pyx_string_tab[90]
-#define __pyx_kp_b_iso88591_A_Q_1_fA_4uKq_1_4y_1_1_6_1E_WAQ __pyx_string_tab[91]
-#define __pyx_kp_b_iso88591_QfA __pyx_string_tab[92]
-#define __pyx_kp_b_iso88591_T_4q_G1F_a_vWE_Q_q_t9G5_4_G1_q __pyx_string_tab[93]
-#define __pyx_kp_b_iso88591_q_0_kQR_1_7_1_2DNRS_1 __pyx_string_tab[94]
-#define __pyx_n_b_kycli_vault_salt __pyx_string_tab[95]
+#define __pyx_n_u_init __pyx_string_tab[52]
+#define __pyx_n_u_is_coroutine __pyx_string_tab[53]
+#define __pyx_n_u_items __pyx_string_tab[54]
+#define __pyx_n_u_iterations __pyx_string_tab[55]
+#define __pyx_n_u_kdf __pyx_string_tab[56]
+#define __pyx_n_u_key __pyx_string_tab[57]
+#define __pyx_n_u_kycli_core_security __pyx_string_tab[58]
+#define __pyx_n_u_length __pyx_string_tab[59]
+#define __pyx_n_u_main __pyx_string_tab[60]
+#define __pyx_n_u_master_key __pyx_string_tab[61]
+#define __pyx_n_u_module __pyx_string_tab[62]
+#define __pyx_n_u_name __pyx_string_tab[63]
+#define __pyx_n_u_new __pyx_string_tab[64]
+#define __pyx_n_u_os __pyx_string_tab[65]
+#define __pyx_n_u_plaintext __pyx_string_tab[66]
+#define __pyx_n_u_pop __pyx_string_tab[67]
+#define __pyx_n_u_pyx_checksum __pyx_string_tab[68]
+#define __pyx_n_u_pyx_result __pyx_string_tab[69]
+#define __pyx_n_u_pyx_state __pyx_string_tab[70]
+#define __pyx_n_u_pyx_type __pyx_string_tab[71]
+#define __pyx_n_u_pyx_unpickle_SecurityManager __pyx_string_tab[72]
+#define __pyx_n_u_pyx_unpickle_SecurityManager_2 __pyx_string_tab[73]
+#define __pyx_n_u_pyx_vtable __pyx_string_tab[74]
+#define __pyx_n_u_qualname __pyx_string_tab[75]
+#define __pyx_n_u_reduce __pyx_string_tab[76]
+#define __pyx_n_u_reduce_cython __pyx_string_tab[77]
+#define __pyx_n_u_reduce_ex __pyx_string_tab[78]
+#define __pyx_n_u_salt __pyx_string_tab[79]
+#define __pyx_n_u_self __pyx_string_tab[80]
+#define __pyx_n_u_set_name __pyx_string_tab[81]
+#define __pyx_n_u_setdefault __pyx_string_tab[82]
+#define __pyx_n_u_setstate __pyx_string_tab[83]
+#define __pyx_n_u_setstate_cython __pyx_string_tab[84]
+#define __pyx_n_u_state __pyx_string_tab[85]
+#define __pyx_n_u_strip __pyx_string_tab[86]
+#define __pyx_n_u_test __pyx_string_tab[87]
+#define __pyx_n_u_update __pyx_string_tab[88]
+#define __pyx_n_u_urandom __pyx_string_tab[89]
+#define __pyx_n_u_use_setstate __pyx_string_tab[90]
+#define __pyx_n_u_values __pyx_string_tab[91]
+#define __pyx_kp_b_iso88591_A_4y_1_1_1_T_A_wb_j_r_G1A __pyx_string_tab[92]
+#define __pyx_kp_b_iso88591_A_4y_1_1_3a_r_Qa_N_A_q_4xxq_1_Qa __pyx_string_tab[93]
+#define __pyx_kp_b_iso88591_A_4y_5_5_1_1_1_T_q_vRq __pyx_string_tab[94]
+#define __pyx_kp_b_iso88591_A_Q_1_fA_4uKq_1_4y_1_1_6_1E_WAQ __pyx_string_tab[95]
+#define __pyx_kp_b_iso88591_QfA __pyx_string_tab[96]
+#define __pyx_kp_b_iso88591_T_4q_G1F_a_vWE_Q_q_t9G5_4_G1_q __pyx_string_tab[97]
+#define __pyx_kp_b_iso88591_ZZ_at_kQRRS_QnM __pyx_string_tab[98]
+#define __pyx_kp_b_iso88591_a_O1_Kq_1_wc_k_1_A_q_q_Q_1_WAZw __pyx_string_tab[99]
+#define __pyx_kp_b_iso88591_q_0_kQR_1_7_1_2DNRS_1 __pyx_string_tab[100]
+#define __pyx_n_b_kycli_vault_salt __pyx_string_tab[101]
 #define __pyx_int_12 __pyx_number_tab[0]
 #define __pyx_int_32 __pyx_number_tab[1]
 #define __pyx_int_100000 __pyx_number_tab[2]
@@ -2631,8 +3129,8 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_ptype_5kycli_4core_8security_SecurityManager);
   Py_CLEAR(clear_module_state->__pyx_type_5kycli_4core_8security_SecurityManager);
   for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_slice[i]); }
-  for (int i=0; i<7; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<96; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<9; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<102; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
   for (int i=0; i<4; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_clear_contents ### */
 /* CommonTypesMetaclass.module_state_clear */
@@ -2659,8 +3157,8 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   Py_VISIT(traverse_module_state->__pyx_ptype_5kycli_4core_8security_SecurityManager);
   Py_VISIT(traverse_module_state->__pyx_type_5kycli_4core_8security_SecurityManager);
   for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_slice[i]); }
-  for (int i=0; i<7; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<96; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<9; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<102; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
   for (int i=0; i<4; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_traverse_contents ### */
 /* CommonTypesMetaclass.module_state_traverse */
@@ -2769,6 +3267,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
   PyObject *__pyx_v_kdf = NULL;
   PyObject *__pyx_v_key = NULL;
   int __pyx_r;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
@@ -2782,7 +3281,9 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0]))
   __Pyx_RefNannySetupContext("__init__", 0);
+  __Pyx_TraceStartFunc("__init__", __pyx_f[0], 12, 0, 0, 0, __PYX_ERR(0, 12, __pyx_L1_error));
 
   /* "kycli/core/security.pyx":13
  * cdef class SecurityManager:
@@ -2791,6 +3292,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  *         self._aesgcm = None
  *         if master_key:
 */
+  __Pyx_TraceLine(13,2,0,__PYX_ERR(0, 13, __pyx_L1_error))
   __Pyx_INCREF(__pyx_v_master_key);
   __Pyx_GIVEREF(__pyx_v_master_key);
   __Pyx_GOTREF(__pyx_v_self->_master_key);
@@ -2804,6 +3306,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  *         if master_key:
  *             if AESGCM is None:
 */
+  __Pyx_TraceLine(14,5,0,__PYX_ERR(0, 14, __pyx_L1_error))
   __Pyx_INCREF(Py_None);
   __Pyx_GIVEREF(Py_None);
   __Pyx_GOTREF(__pyx_v_self->_aesgcm);
@@ -2817,6 +3320,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  *             if AESGCM is None:
  *                 raise ImportError("cryptography library is required for encryption. Install it with 'pip install cryptography'.")
 */
+  __Pyx_TraceLine(15,9,0,__PYX_ERR(0, 15, __pyx_L1_error))
   if (__pyx_v_master_key == Py_None) __pyx_t_1 = 0;
   else
   {
@@ -2834,6 +3338,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  *                 raise ImportError("cryptography library is required for encryption. Install it with 'pip install cryptography'.")
  * 
 */
+    __Pyx_TraceLine(16,11,0,__PYX_ERR(0, 16, __pyx_L1_error))
     __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_mstate_global->__pyx_n_u_AESGCM); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 16, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_1 = (__pyx_t_2 == Py_None);
@@ -2847,6 +3352,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  * 
  *             salt = b'kycli_vault_salt'
 */
+      __Pyx_TraceLine(17,16,0,__PYX_ERR(0, 17, __pyx_L1_error))
       __pyx_t_3 = NULL;
       __pyx_t_4 = 1;
       {
@@ -2876,6 +3382,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  *             kdf = PBKDF2HMAC(
  *                 algorithm=hashes.SHA256(),
 */
+    __Pyx_TraceLine(19,19,0,__PYX_ERR(0, 19, __pyx_L1_error))
     __Pyx_INCREF(__pyx_mstate_global->__pyx_n_b_kycli_vault_salt);
     __pyx_v_salt = __pyx_mstate_global->__pyx_n_b_kycli_vault_salt;
 
@@ -2886,6 +3393,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  *                 algorithm=hashes.SHA256(),
  *                 length=32,
 */
+    __Pyx_TraceLine(20,22,0,__PYX_ERR(0, 20, __pyx_L1_error))
     __pyx_t_3 = NULL;
     __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_PBKDF2HMAC); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
@@ -2897,6 +3405,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  *                 length=32,
  *                 salt=salt,
 */
+    __Pyx_TraceLine(21,26,0,__PYX_ERR(0, 21, __pyx_L1_error))
     __pyx_t_7 = NULL;
     __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_mstate_global->__pyx_n_u_hashes); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
@@ -2931,6 +3440,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  *                 iterations=100000,
  *             )
 */
+    __Pyx_TraceLine(23,30,0,__PYX_ERR(0, 23, __pyx_L1_error))
     __pyx_t_4 = 1;
     #if CYTHON_UNPACK_METHODS
     if (unlikely(PyMethod_Check(__pyx_t_5))) {
@@ -2969,6 +3479,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  *             self._aesgcm = AESGCM(key)
  * 
 */
+    __Pyx_TraceLine(26,34,0,__PYX_ERR(0, 26, __pyx_L1_error))
     __pyx_t_5 = __pyx_v_kdf;
     __Pyx_INCREF(__pyx_t_5);
     if (unlikely(__pyx_v_master_key == Py_None)) {
@@ -2996,6 +3507,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
  * 
  *     cpdef str encrypt(self, str plaintext):
 */
+    __Pyx_TraceLine(27,44,0,__PYX_ERR(0, 27, __pyx_L1_error))
     __pyx_t_9 = NULL;
     __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_AESGCM); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 27, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
@@ -3044,6 +3556,7 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
 
   /* function exit code */
   __pyx_r = 0;
+  __Pyx_TraceReturnCValue(__pyx_r, __Pyx_Owned_Py_None, 0, 0, __PYX_ERR(0, 12, __pyx_L1_error));
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
@@ -3053,12 +3566,19 @@ static int __pyx_pf_5kycli_4core_8security_15SecurityManager___init__(struct __p
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 12, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_salt);
   __Pyx_XDECREF(__pyx_v_kdf);
   __Pyx_XDECREF(__pyx_v_key);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -3082,6 +3602,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(struct
   PyObject *__pyx_v_nonce = NULL;
   PyObject *__pyx_v_ciphertext = NULL;
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -3094,7 +3615,9 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(struct
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1]))
   __Pyx_RefNannySetupContext("encrypt", 0);
+  __Pyx_TraceStartFunc("encrypt", __pyx_f[0], 29, 0, 0, __pyx_skip_dispatch, __PYX_ERR(0, 29, __pyx_L1_error));
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
@@ -3141,6 +3664,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(struct
         if (!(likely(PyUnicode_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_2))) __PYX_ERR(0, 29, __pyx_L1_error)
         __pyx_r = ((PyObject*)__pyx_t_2);
         __pyx_t_2 = 0;
+        __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(0, 29, __pyx_L1_error));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         goto __pyx_L0;
       }
@@ -3164,6 +3688,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(struct
  *             return plaintext
  *         nonce = os.urandom(12)
 */
+  __Pyx_TraceLine(30,5,0,__PYX_ERR(0, 30, __pyx_L1_error))
   __pyx_t_6 = (__pyx_v_self->_aesgcm == Py_None);
   if (__pyx_t_6) {
 
@@ -3174,9 +3699,11 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(struct
  *         nonce = os.urandom(12)
  *         ciphertext = self._aesgcm.encrypt(nonce, plaintext.encode('utf-8'), None)
 */
+    __Pyx_TraceLine(31,6,0,__PYX_ERR(0, 31, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_v_plaintext);
     __pyx_r = __pyx_v_plaintext;
+    __Pyx_TraceReturnValue(__pyx_r, 6, 0, __PYX_ERR(0, 31, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "kycli/core/security.pyx":30
@@ -3195,6 +3722,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(struct
  *         ciphertext = self._aesgcm.encrypt(nonce, plaintext.encode('utf-8'), None)
  *         return "enc:" + base64.b64encode(nonce + ciphertext).decode('utf-8')
 */
+  __Pyx_TraceLine(32,11,0,__PYX_ERR(0, 32, __pyx_L1_error))
   __pyx_t_2 = NULL;
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -3231,6 +3759,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(struct
  *         return "enc:" + base64.b64encode(nonce + ciphertext).decode('utf-8')
  * 
 */
+  __Pyx_TraceLine(33,15,0,__PYX_ERR(0, 33, __pyx_L1_error))
   __pyx_t_3 = __pyx_v_self->_aesgcm;
   __Pyx_INCREF(__pyx_t_3);
   if (unlikely(__pyx_v_plaintext == Py_None)) {
@@ -3258,6 +3787,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(struct
  * 
  *     cpdef str decrypt(self, str encrypted_text):
 */
+  __Pyx_TraceLine(34,24,0,__PYX_ERR(0, 34, __pyx_L1_error))
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_4 = NULL;
   __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_mstate_global->__pyx_n_u_base64); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 34, __pyx_L1_error)
@@ -3305,6 +3835,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(struct
   if (!(likely(PyUnicode_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_3))) __PYX_ERR(0, 34, __pyx_L1_error)
   __pyx_r = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
+  __Pyx_TraceReturnValue(__pyx_r, 24, 0, __PYX_ERR(0, 34, __pyx_L1_error));
   goto __pyx_L0;
 
   /* "kycli/core/security.pyx":29
@@ -3323,12 +3854,19 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(struct
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 29, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.encrypt", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_nonce);
   __Pyx_XDECREF(__pyx_v_ciphertext);
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -3430,12 +3968,15 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_2encrypt(struct __pyx_obj_5kycli_4core_8security_SecurityManager *__pyx_v_self, PyObject *__pyx_v_plaintext) {
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1]))
   __Pyx_RefNannySetupContext("encrypt", 0);
+  __Pyx_TraceStartFunc("encrypt (wrapper)", __pyx_f[0], 29, 0, 0, 0, __PYX_ERR(0, 29, __pyx_L1_error));
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_f_5kycli_4core_8security_15SecurityManager_encrypt(__pyx_v_self, __pyx_v_plaintext, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -3446,10 +3987,17 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_2encrypt(stru
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 29, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.encrypt", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -3475,6 +4023,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
   PyObject *__pyx_v_nonce = NULL;
   PyObject *__pyx_v_ciphertext = NULL;
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -3491,7 +4040,9 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2]))
   __Pyx_RefNannySetupContext("decrypt", 0);
+  __Pyx_TraceStartFunc("decrypt", __pyx_f[0], 36, 0, 0, __pyx_skip_dispatch, __PYX_ERR(0, 36, __pyx_L1_error));
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
@@ -3538,6 +4089,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
         if (!(likely(PyUnicode_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_2))) __PYX_ERR(0, 36, __pyx_L1_error)
         __pyx_r = ((PyObject*)__pyx_t_2);
         __pyx_t_2 = 0;
+        __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(0, 36, __pyx_L1_error));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         goto __pyx_L0;
       }
@@ -3561,6 +4113,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *             return "[DELETED]"
  *         t_val = encrypted_text.strip()
 */
+  __Pyx_TraceLine(37,4,0,__PYX_ERR(0, 37, __pyx_L1_error))
   __pyx_t_6 = (__pyx_v_encrypted_text == ((PyObject*)Py_None));
   if (__pyx_t_6) {
 
@@ -3571,9 +4124,11 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *         t_val = encrypted_text.strip()
  *         if not t_val.startswith("enc:"):
 */
+    __Pyx_TraceLine(38,5,0,__PYX_ERR(0, 38, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_DELETED);
     __pyx_r = __pyx_mstate_global->__pyx_kp_u_DELETED;
+    __Pyx_TraceReturnValue(__pyx_r, 5, 0, __PYX_ERR(0, 38, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "kycli/core/security.pyx":37
@@ -3592,6 +4147,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *         if not t_val.startswith("enc:"):
  *             return t_val
 */
+  __Pyx_TraceLine(39,10,0,__PYX_ERR(0, 39, __pyx_L1_error))
   __pyx_t_1 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__strip, __pyx_v_encrypted_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_t_val = ((PyObject*)__pyx_t_1);
@@ -3604,6 +4160,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *             return t_val
  *         if self._aesgcm is None:
 */
+  __Pyx_TraceLine(40,15,0,__PYX_ERR(0, 40, __pyx_L1_error))
   __pyx_t_6 = __Pyx_PyUnicode_Tailmatch(__pyx_v_t_val, __pyx_mstate_global->__pyx_kp_u_enc, 0, PY_SSIZE_T_MAX, -1); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 40, __pyx_L1_error)
   __pyx_t_7 = (!__pyx_t_6);
   if (__pyx_t_7) {
@@ -3615,9 +4172,11 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *         if self._aesgcm is None:
  *             return "[ENCRYPTED: Provide a master key to view this value]"
 */
+    __Pyx_TraceLine(41,17,0,__PYX_ERR(0, 41, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_v_t_val);
     __pyx_r = __pyx_v_t_val;
+    __Pyx_TraceReturnValue(__pyx_r, 17, 0, __PYX_ERR(0, 41, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "kycli/core/security.pyx":40
@@ -3636,6 +4195,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *             return "[ENCRYPTED: Provide a master key to view this value]"
  *         try:
 */
+  __Pyx_TraceLine(42,23,0,__PYX_ERR(0, 42, __pyx_L1_error))
   __pyx_t_7 = (__pyx_v_self->_aesgcm == Py_None);
   if (__pyx_t_7) {
 
@@ -3646,9 +4206,11 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *         try:
  *             data = base64.b64decode(t_val[4:].encode('utf-8'))
 */
+    __Pyx_TraceLine(43,24,0,__PYX_ERR(0, 43, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_ENCRYPTED_Provide_a_master_key);
     __pyx_r = __pyx_mstate_global->__pyx_kp_u_ENCRYPTED_Provide_a_master_key;
+    __Pyx_TraceReturnValue(__pyx_r, 24, 0, __PYX_ERR(0, 43, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "kycli/core/security.pyx":42
@@ -3667,6 +4229,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *             data = base64.b64decode(t_val[4:].encode('utf-8'))
  *             nonce = data[:12]
 */
+  __Pyx_TraceLine(44,26,0,__PYX_ERR(0, 44, __pyx_L1_error))
   {
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
@@ -3683,6 +4246,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *             nonce = data[:12]
  *             ciphertext = data[12:]
 */
+      __Pyx_TraceLine(45,30,0,__PYX_ERR(0, 45, __pyx_L6_error))
       __pyx_t_2 = NULL;
       __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_base64); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_4);
@@ -3725,6 +4289,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *             ciphertext = data[12:]
  *             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
 */
+      __Pyx_TraceLine(46,39,0,__PYX_ERR(0, 46, __pyx_L6_error))
       __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_v_data, 0, 12, NULL, NULL, &__pyx_mstate_global->__pyx_slice[0], 0, 1, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_v_nonce = __pyx_t_1;
@@ -3737,6 +4302,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
  *         except Exception:
 */
+      __Pyx_TraceLine(47,43,0,__PYX_ERR(0, 47, __pyx_L6_error))
       __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_v_data, 12, 0, NULL, NULL, &__pyx_mstate_global->__pyx_slice[1], 1, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L6_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_v_ciphertext = __pyx_t_1;
@@ -3749,6 +4315,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *         except Exception:
  *             return "[DECRYPTION FAILED: Incorrect master key]"
 */
+      __Pyx_TraceLine(48,45,0,__PYX_ERR(0, 48, __pyx_L6_error))
       __Pyx_XDECREF(__pyx_r);
       __pyx_t_2 = __pyx_v_self->_aesgcm;
       __Pyx_INCREF(__pyx_t_2);
@@ -3774,6 +4341,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
       if (!(likely(PyUnicode_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_1))) __PYX_ERR(0, 48, __pyx_L6_error)
       __pyx_r = ((PyObject*)__pyx_t_1);
       __pyx_t_1 = 0;
+      __Pyx_TraceReturnValue(__pyx_r, 45, 0, __PYX_ERR(0, 48, __pyx_L6_error));
       goto __pyx_L10_try_return;
 
       /* "kycli/core/security.pyx":44
@@ -3790,6 +4358,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_TraceException(__pyx_lineno, 0, 0);
 
     /* "kycli/core/security.pyx":49
  *             ciphertext = data[12:]
@@ -3798,9 +4367,13 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  *             return "[DECRYPTION FAILED: Incorrect master key]"
  * 
 */
+    __Pyx_TraceLine(49,56,0,__PYX_ERR(0, 49, __pyx_L8_except_error))
     __pyx_t_12 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
     if (__pyx_t_12) {
+      __Pyx_AddTraceback("kycli.core.security.SecurityManager.decrypt", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_TraceExceptionHandled(0);
       __Pyx_ErrRestore(0,0,0);
+      __Pyx_TraceExceptionDone();
 
       /* "kycli/core/security.pyx":50
  *             return self._aesgcm.decrypt(nonce, ciphertext, None).decode('utf-8')
@@ -3809,9 +4382,11 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
  * 
  *     cpdef bytes encrypt_blob(self, bytes blob):
 */
+      __Pyx_TraceLine(50,57,0,__PYX_ERR(0, 50, __pyx_L8_except_error))
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_DECRYPTION_FAILED_Incorrect_mas);
       __pyx_r = __pyx_mstate_global->__pyx_kp_u_DECRYPTION_FAILED_Incorrect_mas;
+      __Pyx_TraceReturnValue(__pyx_r, 57, 0, __PYX_ERR(0, 50, __pyx_L8_except_error));
       goto __pyx_L9_except_return;
     }
     goto __pyx_L8_except_error;
@@ -3858,6 +4433,12 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 36, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.decrypt", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
@@ -3866,6 +4447,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(struct
   __Pyx_XDECREF(__pyx_v_nonce);
   __Pyx_XDECREF(__pyx_v_ciphertext);
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -3967,12 +4549,15 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_4decrypt(struct __pyx_obj_5kycli_4core_8security_SecurityManager *__pyx_v_self, PyObject *__pyx_v_encrypted_text) {
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2]))
   __Pyx_RefNannySetupContext("decrypt", 0);
+  __Pyx_TraceStartFunc("decrypt (wrapper)", __pyx_f[0], 36, 0, 0, 0, __PYX_ERR(0, 36, __pyx_L1_error));
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_f_5kycli_4core_8security_15SecurityManager_decrypt(__pyx_v_self, __pyx_v_encrypted_text, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -3983,10 +4568,17 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_4decrypt(stru
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 36, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.decrypt", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -4010,6 +4602,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt_blob(s
   PyObject *__pyx_v_nonce = NULL;
   PyObject *__pyx_v_ciphertext = NULL;
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -4021,7 +4614,9 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt_blob(s
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3]))
   __Pyx_RefNannySetupContext("encrypt_blob", 0);
+  __Pyx_TraceStartFunc("encrypt_blob", __pyx_f[0], 52, 0, 0, __pyx_skip_dispatch, __PYX_ERR(0, 52, __pyx_L1_error));
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
@@ -4068,6 +4663,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt_blob(s
         if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None) || __Pyx_RaiseUnexpectedTypeError("bytes", __pyx_t_2))) __PYX_ERR(0, 52, __pyx_L1_error)
         __pyx_r = ((PyObject*)__pyx_t_2);
         __pyx_t_2 = 0;
+        __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(0, 52, __pyx_L1_error));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         goto __pyx_L0;
       }
@@ -4091,6 +4687,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt_blob(s
  *             return blob
  *         nonce = os.urandom(12)
 */
+  __Pyx_TraceLine(53,5,0,__PYX_ERR(0, 53, __pyx_L1_error))
   __pyx_t_7 = (__pyx_v_self->_aesgcm == Py_None);
   if (!__pyx_t_7) {
   } else {
@@ -4109,9 +4706,11 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt_blob(s
  *         nonce = os.urandom(12)
  *         ciphertext = self._aesgcm.encrypt(nonce, blob, None)
 */
+    __Pyx_TraceLine(54,10,0,__PYX_ERR(0, 54, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_v_blob);
     __pyx_r = __pyx_v_blob;
+    __Pyx_TraceReturnValue(__pyx_r, 10, 0, __PYX_ERR(0, 54, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "kycli/core/security.pyx":53
@@ -4130,6 +4729,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt_blob(s
  *         ciphertext = self._aesgcm.encrypt(nonce, blob, None)
  *         # Format: <Nonce:12><Ciphertext>
 */
+  __Pyx_TraceLine(55,15,0,__PYX_ERR(0, 55, __pyx_L1_error))
   __pyx_t_2 = NULL;
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_os); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -4166,6 +4766,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt_blob(s
  *         # Format: <Nonce:12><Ciphertext>
  *         return nonce + ciphertext
 */
+  __Pyx_TraceLine(56,19,0,__PYX_ERR(0, 56, __pyx_L1_error))
   __pyx_t_3 = __pyx_v_self->_aesgcm;
   __Pyx_INCREF(__pyx_t_3);
   __pyx_t_5 = 0;
@@ -4186,12 +4787,14 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt_blob(s
  * 
  *     cpdef bytes decrypt_blob(self, bytes encrypted_blob):
 */
+  __Pyx_TraceLine(58,25,0,__PYX_ERR(0, 58, __pyx_L1_error))
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = PyNumber_Add(__pyx_v_nonce, __pyx_v_ciphertext); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (!(likely(PyBytes_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("bytes", __pyx_t_1))) __PYX_ERR(0, 58, __pyx_L1_error)
   __pyx_r = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
+  __Pyx_TraceReturnValue(__pyx_r, 25, 0, __PYX_ERR(0, 58, __pyx_L1_error));
   goto __pyx_L0;
 
   /* "kycli/core/security.pyx":52
@@ -4208,12 +4811,19 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_encrypt_blob(s
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 52, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.encrypt_blob", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_nonce);
   __Pyx_XDECREF(__pyx_v_ciphertext);
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -4315,12 +4925,15 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_6encrypt_blob(struct __pyx_obj_5kycli_4core_8security_SecurityManager *__pyx_v_self, PyObject *__pyx_v_blob) {
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3]))
   __Pyx_RefNannySetupContext("encrypt_blob", 0);
+  __Pyx_TraceStartFunc("encrypt_blob (wrapper)", __pyx_f[0], 52, 0, 0, 0, __PYX_ERR(0, 52, __pyx_L1_error));
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_f_5kycli_4core_8security_15SecurityManager_encrypt_blob(__pyx_v_self, __pyx_v_blob, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -4331,10 +4944,17 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_6encrypt_blob
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 52, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.encrypt_blob", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -4358,6 +4978,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
   PyObject *__pyx_v_nonce = NULL;
   PyObject *__pyx_v_ciphertext = NULL;
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -4374,7 +4995,9 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4]))
   __Pyx_RefNannySetupContext("decrypt_blob", 0);
+  __Pyx_TraceStartFunc("decrypt_blob", __pyx_f[0], 60, 0, 0, __pyx_skip_dispatch, __PYX_ERR(0, 60, __pyx_L1_error));
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
@@ -4421,6 +5044,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
         if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None) || __Pyx_RaiseUnexpectedTypeError("bytes", __pyx_t_2))) __PYX_ERR(0, 60, __pyx_L1_error)
         __pyx_r = ((PyObject*)__pyx_t_2);
         __pyx_t_2 = 0;
+        __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(0, 60, __pyx_L1_error));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         goto __pyx_L0;
       }
@@ -4444,6 +5068,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
  *             return encrypted_blob
  *         if len(encrypted_blob) < 12:
 */
+  __Pyx_TraceLine(61,5,0,__PYX_ERR(0, 61, __pyx_L1_error))
   __pyx_t_6 = (__pyx_v_self->_aesgcm == Py_None);
   if (__pyx_t_6) {
 
@@ -4454,9 +5079,11 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
  *         if len(encrypted_blob) < 12:
  *              # Not enough data for nonce, maybe it's unencrypted or corrupted
 */
+    __Pyx_TraceLine(62,6,0,__PYX_ERR(0, 62, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_v_encrypted_blob);
     __pyx_r = __pyx_v_encrypted_blob;
+    __Pyx_TraceReturnValue(__pyx_r, 6, 0, __PYX_ERR(0, 62, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "kycli/core/security.pyx":61
@@ -4475,6 +5102,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
  *              # Not enough data for nonce, maybe it's unencrypted or corrupted
  *              # Check header? The caller handles file header. Here we just decrypt payload.
 */
+  __Pyx_TraceLine(63,11,0,__PYX_ERR(0, 63, __pyx_L1_error))
   if (unlikely(__pyx_v_encrypted_blob == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
     __PYX_ERR(0, 63, __pyx_L1_error)
@@ -4490,6 +5118,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
  * 
  *         try:
 */
+    __Pyx_TraceLine(66,16,0,__PYX_ERR(0, 66, __pyx_L1_error))
     __pyx_t_2 = NULL;
     __pyx_t_5 = 1;
     {
@@ -4519,6 +5148,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
  *             nonce = encrypted_blob[:12]
  *             ciphertext = encrypted_blob[12:]
 */
+  __Pyx_TraceLine(68,18,0,__PYX_ERR(0, 68, __pyx_L1_error))
   {
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
@@ -4535,6 +5165,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
  *             ciphertext = encrypted_blob[12:]
  *             return self._aesgcm.decrypt(nonce, ciphertext, None)
 */
+      __Pyx_TraceLine(69,20,0,__PYX_ERR(0, 69, __pyx_L5_error))
       if (unlikely(__pyx_v_encrypted_blob == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 69, __pyx_L5_error)
@@ -4551,6 +5182,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
  *             return self._aesgcm.decrypt(nonce, ciphertext, None)
  *         except Exception:
 */
+      __Pyx_TraceLine(70,24,0,__PYX_ERR(0, 70, __pyx_L5_error))
       if (unlikely(__pyx_v_encrypted_blob == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 70, __pyx_L5_error)
@@ -4567,6 +5199,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
  *         except Exception:
  *              raise ValueError("Decryption failed: Incorrect master key or corrupted data")
 */
+      __Pyx_TraceLine(71,27,0,__PYX_ERR(0, 71, __pyx_L5_error))
       __Pyx_XDECREF(__pyx_r);
       __pyx_t_2 = __pyx_v_self->_aesgcm;
       __Pyx_INCREF(__pyx_t_2);
@@ -4581,6 +5214,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
       if (!(likely(PyBytes_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("bytes", __pyx_t_1))) __PYX_ERR(0, 71, __pyx_L5_error)
       __pyx_r = ((PyObject*)__pyx_t_1);
       __pyx_t_1 = 0;
+      __Pyx_TraceReturnValue(__pyx_r, 27, 0, __PYX_ERR(0, 71, __pyx_L5_error));
       goto __pyx_L9_try_return;
 
       /* "kycli/core/security.pyx":68
@@ -4596,6 +5230,7 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_TraceException(__pyx_lineno, 0, 0);
 
     /* "kycli/core/security.pyx":72
  *             ciphertext = encrypted_blob[12:]
@@ -4603,19 +5238,23 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
  *         except Exception:             # <<<<<<<<<<<<<<
  *              raise ValueError("Decryption failed: Incorrect master key or corrupted data")
 */
+    __Pyx_TraceLine(72,35,0,__PYX_ERR(0, 72, __pyx_L7_except_error))
     __pyx_t_11 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_Exception))));
     if (__pyx_t_11) {
       __Pyx_AddTraceback("kycli.core.security.SecurityManager.decrypt_blob", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_TraceExceptionHandled(0);
       if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_2, &__pyx_t_4) < 0) __PYX_ERR(0, 72, __pyx_L7_except_error)
       __Pyx_XGOTREF(__pyx_t_1);
       __Pyx_XGOTREF(__pyx_t_2);
       __Pyx_XGOTREF(__pyx_t_4);
+      __Pyx_TraceExceptionDone();
 
       /* "kycli/core/security.pyx":73
  *             return self._aesgcm.decrypt(nonce, ciphertext, None)
  *         except Exception:
  *              raise ValueError("Decryption failed: Incorrect master key or corrupted data")             # <<<<<<<<<<<<<<
 */
+      __Pyx_TraceLine(73,38,0,__PYX_ERR(0, 73, __pyx_L7_except_error))
       __pyx_t_12 = NULL;
       __pyx_t_5 = 1;
       {
@@ -4667,12 +5306,19 @@ static PyObject *__pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(s
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_12);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 60, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.decrypt_blob", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_nonce);
   __Pyx_XDECREF(__pyx_v_ciphertext);
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -4774,12 +5420,15 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_8decrypt_blob(struct __pyx_obj_5kycli_4core_8security_SecurityManager *__pyx_v_self, PyObject *__pyx_v_encrypted_blob) {
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4]))
   __Pyx_RefNannySetupContext("decrypt_blob", 0);
+  __Pyx_TraceStartFunc("decrypt_blob (wrapper)", __pyx_f[0], 60, 0, 0, 0, __PYX_ERR(0, 60, __pyx_L1_error));
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_f_5kycli_4core_8security_15SecurityManager_decrypt_blob(__pyx_v_self, __pyx_v_encrypted_blob, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -4790,10 +5439,17 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_8decrypt_blob
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 60, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.decrypt_blob", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -4851,6 +5507,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_t_2;
@@ -4860,7 +5517,9 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5]))
   __Pyx_RefNannySetupContext("__reduce_cython__", 0);
+  __Pyx_TraceStartFunc("__reduce_cython__", __pyx_f[1], 1, 0, 0, 0, __PYX_ERR(1, 1, __pyx_L1_error));
 
   /* "(tree fragment)":5
  *     cdef object _dict
@@ -4869,6 +5528,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None and _dict:
 */
+  __Pyx_TraceLine(5,2,0,__PYX_ERR(1, 5, __pyx_L1_error))
   __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_self->_aesgcm);
@@ -4887,6 +5547,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
  *     if _dict is not None and _dict:
  *         state += (_dict,)
 */
+  __Pyx_TraceLine(6,8,0,__PYX_ERR(1, 6, __pyx_L1_error))
   __pyx_t_1 = __Pyx_GetAttr3(((PyObject *)__pyx_v_self), __pyx_mstate_global->__pyx_n_u_dict, Py_None); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v__dict = __pyx_t_1;
@@ -4899,6 +5560,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
  *         state += (_dict,)
  *         use_setstate = True
 */
+  __Pyx_TraceLine(7,15,0,__PYX_ERR(1, 7, __pyx_L1_error))
   __pyx_t_3 = (__pyx_v__dict != Py_None);
   if (__pyx_t_3) {
   } else {
@@ -4917,6 +5579,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
  *         use_setstate = True
  *     else:
 */
+    __Pyx_TraceLine(8,19,0,__PYX_ERR(1, 8, __pyx_L1_error))
     __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 8, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_INCREF(__pyx_v__dict);
@@ -4935,6 +5598,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
  *     else:
  *         use_setstate = self._aesgcm is not None or self._master_key is not None
 */
+    __Pyx_TraceLine(9,21,0,__PYX_ERR(1, 9, __pyx_L1_error))
     __pyx_v_use_setstate = 1;
 
     /* "(tree fragment)":7
@@ -4954,6 +5618,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
  *     if use_setstate:
  *         return __pyx_unpickle_SecurityManager, (type(self), 0x3b40a49, None), state
 */
+  __Pyx_TraceLine(11,27,0,__PYX_ERR(1, 11, __pyx_L1_error))
   /*else*/ {
     __pyx_t_3 = (__pyx_v_self->_aesgcm != Py_None);
     if (!__pyx_t_3) {
@@ -4975,6 +5640,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
  *         return __pyx_unpickle_SecurityManager, (type(self), 0x3b40a49, None), state
  *     else:
 */
+  __Pyx_TraceLine(12,33,0,__PYX_ERR(1, 12, __pyx_L1_error))
   if (__pyx_v_use_setstate) {
 
     /* "(tree fragment)":13
@@ -4984,6 +5650,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
  *     else:
  *         return __pyx_unpickle_SecurityManager, (type(self), 0x3b40a49, state)
 */
+    __Pyx_TraceLine(13,34,0,__PYX_ERR(1, 13, __pyx_L1_error))
     __Pyx_XDECREF(__pyx_r);
     __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_SecurityManager); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 13, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
@@ -5011,6 +5678,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
     __pyx_t_1 = 0;
     __pyx_r = __pyx_t_5;
     __pyx_t_5 = 0;
+    __Pyx_TraceReturnValue(__pyx_r, 34, 0, __PYX_ERR(1, 13, __pyx_L1_error));
     goto __pyx_L0;
 
     /* "(tree fragment)":12
@@ -5029,6 +5697,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
  * def __setstate_cython__(self, __pyx_state):
  *     __pyx_unpickle_SecurityManager__set_state(self, __pyx_state)
 */
+  __Pyx_TraceLine(15,42,0,__PYX_ERR(1, 15, __pyx_L1_error))
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
     __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_SecurityManager); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 15, __pyx_L1_error)
@@ -5054,6 +5723,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
     __pyx_t_1 = 0;
     __pyx_r = __pyx_t_4;
     __pyx_t_4 = 0;
+    __Pyx_TraceReturnValue(__pyx_r, 42, 0, __PYX_ERR(1, 15, __pyx_L1_error));
     goto __pyx_L0;
   }
 
@@ -5068,12 +5738,19 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_10__reduce_cy
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(1, 1, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
   __Pyx_XDECREF(__pyx_v__dict);
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5172,19 +5849,23 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_12__setstate_cython__(struct __pyx_obj_5kycli_4core_8security_SecurityManager *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6]))
   __Pyx_RefNannySetupContext("__setstate_cython__", 0);
+  __Pyx_TraceStartFunc("__setstate_cython__", __pyx_f[1], 16, 0, 0, 0, __PYX_ERR(1, 16, __pyx_L1_error));
 
   /* "(tree fragment)":17
  *         return __pyx_unpickle_SecurityManager, (type(self), 0x3b40a49, state)
  * def __setstate_cython__(self, __pyx_state):
  *     __pyx_unpickle_SecurityManager__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
 */
+  __Pyx_TraceLine(17,4,0,__PYX_ERR(1, 17, __pyx_L1_error))
   __pyx_t_1 = __pyx_v___pyx_state;
   __Pyx_INCREF(__pyx_t_1);
   if (!(likely(PyTuple_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_t_1))) __PYX_ERR(1, 17, __pyx_L1_error)
@@ -5206,14 +5887,22 @@ static PyObject *__pyx_pf_5kycli_4core_8security_15SecurityManager_12__setstate_
 
   /* function exit code */
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(1, 16, __pyx_L1_error));
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(1, 16, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.SecurityManager.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5340,6 +6029,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 static PyObject *__pyx_pf_5kycli_4core_8security___pyx_unpickle_SecurityManager(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
@@ -5349,7 +6039,9 @@ static PyObject *__pyx_pf_5kycli_4core_8security___pyx_unpickle_SecurityManager(
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7]))
   __Pyx_RefNannySetupContext("__pyx_unpickle_SecurityManager", 0);
+  __Pyx_TraceStartFunc("__pyx_unpickle_SecurityManager", __pyx_f[1], 4, 0, 0, 0, __PYX_ERR(1, 4, __pyx_L1_error));
 
   /* "(tree fragment)":6
  * def __pyx_unpickle_SecurityManager(__pyx_type, long __pyx_checksum, tuple __pyx_state):
@@ -5358,6 +6050,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security___pyx_unpickle_SecurityManager(
  *     __pyx_result = SecurityManager.__new__(__pyx_type)
  *     if __pyx_state is not None:
 */
+  __Pyx_TraceLine(6,2,0,__PYX_ERR(1, 6, __pyx_L1_error))
   __pyx_t_1 = __Pyx_CheckUnpickleChecksum(__pyx_v___pyx_checksum, 0x3b40a49, 0x8814178, 0x0685493, __pyx_k_aesgcm__master_key); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(1, 6, __pyx_L1_error)
 
   /* "(tree fragment)":7
@@ -5367,6 +6060,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security___pyx_unpickle_SecurityManager(
  *     if __pyx_state is not None:
  *         __pyx_unpickle_SecurityManager__set_state(<SecurityManager> __pyx_result, __pyx_state)
 */
+  __Pyx_TraceLine(7,9,0,__PYX_ERR(1, 7, __pyx_L1_error))
   __pyx_t_3 = ((PyObject *)__pyx_mstate_global->__pyx_ptype_5kycli_4core_8security_SecurityManager);
   __Pyx_INCREF(__pyx_t_3);
   __pyx_t_4 = 0;
@@ -5387,6 +6081,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security___pyx_unpickle_SecurityManager(
  *         __pyx_unpickle_SecurityManager__set_state(<SecurityManager> __pyx_result, __pyx_state)
  *     return __pyx_result
 */
+  __Pyx_TraceLine(8,16,0,__PYX_ERR(1, 8, __pyx_L1_error))
   __pyx_t_5 = (__pyx_v___pyx_state != ((PyObject*)Py_None));
   if (__pyx_t_5) {
 
@@ -5397,6 +6092,7 @@ static PyObject *__pyx_pf_5kycli_4core_8security___pyx_unpickle_SecurityManager(
  *     return __pyx_result
  * cdef __pyx_unpickle_SecurityManager__set_state(SecurityManager __pyx_result, __pyx_state: tuple):
 */
+    __Pyx_TraceLine(9,21,0,__PYX_ERR(1, 9, __pyx_L1_error))
     if (unlikely(__pyx_v___pyx_state == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "cannot pass None into a C function argument that is declared 'not None'");
       __PYX_ERR(1, 9, __pyx_L1_error)
@@ -5421,9 +6117,11 @@ static PyObject *__pyx_pf_5kycli_4core_8security___pyx_unpickle_SecurityManager(
  * cdef __pyx_unpickle_SecurityManager__set_state(SecurityManager __pyx_result, __pyx_state: tuple):
  *     __pyx_result._aesgcm = __pyx_state[0]; __pyx_result._master_key = __pyx_state[1]
 */
+  __Pyx_TraceLine(10,22,0,__PYX_ERR(1, 10, __pyx_L1_error))
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v___pyx_result);
   __pyx_r = __pyx_v___pyx_result;
+  __Pyx_TraceReturnValue(__pyx_r, 22, 0, __PYX_ERR(1, 10, __pyx_L1_error));
   goto __pyx_L0;
 
   /* "(tree fragment)":4
@@ -5438,11 +6136,18 @@ static PyObject *__pyx_pf_5kycli_4core_8security___pyx_unpickle_SecurityManager(
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(1, 4, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.__pyx_unpickle_SecurityManager", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_result);
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5457,13 +6162,16 @@ static PyObject *__pyx_pf_5kycli_4core_8security___pyx_unpickle_SecurityManager(
 
 static PyObject *__pyx_f_5kycli_4core_8security___pyx_unpickle_SecurityManager__set_state(struct __pyx_obj_5kycli_4core_8security_SecurityManager *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_t_2;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
+  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[8]))
   __Pyx_RefNannySetupContext("__pyx_unpickle_SecurityManager__set_state", 0);
+  __Pyx_TraceStartFunc("__pyx_unpickle_SecurityManager__set_state", __pyx_f[1], 11, 0, 0, 0, __PYX_ERR(1, 11, __pyx_L1_error));
 
   /* "(tree fragment)":12
  *     return __pyx_result
@@ -5471,6 +6179,7 @@ static PyObject *__pyx_f_5kycli_4core_8security___pyx_unpickle_SecurityManager__
  *     __pyx_result._aesgcm = __pyx_state[0]; __pyx_result._master_key = __pyx_state[1]             # <<<<<<<<<<<<<<
  *     __Pyx_UpdateUnpickledDict(__pyx_result, __pyx_state, 2)
 */
+  __Pyx_TraceLine(12,5,0,__PYX_ERR(1, 12, __pyx_L1_error))
   __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 1, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -5492,6 +6201,7 @@ static PyObject *__pyx_f_5kycli_4core_8security___pyx_unpickle_SecurityManager__
  *     __pyx_result._aesgcm = __pyx_state[0]; __pyx_result._master_key = __pyx_state[1]
  *     __Pyx_UpdateUnpickledDict(__pyx_result, __pyx_state, 2)             # <<<<<<<<<<<<<<
 */
+  __Pyx_TraceLine(13,13,0,__PYX_ERR(1, 13, __pyx_L1_error))
   __pyx_t_2 = __Pyx_UpdateUnpickledDict(((PyObject *)__pyx_v___pyx_result), __pyx_v___pyx_state, 2); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(1, 13, __pyx_L1_error)
 
   /* "(tree fragment)":11
@@ -5504,13 +6214,21 @@ static PyObject *__pyx_f_5kycli_4core_8security___pyx_unpickle_SecurityManager__
 
   /* function exit code */
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(1, 11, __pyx_L1_error));
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  #if CYTHON_USE_SYS_MONITORING
+  __Pyx_TraceExceptionUnwind(0, 0);
+  #else
+  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(1, 11, __pyx_L1_error));
+  #endif
   __Pyx_AddTraceback("kycli.core.security.__pyx_unpickle_SecurityManager__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5967,6 +6685,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_security(PyObject *__pyx_pyinit_mo
   int pystate_addmodule_run = 0;
   #endif
   __pyx_mstatetype *__pyx_mstate = NULL;
+  __Pyx_TraceDeclarationsFunc
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
@@ -6061,6 +6780,7 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
   (void)__Pyx_modinit_variable_import_code(__pyx_mstate);
   (void)__Pyx_modinit_function_import_code(__pyx_mstate);
   /*--- Execution code ---*/
+  __Pyx_TraceStartFunc("PyInit_security", __pyx_f[0], 1, 2, 0, 0, __PYX_ERR(0, 1, __pyx_L1_error));
 
   /* "kycli/core/security.pyx":2
  * # cython: language_level=3
@@ -6068,6 +6788,7 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  * import base64
  * try:
 */
+  __Pyx_TraceLine(2,3,0,__PYX_ERR(0, 2, __pyx_L1_error))
   __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_os, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __pyx_t_2 = __pyx_t_1;
   __Pyx_GOTREF(__pyx_t_2);
@@ -6081,6 +6802,7 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  * try:
  *     from cryptography.hazmat.primitives import hashes
 */
+  __Pyx_TraceLine(3,4,0,__PYX_ERR(0, 3, __pyx_L1_error))
   __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_base64, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
   __pyx_t_2 = __pyx_t_1;
   __Pyx_GOTREF(__pyx_t_2);
@@ -6094,6 +6816,7 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  *     from cryptography.hazmat.primitives import hashes
  *     from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 */
+  __Pyx_TraceLine(4,6,0,__PYX_ERR(0, 4, __pyx_L1_error))
   {
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
@@ -6110,6 +6833,7 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  *     from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
  *     from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 */
+      __Pyx_TraceLine(5,8,0,__PYX_ERR(0, 5, __pyx_L2_error))
       {
         PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_hashes};
         __pyx_t_5 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_cryptography_hazmat_primitives, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 5, __pyx_L2_error)
@@ -6134,6 +6858,7 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  *     from cryptography.hazmat.primitives.ciphers.aead import AESGCM
  * except ImportError:
 */
+      __Pyx_TraceLine(6,11,0,__PYX_ERR(0, 6, __pyx_L2_error))
       {
         PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_PBKDF2HMAC};
         __pyx_t_5 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_cryptography_hazmat_primitives_k, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 6, __pyx_L2_error)
@@ -6158,6 +6883,7 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  * except ImportError:
  *     AESGCM = None
 */
+      __Pyx_TraceLine(7,14,0,__PYX_ERR(0, 7, __pyx_L2_error))
       {
         PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_AESGCM};
         __pyx_t_5 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_cryptography_hazmat_primitives_c, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 7, __pyx_L2_error)
@@ -6190,6 +6916,7 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
     __pyx_L2_error:;
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_TraceException(__pyx_lineno, 0, 0);
 
     /* "kycli/core/security.pyx":8
  *     from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -6198,13 +6925,16 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  *     AESGCM = None
  * 
 */
+    __Pyx_TraceLine(8,16,0,__PYX_ERR(0, 8, __pyx_L4_except_error))
     __pyx_t_8 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(((PyTypeObject*)PyExc_ImportError))));
     if (__pyx_t_8) {
       __Pyx_AddTraceback("kycli.core.security", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_TraceExceptionHandled(0);
       if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_7, &__pyx_t_9) < 0) __PYX_ERR(0, 8, __pyx_L4_except_error)
       __Pyx_XGOTREF(__pyx_t_2);
       __Pyx_XGOTREF(__pyx_t_7);
       __Pyx_XGOTREF(__pyx_t_9);
+      __Pyx_TraceExceptionDone();
 
       /* "kycli/core/security.pyx":9
  *     from cryptography.hazmat.primitives.ciphers.aead import AESGCM
@@ -6213,6 +6943,7 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  * 
  * cdef class SecurityManager:
 */
+      __Pyx_TraceLine(9,18,0,__PYX_ERR(0, 9, __pyx_L4_except_error))
       if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_AESGCM, Py_None) < (0)) __PYX_ERR(0, 9, __pyx_L4_except_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -6249,7 +6980,9 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  *         if self._aesgcm is None:
  *             return plaintext
 */
-  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_3encrypt, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager_encrypt, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __Pyx_TraceLine(29,23,0,__PYX_ERR(0, 29, __pyx_L1_error))
+
+  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_3encrypt, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager_encrypt, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_9);
@@ -6264,7 +6997,9 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  *         if encrypted_text is None:
  *             return "[DELETED]"
 */
-  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_5decrypt, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager_decrypt, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_TraceLine(36,24,0,__PYX_ERR(0, 36, __pyx_L1_error))
+
+  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_5decrypt, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager_decrypt, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_9);
@@ -6279,7 +7014,9 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  *         if self._aesgcm is None or blob is None:
  *             return blob
 */
-  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_7encrypt_blob, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager_encrypt_blob, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_TraceLine(52,25,0,__PYX_ERR(0, 52, __pyx_L1_error))
+
+  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_7encrypt_blob, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager_encrypt_blob, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_9);
@@ -6294,7 +7031,9 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  *         if self._aesgcm is None:
  *             return encrypted_blob
 */
-  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_9decrypt_blob, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager_decrypt_blob, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 60, __pyx_L1_error)
+  __Pyx_TraceLine(60,26,0,__PYX_ERR(0, 60, __pyx_L1_error))
+
+  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_9decrypt_blob, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager_decrypt_blob, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_9);
@@ -6307,7 +7046,8 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  *     cdef tuple state
  *     cdef object _dict
 */
-  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_11__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager___reduce_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_TraceLine(1,0,0,__PYX_ERR(1, 1, __pyx_L1_error))
+  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_11__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager___reduce_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_9);
@@ -6321,7 +7061,8 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_SecurityManager__set_state(self, __pyx_state)
 */
-  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_13__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager___setstate_cytho, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 16, __pyx_L1_error)
+  __Pyx_TraceLine(16,22,0,__PYX_ERR(1, 16, __pyx_L1_error))
+  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_15SecurityManager_13__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_SecurityManager___setstate_cytho, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_9);
@@ -6336,7 +7077,8 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
  *     cdef object __pyx_result
  *     __Pyx_CheckUnpickleChecksum(__pyx_checksum, 0x3b40a49, 0x8814178, 0x0685493, b'_aesgcm, _master_key')
 */
-  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_1__pyx_unpickle_SecurityManager, 0, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_SecurityManager, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __Pyx_TraceLine(4,5,0,__PYX_ERR(1, 4, __pyx_L1_error))
+  __pyx_t_9 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_8security_1__pyx_unpickle_SecurityManager, 0, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_SecurityManager, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_security, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7])); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_9);
@@ -6344,15 +7086,28 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_SecurityManager, __pyx_t_9) < (0)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
+  /* "(tree fragment)":11
+ *         __pyx_unpickle_SecurityManager__set_state(<SecurityManager> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ * cdef __pyx_unpickle_SecurityManager__set_state(SecurityManager __pyx_result, __pyx_state: tuple):             # <<<<<<<<<<<<<<
+ *     __pyx_result._aesgcm = __pyx_state[0]; __pyx_result._master_key = __pyx_state[1]
+ *     __Pyx_UpdateUnpickledDict(__pyx_result, __pyx_state, 2)
+*/
+  __Pyx_TraceLine(11,20,0,__PYX_ERR(1, 11, __pyx_L1_error))
+
+
   /* "kycli/core/security.pyx":1
  * # cython: language_level=3             # <<<<<<<<<<<<<<
  * import os
  * import base64
 */
+  __Pyx_TraceLine(1,2,0,__PYX_ERR(0, 1, __pyx_L1_error))
   __pyx_t_9 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_test, __pyx_t_9) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __Pyx_TraceReturnValue(Py_None, 2, 0, __PYX_ERR(0, 1, __pyx_L1_error));
+  __Pyx_PyMonitoring_ExitScope(0);
 
   /*--- Wrapped vars code ---*/
 
@@ -6361,6 +7116,8 @@ __Pyx_RefNannySetupContext("PyInit_security", 0);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_TraceException(__pyx_lineno, 0, 0);
+  __Pyx_TraceExceptionUnwind(2, 0);
   if (__pyx_m) {
     if (__pyx_mstate->__pyx_d && stringtab_initialized) {
       __Pyx_AddTraceback("init kycli.core.security", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -6462,31 +7219,31 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 8; } index[] = {{1},{41},{9},{57},{52},{19},{179},{1},{8},{92},{7},{6},{4},{2},{9},{23},{14},{5},{6},{10},{20},{6},{15},{33},{35},{23},{28},{23},{28},{9},{18},{9},{9},{6},{4},{18},{30},{43},{41},{6},{7},{12},{6},{8},{5},{7},{12},{14},{14},{8},{12},{6},{13},{5},{10},{19},{6},{8},{10},{10},{8},{7},{2},{9},{3},{14},{12},{11},{10},{30},{14},{12},{10},{17},{13},{4},{4},{12},{10},{12},{19},{5},{5},{8},{6},{7},{12},{6},{77},{93},{63},{132},{11},{111},{57},{16}};
-    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1281 bytes) */
-const char* const cstring = "BZh91AY&SY\201\353Fn\000\000y\177\377\377\357\377\371\370\327\377\375\277\357\374\252\277\377\377\366@@@@@@@@@@@@@\000@\000P\004^]\265C\327@4\034w\206\246\241\014\232\233\0216\21024\323C!\241\2044\006M\000\032h\311\240\014\206F\021\200\230C\200\000\000\032\000\000\000h\001\240\000\032\000\000h\000\000\000\032\247\243T\366\224\321\246\247\2504\032\032\r\000\000\006\206\200\000\000\000\000\320\0004\r\006\251\372\224\321\215Sh\023COP\014\230\215\001\241\246\215\000144\000\006@\323 \014 \320\022\204\t\240!\243S\002&\325<\223\324=L\203j\0314h4\000\320\320\r\000\001\246\215=L\230J%\326\003\227\372\345o\371\307)\376\241\010w;\342x\025\212\3742\306\222<\017\225\n\210\252\252\002\255\304U\022n\021\034\263\276\267\036\024\222&\242\264\256\233a\240CM\232\234c N\206\034\021\014\002\r\0208\221N\207\312\226&\326\215\304\n\261\310\310\243J\275c\354n\240\222\025\316\272\311\201\252\036\265B\264\232\020D[\246\241\r\366\256r\321\211\t\250\3750\253\220\241TK\364w$,O@\222\2335\332\310\317\300\375\020y\333\310\343J\231\022\024\311\035E\013\276_\341\310d\341\277\235\204\004\314\014\270v8>\374\225\374\375o\231\034\2010\317Fi\315TQ\273\3419 \375\242Y\263\305\226!\235\344\340\265aF\232\356W\311#/\266\003\243\240R\207I\346\326?\303\367n^+\366\352\354\366\306\235\265\302WF\301\335\275\020\331\203\354\246\311\205\335\232\246v\262k\355e\001\372\207,t\232\244\301\342\226\201\"5_\232\t\007\247\252\"4\261\211\013a0\306\021C>\316j%\230\230%\225\0218\366u89\333,\002\356{#\324\014\336\210\300yoA\313\025{6\363\350\364\375^\354\244h\305f\227\301\364\320\3449%\323\220Z*\212\324\271#\026\002.d\"\346\037C\225]\323m\371\020\232\317v\236[ \005\267z\362\357TuzV\017&\230q\001\213\027\252\242U\014,-A\312\230\\\204\225\224lVE8\266\364\030\351z\327\347eU\300`\323\217|3k:\212\220w\213\244\275 .\262\267r\325a\226\206\002\205\013\025\275\030B\241\226\350$\222T$\241\353_j\213@\010\t@3\022T\202\313%\204o/\350\330k\234\032x\255-\035)Z\241F\233\251\325\217\001xid\211$KD!\034\315dD\363c\3042\212A\313$y\317\266\342\200""\010\316\007\326\032\243\002\266<\207\271\362tJ\235A\243)\014\342\341YK\203`\013\005\252\252\214\271\207Z\321'\204\202\225G\232\245\243\250\363Pj\344u\306l\227\262\317o>\277ot\016\264\354B\tXMt\"\357.\214\254\210\310P\202\357c3\277An\207\245\016\256.'\013\343\\\002\020u3\221\246\227\301\371\255\347O}\024B\265T\206\345\0316R\225\274\252\277\357\243y\222&\273\352\335T\257\233\213\n\021\236\347*A\021I$\231\"\353\244\213\207}\"\222G\313S\324g\260*\252\260\3405\335\027\323co\n\211\"u\2515\036?d\347Tf\253\235\032\264LI\246\310!\204q\252\202\231a\307A\265P\266\355\253\227N\304\253\"\325\257,\207\346Bn\362i\276\204z%\n \326\t\237>\277\037{\215\034\307\261\311\013\311 \226Y\270\2071\343\240`f-\271L\006\247J)*\004\030@\315*!0\032P\000\373\t\323\202\230\r\233\025\310A,\204\013\364\263\217r\225\322\036\244\007\305\215\375\230^\364\271\345D\224UxO\273\026\027\205\354\271\206\267#\323\2239\021\236cxI\321\361\240\201tb\320A\\\2156\234QU\326\301\026\354\317\306\\\203s\020\266\005D\312\242\222G\241uU\244gj\024\010B\205\327w~g4&n\275\317\264^\031\232\354\246\321\r\035\347\035\r\314r\236D\"\367x\222\210\366\340\316=DT\314m.\342~\342\260op(\0167\221\260\261\222\204\003\320\3006MD\304\032\023'\t\315\343\335\352\227I\335\204\373\000\370\372\374]\317;\256(\023\315\323\357\354>&\021\200\300TH\260/\020\365>\204y4\302\302L\0206j\312n:\317\266/8\227.\320\250j\345\nS\222+\223\214\372\255\013x\305\3144\350\355Y\023\033\266m\321sB\375\357\345\007\232\252\220z\250\264\362\341\262\226\205Y\333\273\273aK\346_\324:O\036-\201 \311\346iF\033\367\221\n\264p\272\330b\341\200\340\262\331a\332\341\340\020\242\353\334FaMd\313\003\022\010\234\006\247+HJ\031\212\014 j\207=d\306\243\020\221\244O/\370\273\222)\302\204\204\017Z3p";
-    PyObject *data = __Pyx_DecompressString(cstring, 1281, 2);
+    const struct { const unsigned int length: 8; } index[] = {{1},{41},{9},{57},{52},{19},{179},{1},{8},{92},{7},{6},{4},{2},{9},{23},{14},{5},{6},{10},{20},{6},{15},{33},{35},{23},{28},{23},{28},{9},{18},{9},{9},{6},{4},{18},{30},{43},{41},{6},{7},{12},{6},{8},{5},{7},{12},{14},{14},{8},{12},{6},{8},{13},{5},{10},{3},{3},{19},{6},{8},{10},{10},{8},{7},{2},{9},{3},{14},{12},{11},{10},{30},{41},{14},{12},{10},{17},{13},{4},{4},{12},{10},{12},{19},{5},{5},{8},{6},{7},{12},{6},{77},{93},{63},{132},{11},{111},{40},{106},{57},{16}};
+    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1376 bytes) */
+const char* const cstring = "BZh91AY&SY&\206+X\000\000\217\377\377\377\357\377\373\371\327\377\375\277\357\374\272\277\377\377\366\300@@@@@@@@@@@@\000@\000P\004\273\326\263,\200\240\003\014\032\202$\330\211\350\021\221\246\233S@\321\241\246\2314\r\032h\000\001\265\000\001\243M1=L\324\3654d\016\000\000\000\000\000\000\000\006\200\000\000\000\000\000\000\000\006\211\246F\242\233\322\215 zjz\236\243@\320h\r\000\000h\0004\000\320\0004\006\207\244h\365\016\000\000\000\000\000\000\000\006\200\000\000\000\000\000\000\000\004\222\t\240\230\206\215\032\247\246M&\233S$\311\246\201\221\210h4\000\001\240\000\000\000\030\202r\323\316\000`\321\301\r4\030\006\221\005_\337\364\001\376\252\010-a\235\262w\030Vu\030 fl\00362L\006\"\250\021`\031\222\214GU\232O+Q4\260\3640\351B\350\240\241S\r1VN@\256\325\255@\302\363\003\255\340\202!\303\005[\026\010\350v\275t]\263\314\306\206\310+\006o\253\353J\273\007fj\t!\\\337v\310\222\251\335U+J \355C\246\201\202J\267=\203\311\244\263\225\227\256\013\367\240\020B\010w~\365\363B\215\224\204\317f\376\352\353\245\230\326c\210\215\033h2\030\312\243L\223\347\235\270\013\277\354\206]\327to\212\316\311\2119\303\332\366\370y\2376Y\375\337[\264\236\212\2129\336\333\262Yfna\332\242M\307[\370~S\367\230\205=\314X\272\031%\365}\331\364g\325[\226~\250o:\034\224r\250\255\020\301\221\354o\230\257\242B\251X\031+w\010\333:l\344\036\265\3320\337\240\3457)\000\255D\324L{\274\205\356\370\200_0\216\324\324\336\246\341\264GL\202\244#\210`9(\210\341\000\350I=`\342D\265\003i\005\312y\373\0343\265\325\014\330\355&-\307\347\3646y\037\306\356\373\177 \027t\234\2400\030u\307\001\340@\202\033\003\214!\306L\225~_;I\334k\216\335/\306*\265M\010p\347I\001@f\014\303\2313@\200d\200%DA\031\304\314'&\033\026\n\346\3715~m)\001K3e\374\254t:\325\220(W\363\220c\307\3450\252\215\365\226!\354\257\264Rg0\354u\314\266\370|\\\327\017:\336^l\034\314\332\007\006\254\274!~\263\260\312/\347j3R\023\312\032\3730\240\257Q\313L\3514\277\032\035\002\270\271\231\231\23133\262j\355\300\250\031\np\306\367\223\262\231\247\313a5\305""\335[\rtE\324d\265Z>R\261\202}V\323\275\227@\333\264\355[Y\237)1{B\016fj\347\276\2506&\027\034\253]\271\372\350\032\020\311k\311\335\000\304\343\243\007\302O\230\251\363\230f#\244k\361\024\2746 h\265UTf\316>\307LQ|\221K(\032\245\207b\006\244j\351\276\323>[\234\367Q\313\342\305\350lA\322\246\264Eb\n\033\004\333\355\206g$\344N\206\027\361F\2627\005.D\246\230\214\201\3268\355\210\3003%O!\220\361X\331\251\263uV\300\214\210V\314\243\242\213\265\321R\257\222e\272\337\327w\212h/\221\276h\263\201\225\230\262\341:t\036\366QI\211)9L\374rM\207uL\244\241-pa\320p338z\r\226\315\nkw\000\311H\243\023\0241\001\241\256\212\n\243C6\034\244\372\322\310\267\254\2124\315\225\230\030\317\034'8Y\026\343\341l\373\333\025W5[3\310\205\350\240\177B\233\247PJv\020\352\322\303\r\230s\326\370\341\375\235\316\217M\331\211\304\254\263J8 >&\202\362\334lh\035N\244\304\247H\241\307Q\223\251\303R\0035\326L\324\351{\332vN+\034m\246\276\367\ng\244\311J2\265\034\032\357\272\n\330\025\022\030f\200Q\375\314\341\270\240\346\316:\314\260^\026\222b/\211\222!'\264\271\"\"\331\242\350\211\236\235;\250\2313>\310\246\267<2\026\241\333QdJ\212\n\246RPE\265bSQb'H\214\355\275\263\037v\223pRo\301\360\264n*V\273)\265#\225\334y\340\351\313*.D\320\1772S\020qw\026\004Y&W\234&>8ig\006\336&@\363jgh\261\312t\007S@l\241\222\310\034\245v\343\232s\377.\311l\270>%\362 \\\234\270\277Y\213\220\240s\020o\371\016\360Z\013\224\020Z/\241Kj\347,\376\252\22438{k\365S#\321\261 \t\221j\317\200\027;C\362\014\377\205\372\243\n\244\254\211\242\313*\326'\254VM\016Gi1\3302\315,^\001&\225\213\335M6\203C\246\034\030<\226$\331\265e[/F\234\3524\037\277(\311\270\037\221\337\2225\304\330\335\025\360\346`\274\230\370<\264K\312\002\375U\262Z\030\344S\027\306\236~\300\227\230\230v\255\344\027\237\263\277\243@\2240\233\347\336\235H[\240\347\22433r\361\246z\023\3752nUO^f\001\312\010\205\2641\270\006\207\3271#\013\taC\224\344\322\235\206\263W\211\233NK\377\027rE8P\220&\206+X";
+    PyObject *data = __Pyx_DecompressString(cstring, 1376, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (1146 bytes) */
-const char* const cstring = "x\332\205TMo\333F\020\215b5Q`7\216\2334_\005\232uspP4L\344\312n\352\0265TKv\214$\256\277\200\240\010\202\305\212\034I\033Q$\265\273\224\315\"\005|\324\221G\036y\344QG\037u\364\321G\036\363\023\362\023:+\312\206\342\330\315\201\344\354\354\274\3317ofi\274\251TW\266\377\336\334]\377k\203\254\226\327_V+Kd\3351]!\300T\244\315\244\002AZ\020\274\305\300\227\325\335j\345m\005L\021x\212\273\016\2513n\203u>\200\270\202h\257\357)\260\210\305\024{S\335\030\036\245\217\330\024n\227[@\3308B\271\244\313a\217\250&\227\244\313l\037\336\256;\370\345\026\251\331n\215\330\3404Ts\303U\200!L\221\225@5\221\005\006[`\363\032\010\246\300\016\210T\202\233:'\0069d\263\272\371\270\364\254D\230c\021\001\357\220\244$\322\257\2316\223\022$q\353\244\346s[q\207\250\300\003i\220\365:\t\\\2378\200\264\221\221\207q\343\000\325\004\207HP\332 s\314q\\\305\264\030\024\341\334i\314\021\213k%x\0274z\225\331\022\214efY\024\0033\345\334\206`^3 HY0\021h\376\002:>\302,RG\325\3009\021\030\3118R1\333&\\\221=\256\232d\316\343\036\341#\347x\2669\303\342\222\325l\000'{\233K\r\223\313le\265\002\323\346O\260\035\360D\202\351\013\256\002\303\013\366\177\327R9\r\351\372\302\204?|U\177\374\254\\\335Y[y\265\371\347\213\312\352\374\363W\345\025J7\203}|*()\335\200}\265\r\365\235\347\345\371\205\305\235Q\242W\314a\r\020g\226\006\245X\217o\0025\207]\242\364\363\000T\021\013Q\027\207X\231`\027\270\251\036\212\263{#\361.p\017!\314n\270\270\327\304\311\013\034\223\273\006\352\342\3728\001 k\213%L\356Z\200\006B\264\301$,\2264\014\025t\200rl\264`&\372\315\326\270\376F\223\375\323f\312\360\004os\335}\371\377\273\206\311\275&\010i0`\326\027B[V\335\360j\370\236\317\310\215\352\037\227\301\002\201\241\224Z\272M\331gT\362x\345'.\353\314Ja_)\255\373\216\211X\3328i\013m2\331\004I\271\244\247\022q\005m\211/1\034z9\034,- \030'\203\225\335RJ\333\014\265\242\331\365\246x\275\321v-\337\006}\204\303\332\331\027\366(u\245gc\254&\341\271\036\2458\230\324l\202\331\222~;[\t\220\276\2552{DM\233\372\302f\226\357x\334la\3563}\317v\273J_\002}^\307g""\366\311\331\243\361\244\237\r\352\251\003\366qF\231\255$\330\365\341\264\216x\243eA\235\r)\235\3160=g\236\207+}\307\260*mP\352{\370'\004_\340\337\310m\373\022N1\303\337\235<(\247\205\311^\251\027D\023Q1\235\272\031\026\323\302\215\360r\370(\232\305u\341\333p7\272\033\337Mf\222\271\376\275\303\271\301\314\340\307#DL\367\366\302Zt%z\227\344\222\333\211\350\177w\2706(\016\312\347%\233\354\375\334c\307\323\017\"\021\317|\274r\351\372\255p)\332\212\330\207\302\265t\352V\270\021\377\020\227\323\251{\321\367q'\311iH)\334\217\366qq5y\177XL\247o\244_\337\314\020\343\311\027\342\211x!\231H\276\300\370v\277\363\001\271v\303\355\260\223\301\227\243\207\321\326)\350zT\217GY\375\360E\324\211s\247\244?-\342\232\376.F\367\343b\\\305\314\017\223\327\375r\177K\027P\211.G\263\272\200[\232\343\331\002\026\006W\007\235\243\234.C':\310\245\371\307\311VR\357\227\017r\037\013\227\276\272\336\333\r\357G\245\250\223\346\247zka1\\\215~\212Y\232\277z\320\355\275\016\253:iZ\370&\234M\013wB,\345N\250\242_\343\265d\241?\321/\365\377\035\254\035\025ul\007\033r<\375\264\237GR\257\017_\014\366\216P\336O<\235\203\334\207\374\203\250sL\236\366'\017\177\033\264\216\267\266\323\374\315p9~\224\314&\303$\357\303_\260\220B\261?s<_\031l\034o\357\244\371\311^qx\335hw8zz2\377\003\037$\006\021";
-    PyObject *data = __Pyx_DecompressString(cstring, 1146, 1);
+    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (1266 bytes) */
+const char* const cstring = "x\332\205TKo\333F\020\216b\265V`5\226\362~\240\315\272\001\342 h\224\310\225\3354\t\032\250\226\354\030\216\035\277\000\243\t\202\305\212\\I\033Q|\355R\266\212\024\365QG\036\367\310#\217:\372\250\243\217:\362\350\237\220\237\320YR6\024'i\016$gw\347\033~\363\315\314\026\336V\252\213[\177m\354\254\274^GK\345\225W\325\312S\264bj\226\353RM\2406\341\202\272\250E\273\357\300\361Uu\247ZyW\241\232\333\265\005\263LT'\314\240\372\227\001\310r\221\332\365lAu\244\023A\336V\327\343_\251_l\270V\207\351\024\221q\204\260P\207\321=$\232\214\243\0161<\372n\305\204/\323Q\315\260j\310\240fC4\327-A\301\205\010\264\330\025M`\001\316:5X\215\272DP\243\213\270p\231\246b\202\223\2116\252\033\017KOJ\210\230:r\351{ \311\021\367j\232A8\247\034YuT\363\230!\230\211D\327\246\274\200V\352\250ky\310\244@\033\030\331\3407\016\020Mj\"N\2052\320,1MK\020%\006\00683\033\263HgJ\t\326\241\n\275D\014N\013/\210\256cpL\224\263\032.\261\233]\004\224]\342v\025\177\227:\036\300tT\007\325\250y\"0\2201\271 \206\201\230@{L4\321\254\315l\304F\233\343\321f\013:\343\244fPj&o\355iCc<Y\351\255\256f\260GP\016\372\210S\315s\231\350\026\354\356\376s%\225\331\340\226\347j\364\017O\324\037>)W\267\227\027\3276\376\\\255,\315\275\\+/b\274\321\335\207\247\002\222\342u\272/\266h}\373eyn~a{\024h\215\230\244A\3353\313\002\306\220\217\247Q\254\305U\302\370s\007P\021\022\021_w\321\023\301\276\262\215US\234=\033\211\367\225\355\030B\214\206\005gM\350\274\256\2511\253\000\272X\036t\000\345\265\205\022\004\267t\n\006@\224A8]()\030(hR\314\240\320.\321`_k\215\353_h\222\277\333D\024l\227\265\231\252>\377\377\323\202\306\354&uy\201P\242\177\303\265\245\327\013v\r\336s\t\271Q\376\3432\350\324\005W\214uU\246\3443Jy<\363\223-\375\314J@]1\256{\246\006X\3348)\013n\022\336\244\034C\322LEe\034\237J\305\004msx\271q\363s \007\023\034\267\231\222\223\026N\332,\231Y\214\333\004\224\303\311\260cp\005\333\322=\203\252\037\232\244\235|\351\036\306\026\267\r\360U\224l\313\306\030\332\024kM\252\265\270\327NV.\345\236!\022{DT\231j|\023\3133m\246\265 \366""\231.\370\326)\364\343x\300\216P\263\243\2109\0361NH\216\272\032\177\326\337\247\033t\037B\021Cpj\324\223\240\t\026,\235\326I\314\375\264\365\361\027\306 ^\251\321\204\364\225\201\261g\303\005J=\027.1\253\355qz\212\211oI~P\2162S\275R\257+'d1\312^\366\213Q&\347\237\367\357\313\031Xg\256\372;\362Fp#\314\207\263\375\233\207\263\203\374\340\301\021 \246{{~M~/\337\207\251\360Z\350\366o\037.\017\212\203\362\227\202M\365~\355\221\341\364\035\351\006\371\217\337\237\273x\305\177*7%9\316\\\210\262W\374\365\340\347\240\034eo\312\237\002'L)H\311\337\227\373\260\230\014?\034\026\243\351\\\364\303\345\0041\036|>\230\010\346\303\211\360\033\214\257\365\235c\340\332\361\267|'\201\277\220w\345\346)\350\242\254\007\243\250\236\277*\235 uJ\372\323$.\250\357\202\274\025\024\203*D\276\033\356\366\313\375M\225@E\236\2273*\201+\212\343\331\004\346\007\223\003\347(\245\322P\201\016RQ\372a\270\031\326\373\345\203\324\307\314\271\357.\366v\374[\262$\235(\235\355-\373E\177I\376\022\220(=y\320\351\355\372U\0254\312\\\362g\242\314u\037R\271\356\013\371{\260\034\316\367'\372\245\376?\203\345\243\242\362u\240 \303\351\307\3754\220\332=\\\035\354\035\201\274\237\3548\303so\206o\336F\351\234?%\237\005$\020\341\363\376\277\203\326psk\270\265\035\245\177\004\362f\270v\230\037\246\357\301\3773\331\336k\245e\266\267\352;J\r\320A\225\\\223\371(w\315o\005\371`\3468V&{\311\177 \313Q\356\226\274\027L\006N\224\003\236Q\356\252\277\031\345n\313\3421\034\337\365weY\276\t\366B\022:QV\021XP\370\203\324q\372\216t\206\350q\177\352\360YL%J_\366_\004\367\303\2310N\353\203\377\033H\233)\366\363\303\271\312`=&\nT\342\233\002w\342aP\263\362\037N\224W8";
+    PyObject *data = __Pyx_DecompressString(cstring, 1266, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (1983 bytes) */
-const char* const bytes = ".[DECRYPTION FAILED: Incorrect master key][DELETED]Decryption failed: Incorrect master key or corrupted data[ENCRYPTED: Provide a master key to view this value]Invalid blob lengthNote that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.?add_notecryptography library is required for encryption. Install it with 'pip install cryptography'.disableenableenc:gcisenabledkycli/core/security.pyx<stringsource>utf-8AESGCMPBKDF2HMAC__Pyx_PyDict_NextRefSHA256SecurityManagerSecurityManager.__reduce_cython__SecurityManager.__setstate_cython__SecurityManager.decryptSecurityManager.decrypt_blobSecurityManager.encryptSecurityManager.encrypt_blobalgorithmasyncio.coroutinesb64decodeb64encodebase64blobcline_in_tracebackcryptography.hazmat.primitivescryptography.hazmat.primitives.ciphers.aeadcryptography.hazmat.primitives.kdf.pbkdf2decodedecryptdecrypt_blobderive__dict___dictencryptencrypt_blobencrypted_blobencrypted_text__func____getstate__hashes_is_coroutineitemsiterationskycli.core.securitylength__main__master_key__module____name____new__osplaintextpop__pyx_checksum__pyx_result__pyx_state__pyx_type__pyx_unpickle_SecurityManager__pyx_vtable____qualname____reduce____reduce_cython____reduce_ex__saltself__set_name__setdefault__setstate____setstate_cython__statestrip__test__updateurandomuse_setstatevalues\200A\330\010\013\2104\210y\230\003\2301\330\014\023\2201\330\010\020\220\002\220(\230!\2301\330\010\025\220T\230\030\240\030\250\021\250'\260\031\270'\300\021\300*\310A\330\010\017\210w\220b\230\006\230j\250\001\250\026\250r\260\033\270G\3001\300A\200A\330\010\013\2104\210y\230\003\2301\330\014\023\2201\330\010\013\2103\210a\320\017\037\230r\240\021\360\006\000\016\024\220:\230Q\230a\340\010\t\330\014\024\220N\240\"\240A\330\014\031\230\036\240q\250\001\330\014\023\2204\220x\230x\240q\250\007\250|\2701\330\017\020\330\r\023\220:\230Q\230a\200A\330\010\013\2104\210y\230""\003\2305\240\003\2405\250\003\2501\330\014\023\2201\330\010\020\220\002\220(\230!\2301\330\010\025\220T\230\030\240\030\250\021\250'\260\026\260q\340\010\017\210v\220R\220q\200A\330\010\013\210?\230#\230Q\330\014\023\2201\330\010\020\220\016\230f\240A\330\010\013\2104\210u\220K\230q\240\001\330\014\023\2201\330\010\013\2104\210y\230\003\2301\330\014\023\2201\330\010\t\330\014\023\2206\230\032\2401\240E\250\021\250#\250W\260A\260Q\330\014\024\220D\230\002\230!\330\014\031\230\024\230Q\230a\330\014\023\2204\220x\230x\240q\250\007\250|\2705\300\007\300q\310\001\330\017\020\330\014\023\2201\200\001\330\004-\250Q\250f\260A\200\001\360\010\000\005\016\210T\220\032\2304\230q\330\004\014\210G\2201\220F\230,\240a\330\004\007\200v\210W\220E\230\024\230Q\330\010\022\220!\330\010\027\220q\340\010\027\220t\2309\240G\2505\260\003\2604\260}\300G\3101\330\004\007\200q\330\010\017\320\0170\260\004\260A\260W\270K\300w\310a\340\010\017\320\0170\260\004\260A\260W\270K\300q\200\001\340\004\037\230q\320 0\260\013\270;\300k\320QR\330\004\023\220?\240(\250!\2501\330\004\007\200|\2207\230!\330\0101\260\021\3202D\300N\320RS\330\004\013\2101kycli_vault_salt";
+    #else /* compression: none (2184 bytes) */
+const char* const bytes = ".[DECRYPTION FAILED: Incorrect master key][DELETED]Decryption failed: Incorrect master key or corrupted data[ENCRYPTED: Provide a master key to view this value]Invalid blob lengthNote that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.?add_notecryptography library is required for encryption. Install it with 'pip install cryptography'.disableenableenc:gcisenabledkycli/core/security.pyx<stringsource>utf-8AESGCMPBKDF2HMAC__Pyx_PyDict_NextRefSHA256SecurityManagerSecurityManager.__reduce_cython__SecurityManager.__setstate_cython__SecurityManager.decryptSecurityManager.decrypt_blobSecurityManager.encryptSecurityManager.encrypt_blobalgorithmasyncio.coroutinesb64decodeb64encodebase64blobcline_in_tracebackcryptography.hazmat.primitivescryptography.hazmat.primitives.ciphers.aeadcryptography.hazmat.primitives.kdf.pbkdf2decodedecryptdecrypt_blobderive__dict___dictencryptencrypt_blobencrypted_blobencrypted_text__func____getstate__hashes__init___is_coroutineitemsiterationskdfkeykycli.core.securitylength__main__master_key__module____name____new__osplaintextpop__pyx_checksum__pyx_result__pyx_state__pyx_type__pyx_unpickle_SecurityManager__pyx_unpickle_SecurityManager__set_state__pyx_vtable____qualname____reduce____reduce_cython____reduce_ex__saltself__set_name__setdefault__setstate____setstate_cython__statestrip__test__updateurandomuse_setstatevalues\200A\330\010\013\2104\210y\230\003\2301\330\014\023\2201\330\010\020\220\002\220(\230!\2301\330\010\025\220T\230\030\240\030\250\021\250'\260\031\270'\300\021\300*\310A\330\010\017\210w\220b\230\006\230j\250\001\250\026\250r\260\033\270G\3001\300A\200A\330\010\013\2104\210y\230\003\2301\330\014\023\2201\330\010\013\2103\210a\320\017\037\230r\240\021\360\006\000\016\024\220:\230Q\230a\340\010\t\330\014\024\220N\240\"\240A\330\014\031\230\036\240q\250\001\330\014\023\2204\220x\230x\240q\250\007\250|\2701\330\017\020""\330\r\023\220:\230Q\230a\200A\330\010\013\2104\210y\230\003\2305\240\003\2405\250\003\2501\330\014\023\2201\330\010\020\220\002\220(\230!\2301\330\010\025\220T\230\030\240\030\250\021\250'\260\026\260q\340\010\017\210v\220R\220q\200A\330\010\013\210?\230#\230Q\330\014\023\2201\330\010\020\220\016\230f\240A\330\010\013\2104\210u\220K\230q\240\001\330\014\023\2201\330\010\013\2104\210y\230\003\2301\330\014\023\2201\330\010\t\330\014\023\2206\230\032\2401\240E\250\021\250#\250W\260A\260Q\330\014\024\220D\230\002\230!\330\014\031\230\024\230Q\230a\330\014\023\2204\220x\230x\240q\250\007\250|\2705\300\007\300q\310\001\330\017\020\330\014\023\2201\200\001\330\004-\250Q\250f\260A\200\001\360\010\000\005\016\210T\220\032\2304\230q\330\004\014\210G\2201\220F\230,\240a\330\004\007\200v\210W\220E\230\024\230Q\330\010\022\220!\330\010\027\220q\340\010\027\220t\2309\240G\2505\260\003\2604\260}\300G\3101\330\004\007\200q\330\010\017\320\0170\260\004\260A\260W\270K\300w\310a\340\010\017\320\0170\260\004\260A\260W\270K\300q\320\000Z\320Z[\330\004\020\220\013\230;\240a\240t\250<\260\177\300k\320QR\320RS\330\004\035\230Q\230n\250M\270\021\320\004&\240a\330\010\014\210O\2301\330\010\014\210K\220q\330\010\013\2101\330\014\017\210w\220c\230\021\330\020\026\220k\240\021\240!\340\014\023\2201\330\014\022\220*\230A\330\020\032\230&\240\007\240q\330\020\027\220q\330\020\025\220Q\330\020\033\2301\340\014\022\220#\220W\230A\230Z\240w\250a\250q\330\014\020\220\013\2306\240\021\240!\200\001\340\004\037\230q\320 0\260\013\270;\300k\320QR\330\004\023\220?\240(\250!\2501\330\004\007\200|\2207\230!\330\0101\260\021\3202D\300N\320RS\330\004\013\2101kycli_vault_salt";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
     PyObject **stringtab = __pyx_mstate->__pyx_string_tab;
     Py_ssize_t pos = 0;
-    for (int i = 0; i < 88; i++) {
+    for (int i = 0; i < 92; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyUnicode_DecodeUTF8(bytes + pos, bytes_length, NULL);
       if (likely(string) && i >= 18) PyUnicode_InternInPlace(&string);
@@ -6497,7 +7254,7 @@ const char* const bytes = ".[DECRYPTION FAILED: Incorrect master key][DELETED]De
       stringtab[i] = string;
       pos += bytes_length;
     }
-    for (int i = 88; i < 96; i++) {
+    for (int i = 92; i < 102; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyBytes_FromStringAndSize(bytes + pos, bytes_length);
       stringtab[i] = string;
@@ -6508,15 +7265,15 @@ const char* const bytes = ".[DECRYPTION FAILED: Incorrect master key][DELETED]De
       }
     }
     Py_XDECREF(data);
-    for (Py_ssize_t i = 0; i < 96; i++) {
+    for (Py_ssize_t i = 0; i < 102; i++) {
       if (unlikely(PyObject_Hash(stringtab[i]) == -1)) {
         __PYX_ERR(0, 1, __pyx_L1_error)
       }
     }
     #if CYTHON_IMMORTAL_CONSTANTS
     {
-      PyObject **table = stringtab + 88;
-      for (Py_ssize_t i=0; i<8; ++i) {
+      PyObject **table = stringtab + 92;
+      for (Py_ssize_t i=0; i<10; ++i) {
         #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
         #if PY_VERSION_HEX < 0x030E0000
         if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -6589,39 +7346,49 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   PyObject* tuple_dedup_map = PyDict_New();
   if (unlikely(!tuple_dedup_map)) return -1;
   {
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 12};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_master_key, __pyx_mstate->__pyx_n_u_salt, __pyx_mstate->__pyx_n_u_kdf, __pyx_mstate->__pyx_n_u_key};
+    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_security_pyx, __pyx_mstate->__pyx_n_u_init, __pyx_mstate->__pyx_kp_b_iso88591_a_O1_Kq_1_wc_k_1_A_q_q_Q_1_WAZw, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
+  }
+  {
     const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 29};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_plaintext};
-    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_security_pyx, __pyx_mstate->__pyx_n_u_encrypt, __pyx_mstate->__pyx_kp_b_iso88591_A_4y_1_1_1_T_A_wb_j_r_G1A, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_security_pyx, __pyx_mstate->__pyx_n_u_encrypt, __pyx_mstate->__pyx_kp_b_iso88591_A_4y_1_1_1_T_A_wb_j_r_G1A, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 36};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_encrypted_text};
-    __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_security_pyx, __pyx_mstate->__pyx_n_u_decrypt, __pyx_mstate->__pyx_kp_b_iso88591_A_Q_1_fA_4uKq_1_4y_1_1_6_1E_WAQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_security_pyx, __pyx_mstate->__pyx_n_u_decrypt, __pyx_mstate->__pyx_kp_b_iso88591_A_Q_1_fA_4uKq_1_4y_1_1_6_1E_WAQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 52};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_blob};
-    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_security_pyx, __pyx_mstate->__pyx_n_u_encrypt_blob, __pyx_mstate->__pyx_kp_b_iso88591_A_4y_5_5_1_1_1_T_q_vRq, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_security_pyx, __pyx_mstate->__pyx_n_u_encrypt_blob, __pyx_mstate->__pyx_kp_b_iso88591_A_4y_5_5_1_1_1_T_q_vRq, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 60};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_encrypted_blob};
-    __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_security_pyx, __pyx_mstate->__pyx_n_u_decrypt_blob, __pyx_mstate->__pyx_kp_b_iso88591_A_4y_1_1_3a_r_Qa_N_A_q_4xxq_1_Qa, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_security_pyx, __pyx_mstate->__pyx_n_u_decrypt_blob, __pyx_mstate->__pyx_kp_b_iso88591_A_4y_1_1_3a_r_Qa_N_A_q_4xxq_1_Qa, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 1};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_state, __pyx_mstate->__pyx_n_u_dict_2, __pyx_mstate->__pyx_n_u_use_setstate};
-    __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_reduce_cython, __pyx_mstate->__pyx_kp_b_iso88591_T_4q_G1F_a_vWE_Q_q_t9G5_4_G1_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_reduce_cython, __pyx_mstate->__pyx_kp_b_iso88591_T_4q_G1F_a_vWE_Q_q_t9G5_4_G1_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 16};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_pyx_state};
-    __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_setstate_cython, __pyx_mstate->__pyx_kp_b_iso88591_QfA, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[6] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_setstate_cython, __pyx_mstate->__pyx_kp_b_iso88591_QfA, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[6])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 4};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_pyx_type, __pyx_mstate->__pyx_n_u_pyx_checksum, __pyx_mstate->__pyx_n_u_pyx_state, __pyx_mstate->__pyx_n_u_pyx_result};
-    __pyx_mstate_global->__pyx_codeobj_tab[6] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_pyx_unpickle_SecurityManager, __pyx_mstate->__pyx_kp_b_iso88591_q_0_kQR_1_7_1_2DNRS_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[6])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[7] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_pyx_unpickle_SecurityManager, __pyx_mstate->__pyx_kp_b_iso88591_q_0_kQR_1_7_1_2DNRS_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[7])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 11};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_pyx_result, __pyx_mstate->__pyx_n_u_pyx_state};
+    __pyx_mstate_global->__pyx_codeobj_tab[8] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_pyx_unpickle_SecurityManager_2, __pyx_mstate->__pyx_kp_b_iso88591_ZZ_at_kQRRS_QnM, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[8])) goto bad;
   }
   Py_DECREF(tuple_dedup_map);
   return 0;
@@ -7787,48 +8554,7 @@ static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *nam
     return 0;
 }
 
-/* PyErrExceptionMatches (used by PyObjectGetAttrStrNoError) */
-#if CYTHON_FAST_THREAD_STATE
-static int __Pyx_PyErr_ExceptionMatchesTuple(PyObject *exc_type, PyObject *tuple) {
-    Py_ssize_t i, n;
-    n = PyTuple_GET_SIZE(tuple);
-    for (i=0; i<n; i++) {
-        if (exc_type == PyTuple_GET_ITEM(tuple, i)) return 1;
-    }
-    for (i=0; i<n; i++) {
-        if (__Pyx_PyErr_GivenExceptionMatches(exc_type, PyTuple_GET_ITEM(tuple, i))) return 1;
-    }
-    return 0;
-}
-static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tstate, PyObject* err) {
-    int result;
-    PyObject *exc_type;
-#if PY_VERSION_HEX >= 0x030C00A6
-    PyObject *current_exception = tstate->current_exception;
-    if (unlikely(!current_exception)) return 0;
-    exc_type = (PyObject*) Py_TYPE(current_exception);
-    if (exc_type == err) return 1;
-#else
-    exc_type = tstate->curexc_type;
-    if (exc_type == err) return 1;
-    if (unlikely(!exc_type)) return 0;
-#endif
-    #if CYTHON_AVOID_BORROWED_REFS
-    Py_INCREF(exc_type);
-    #endif
-    if (unlikely(PyTuple_Check(err))) {
-        result = __Pyx_PyErr_ExceptionMatchesTuple(exc_type, err);
-    } else {
-        result = __Pyx_PyErr_GivenExceptionMatches(exc_type, err);
-    }
-    #if CYTHON_AVOID_BORROWED_REFS
-    Py_DECREF(exc_type);
-    #endif
-    return result;
-}
-#endif
-
-/* PyErrFetchRestore (used by PyObjectGetAttrStrNoError) */
+/* PyErrFetchRestore (used by Profile) */
 #if CYTHON_FAST_THREAD_STATE
 static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
 #if PY_VERSION_HEX >= 0x030C00A6
@@ -7884,6 +8610,165 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
     tstate->curexc_value = 0;
     tstate->curexc_traceback = 0;
 #endif
+}
+#endif
+
+/* Profile */
+#if CYTHON_PROFILE || CYTHON_TRACE
+#if CYTHON_TRACE && !CYTHON_USE_SYS_MONITORING
+static int __Pyx_call_line_trace_func(PyThreadState *tstate, PyFrameObject *frame, int line) {
+    int ret;
+    PyObject *type, *value, *traceback;
+    __Pyx_ErrFetchInState(tstate, &type, &value, &traceback);
+    __Pyx_PyFrame_SetLineNumber(frame, line);
+    __Pyx_EnterTracing(tstate);
+    ret = tstate->c_tracefunc(tstate->c_traceobj, frame, PyTrace_LINE, NULL);
+    __Pyx_LeaveTracing(tstate);
+    if (likely(!ret)) {
+        __Pyx_ErrRestoreInState(tstate, type, value, traceback);
+    } else {
+        Py_XDECREF(type);
+        Py_XDECREF(value);
+        Py_XDECREF(traceback);
+    }
+    return ret;
+}
+#endif
+CYTHON_UNUSED static PyCodeObject *__Pyx_createFrameCodeObject(const char *funcname, const char *srcfile, int firstlineno) {
+    PyCodeObject *py_code = PyCode_NewEmpty(srcfile, funcname, firstlineno);
+    if (likely(py_code)) {
+        py_code->co_flags |= CO_OPTIMIZED | CO_NEWLOCALS;
+    }
+    return py_code;
+}
+#if CYTHON_USE_SYS_MONITORING
+CYTHON_UNUSED static int __Pyx__TraceStartFunc(PyMonitoringState *state_array, PyObject *code_obj, int offset, int skip_event) {
+    int ret;
+    __pyx_monitoring_version_type version = 0;
+    ret = PyMonitoring_EnterScope(state_array, &version, __Pyx_MonitoringEventTypes, __Pyx_MonitoringEventTypes_CyFunc_count);
+    if (unlikely(ret == -1)) return -1;
+    return skip_event ? 0 : PyMonitoring_FirePyStartEvent(&state_array[__Pyx_Monitoring_PY_START], code_obj, offset);
+}
+CYTHON_UNUSED static int __Pyx__TraceStartGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset) {
+    int ret;
+    ret = PyMonitoring_EnterScope(state_array, version, __Pyx_MonitoringEventTypes, __Pyx_MonitoringEventTypes_CyGen_count);
+    if (unlikely(ret == -1)) return -1;
+    return PyMonitoring_FirePyStartEvent(&state_array[__Pyx_Monitoring_PY_START], code_obj, offset);
+}
+CYTHON_UNUSED static int __Pyx__TraceResumeGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset) {
+    int ret;
+    ret = PyMonitoring_EnterScope(state_array, version, __Pyx_MonitoringEventTypes, __Pyx_MonitoringEventTypes_CyGen_count);
+    if (unlikely(ret == -1)) return -1;
+    return PyMonitoring_FirePyResumeEvent(&state_array[__Pyx_Monitoring_PY_RESUME], code_obj, offset);
+}
+CYTHON_UNUSED static void __Pyx__TraceException(PyMonitoringState *monitoring_state, PyObject *code_obj, int offset, int reraised) {
+    if (reraised) {
+        (void) PyMonitoring_FireReraiseEvent(monitoring_state, code_obj, offset);
+    } else {
+        (void) PyMonitoring_FireRaiseEvent(monitoring_state, code_obj, offset);
+    }
+}
+#if CYTHON_TRACE
+CYTHON_UNUSED static int __Pyx__TraceLine(PyMonitoringState *monitoring_state, PyObject *code_obj, int line, int offset) {
+    int ret;
+    PyObject *exc = PyErr_GetRaisedException();
+    ret = PyMonitoring_FireLineEvent(monitoring_state, code_obj, offset, line);
+    if (exc) PyErr_SetRaisedException(exc);
+    return ret;
+}
+#endif
+#else
+static int __Pyx_TraceSetupAndCall(PyCodeObject** code,
+                                   PyFrameObject** frame,
+                                   PyThreadState* tstate,
+                                   const char *funcname,
+                                   const char *srcfile,
+                                   int firstlineno,
+                                   int skip_event) {
+    if (*frame == NULL || !CYTHON_PROFILE_REUSE_FRAME) {
+        int needs_new_code_obj = (*code == NULL);
+        if (needs_new_code_obj) {
+            *code = __Pyx_createFrameCodeObject(funcname, srcfile, firstlineno);
+            if (*code == NULL) return 0;
+        }
+        *frame = PyFrame_New(
+            tstate,                          /*PyThreadState *tstate*/
+            *code,                           /*PyCodeObject *code*/
+            __pyx_mstate_global->__pyx_d,    /*PyObject *globals*/
+            0                                /*PyObject *locals*/
+        );
+        if (needs_new_code_obj && !CYTHON_PROFILE_REUSE_CODEOBJ)
+            Py_CLEAR(*code); // otherwise the reference is owned externally
+        if (*frame == NULL) return 0;
+        if (CYTHON_TRACE && (*frame)->f_trace == NULL) {
+            Py_INCREF(Py_None);
+            (*frame)->f_trace = Py_None;
+        }
+    }
+    if (!skip_event) {
+        PyObject *type, *value, *traceback;
+        int retval = 1;
+        __Pyx_PyFrame_SetLineNumber(*frame, firstlineno);
+        __Pyx_EnterTracing(tstate);
+        __Pyx_ErrFetchInState(tstate, &type, &value, &traceback);
+        #if CYTHON_TRACE
+        if (tstate->c_tracefunc)
+            retval = tstate->c_tracefunc(tstate->c_traceobj, *frame, PyTrace_CALL, NULL) == 0;
+        if (retval && tstate->c_profilefunc)
+        #endif
+            retval = tstate->c_profilefunc(tstate->c_profileobj, *frame, PyTrace_CALL, NULL) == 0;
+        __Pyx_LeaveTracing(tstate);
+        if (unlikely(!retval)) {
+            Py_XDECREF(type);
+            Py_XDECREF(value);
+            Py_XDECREF(traceback);
+            return -1;
+        }
+        __Pyx_ErrRestoreInState(tstate, type, value, traceback);
+    }
+    return __Pyx_IsTracing(tstate, 0, 0);
+}
+#endif
+#endif
+
+/* PyErrExceptionMatches (used by PyObjectGetAttrStrNoError) */
+#if CYTHON_FAST_THREAD_STATE
+static int __Pyx_PyErr_ExceptionMatchesTuple(PyObject *exc_type, PyObject *tuple) {
+    Py_ssize_t i, n;
+    n = PyTuple_GET_SIZE(tuple);
+    for (i=0; i<n; i++) {
+        if (exc_type == PyTuple_GET_ITEM(tuple, i)) return 1;
+    }
+    for (i=0; i<n; i++) {
+        if (__Pyx_PyErr_GivenExceptionMatches(exc_type, PyTuple_GET_ITEM(tuple, i))) return 1;
+    }
+    return 0;
+}
+static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tstate, PyObject* err) {
+    int result;
+    PyObject *exc_type;
+#if PY_VERSION_HEX >= 0x030C00A6
+    PyObject *current_exception = tstate->current_exception;
+    if (unlikely(!current_exception)) return 0;
+    exc_type = (PyObject*) Py_TYPE(current_exception);
+    if (exc_type == err) return 1;
+#else
+    exc_type = tstate->curexc_type;
+    if (exc_type == err) return 1;
+    if (unlikely(!exc_type)) return 0;
+#endif
+    #if CYTHON_AVOID_BORROWED_REFS
+    Py_INCREF(exc_type);
+    #endif
+    if (unlikely(PyTuple_Check(err))) {
+        result = __Pyx_PyErr_ExceptionMatchesTuple(exc_type, err);
+    } else {
+        result = __Pyx_PyErr_GivenExceptionMatches(exc_type, err);
+    }
+    #if CYTHON_AVOID_BORROWED_REFS
+    Py_DECREF(exc_type);
+    #endif
+    return result;
 }
 #endif
 
