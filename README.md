@@ -113,7 +113,6 @@ kyws
 
 #### `kymv` — Move Key
 Moves a key (and its value) from the current workspace to another.
-- **Safety**: Asks for confirmation if the key exists in the target.
 ```bash
 kymv my_api_key project_beta
 # Result: ✅ Moved 'my_api_key' to 'project_beta'.
@@ -121,16 +120,37 @@ kymv my_api_key project_beta
 
 #### `kydrop` — Delete Workspace
 Permanently deletes an entire workspace and its database file.
-- **Safety**: Requires explicit confirmation (`y/N`) in CLI.
-- **Restriction**: You cannot drop the currently active workspace.
 ```bash
 kydrop temp_test
 # Result: ⚠️ DANGER: Are you sure you want to PERMANENTLY delete workspace 'temp_test'? (y/N): y
 # Result: ✅ Workspace 'temp_test' deleted.
 ```
 
----
 
+## 🧭 Roadmap (Planned Features)
+
+### High-Value Additions
+- **Batch Queue Ops**: `kypush --file` and `kypop --n 100` for throughput.
+- **Delayed Jobs**: `kypush --delay 30s` with scheduled dequeue.
+- **Visibility Timeout**: `kypop --lease 30s` + `kyack`/`kynack` for retry flows.
+- **Workspace TTL Policies**: Default TTL per workspace + `kyttl set/get`.
+
+### Usability & DX
+- **Interactive CLI Prompts**: Fuzzy key search + history in non-TUI mode.
+- **Config Profiles**: `kyprofile use prod` to switch db path, master key, defaults.
+- **Output Formatting**: `--json` everywhere; `--pretty` for tables.
+
+### Security & Compliance
+- **Key ACLs / Scopes**: Read-only mode, write lock, per-workspace access key.
+- **Audit Export**: `kyaudit export` with time filters.
+
+### Observability
+- **Stats Command**: `kystats` for size, counts, TTL expirations, queue depth.
+- **Metrics Endpoint**: Optional local HTTP for queue depth + ops/sec.
+
+### Data Management
+- **Namespace/Prefix Views**: `kyws view <prefix>` for large stores.
+- **Backup/Restore**: `kybackup` with encryption and versioned snapshots.
 ### `kyh` — The Help Center
 Shows the available commands and basic usage instructions.
 ```bash

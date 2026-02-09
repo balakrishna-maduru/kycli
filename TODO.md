@@ -41,6 +41,21 @@ This list tracks the progress of implementing high-performance and robust enhanc
 - [ ] **Activity Logs**: Background logging via Python `logging` module.
 - [ ] **Atomic Rename Exports**: Write-to-temp-then-rename for export safety.
 - [ ] **Compression**: Optional MsgPack/Zstd for large values.
+
+## Phase 8: Roadmap (Planned Features) 🧭
+- [ ] **Batch Queue Ops**: `kypush --file` and `kypop --n 100` for throughput.
+- [ ] **Delayed Jobs**: `kypush --delay 30s` with scheduled dequeue.
+- [ ] **Visibility Timeout**: `kypop --lease 30s` + `kyack`/`kynack` for retry flows.
+- [ ] **Workspace TTL Policies**: Default TTL per workspace + `kyttl set/get`.
+- [ ] **Interactive CLI Prompts**: Fuzzy key search + history in non-TUI mode.
+- [ ] **Config Profiles**: `kyprofile use prod` to switch db path, master key, defaults.
+- [ ] **Output Formatting**: `--json` everywhere; `--pretty` for tables.
+- [ ] **Key ACLs / Scopes**: Read-only mode, write lock, per-workspace access key.
+- [ ] **Audit Export**: `kyaudit export` with time filters.
+- [ ] **Stats Command**: `kystats` for size, counts, TTL expirations, queue depth.
+- [ ] **Metrics Endpoint**: Optional local HTTP for queue depth + ops/sec.
+- [ ] **Namespace/Prefix Views**: `kyws view <prefix>` for large stores.
+- [ ] **Backup/Restore**: `kybackup` with encryption and versioned snapshots.
 ## Phase 7: Community & Branding 🤝
 - [x] **Community Guidelines** (COC, Contributing, Security)
 - [x] **Issue Templates**

@@ -38,6 +38,11 @@ kyuse my_queue
 ### 2. Queue Operations (FIFO)
 Queues add items to the tail and remove from the head.
 
+**How it works:**
+- Each `kypush` writes an item into the queue table.
+- `kypeek` reads the next item without removing it.
+- `kypop` removes the next item in FIFO order (oldest first).
+
 ```bash
 # Push items (No key needed!)
 kypush "process_image_1.jpg"
@@ -55,6 +60,10 @@ kypop
 ### 3. Stack Operations (LIFO)
 Stacks add to the top and remove from the top.
 
+**How it works:**
+- `kypush` adds a new item to the top of the stack.
+- `kypop` removes the most recently pushed item.
+
 ```bash
 kyws create my_stack --type stack
 kyuse my_stack
@@ -68,6 +77,10 @@ kypop
 
 ### 4. Priority Queues
 Items with **higher priority number** are popped first.
+
+**How it works:**
+- Each `kypush` stores the item plus its priority.
+- `kypop` returns the highest priority first; ties are FIFO by insertion order.
 
 ```bash
 kyws create my_triage --type priority_queue
@@ -96,6 +109,36 @@ kyclear
 
 ---
 
+## End-to-End Example (Queue Worker)
+
+**Producer** (enqueue jobs):
+```bash
+kyws create jobs --type queue
+kyuse jobs
+
+kypush "resize:img_001.jpg"
+kypush "resize:img_002.jpg"
+kypush "resize:img_003.jpg"
+```
+
+**Consumer** (process jobs):
+```bash
+while true; do
+    job=$(kypop)
+    if [ "$job" = "None" ] || [ -z "$job" ]; then
+        break
+    fi
+    echo "processing $job"
+done
+```
+
+**Inspect queue depth:**
+```bash
+kycount
+```
+
+---
+
 ## Python API Integration
 
 You can use `Kycore` directly in your Python applications for high-performance embeddable queues.
@@ -119,3 +162,75 @@ if item:
 ### Concurrency
 To share a queue between threads, pass the `Kycore` instance or use a properly configured shared connection.
 `kypush` and `kypop` utilize SQLite's atomic locking, making `kycli` a robust alternative to Redis/RabbitMQ for single-node setups.
+
+---
+
+## Planned Queue Features (Roadmap)
+
+These are upcoming improvements for typed workspaces. They are **not implemented yet**, but are planned and tracked in the roadmap.
+
+### 1. Batch Queue Ops
+Increase throughput for large workloads.
+
+**Proposed behavior:**
+- `kypush --file` reads one item per line and enqueues them in order.
+- `kypop --n` returns a newline-delimited batch in FIFO/LIFO/priority order.
+
+```bash
+# Push a batch of items from file (one item per line)
+kypush --file tasks.txt
+
+# Pop N items at once
+kypop --n 100
+```
+
+### 2. Delayed Jobs
+Schedule items to become visible after a delay.
+
+**Proposed behavior:**
+- Jobs are stored with `available_at` timestamp.
+- `kypop` ignores items not yet visible.
+
+```bash
+kypush "email:user_123" --delay 30s
+```
+
+### 3. Visibility Timeout (Lease + Retry)
+Allow consumers to lease work items with retry flows.
+
+**Proposed behavior:**
+- `kypop --lease` returns a `receipt_id` for ack/nack.
+- If not acked within lease duration, the item becomes visible again.
+- `kynack` can requeue with backoff or move to a dead-letter queue.
+
+```bash
+# Lease an item for 30 seconds
+kypop --lease 30s
+
+# Acknowledge completion
+kyack <receipt_id>
+
+# Re-queue the item for retry
+kynack <receipt_id>
+```
+
+### 4. Workspace TTL Policies
+Set default TTL for all new items in a workspace.
+
+**Proposed behavior:**
+- `kyttl set` stores a workspace-level default TTL.
+- `kypush` and `kys` inherit TTL unless overridden.
+
+```bash
+kyttl set 7d
+kyttl get
+```
+
+---
+
+## Known Gaps (Not Implemented Yet)
+
+- No batch queue operations (`--file`, `--n`).
+- No delayed jobs or scheduled dequeue.
+- No visibility timeout, `kyack`, or `kynack` flow.
+- No per-workspace default TTL policies.
