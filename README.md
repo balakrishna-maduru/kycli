@@ -693,6 +693,6 @@ PYTHONPATH=. python3 tests/performance/kycli_benchmark.py
 
 **Balakrishna Maduru**  
 - [GitHub](https://github.com/balakrishna-maduru)  
-- [LinkedIn](https://www.linkedin.com/in/balakrishna-maduru/in/balakrishna-maduru)  
+- [LinkedIn](https://www.linkedin.com/in/balakrishna-maduru)  
 - [Twitter](https://x.com/krishonlyyou)
 
