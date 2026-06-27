@@ -15,10 +15,16 @@ When creating a workspace, you can assign it a specific type. This type enforces
 | **Priority Queue** | Ordered by priority (Highest first). | Task scheduling, Triage systems |
 
 ### Atomic Guarantees
-All Queue/Stack operations (`push`, `pop`) are **Atomic** and use `BEGIN IMMEDIATE` transaction locking. This ensures:
+All Queue/Stack operations (`push`, `pop`) are **Atomic**: in-memory transactions use
+`BEGIN IMMEDIATE` locking, and every write is serialized to disk via a cross-process
+`flock` (POSIX) plus an atomic temp-file-then-rename, with the latest on-disk state
+reloaded before each mutation. This ensures:
 - **Zero Duplicates**: Multiple consumers will never pop the same item.
-- **Zero Data Loss**: Pop operations are transactional; if a script crashes mid-pop, the data remains (unless successfully committed).
-- **Thread Safety**: Safe for concurrent use across threads (via shared instance) or processes (via SQLite locking).
+- **Zero Data Loss**: Writes from independent processes sharing one workspace file are
+  serialized rather than silently overwriting each other.
+- **Thread Safety**: Safe for concurrent use across threads (via a shared instance) or
+  across independent processes (via the cross-process lock). Windows note: atomic writes
+  still prevent corruption, but cross-process mutual exclusion requires POSIX `flock`.
 
 ---
 
@@ -160,21 +166,24 @@ if item:
 ```
 
 ### Concurrency
-To share a queue between threads, pass the `Kycore` instance or use a properly configured shared connection.
-`kypush` and `kypop` utilize SQLite's atomic locking, making `kycli` a robust alternative to Redis/RabbitMQ for single-node setups.
+Within one process, share a single `Kycore` instance across threads — `push`/`pop` use an
+in-process lock plus `BEGIN IMMEDIATE` transactions. Across processes, each `Kycore`
+instance (e.g. each `kycli` CLI invocation) coordinates through a cross-process `flock` on
+a sidecar lock file, reloading the latest on-disk state before every write, making
+`kycli` a robust single-node alternative to Redis/RabbitMQ for these workloads.
 
 ---
 
-## Planned Queue Features (Roadmap)
+## Advanced Queue Features
 
-These are upcoming improvements for typed workspaces. They are **not implemented yet**, but are planned and tracked in the roadmap.
+These queue capabilities are now implemented for typed workspaces.
 
 ### 1. Batch Queue Ops
 Increase throughput for large workloads.
 
-**Proposed behavior:**
+**Current behavior:**
 - `kypush --file` reads one item per line and enqueues them in order.
-- `kypop --n` returns a newline-delimited batch in FIFO/LIFO/priority order.
+- `kypop --n` returns a JSON array when combined with `--json`, or Python-style output otherwise.
 
 ```bash
 # Push a batch of items from file (one item per line)
@@ -187,9 +196,9 @@ kypop --n 100
 ### 2. Delayed Jobs
 Schedule items to become visible after a delay.
 
-**Proposed behavior:**
+**Current behavior:**
 - Jobs are stored with `available_at` timestamp.
-- `kypop` ignores items not yet visible.
+- `kypop` and `kypeek` ignore items not yet visible.
 
 ```bash
 kypush "email:user_123" --delay 30s
@@ -198,10 +207,10 @@ kypush "email:user_123" --delay 30s
 ### 3. Visibility Timeout (Lease + Retry)
 Allow consumers to lease work items with retry flows.
 
-**Proposed behavior:**
+**Current behavior:**
 - `kypop --lease` returns a `receipt_id` for ack/nack.
-- If not acked within lease duration, the item becomes visible again.
-- `kynack` can requeue with backoff or move to a dead-letter queue.
+- If not acked within the lease duration, the item becomes visible again.
+- `kynack` can requeue the item immediately or with `--delay`.
 
 ```bash
 # Lease an item for 30 seconds
@@ -217,7 +226,7 @@ kynack <receipt_id>
 ### 4. Workspace TTL Policies
 Set default TTL for all new items in a workspace.
 
-**Proposed behavior:**
+**Current behavior:**
 - `kyttl set` stores a workspace-level default TTL.
 - `kypush` and `kys` inherit TTL unless overridden.
 
@@ -228,9 +237,8 @@ kyttl get
 
 ---
 
-## Known Gaps (Not Implemented Yet)
+## Remaining Gaps
 
-- No batch queue operations (`--file`, `--n`).
-- No delayed jobs or scheduled dequeue.
-- No visibility timeout, `kyack`, or `kynack` flow.
-- No per-workspace default TTL policies.
+- No dead-letter queue support yet.
+- No consumer group abstraction yet.
+- No built-in queue retry policy beyond manual `kynack --delay`.

@@ -36,6 +36,15 @@ kypeek = "kycli.cli:main"
 kypop = "kycli.cli:main"
 kycount = "kycli.cli:main"
 kyclear = "kycli.cli:main"
+kyack = "kycli.cli:main"
+kynack = "kycli.cli:main"
+kyttl = "kycli.cli:main"
+kyprofile = "kycli.cli:main"
+kyacl = "kycli.cli:main"
+kyaudit = "kycli.cli:main"
+kystats = "kycli.cli:main"
+kybackup = "kycli.cli:main"
+kymetrics = "kycli.cli:main"
 
 
 [build-system]

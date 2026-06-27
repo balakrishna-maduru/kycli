@@ -3,16 +3,6 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "define_macros": [
-            [
-                "CYTHON_TRACE",
-                "1"
-            ],
-            [
-                "CYTHON_TRACE_NOGIL",
-                "1"
-            ]
-        ],
         "depends": [
             "/opt/homebrew/opt/sqlite/include/sqlite3.h"
         ],
@@ -1538,62 +1528,6 @@ static const char* const __pyx_f[] = {
 #define __Pyx_END_CRITICAL_SECTION Py_END_CRITICAL_SECTION
 #endif
 
-/* Profile_config.proto (used by Profile) */
-#ifndef CYTHON_PROFILE
-#if CYTHON_COMPILING_IN_LIMITED_API || CYTHON_COMPILING_IN_PYPY
-  #define CYTHON_PROFILE 0
-#else
-  #define CYTHON_PROFILE 1
-#endif
-#endif
-#ifndef CYTHON_TRACE_NOGIL
-  #define CYTHON_TRACE_NOGIL 0
-#else
-  #if CYTHON_TRACE_NOGIL && !defined(CYTHON_TRACE)
-    #define CYTHON_TRACE 1
-  #endif
-#endif
-#ifndef CYTHON_TRACE
-  #define CYTHON_TRACE 0
-#endif
-#if CYTHON_PROFILE || CYTHON_TRACE
-#if CYTHON_USE_SYS_MONITORING
-    typedef enum {
-        __Pyx_Monitoring_PY_START = 0,
-        __Pyx_Monitoring_PY_RETURN,
-        __Pyx_Monitoring_PY_UNWIND,
-        __Pyx_Monitoring_LINE,
-        __Pyx_Monitoring_RAISE,
-        __Pyx_Monitoring_RERAISE,
-        __Pyx_Monitoring_EXCEPTION_HANDLED,
-        __Pyx_Monitoring_PY_RESUME,
-        __Pyx_Monitoring_PY_YIELD,
-        __Pyx_Monitoring_STOP_ITERATION,
-    } __Pyx_Monitoring_Event_Index;
-    static const unsigned char __Pyx_MonitoringEventTypes[] = {
-        PY_MONITORING_EVENT_PY_START,
-        PY_MONITORING_EVENT_PY_RETURN,
-        PY_MONITORING_EVENT_PY_UNWIND,
-        PY_MONITORING_EVENT_LINE,
-        PY_MONITORING_EVENT_RAISE,
-        PY_MONITORING_EVENT_RERAISE,
-        PY_MONITORING_EVENT_EXCEPTION_HANDLED,
-        PY_MONITORING_EVENT_PY_RESUME,
-        PY_MONITORING_EVENT_PY_YIELD,
-        PY_MONITORING_EVENT_STOP_ITERATION,
-    };
-    #define __Pyx_MonitoringEventTypes_CyFunc_count (sizeof(__Pyx_MonitoringEventTypes) - 3)
-    #define __Pyx_MonitoringEventTypes_CyGen_count (sizeof(__Pyx_MonitoringEventTypes))
-#endif
-#endif
-
-/* NoFastGil.proto */
-#define __Pyx_PyGILState_Ensure PyGILState_Ensure
-#define __Pyx_PyGILState_Release PyGILState_Release
-#define __Pyx_FastGIL_Remember()
-#define __Pyx_FastGIL_Forget()
-#define __Pyx_FastGilFuncInit()
-
 /* IncludeStructmemberH.proto (used by FixUpExtensionType) */
 #include <structmember.h>
 
@@ -1620,8 +1554,8 @@ struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine {
 
 
 
-/* "kycli/core/engine.pyx":5
- * import os
+/* "kycli/core/engine.pyx":20
+ *     time.sleep(delay_ms / 1000.0)
  * 
  * cdef class DatabaseEngine:             # <<<<<<<<<<<<<<
  *     def __init__(self, str db_path):
@@ -1775,62 +1709,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStrNoError(PyObject* obj, P
 /* GetBuiltinName.proto */
 static PyObject *__Pyx_GetBuiltinName(PyObject *name);
 
-/* TupleAndListFromArray.proto (used by fastcall) */
-#if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE PyObject* __Pyx_PyList_FromArray(PyObject *const *src, Py_ssize_t n);
-#endif
-#if CYTHON_COMPILING_IN_CPYTHON || CYTHON_METH_FASTCALL
-static CYTHON_INLINE PyObject* __Pyx_PyTuple_FromArray(PyObject *const *src, Py_ssize_t n);
-#endif
-
-/* IncludeStringH.proto (used by BytesEquals) */
-#include <string.h>
-
-/* BytesEquals.proto (used by UnicodeEquals) */
-static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals);
-
-/* UnicodeEquals.proto (used by fastcall) */
-static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals);
-
-/* fastcall.proto */
-#if CYTHON_AVOID_BORROWED_REFS
-    #define __Pyx_ArgRef_VARARGS(args, i) __Pyx_PySequence_ITEM(args, i)
-#elif CYTHON_ASSUME_SAFE_MACROS
-    #define __Pyx_ArgRef_VARARGS(args, i) __Pyx_NewRef(__Pyx_PyTuple_GET_ITEM(args, i))
-#else
-    #define __Pyx_ArgRef_VARARGS(args, i) __Pyx_XNewRef(PyTuple_GetItem(args, i))
-#endif
-#define __Pyx_NumKwargs_VARARGS(kwds) PyDict_Size(kwds)
-#define __Pyx_KwValues_VARARGS(args, nargs) NULL
-#define __Pyx_GetKwValue_VARARGS(kw, kwvalues, s) __Pyx_PyDict_GetItemStrWithError(kw, s)
-#define __Pyx_KwargsAsDict_VARARGS(kw, kwvalues) PyDict_Copy(kw)
-#if CYTHON_METH_FASTCALL
-    #define __Pyx_ArgRef_FASTCALL(args, i) __Pyx_NewRef(args[i])
-    #define __Pyx_NumKwargs_FASTCALL(kwds) __Pyx_PyTuple_GET_SIZE(kwds)
-    #define __Pyx_KwValues_FASTCALL(args, nargs) ((args) + (nargs))
-    static CYTHON_INLINE PyObject * __Pyx_GetKwValue_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues, PyObject *s);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030d0000 || CYTHON_COMPILING_IN_LIMITED_API
-    CYTHON_UNUSED static PyObject *__Pyx_KwargsAsDict_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues);
-  #else
-    #define __Pyx_KwargsAsDict_FASTCALL(kw, kwvalues) _PyStack_AsDict(kwvalues, kw)
-  #endif
-#else
-    #define __Pyx_ArgRef_FASTCALL __Pyx_ArgRef_VARARGS
-    #define __Pyx_NumKwargs_FASTCALL __Pyx_NumKwargs_VARARGS
-    #define __Pyx_KwValues_FASTCALL __Pyx_KwValues_VARARGS
-    #define __Pyx_GetKwValue_FASTCALL __Pyx_GetKwValue_VARARGS
-    #define __Pyx_KwargsAsDict_FASTCALL __Pyx_KwargsAsDict_VARARGS
-#endif
-#define __Pyx_ArgsSlice_VARARGS(args, start, stop) PyTuple_GetSlice(args, start, stop)
-#if CYTHON_METH_FASTCALL || (CYTHON_COMPILING_IN_CPYTHON && CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS)
-#define __Pyx_ArgsSlice_FASTCALL(args, start, stop) __Pyx_PyTuple_FromArray(args + start, stop - start)
-#else
-#define __Pyx_ArgsSlice_FASTCALL(args, start, stop) PyTuple_GetSlice(args, start, stop)
-#endif
-
-/* py_dict_items.proto (used by OwnedDictNext) */
-static CYTHON_INLINE PyObject* __Pyx_PyDict_Items(PyObject* d);
-
 /* CallCFunction.proto (used by CallUnboundCMethod0) */
 #define __Pyx_CallCFunction(cfunc, self, args)\
     ((PyCFunction)(void(*)(void))(cfunc)->func)(self, args)
@@ -1901,6 +1779,115 @@ static CYTHON_INLINE PyObject* __Pyx_CallUnboundCMethod0(__Pyx_CachedCFunction* 
 #else
 #define __Pyx_CallUnboundCMethod0(cfunc, self)  __Pyx__CallUnboundCMethod0(cfunc, self)
 #endif
+
+/* PyUnicodeContains.proto */
+static CYTHON_INLINE int __Pyx_PyUnicode_ContainsTF(PyObject* substring, PyObject* text, int eq) {
+    int result = PyUnicode_Contains(text, substring);
+    return unlikely(result < 0) ? result : (result == (eq == Py_EQ));
+}
+
+/* PyDictVersioning.proto (used by GetModuleGlobalName) */
+#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
+#define __PYX_DICT_VERSION_INIT  ((PY_UINT64_T) -1)
+#define __PYX_GET_DICT_VERSION(dict)  (((PyDictObject*)(dict))->ma_version_tag)
+#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)\
+    (version_var) = __PYX_GET_DICT_VERSION(dict);\
+    (cache_var) = (value);
+#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP) {\
+    static PY_UINT64_T __pyx_dict_version = 0;\
+    static PyObject *__pyx_dict_cached_value = NULL;\
+    if (likely(__PYX_GET_DICT_VERSION(DICT) == __pyx_dict_version)) {\
+        (VAR) = __Pyx_XNewRef(__pyx_dict_cached_value);\
+    } else {\
+        (VAR) = __pyx_dict_cached_value = (LOOKUP);\
+        __pyx_dict_version = __PYX_GET_DICT_VERSION(DICT);\
+    }\
+}
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj);
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj);
+static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version);
+#else
+#define __PYX_GET_DICT_VERSION(dict)  (0)
+#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)
+#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP)  (VAR) = (LOOKUP);
+#endif
+
+/* GetModuleGlobalName.proto */
+#if CYTHON_USE_DICT_VERSIONS
+#define __Pyx_GetModuleGlobalName(var, name)  do {\
+    static PY_UINT64_T __pyx_dict_version = 0;\
+    static PyObject *__pyx_dict_cached_value = NULL;\
+    (var) = (likely(__pyx_dict_version == __PYX_GET_DICT_VERSION(__pyx_mstate_global->__pyx_d))) ?\
+        (likely(__pyx_dict_cached_value) ? __Pyx_NewRef(__pyx_dict_cached_value) : __Pyx_GetBuiltinName(name)) :\
+        __Pyx__GetModuleGlobalName(name, &__pyx_dict_version, &__pyx_dict_cached_value);\
+} while(0)
+#define __Pyx_GetModuleGlobalNameUncached(var, name)  do {\
+    PY_UINT64_T __pyx_dict_version;\
+    PyObject *__pyx_dict_cached_value;\
+    (var) = __Pyx__GetModuleGlobalName(name, &__pyx_dict_version, &__pyx_dict_cached_value);\
+} while(0)
+static PyObject *__Pyx__GetModuleGlobalName(PyObject *name, PY_UINT64_T *dict_version, PyObject **dict_cached_value);
+#else
+#define __Pyx_GetModuleGlobalName(var, name)  (var) = __Pyx__GetModuleGlobalName(name)
+#define __Pyx_GetModuleGlobalNameUncached(var, name)  (var) = __Pyx__GetModuleGlobalName(name)
+static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name);
+#endif
+
+/* TupleAndListFromArray.proto (used by fastcall) */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyList_FromArray(PyObject *const *src, Py_ssize_t n);
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON || CYTHON_METH_FASTCALL
+static CYTHON_INLINE PyObject* __Pyx_PyTuple_FromArray(PyObject *const *src, Py_ssize_t n);
+#endif
+
+/* IncludeStringH.proto (used by BytesEquals) */
+#include <string.h>
+
+/* BytesEquals.proto (used by UnicodeEquals) */
+static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals);
+
+/* UnicodeEquals.proto (used by fastcall) */
+static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals);
+
+/* fastcall.proto */
+#if CYTHON_AVOID_BORROWED_REFS
+    #define __Pyx_ArgRef_VARARGS(args, i) __Pyx_PySequence_ITEM(args, i)
+#elif CYTHON_ASSUME_SAFE_MACROS
+    #define __Pyx_ArgRef_VARARGS(args, i) __Pyx_NewRef(__Pyx_PyTuple_GET_ITEM(args, i))
+#else
+    #define __Pyx_ArgRef_VARARGS(args, i) __Pyx_XNewRef(PyTuple_GetItem(args, i))
+#endif
+#define __Pyx_NumKwargs_VARARGS(kwds) PyDict_Size(kwds)
+#define __Pyx_KwValues_VARARGS(args, nargs) NULL
+#define __Pyx_GetKwValue_VARARGS(kw, kwvalues, s) __Pyx_PyDict_GetItemStrWithError(kw, s)
+#define __Pyx_KwargsAsDict_VARARGS(kw, kwvalues) PyDict_Copy(kw)
+#if CYTHON_METH_FASTCALL
+    #define __Pyx_ArgRef_FASTCALL(args, i) __Pyx_NewRef(args[i])
+    #define __Pyx_NumKwargs_FASTCALL(kwds) __Pyx_PyTuple_GET_SIZE(kwds)
+    #define __Pyx_KwValues_FASTCALL(args, nargs) ((args) + (nargs))
+    static CYTHON_INLINE PyObject * __Pyx_GetKwValue_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues, PyObject *s);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030d0000 || CYTHON_COMPILING_IN_LIMITED_API
+    CYTHON_UNUSED static PyObject *__Pyx_KwargsAsDict_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues);
+  #else
+    #define __Pyx_KwargsAsDict_FASTCALL(kw, kwvalues) _PyStack_AsDict(kwvalues, kw)
+  #endif
+#else
+    #define __Pyx_ArgRef_FASTCALL __Pyx_ArgRef_VARARGS
+    #define __Pyx_NumKwargs_FASTCALL __Pyx_NumKwargs_VARARGS
+    #define __Pyx_KwValues_FASTCALL __Pyx_KwValues_VARARGS
+    #define __Pyx_GetKwValue_FASTCALL __Pyx_GetKwValue_VARARGS
+    #define __Pyx_KwargsAsDict_FASTCALL __Pyx_KwargsAsDict_VARARGS
+#endif
+#define __Pyx_ArgsSlice_VARARGS(args, start, stop) PyTuple_GetSlice(args, start, stop)
+#if CYTHON_METH_FASTCALL || (CYTHON_COMPILING_IN_CPYTHON && CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS)
+#define __Pyx_ArgsSlice_FASTCALL(args, start, stop) __Pyx_PyTuple_FromArray(args + start, stop - start)
+#else
+#define __Pyx_ArgsSlice_FASTCALL(args, start, stop) PyTuple_GetSlice(args, start, stop)
+#endif
+
+/* py_dict_items.proto (used by OwnedDictNext) */
+static CYTHON_INLINE PyObject* __Pyx_PyDict_Items(PyObject* d);
 
 /* py_dict_values.proto (used by OwnedDictNext) */
 static CYTHON_INLINE PyObject* __Pyx_PyDict_Values(PyObject* d);
@@ -1976,432 +1963,6 @@ static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *nam
     ((likely(__Pyx_IS_TYPE(obj, type) | (none_allowed && (obj == Py_None)))) ? 1 :\
         __Pyx__ArgTypeTest(obj, type, name, exact))
 
-/* Profile.proto */
-#if CYTHON_TRACE
-  #undef CYTHON_PROFILE_REUSE_FRAME
-#endif
-#if CYTHON_USE_MODULE_STATE
-  #undef CYTHON_PROFILE_REUSE_CODEOBJ
-  #define CYTHON_PROFILE_REUSE_CODEOBJ 0
-  #undef CYTHON_PROFILE_REUSE_FRAME
-#endif
-#ifndef CYTHON_PROFILE_REUSE_CODEOBJ
-  #define CYTHON_PROFILE_REUSE_CODEOBJ 1
-#endif
-#ifndef CYTHON_PROFILE_REUSE_FRAME
-  #define CYTHON_PROFILE_REUSE_FRAME 0
-#endif
-#if CYTHON_USE_SYS_MONITORING && (CYTHON_PROFILE || CYTHON_TRACE)
-  #define __PYX_MONITORING_ABI_SUFFIX  "_mon"
-#else
-  #define __PYX_MONITORING_ABI_SUFFIX
-#endif
-#if CYTHON_PROFILE || CYTHON_TRACE
-#if CYTHON_USE_SYS_MONITORING
-  typedef uint64_t __pyx_monitoring_version_type;
-  #define __Pyx_TraceDeclarationsFunc\
-      PyObject *__pyx_frame_code = NULL;\
-      PyMonitoringState __pyx_pymonitoring_state[__Pyx_MonitoringEventTypes_CyFunc_count];\
-      int __pyx_exception_already_reported = 0;\
-      const int __pyx_sys_monitoring_disabled_in_parallel = 0; CYTHON_UNUSED_VAR(__pyx_sys_monitoring_disabled_in_parallel);
-  #define __Pyx_TraceDeclarationsGen\
-      PyObject *__pyx_frame_code = Py_NewRef(__pyx_generator->gi_code);\
-      PyMonitoringState* __pyx_pymonitoring_state = __pyx_generator->__pyx_pymonitoring_state;\
-      __pyx_monitoring_version_type __pyx_pymonitoring_version = __pyx_generator->__pyx_pymonitoring_version;\
-      int __pyx_exception_already_reported = 0;\
-      const int __pyx_sys_monitoring_disabled_in_parallel = 0; CYTHON_UNUSED_VAR(__pyx_sys_monitoring_disabled_in_parallel);
-  #define __Pyx_IsTracing(event_id)  ((!__pyx_sys_monitoring_disabled_in_parallel) && (__pyx_pymonitoring_state[event_id]).active)
-  #define __Pyx_TraceFrameInit(codeobj)\
-      if (codeobj) __pyx_frame_code = codeobj;
-  #define __Pyx_TurnOffSysMonitoringInParallel\
-    const int __pyx_sys_monitoring_disabled_in_parallel = 1;\
-    CYTHON_UNUSED_VAR(__pyx_sys_monitoring_disabled_in_parallel);
-  CYTHON_UNUSED static PyCodeObject *__Pyx_createFrameCodeObject(const char *funcname, const char *srcfile, int firstlineno);
-  CYTHON_UNUSED static int __Pyx__TraceStartFunc(PyMonitoringState *state_array, PyObject *code_obj, int offset, int skip_event);
-  CYTHON_UNUSED static int __Pyx__TraceStartGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset);
-  CYTHON_UNUSED static int __Pyx__TraceResumeGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset);
-  CYTHON_UNUSED static void __Pyx__TraceException(PyMonitoringState *monitoring_state, PyObject *code_obj, int offset, int reraised);
-  #define __Pyx_PyMonitoring_ExitScope(nogil)\
-    if (nogil) {\
-        (void) __pyx_exception_already_reported;\
-        if (CYTHON_TRACE_NOGIL) {\
-            PyGILState_STATE state = PyGILState_Ensure();\
-            PyMonitoring_ExitScope();\
-            Py_XDECREF(__pyx_frame_code);\
-            PyGILState_Release(state);\
-        }\
-    } else {\
-        PyMonitoring_ExitScope();\
-        Py_XDECREF(__pyx_frame_code);\
-    }
-  #define __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)\
-  if ((0) ); else {\
-      int ret = 0;\
-      memset(__pyx_pymonitoring_state, 0, sizeof(__pyx_pymonitoring_state));\
-      if (nogil) {\
-          if (CYTHON_TRACE_NOGIL) {\
-              PyGILState_STATE state = PyGILState_Ensure();\
-              if (!__Pyx_PyThreadState_Current->tracing) {\
-                  if (likely(__pyx_frame_code)) Py_INCREF(__pyx_frame_code);\
-                  else __pyx_frame_code = (PyObject*) __Pyx_createFrameCodeObject(funcname, srcfile, firstlineno);\
-                  if (unlikely(!__pyx_frame_code)) ret = -1;\
-                  else ret = __Pyx__TraceStartFunc(__pyx_pymonitoring_state, __pyx_frame_code, offset, skip_event);\
-              } else __pyx_frame_code = NULL;\
-              PyGILState_Release(state);\
-          } else __pyx_frame_code = NULL;\
-      } else {\
-          if (!__Pyx_PyThreadState_Current->tracing) {\
-              if (likely(__pyx_frame_code)) Py_INCREF(__pyx_frame_code);\
-              else __pyx_frame_code = (PyObject*) __Pyx_createFrameCodeObject(funcname, srcfile, firstlineno);\
-              if (unlikely(!__pyx_frame_code)) ret = -1;\
-              else ret = __Pyx__TraceStartFunc(__pyx_pymonitoring_state, __pyx_frame_code, offset, skip_event);\
-          } else __pyx_frame_code = NULL;\
-      }\
-      if (unlikely(ret == -1)) goto_error;\
-  }
-  #define __Pyx_TraceStartGen(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)\
-  if ((0) ); else {\
-      int ret = __Pyx__TraceStartGen(__pyx_pymonitoring_state, &__pyx_pymonitoring_version, __pyx_frame_code, offset);\
-      if (unlikely(ret == -1)) goto_error;\
-  }
-  #define __Pyx_TraceResumeGen(funcname, srcfile, firstlineno, offset, goto_error)\
-  if ((0) ); else {\
-      int ret = __Pyx__TraceResumeGen(__pyx_pymonitoring_state, &__pyx_pymonitoring_version, __pyx_frame_code, offset);\
-      if (unlikely(ret == -1)) goto_error;\
-  }
-  #define __Pyx_TraceYield(result, offset, goto_error)\
-  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_YIELD)); else {\
-      int ret = PyMonitoring_FirePyYieldEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, result);\
-      PyMonitoring_ExitScope();\
-      if (unlikely(ret == -1)) goto_error;\
-  }
-  #define __Pyx_TraceException(offset, reraised, fresh)\
-  if (!__Pyx_IsTracing((reraised) ? __Pyx_Monitoring_RERAISE : __Pyx_Monitoring_RAISE)); else {\
-      if (fresh || reraised || !__pyx_exception_already_reported) {\
-          __Pyx__TraceException(&__pyx_pymonitoring_state[(reraised) ? __Pyx_Monitoring_RERAISE : __Pyx_Monitoring_RAISE], __pyx_frame_code, offset, reraised);\
-      }\
-      __pyx_exception_already_reported = 1;\
-  }
-  #define __Pyx_TraceExceptionDone()  __pyx_exception_already_reported = 0
-  #define __Pyx_TraceExceptionHandled(offset)\
-  if (!__Pyx_IsTracing(__Pyx_Monitoring_EXCEPTION_HANDLED)); else {\
-      (void) PyMonitoring_FireExceptionHandledEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_EXCEPTION_HANDLED], __pyx_frame_code, offset);\
-      __pyx_exception_already_reported = 0;\
-  }
-  #define __Pyx_TraceReturnValue(result, offset, nogil, goto_error)\
-  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_RETURN)); else {\
-      int ret = 0;\
-      if (nogil) {\
-          if (CYTHON_TRACE_NOGIL) {\
-              PyGILState_STATE state = PyGILState_Ensure();\
-              ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, result);\
-              PyGILState_Release(state);\
-          }\
-      } else {\
-          ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, result);\
-      }\
-      if (unlikely(ret == -1)) goto_error;\
-  }
-  #define __Pyx_TraceReturnCValue(cresult, convert_function, offset, nogil, goto_error)\
-  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_RETURN)); else {\
-      int ret = 0;\
-      if (nogil) {\
-          if (CYTHON_TRACE_NOGIL) {\
-              PyGILState_STATE state = PyGILState_Ensure();\
-              PyObject *pyvalue = convert_function(cresult);\
-              if (unlikely(!pyvalue)) {\
-                  PyErr_Clear();\
-                  pyvalue = Py_None; Py_INCREF(Py_None);\
-              }\
-              ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, pyvalue);\
-              Py_DECREF(pyvalue);\
-              PyGILState_Release(state);\
-          }\
-      } else {\
-          PyObject *pyvalue = convert_function(cresult);\
-          if (unlikely(!pyvalue)) {\
-              PyErr_Clear();\
-              pyvalue = Py_None; Py_INCREF(Py_None);\
-          }\
-          ret = PyMonitoring_FirePyReturnEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_RETURN], __pyx_frame_code, offset, pyvalue);\
-          Py_DECREF(pyvalue);\
-      }\
-      if (unlikely(ret == -1)) goto_error;\
-  }
-  #define __Pyx_TraceExceptionUnwind(offset, nogil)\
-  if (!__Pyx_IsTracing(__Pyx_Monitoring_PY_UNWIND)); else {\
-      if (nogil) {\
-          if (CYTHON_TRACE_NOGIL) {\
-              PyGILState_STATE state = PyGILState_Ensure();\
-              (void) PyMonitoring_FirePyUnwindEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_UNWIND], __pyx_frame_code, offset);\
-              PyGILState_Release(state);\
-          }\
-      } else {\
-          (void) PyMonitoring_FirePyUnwindEvent(&__pyx_pymonitoring_state[__Pyx_Monitoring_PY_UNWIND], __pyx_frame_code, offset);\
-      }\
-  }
-  #if CYTHON_TRACE
-  CYTHON_UNUSED static int __Pyx__TraceLine(PyMonitoringState *monitoring_state, PyObject *code_obj, int line, int offset);
-  #define __Pyx_TraceLine(line, offset, nogil, goto_error)\
-  if (!__Pyx_IsTracing(__Pyx_Monitoring_LINE)); else {\
-      int ret = 0;\
-      if (nogil) {\
-          if (CYTHON_TRACE_NOGIL) {\
-              PyGILState_STATE state = PyGILState_Ensure();\
-              ret = __Pyx__TraceLine(&__pyx_pymonitoring_state[__Pyx_Monitoring_LINE], __pyx_frame_code, line, offset);\
-              PyGILState_Release(state);\
-          }\
-      } else {\
-          ret = __Pyx__TraceLine(&__pyx_pymonitoring_state[__Pyx_Monitoring_LINE], __pyx_frame_code, line, offset);\
-      }\
-      if (unlikely(ret == -1)) goto_error;\
-  }
-  #endif
-#else
-  #include "compile.h"
-  #include "frameobject.h"
-  #include "traceback.h"
-#if PY_VERSION_HEX >= 0x030b00a6 && !defined(PYPY_VERSION)
-  #ifndef Py_BUILD_CORE
-    #define Py_BUILD_CORE 1
-  #endif
-  #include "internal/pycore_frame.h"
-#endif
-  #if CYTHON_PROFILE_REUSE_FRAME
-    #define CYTHON_FRAME_MODIFIER static
-    #define CYTHON_FRAME_DEL(frame)
-  #else
-    #define CYTHON_FRAME_MODIFIER
-    #define CYTHON_FRAME_DEL(frame) Py_CLEAR(frame)
-  #endif
-  #if CYTHON_PROFILE_REUSE_CODEOBJ
-    #define CYTHON_CODEOBJ_MODIFIER static
-  #else
-    #define CYTHON_CODEOBJ_MODIFIER
-  #endif
-  #define __Pyx_TraceDeclarationsFunc\
-      CYTHON_CODEOBJ_MODIFIER PyCodeObject *__pyx_frame_code = NULL;\
-      CYTHON_FRAME_MODIFIER PyFrameObject *__pyx_frame = NULL;\
-      int __Pyx_use_tracing = 0;
-  #define __Pyx_TraceDeclarationsGen\
-      PyObject *__pyx_frame_code = __pyx_generator->gi_code;\
-      CYTHON_FRAME_MODIFIER PyFrameObject *__pyx_frame = NULL;\
-      int __Pyx_use_tracing = 0;
-  #define __Pyx_TraceFrameInit(codeobj)\
-      if (codeobj) __pyx_frame_code = (PyCodeObject*) codeobj;
-  #define __Pyx_PyMonitoring_ExitScope(nogil)\
-    if (!CYTHON_PROFILE_REUSE_FRAME && nogil) {\
-        PyGILState_STATE state = PyGILState_Ensure();\
-        CYTHON_FRAME_DEL(__pyx_frame);\
-        PyGILState_Release(state);\
-    } else {\
-        CYTHON_FRAME_DEL(__pyx_frame);\
-    }
-  #define __Pyx_TraceException(offset, reraised, fresh)  {}
-  #define __Pyx_TraceExceptionHandled(offset)  {}
-  #define __Pyx_TraceExceptionDone()  {}
-  #define __Pyx_TurnOffSysMonitoringInParallel {} // Only needed for freethreading
-#if PY_VERSION_HEX >= 0x030b00a2
-  #if PY_VERSION_HEX >= 0x030C00b1
-  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
-     ((!(check_tracing) || !(tstate)->tracing) &&\
-         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
-  #else
-  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
-     (unlikely((tstate)->cframe->use_tracing) &&\
-         (!(check_tracing) || !(tstate)->tracing) &&\
-         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
-  #endif
-  #define __Pyx_EnterTracing(tstate)  PyThreadState_EnterTracing(tstate)
-  #define __Pyx_LeaveTracing(tstate)  PyThreadState_LeaveTracing(tstate)
-#elif PY_VERSION_HEX >= 0x030a00b1
-  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
-     (unlikely((tstate)->cframe->use_tracing) &&\
-         (!(check_tracing) || !(tstate)->tracing) &&\
-         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
-  #define __Pyx_EnterTracing(tstate)\
-      do { tstate->tracing++; tstate->cframe->use_tracing = 0; } while (0)
-  #define __Pyx_LeaveTracing(tstate)\
-      do {\
-          tstate->tracing--;\
-          tstate->cframe->use_tracing = ((CYTHON_TRACE && tstate->c_tracefunc != NULL)\
-                                 || tstate->c_profilefunc != NULL);\
-      } while (0)
-#else
-  #define __Pyx_IsTracing(tstate, check_tracing, check_funcs)\
-     (unlikely((tstate)->use_tracing) &&\
-         (!(check_tracing) || !(tstate)->tracing) &&\
-         (!(check_funcs) || (tstate)->c_profilefunc || (CYTHON_TRACE && (tstate)->c_tracefunc)))
-  #define __Pyx_EnterTracing(tstate)\
-      do { tstate->tracing++; tstate->use_tracing = 0; } while (0)
-  #define __Pyx_LeaveTracing(tstate)\
-      do {\
-          tstate->tracing--;\
-          tstate->use_tracing = ((CYTHON_TRACE && tstate->c_tracefunc != NULL)\
-                                         || tstate->c_profilefunc != NULL);\
-      } while (0)
-#endif
-  #define __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)\
-  if (nogil) {\
-      if (CYTHON_TRACE_NOGIL) {\
-          PyThreadState *tstate;\
-          PyGILState_STATE state = PyGILState_Ensure();\
-          tstate = __Pyx_PyThreadState_Current;\
-          if (__Pyx_IsTracing(tstate, 1, 1)) {\
-              __Pyx_use_tracing = __Pyx_TraceSetupAndCall((PyCodeObject**)&__pyx_frame_code, &__pyx_frame, tstate, funcname, srcfile, firstlineno, skip_event);\
-          }\
-          PyGILState_Release(state);\
-          if (unlikely(__Pyx_use_tracing < 0)) goto_error;\
-      }\
-  } else {\
-      PyThreadState* tstate = PyThreadState_GET();\
-      if (__Pyx_IsTracing(tstate, 1, 1)) {\
-          __Pyx_use_tracing = __Pyx_TraceSetupAndCall((PyCodeObject**)&__pyx_frame_code, &__pyx_frame, tstate, funcname, srcfile, firstlineno, skip_event);\
-          if (unlikely(__Pyx_use_tracing < 0)) goto_error;\
-      }\
-  }
-  #define __Pyx_TraceStartGen __Pyx_TraceStartFunc
-  #define __Pyx_TraceYield(result, offset, goto_error)\
-  if (likely(!__Pyx_use_tracing)); else {\
-      PyThreadState* tstate = __Pyx_PyThreadState_Current;\
-      if (__Pyx_IsTracing(tstate, 0, 0)) {\
-          __Pyx_call_return_trace_func(tstate, __pyx_frame, (PyObject*)result);\
-      }\
-      if ((1)); else goto_error;\
-  }
-  #define __Pyx_TraceResumeGen(funcname, srcfile, firstlineno, offset, goto_error)\
-      __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, 0, 0, goto_error)
-  CYTHON_UNUSED static void __Pyx_call_return_trace_func(PyThreadState *tstate, PyFrameObject *frame, PyObject *result) {
-      PyObject *type, *value, *traceback;
-      __Pyx_ErrFetchInState(tstate, &type, &value, &traceback);
-      __Pyx_EnterTracing(tstate);
-      if (CYTHON_TRACE && tstate->c_tracefunc)
-          tstate->c_tracefunc(tstate->c_traceobj, frame, PyTrace_RETURN, result);
-      if (tstate->c_profilefunc)
-          tstate->c_profilefunc(tstate->c_profileobj, frame, PyTrace_RETURN, result);
-      __Pyx_LeaveTracing(tstate);
-      __Pyx_ErrRestoreInState(tstate, type, value, traceback);
-  }
-  #define __Pyx_TraceReturnValue(result, offset, nogil, goto_error)\
-  if (likely(!__Pyx_use_tracing)); else {\
-      if (nogil) {\
-          if (CYTHON_TRACE_NOGIL) {\
-              PyThreadState *tstate;\
-              PyGILState_STATE state = PyGILState_Ensure();\
-              tstate = __Pyx_PyThreadState_Current;\
-              if (__Pyx_IsTracing(tstate, 0, 0)) {\
-                  __Pyx_call_return_trace_func(tstate, __pyx_frame, (PyObject*)result);\
-              }\
-              PyGILState_Release(state);\
-          }\
-      } else {\
-          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
-          if (__Pyx_IsTracing(tstate, 0, 0)) {\
-              __Pyx_call_return_trace_func(tstate, __pyx_frame, (PyObject*)result);\
-          }\
-      }\
-      if ((1)); else goto_error;\
-  }
-  #define __Pyx_TraceReturnCValue(cresult, convert_function, offset, nogil, goto_error)\
-  if (likely(!__Pyx_use_tracing)); else {\
-      if (nogil) {\
-          if (CYTHON_TRACE_NOGIL) {\
-              PyThreadState *tstate;\
-              PyGILState_STATE state = PyGILState_Ensure();\
-              tstate = __Pyx_PyThreadState_Current;\
-              if (__Pyx_IsTracing(tstate, 0, 0)) {\
-                  PyObject *pyvalue = convert_function(cresult);\
-                  if (unlikely(!pyvalue)) {\
-                    PyErr_Clear();\
-                    pyvalue = Py_None; Py_INCREF(Py_None);\
-                  }\
-                  __Pyx_call_return_trace_func(tstate, __pyx_frame, pyvalue);\
-                  Py_DECREF(pyvalue);\
-              }\
-              PyGILState_Release(state);\
-          }\
-      } else {\
-          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
-          if (__Pyx_IsTracing(tstate, 0, 0)) {\
-              PyObject *pyvalue = convert_function(cresult);\
-              if (unlikely(!pyvalue)) {\
-                  PyErr_Clear();\
-                  pyvalue = Py_None; Py_INCREF(Py_None);\
-              }\
-              __Pyx_call_return_trace_func(tstate, __pyx_frame, pyvalue);\
-              Py_DECREF(pyvalue);\
-          }\
-      }\
-      if ((1)); else goto_error;\
-  }
-  #define __Pyx_TraceExceptionUnwind(offset, nogil)\
-  if (likely(!__Pyx_use_tracing)); else {\
-      if (nogil) {\
-          if (CYTHON_TRACE_NOGIL) {\
-              PyThreadState *tstate;\
-              PyGILState_STATE state = PyGILState_Ensure();\
-              tstate = __Pyx_PyThreadState_Current;\
-              if (__Pyx_IsTracing(tstate, 0, 0)) {\
-                  __Pyx_call_return_trace_func(tstate, __pyx_frame, Py_None);\
-              }\
-              PyGILState_Release(state);\
-          }\
-      } else {\
-          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
-          if (__Pyx_IsTracing(tstate, 0, 0)) {\
-              __Pyx_call_return_trace_func(tstate, __pyx_frame, Py_None);\
-          }\
-      }\
-  }
-  static int __Pyx_TraceSetupAndCall(PyCodeObject** code, PyFrameObject** frame, PyThreadState* tstate, const char *funcname, const char *srcfile, int firstlineno, int skip_event);
-#if CYTHON_TRACE
-  CYTHON_UNUSED static int __Pyx_call_line_trace_func(PyThreadState *tstate, PyFrameObject *frame, int line);
-  #define __Pyx_TraceLine(line, offset, nogil, goto_error)\
-  if (likely(!__Pyx_use_tracing)); else {\
-      int ret = 0;\
-      if (nogil) {\
-          if (CYTHON_TRACE_NOGIL) {\
-              PyThreadState *tstate;\
-              PyGILState_STATE state = __Pyx_PyGILState_Ensure();\
-              tstate = __Pyx_PyThreadState_Current;\
-              if (__Pyx_IsTracing(tstate, 0, 0) && tstate->c_tracefunc && __pyx_frame->f_trace) {\
-                  ret = __Pyx_call_line_trace_func(tstate, __pyx_frame, line);\
-              }\
-              __Pyx_PyGILState_Release(state);\
-          }\
-      } else {\
-          PyThreadState* tstate = __Pyx_PyThreadState_Current;\
-          if (__Pyx_IsTracing(tstate, 0, 0) && tstate->c_tracefunc && __pyx_frame->f_trace) {\
-              ret = __Pyx_call_line_trace_func(tstate, __pyx_frame, line);\
-          }\
-      }\
-      if (unlikely(ret)) goto_error;\
-  }
-#endif
-#endif
-#else
-  #define __Pyx_TraceDeclarationsFunc
-  #define __Pyx_TraceDeclarationsGen
-  #define __Pyx_TraceExceptionDone()  {}
-  #define __Pyx_TraceFrameInit(codeobj)  {}
-  #define __Pyx_TurnOffSysMonitoringInParallel {}
-  #define __Pyx_PyMonitoring_ExitScope(nogil)  {}
-  #define __Pyx_TraceException(offset, reraised, fresh)  {}
-  #define __Pyx_TraceExceptionUnwind(offset, nogil)  {}
-  #define __Pyx_TraceExceptionHandled(offset)  {}
-  #define __Pyx_TraceStartFunc(funcname, srcfile, firstlineno, offset, nogil, skip_event, goto_error)   if ((1)); else goto_error;
-  #define __Pyx_TraceStartGen __Pyx_TraceStartFunc
-  #define __Pyx_TraceResumeGen(funcname, srcfile, firstlineno, offset, goto_error)   if ((1)); else goto_error;
-  #define __Pyx_TraceYield(result, offset, goto_error)   if ((1)); else goto_error;
-  #define __Pyx_TraceReturnValue(result, offset, nogil, goto_error)\
-      if ((1)); else goto_error;
-  #define __Pyx_TraceReturnCValue(cresult, convert_function, offset, nogil, goto_error)\
-      if ((1)); else { (void) convert_function; goto_error }
-#endif
-#if !CYTHON_TRACE
-  #define __Pyx_TraceLine(line, offset, nogil, goto_error)   if ((1)); else goto_error;
-#endif
-
 /* PyRuntimeError_Check.proto */
 #define __Pyx_PyExc_RuntimeError_Check(obj)  __Pyx_TypeCheck(obj, PyExc_RuntimeError)
 
@@ -2425,37 +1986,6 @@ static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *nam
 /* RaiseException.export */
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
 
-/* WriteUnraisableException.proto */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
-
-/* PyDictVersioning.proto */
-#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
-#define __PYX_DICT_VERSION_INIT  ((PY_UINT64_T) -1)
-#define __PYX_GET_DICT_VERSION(dict)  (((PyDictObject*)(dict))->ma_version_tag)
-#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)\
-    (version_var) = __PYX_GET_DICT_VERSION(dict);\
-    (cache_var) = (value);
-#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP) {\
-    static PY_UINT64_T __pyx_dict_version = 0;\
-    static PyObject *__pyx_dict_cached_value = NULL;\
-    if (likely(__PYX_GET_DICT_VERSION(DICT) == __pyx_dict_version)) {\
-        (VAR) = __Pyx_XNewRef(__pyx_dict_cached_value);\
-    } else {\
-        (VAR) = __pyx_dict_cached_value = (LOOKUP);\
-        __pyx_dict_version = __PYX_GET_DICT_VERSION(DICT);\
-    }\
-}
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj);
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj);
-static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version);
-#else
-#define __PYX_GET_DICT_VERSION(dict)  (0)
-#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)
-#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP)  (VAR) = (LOOKUP);
-#endif
-
 /* RejectKeywords.export */
 static void __Pyx_RejectKeywords(const char* function_name, PyObject *kwds);
 
@@ -2478,6 +2008,12 @@ static CYTHON_INLINE PyObject* __Pyx_decode_c_string(
          const char* cstring, Py_ssize_t start, Py_ssize_t stop,
          const char* encoding, const char* errors,
          PyObject* (*decode_func)(const char *s, Py_ssize_t size, const char *errors));
+
+/* RaiseUnexpectedTypeError.proto */
+static int __Pyx_RaiseUnexpectedTypeError(const char *expected, PyObject *obj);
+
+/* PyUnicode_Unicode.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyUnicode_Unicode(PyObject *obj);
 
 /* PyLongBinop.proto */
 #if !CYTHON_COMPILING_IN_PYPY
@@ -2754,6 +2290,9 @@ static void __Pyx_AddTraceback(const char *funcname, int c_line,
 #define __Pyx_HAS_GCC_DIAGNOSTIC
 #endif
 
+/* CIntFromPy.proto */
+static CYTHON_INLINE int __Pyx_PyLong_As_int(PyObject *);
+
 /* PyObjectVectorCallKwBuilder.proto (used by CIntToPy) */
 CYTHON_UNUSED static int __Pyx_VectorcallBuilder_AddArg_Check(PyObject *key, PyObject *value, PyObject *builder, PyObject **args, int n);
 #if CYTHON_VECTORCALL
@@ -2774,9 +2313,6 @@ static int __Pyx_VectorcallBuilder_AddArgStr(const char *key, PyObject *value, P
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyLong_From_int(int value);
-
-/* CIntFromPy.proto */
-static CYTHON_INLINE int __Pyx_PyLong_As_int(PyObject *);
 
 /* FormatTypeName.proto */
 #if CYTHON_COMPILING_IN_LIMITED_API
@@ -2895,6 +2431,10 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine__bind_and_fetch(s
 /* Module declarations from "kycli.core.sqlite_defs" */
 
 /* Module declarations from "kycli.core.engine" */
+static int __pyx_v_5kycli_4core_6engine__RETRY_ATTEMPTS;
+static int __pyx_v_5kycli_4core_6engine__RETRY_BASE_MS;
+static int __pyx_f_5kycli_4core_6engine__is_retryable_error(PyObject *); /*proto*/
+static void __pyx_f_5kycli_4core_6engine__retry_sleep(int); /*proto*/
 /* #### Code section: typeinfo ### */
 /* #### Code section: before_global_var ### */
 #define __Pyx_MODULE_NAME "kycli.core.engine"
@@ -2937,8 +2477,9 @@ typedef struct {
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_items;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_pop;
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_values;
-  PyObject *__pyx_codeobj_tab[8];
-  PyObject *__pyx_string_tab[68];
+  __Pyx_CachedCFunction __pyx_umethod_PyUnicode_Type__lower;
+  PyObject *__pyx_codeobj_tab[3];
+  PyObject *__pyx_string_tab[60];
   PyObject *__pyx_number_tab[2];
 /* #### Code section: module_state_contents ### */
 /* CommonTypesMetaclass.module_state_decls */
@@ -2982,72 +2523,64 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 /* #### Code section: constant_name_defines ### */
 #define __pyx_kp_u_ __pyx_string_tab[0]
 #define __pyx_kp_u_Could_not_open_database __pyx_string_tab[1]
-#define __pyx_kp_u_Note_that_Cython_is_deliberately __pyx_string_tab[2]
-#define __pyx_kp_u_PRAGMA_cache_size_64000 __pyx_string_tab[3]
-#define __pyx_kp_u_PRAGMA_journal_mode_WAL __pyx_string_tab[4]
-#define __pyx_kp_u_PRAGMA_synchronous_NORMAL __pyx_string_tab[5]
-#define __pyx_kp_u_PRAGMA_temp_store_MEMORY __pyx_string_tab[6]
-#define __pyx_kp_u_Prepare_error __pyx_string_tab[7]
-#define __pyx_kp_u_SQLite_error __pyx_string_tab[8]
-#define __pyx_kp_u_Step_error __pyx_string_tab[9]
-#define __pyx_kp_u_Unknown_error __pyx_string_tab[10]
-#define __pyx_kp_u_add_note __pyx_string_tab[11]
-#define __pyx_kp_u_disable __pyx_string_tab[12]
-#define __pyx_kp_u_enable __pyx_string_tab[13]
-#define __pyx_kp_u_gc __pyx_string_tab[14]
-#define __pyx_kp_u_isenabled __pyx_string_tab[15]
-#define __pyx_kp_u_kycli_core_engine_pyx __pyx_string_tab[16]
-#define __pyx_kp_u_self__db_cannot_be_converted_to __pyx_string_tab[17]
-#define __pyx_kp_u_stringsource __pyx_string_tab[18]
-#define __pyx_n_u_DatabaseEngine __pyx_string_tab[19]
-#define __pyx_n_u_DatabaseEngine___reduce_cython __pyx_string_tab[20]
-#define __pyx_n_u_DatabaseEngine___setstate_cython __pyx_string_tab[21]
-#define __pyx_n_u_DatabaseEngine_close __pyx_string_tab[22]
-#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[23]
-#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[24]
-#define __pyx_n_u_bind_and_execute __pyx_string_tab[25]
-#define __pyx_n_u_bind_and_fetch __pyx_string_tab[26]
+#define __pyx_kp_u_None __pyx_string_tab[2]
+#define __pyx_kp_u_Note_that_Cython_is_deliberately __pyx_string_tab[3]
+#define __pyx_kp_u_PRAGMA_cache_size_64000 __pyx_string_tab[4]
+#define __pyx_kp_u_PRAGMA_journal_mode_WAL __pyx_string_tab[5]
+#define __pyx_kp_u_PRAGMA_synchronous_NORMAL __pyx_string_tab[6]
+#define __pyx_kp_u_PRAGMA_temp_store_MEMORY __pyx_string_tab[7]
+#define __pyx_kp_u_Prepare_error __pyx_string_tab[8]
+#define __pyx_kp_u_SQLite_error __pyx_string_tab[9]
+#define __pyx_kp_u_Step_error __pyx_string_tab[10]
+#define __pyx_kp_u_Unknown_error __pyx_string_tab[11]
+#define __pyx_kp_u_add_note __pyx_string_tab[12]
+#define __pyx_kp_u_disable __pyx_string_tab[13]
+#define __pyx_kp_u_enable __pyx_string_tab[14]
+#define __pyx_kp_u_gc __pyx_string_tab[15]
+#define __pyx_kp_u_isenabled __pyx_string_tab[16]
+#define __pyx_kp_u_kycli_core_engine_pyx __pyx_string_tab[17]
+#define __pyx_kp_u_self__db_cannot_be_converted_to __pyx_string_tab[18]
+#define __pyx_kp_u_stringsource __pyx_string_tab[19]
+#define __pyx_n_u_DatabaseEngine __pyx_string_tab[20]
+#define __pyx_n_u_DatabaseEngine___reduce_cython __pyx_string_tab[21]
+#define __pyx_n_u_DatabaseEngine___setstate_cython __pyx_string_tab[22]
+#define __pyx_n_u_DatabaseEngine_close __pyx_string_tab[23]
+#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[24]
+#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[25]
+#define __pyx_n_u_busy __pyx_string_tab[26]
 #define __pyx_n_u_cline_in_traceback __pyx_string_tab[27]
 #define __pyx_n_u_close __pyx_string_tab[28]
-#define __pyx_n_u_data_path __pyx_string_tab[29]
-#define __pyx_n_u_db __pyx_string_tab[30]
-#define __pyx_n_u_db_path __pyx_string_tab[31]
-#define __pyx_n_u_dealloc __pyx_string_tab[32]
-#define __pyx_n_u_enumerate __pyx_string_tab[33]
-#define __pyx_n_u_execute_raw __pyx_string_tab[34]
-#define __pyx_n_u_func __pyx_string_tab[35]
-#define __pyx_n_u_getstate __pyx_string_tab[36]
-#define __pyx_n_u_init __pyx_string_tab[37]
-#define __pyx_n_u_is_coroutine __pyx_string_tab[38]
-#define __pyx_n_u_items __pyx_string_tab[39]
-#define __pyx_n_u_kycli_core_engine __pyx_string_tab[40]
-#define __pyx_n_u_main __pyx_string_tab[41]
-#define __pyx_n_u_module __pyx_string_tab[42]
-#define __pyx_n_u_name __pyx_string_tab[43]
-#define __pyx_n_u_os __pyx_string_tab[44]
-#define __pyx_n_u_params __pyx_string_tab[45]
-#define __pyx_n_u_path_bytes __pyx_string_tab[46]
-#define __pyx_n_u_pop __pyx_string_tab[47]
-#define __pyx_n_u_pyx_state __pyx_string_tab[48]
-#define __pyx_n_u_pyx_vtable __pyx_string_tab[49]
-#define __pyx_n_u_qualname __pyx_string_tab[50]
-#define __pyx_n_u_reduce __pyx_string_tab[51]
-#define __pyx_n_u_reduce_cython __pyx_string_tab[52]
-#define __pyx_n_u_reduce_ex __pyx_string_tab[53]
-#define __pyx_n_u_self __pyx_string_tab[54]
-#define __pyx_n_u_set_name __pyx_string_tab[55]
-#define __pyx_n_u_setdefault __pyx_string_tab[56]
-#define __pyx_n_u_setstate __pyx_string_tab[57]
-#define __pyx_n_u_setstate_cython __pyx_string_tab[58]
-#define __pyx_n_u_sql __pyx_string_tab[59]
-#define __pyx_n_u_test __pyx_string_tab[60]
-#define __pyx_n_u_values __pyx_string_tab[61]
-#define __pyx_kp_b_iso88591_1_s_A_q_F_V6_Q_q_L_a_q_q __pyx_string_tab[62]
-#define __pyx_kp_b_iso88591_A_4q_a_q __pyx_string_tab[63]
-#define __pyx_kp_b_iso88591_A_N_waq_q_AT_s_a_a_M_M_M_M __pyx_string_tab[64]
-#define __pyx_kp_b_iso88591_A_s_Qd_Cq_fCq_a_0_q_A_CuIQa_r_A __pyx_string_tab[65]
-#define __pyx_kp_b_iso88591_A_s_Qd_Cq_fCq_a_0_q_A_CuIQa_r_A_2 __pyx_string_tab[66]
-#define __pyx_kp_b_iso88591_Q __pyx_string_tab[67]
+#define __pyx_n_u_db_path __pyx_string_tab[29]
+#define __pyx_n_u_enumerate __pyx_string_tab[30]
+#define __pyx_n_u_func __pyx_string_tab[31]
+#define __pyx_n_u_getstate __pyx_string_tab[32]
+#define __pyx_n_u_is_coroutine __pyx_string_tab[33]
+#define __pyx_n_u_items __pyx_string_tab[34]
+#define __pyx_n_u_kycli_core_engine __pyx_string_tab[35]
+#define __pyx_n_u_locked __pyx_string_tab[36]
+#define __pyx_n_u_lower __pyx_string_tab[37]
+#define __pyx_n_u_main __pyx_string_tab[38]
+#define __pyx_n_u_module __pyx_string_tab[39]
+#define __pyx_n_u_name __pyx_string_tab[40]
+#define __pyx_n_u_os __pyx_string_tab[41]
+#define __pyx_n_u_pop __pyx_string_tab[42]
+#define __pyx_n_u_pyx_state __pyx_string_tab[43]
+#define __pyx_n_u_pyx_vtable __pyx_string_tab[44]
+#define __pyx_n_u_qualname __pyx_string_tab[45]
+#define __pyx_n_u_reduce __pyx_string_tab[46]
+#define __pyx_n_u_reduce_cython __pyx_string_tab[47]
+#define __pyx_n_u_reduce_ex __pyx_string_tab[48]
+#define __pyx_n_u_self __pyx_string_tab[49]
+#define __pyx_n_u_set_name __pyx_string_tab[50]
+#define __pyx_n_u_setdefault __pyx_string_tab[51]
+#define __pyx_n_u_setstate __pyx_string_tab[52]
+#define __pyx_n_u_setstate_cython __pyx_string_tab[53]
+#define __pyx_n_u_sleep __pyx_string_tab[54]
+#define __pyx_n_u_test __pyx_string_tab[55]
+#define __pyx_n_u_time __pyx_string_tab[56]
+#define __pyx_n_u_values __pyx_string_tab[57]
+#define __pyx_kp_b_iso88591_A_4q_a_q __pyx_string_tab[58]
+#define __pyx_kp_b_iso88591_Q __pyx_string_tab[59]
 #define __pyx_int_0 __pyx_number_tab[0]
 #define __pyx_int_1 __pyx_number_tab[1]
 /* #### Code section: module_state_clear ### */
@@ -3066,8 +2599,8 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   #endif
   Py_CLEAR(clear_module_state->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine);
   Py_CLEAR(clear_module_state->__pyx_type_5kycli_4core_6engine_DatabaseEngine);
-  for (int i=0; i<8; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<68; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<3; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<60; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
   for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_clear_contents ### */
 /* CommonTypesMetaclass.module_state_clear */
@@ -3093,8 +2626,8 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   __Pyx_VISIT_CONST(traverse_module_state->__pyx_empty_unicode);
   Py_VISIT(traverse_module_state->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine);
   Py_VISIT(traverse_module_state->__pyx_type_5kycli_4core_6engine_DatabaseEngine);
-  for (int i=0; i<8; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<68; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<3; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<60; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
   for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_traverse_contents ### */
 /* CommonTypesMetaclass.module_state_traverse */
@@ -3109,7 +2642,202 @@ return 0;
 #endif
 /* #### Code section: module_code ### */
 
-/* "kycli/core/engine.pyx":6
+/* "kycli/core/engine.pyx":9
+ * cdef int _RETRY_BASE_MS = 25
+ * 
+ * cdef bint _is_retryable_error(str msg):             # <<<<<<<<<<<<<<
+ *     if not msg:
+ *         return False
+*/
+
+static int __pyx_f_5kycli_4core_6engine__is_retryable_error(PyObject *__pyx_v_msg) {
+  PyObject *__pyx_v_m = NULL;
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("_is_retryable_error", 0);
+
+  /* "kycli/core/engine.pyx":10
+ * 
+ * cdef bint _is_retryable_error(str msg):
+ *     if not msg:             # <<<<<<<<<<<<<<
+ *         return False
+ *     m = msg.lower()
+*/
+  if (__pyx_v_msg == Py_None) __pyx_t_1 = 0;
+  else
+  {
+    Py_ssize_t __pyx_temp = __Pyx_PyUnicode_IS_TRUE(__pyx_v_msg);
+    if (unlikely(((!CYTHON_ASSUME_SAFE_SIZE) && __pyx_temp < 0))) __PYX_ERR(0, 10, __pyx_L1_error)
+    __pyx_t_1 = (__pyx_temp != 0);
+  }
+
+  __pyx_t_2 = (!__pyx_t_1);
+  if (__pyx_t_2) {
+
+    /* "kycli/core/engine.pyx":11
+ * cdef bint _is_retryable_error(str msg):
+ *     if not msg:
+ *         return False             # <<<<<<<<<<<<<<
+ *     m = msg.lower()
+ *     return "locked" in m or "busy" in m
+*/
+    __pyx_r = 0;
+    goto __pyx_L0;
+
+    /* "kycli/core/engine.pyx":10
+ * 
+ * cdef bint _is_retryable_error(str msg):
+ *     if not msg:             # <<<<<<<<<<<<<<
+ *         return False
+ *     m = msg.lower()
+*/
+  }
+
+  /* "kycli/core/engine.pyx":12
+ *     if not msg:
+ *         return False
+ *     m = msg.lower()             # <<<<<<<<<<<<<<
+ *     return "locked" in m or "busy" in m
+ * 
+*/
+  __pyx_t_3 = __Pyx_CallUnboundCMethod0(&__pyx_mstate_global->__pyx_umethod_PyUnicode_Type__lower, __pyx_v_msg); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_v_m = ((PyObject*)__pyx_t_3);
+  __pyx_t_3 = 0;
+
+  /* "kycli/core/engine.pyx":13
+ *         return False
+ *     m = msg.lower()
+ *     return "locked" in m or "busy" in m             # <<<<<<<<<<<<<<
+ * 
+ * cdef void _retry_sleep(int attempt):
+*/
+  __pyx_t_1 = (__Pyx_PyUnicode_ContainsTF(__pyx_mstate_global->__pyx_n_u_locked, __pyx_v_m, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (!__pyx_t_1) {
+  } else {
+    __pyx_t_2 = __pyx_t_1;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_1 = (__Pyx_PyUnicode_ContainsTF(__pyx_mstate_global->__pyx_n_u_busy, __pyx_v_m, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_2 = __pyx_t_1;
+  __pyx_L4_bool_binop_done:;
+  __pyx_r = __pyx_t_2;
+  goto __pyx_L0;
+
+  /* "kycli/core/engine.pyx":9
+ * cdef int _RETRY_BASE_MS = 25
+ * 
+ * cdef bint _is_retryable_error(str msg):             # <<<<<<<<<<<<<<
+ *     if not msg:
+ *         return False
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("kycli.core.engine._is_retryable_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_m);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "kycli/core/engine.pyx":15
+ *     return "locked" in m or "busy" in m
+ * 
+ * cdef void _retry_sleep(int attempt):             # <<<<<<<<<<<<<<
+ *     # Short exponential backoff to fail fast but still handle transient locks.
+ *     delay_ms = _RETRY_BASE_MS * (2 ** attempt)
+*/
+
+static void __pyx_f_5kycli_4core_6engine__retry_sleep(int __pyx_v_attempt) {
+  double __pyx_v_delay_ms;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  size_t __pyx_t_5;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("_retry_sleep", 0);
+
+  /* "kycli/core/engine.pyx":17
+ * cdef void _retry_sleep(int attempt):
+ *     # Short exponential backoff to fail fast but still handle transient locks.
+ *     delay_ms = _RETRY_BASE_MS * (2 ** attempt)             # <<<<<<<<<<<<<<
+ *     time.sleep(delay_ms / 1000.0)
+ * 
+*/
+  __pyx_v_delay_ms = (__pyx_v_5kycli_4core_6engine__RETRY_BASE_MS * pow(2.0, ((double)__pyx_v_attempt)));
+
+  /* "kycli/core/engine.pyx":18
+ *     # Short exponential backoff to fail fast but still handle transient locks.
+ *     delay_ms = _RETRY_BASE_MS * (2 ** attempt)
+ *     time.sleep(delay_ms / 1000.0)             # <<<<<<<<<<<<<<
+ * 
+ * cdef class DatabaseEngine:
+*/
+  __pyx_t_2 = NULL;
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_time); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_sleep); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyFloat_FromDouble((__pyx_v_delay_ms / 1000.0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = 1;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_4))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
+    assert(__pyx_t_2);
+    PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_4);
+    __Pyx_INCREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx__function);
+    __Pyx_DECREF_SET(__pyx_t_4, __pyx__function);
+    __pyx_t_5 = 0;
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_t_3};
+    __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "kycli/core/engine.pyx":15
+ *     return "locked" in m or "busy" in m
+ * 
+ * cdef void _retry_sleep(int attempt):             # <<<<<<<<<<<<<<
+ *     # Short exponential backoff to fail fast but still handle transient locks.
+ *     delay_ms = _RETRY_BASE_MS * (2 ** attempt)
+*/
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("kycli.core.engine._retry_sleep", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+}
+
+/* "kycli/core/engine.pyx":21
  * 
  * cdef class DatabaseEngine:
  *     def __init__(self, str db_path):             # <<<<<<<<<<<<<<
@@ -3139,32 +2867,32 @@ static int __pyx_pw_5kycli_4core_6engine_14DatabaseEngine_1__init__(PyObject *__
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_db_path,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_VARARGS(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 6, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 21, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_VARARGS(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 6, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 21, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "__init__", 0) < (0)) __PYX_ERR(0, 6, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "__init__", 0) < (0)) __PYX_ERR(0, 21, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, i); __PYX_ERR(0, 6, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, i); __PYX_ERR(0, 21, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_VARARGS(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 6, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 21, __pyx_L3_error)
     }
     __pyx_v_db_path = ((PyObject*)values[0]);
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 6, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 21, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -3175,7 +2903,7 @@ static int __pyx_pw_5kycli_4core_6engine_14DatabaseEngine_1__init__(PyObject *__
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_db_path), (&PyUnicode_Type), 1, "db_path", 1))) __PYX_ERR(0, 6, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_db_path), (&PyUnicode_Type), 1, "db_path", 1))) __PYX_ERR(0, 21, __pyx_L1_error)
   __pyx_r = __pyx_pf_5kycli_4core_6engine_14DatabaseEngine___init__(((struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine *)__pyx_v_self), __pyx_v_db_path);
 
   /* function exit code */
@@ -3198,7 +2926,6 @@ static int __pyx_pw_5kycli_4core_6engine_14DatabaseEngine_1__init__(PyObject *__
 static int __pyx_pf_5kycli_4core_6engine_14DatabaseEngine___init__(struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine *__pyx_v_self, PyObject *__pyx_v_db_path) {
   PyObject *__pyx_v_path_bytes = 0;
   int __pyx_r;
-  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   char const *__pyx_t_2;
@@ -3211,68 +2938,62 @@ static int __pyx_pf_5kycli_4core_6engine_14DatabaseEngine___init__(struct __pyx_
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0]))
   __Pyx_RefNannySetupContext("__init__", 0);
-  __Pyx_TraceStartFunc("__init__", __pyx_f[0], 6, 0, 0, 0, __PYX_ERR(0, 6, __pyx_L1_error));
 
-  /* "kycli/core/engine.pyx":7
+  /* "kycli/core/engine.pyx":22
  * cdef class DatabaseEngine:
  *     def __init__(self, str db_path):
  *         self._data_path = db_path             # <<<<<<<<<<<<<<
  *         cdef bytes path_bytes = db_path.encode('utf-8')
  *         if sqlite3_open(path_bytes, &self._db) != SQLITE_OK:
 */
-  __Pyx_TraceLine(7,1,0,__PYX_ERR(0, 7, __pyx_L1_error))
   __Pyx_INCREF(__pyx_v_db_path);
   __Pyx_GIVEREF(__pyx_v_db_path);
   __Pyx_GOTREF(__pyx_v_self->_data_path);
   __Pyx_DECREF(__pyx_v_self->_data_path);
   __pyx_v_self->_data_path = __pyx_v_db_path;
 
-  /* "kycli/core/engine.pyx":8
+  /* "kycli/core/engine.pyx":23
  *     def __init__(self, str db_path):
  *         self._data_path = db_path
  *         cdef bytes path_bytes = db_path.encode('utf-8')             # <<<<<<<<<<<<<<
  *         if sqlite3_open(path_bytes, &self._db) != SQLITE_OK:
  *             raise RuntimeError(f"Could not open database: {sqlite3_errmsg(self._db)}")
 */
-  __Pyx_TraceLine(8,5,0,__PYX_ERR(0, 8, __pyx_L1_error))
   if (unlikely(__pyx_v_db_path == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "encode");
-    __PYX_ERR(0, 8, __pyx_L1_error)
+    __PYX_ERR(0, 23, __pyx_L1_error)
   }
-  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_db_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_db_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_path_bytes = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/core/engine.pyx":9
+  /* "kycli/core/engine.pyx":24
  *         self._data_path = db_path
  *         cdef bytes path_bytes = db_path.encode('utf-8')
  *         if sqlite3_open(path_bytes, &self._db) != SQLITE_OK:             # <<<<<<<<<<<<<<
  *             raise RuntimeError(f"Could not open database: {sqlite3_errmsg(self._db)}")
  * 
 */
-  __Pyx_TraceLine(9,12,0,__PYX_ERR(0, 9, __pyx_L1_error))
-  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_path_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_path_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L1_error)
   __pyx_t_3 = (sqlite3_open(__pyx_t_2, (&__pyx_v_self->_db)) != SQLITE_OK);
   if (unlikely(__pyx_t_3)) {
 
-    /* "kycli/core/engine.pyx":10
+    /* "kycli/core/engine.pyx":25
  *         cdef bytes path_bytes = db_path.encode('utf-8')
  *         if sqlite3_open(path_bytes, &self._db) != SQLITE_OK:
  *             raise RuntimeError(f"Could not open database: {sqlite3_errmsg(self._db)}")             # <<<<<<<<<<<<<<
  * 
  *         # Optimizations
 */
-    __Pyx_TraceLine(10,20,0,__PYX_ERR(0, 10, __pyx_L1_error))
     __pyx_t_4 = NULL;
-    __pyx_t_5 = __Pyx_PyBytes_FromString(sqlite3_errmsg(__pyx_v_self->_db)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 10, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyBytes_FromString(sqlite3_errmsg(__pyx_v_self->_db)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 25, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 10, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 25, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Could_not_open_database, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 10, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Could_not_open_database, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 25, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_t_7 = 1;
@@ -3281,14 +3002,14 @@ static int __pyx_pf_5kycli_4core_6engine_14DatabaseEngine___init__(struct __pyx_
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 10, __pyx_L1_error)
+    __PYX_ERR(0, 25, __pyx_L1_error)
 
-    /* "kycli/core/engine.pyx":9
+    /* "kycli/core/engine.pyx":24
  *         self._data_path = db_path
  *         cdef bytes path_bytes = db_path.encode('utf-8')
  *         if sqlite3_open(path_bytes, &self._db) != SQLITE_OK:             # <<<<<<<<<<<<<<
@@ -3297,47 +3018,43 @@ static int __pyx_pf_5kycli_4core_6engine_14DatabaseEngine___init__(struct __pyx_
 */
   }
 
-  /* "kycli/core/engine.pyx":13
+  /* "kycli/core/engine.pyx":28
  * 
  *         # Optimizations
  *         self._execute_raw("PRAGMA journal_mode=WAL")             # <<<<<<<<<<<<<<
  *         self._execute_raw("PRAGMA synchronous=NORMAL")
  *         self._execute_raw("PRAGMA cache_size=-64000")
 */
-  __Pyx_TraceLine(13,29,0,__PYX_ERR(0, 13, __pyx_L1_error))
-  __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_4core_6engine_DatabaseEngine *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_PRAGMA_journal_mode_WAL); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_4core_6engine_DatabaseEngine *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_PRAGMA_journal_mode_WAL); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 28, __pyx_L1_error)
 
-  /* "kycli/core/engine.pyx":14
+  /* "kycli/core/engine.pyx":29
  *         # Optimizations
  *         self._execute_raw("PRAGMA journal_mode=WAL")
  *         self._execute_raw("PRAGMA synchronous=NORMAL")             # <<<<<<<<<<<<<<
  *         self._execute_raw("PRAGMA cache_size=-64000")
  *         self._execute_raw("PRAGMA temp_store=MEMORY")
 */
-  __Pyx_TraceLine(14,33,0,__PYX_ERR(0, 14, __pyx_L1_error))
-  __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_4core_6engine_DatabaseEngine *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_PRAGMA_synchronous_NORMAL); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_4core_6engine_DatabaseEngine *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_PRAGMA_synchronous_NORMAL); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 29, __pyx_L1_error)
 
-  /* "kycli/core/engine.pyx":15
+  /* "kycli/core/engine.pyx":30
  *         self._execute_raw("PRAGMA journal_mode=WAL")
  *         self._execute_raw("PRAGMA synchronous=NORMAL")
  *         self._execute_raw("PRAGMA cache_size=-64000")             # <<<<<<<<<<<<<<
  *         self._execute_raw("PRAGMA temp_store=MEMORY")
  * 
 */
-  __Pyx_TraceLine(15,37,0,__PYX_ERR(0, 15, __pyx_L1_error))
-  __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_4core_6engine_DatabaseEngine *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_PRAGMA_cache_size_64000); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_4core_6engine_DatabaseEngine *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_PRAGMA_cache_size_64000); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 30, __pyx_L1_error)
 
-  /* "kycli/core/engine.pyx":16
+  /* "kycli/core/engine.pyx":31
  *         self._execute_raw("PRAGMA synchronous=NORMAL")
  *         self._execute_raw("PRAGMA cache_size=-64000")
  *         self._execute_raw("PRAGMA temp_store=MEMORY")             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
 */
-  __Pyx_TraceLine(16,41,0,__PYX_ERR(0, 16, __pyx_L1_error))
-  __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_4core_6engine_DatabaseEngine *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_PRAGMA_temp_store_MEMORY); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_8 = ((struct __pyx_vtabstruct_5kycli_4core_6engine_DatabaseEngine *)__pyx_v_self->__pyx_vtab)->_execute_raw(__pyx_v_self, __pyx_mstate_global->__pyx_kp_u_PRAGMA_temp_store_MEMORY); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 31, __pyx_L1_error)
 
-  /* "kycli/core/engine.pyx":6
+  /* "kycli/core/engine.pyx":21
  * 
  * cdef class DatabaseEngine:
  *     def __init__(self, str db_path):             # <<<<<<<<<<<<<<
@@ -3347,29 +3064,21 @@ static int __pyx_pf_5kycli_4core_6engine_14DatabaseEngine___init__(struct __pyx_
 
   /* function exit code */
   __pyx_r = 0;
-  __Pyx_TraceReturnCValue(__pyx_r, __Pyx_Owned_Py_None, 0, 0, __PYX_ERR(0, 6, __pyx_L1_error));
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_TraceException(__pyx_lineno, 0, 0);
-  #if CYTHON_USE_SYS_MONITORING
-  __Pyx_TraceExceptionUnwind(0, 0);
-  #else
-  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 6, __pyx_L1_error));
-  #endif
   __Pyx_AddTraceback("kycli.core.engine.DatabaseEngine.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_path_bytes);
-  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "kycli/core/engine.pyx":18
+/* "kycli/core/engine.pyx":33
  *         self._execute_raw("PRAGMA temp_store=MEMORY")
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -3391,46 +3100,37 @@ static void __pyx_pw_5kycli_4core_6engine_14DatabaseEngine_3__dealloc__(PyObject
 }
 
 static void __pyx_pf_5kycli_4core_6engine_14DatabaseEngine_2__dealloc__(struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine *__pyx_v_self) {
-  __Pyx_TraceDeclarationsFunc
   int __pyx_t_1;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1]))
-  __Pyx_TraceStartFunc("__dealloc__", __pyx_f[0], 18, 0, 0, 0, __PYX_ERR(0, 18, __pyx_L1_error));
 
-  /* "kycli/core/engine.pyx":19
+  /* "kycli/core/engine.pyx":34
  * 
  *     def __dealloc__(self):
  *         if self._db:             # <<<<<<<<<<<<<<
  *             sqlite3_close(self._db)
  *             self._db = NULL
 */
-  __Pyx_TraceLine(19,3,0,__PYX_ERR(0, 19, __pyx_L1_error))
   __pyx_t_1 = (__pyx_v_self->_db != 0);
   if (__pyx_t_1) {
 
-    /* "kycli/core/engine.pyx":20
+    /* "kycli/core/engine.pyx":35
  *     def __dealloc__(self):
  *         if self._db:
  *             sqlite3_close(self._db)             # <<<<<<<<<<<<<<
  *             self._db = NULL
  * 
 */
-    __Pyx_TraceLine(20,5,0,__PYX_ERR(0, 20, __pyx_L1_error))
     (void)(sqlite3_close(__pyx_v_self->_db));
 
-    /* "kycli/core/engine.pyx":21
+    /* "kycli/core/engine.pyx":36
  *         if self._db:
  *             sqlite3_close(self._db)
  *             self._db = NULL             # <<<<<<<<<<<<<<
  * 
  *     cpdef close(self):
 */
-    __Pyx_TraceLine(21,8,0,__PYX_ERR(0, 21, __pyx_L1_error))
     __pyx_v_self->_db = NULL;
 
-    /* "kycli/core/engine.pyx":19
+    /* "kycli/core/engine.pyx":34
  * 
  *     def __dealloc__(self):
  *         if self._db:             # <<<<<<<<<<<<<<
@@ -3439,7 +3139,7 @@ static void __pyx_pf_5kycli_4core_6engine_14DatabaseEngine_2__dealloc__(struct _
 */
   }
 
-  /* "kycli/core/engine.pyx":18
+  /* "kycli/core/engine.pyx":33
  *         self._execute_raw("PRAGMA temp_store=MEMORY")
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -3448,21 +3148,9 @@ static void __pyx_pf_5kycli_4core_6engine_14DatabaseEngine_2__dealloc__(struct _
 */
 
   /* function exit code */
-  __Pyx_TraceReturnValue(Py_None, 0, 0, __PYX_ERR(0, 18, __pyx_L1_error));
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_TraceException(__pyx_lineno, 0, 0);
-  #if CYTHON_USE_SYS_MONITORING
-  __Pyx_TraceExceptionUnwind(0, 0);
-  #else
-  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 18, __pyx_L1_error));
-  #endif
-  __Pyx_WriteUnraisable("kycli.core.engine.DatabaseEngine.__dealloc__", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
-  __pyx_L0:;
-  __Pyx_PyMonitoring_ExitScope(0);
 }
 
-/* "kycli/core/engine.pyx":23
+/* "kycli/core/engine.pyx":38
  *             self._db = NULL
  * 
  *     cpdef close(self):             # <<<<<<<<<<<<<<
@@ -3479,7 +3167,6 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 ); /*proto*/
 static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine_close(struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
-  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -3490,9 +3177,7 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine_close(struct __py
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2]))
   __Pyx_RefNannySetupContext("close", 0);
-  __Pyx_TraceStartFunc("close", __pyx_f[0], 23, 0, 0, __pyx_skip_dispatch, __PYX_ERR(0, 23, __pyx_L1_error));
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
@@ -3509,7 +3194,7 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine_close(struct __py
     if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
       PY_UINT64_T __pyx_typedict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
       #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_mstate_global->__pyx_n_u_close); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_mstate_global->__pyx_n_u_close); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (!__Pyx_IsSameCFunction(__pyx_t_1, (void(*)(void)) __pyx_pw_5kycli_4core_6engine_14DatabaseEngine_5close)) {
         __Pyx_XDECREF(__pyx_r);
@@ -3533,12 +3218,11 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine_close(struct __py
           __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_5, (1-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
         }
         __pyx_r = __pyx_t_2;
         __pyx_t_2 = 0;
-        __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(0, 23, __pyx_L1_error));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         goto __pyx_L0;
       }
@@ -3555,38 +3239,35 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine_close(struct __py
     #endif
   }
 
-  /* "kycli/core/engine.pyx":24
+  /* "kycli/core/engine.pyx":39
  * 
  *     cpdef close(self):
  *         if self._db:             # <<<<<<<<<<<<<<
  *             sqlite3_close(self._db)
  *             self._db = NULL
 */
-  __Pyx_TraceLine(24,3,0,__PYX_ERR(0, 24, __pyx_L1_error))
   __pyx_t_6 = (__pyx_v_self->_db != 0);
   if (__pyx_t_6) {
 
-    /* "kycli/core/engine.pyx":25
+    /* "kycli/core/engine.pyx":40
  *     cpdef close(self):
  *         if self._db:
  *             sqlite3_close(self._db)             # <<<<<<<<<<<<<<
  *             self._db = NULL
  * 
 */
-    __Pyx_TraceLine(25,5,0,__PYX_ERR(0, 25, __pyx_L1_error))
     (void)(sqlite3_close(__pyx_v_self->_db));
 
-    /* "kycli/core/engine.pyx":26
+    /* "kycli/core/engine.pyx":41
  *         if self._db:
  *             sqlite3_close(self._db)
  *             self._db = NULL             # <<<<<<<<<<<<<<
  * 
  *     cdef int _execute_raw(self, str sql) except -1:
 */
-    __Pyx_TraceLine(26,8,0,__PYX_ERR(0, 26, __pyx_L1_error))
     __pyx_v_self->_db = NULL;
 
-    /* "kycli/core/engine.pyx":24
+    /* "kycli/core/engine.pyx":39
  * 
  *     cpdef close(self):
  *         if self._db:             # <<<<<<<<<<<<<<
@@ -3595,7 +3276,7 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine_close(struct __py
 */
   }
 
-  /* "kycli/core/engine.pyx":23
+  /* "kycli/core/engine.pyx":38
  *             self._db = NULL
  * 
  *     cpdef close(self):             # <<<<<<<<<<<<<<
@@ -3605,24 +3286,16 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine_close(struct __py
 
   /* function exit code */
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(0, 23, __pyx_L1_error));
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_TraceException(__pyx_lineno, 0, 0);
-  #if CYTHON_USE_SYS_MONITORING
-  __Pyx_TraceExceptionUnwind(0, 0);
-  #else
-  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 23, __pyx_L1_error));
-  #endif
   __Pyx_AddTraceback("kycli.core.engine.DatabaseEngine.close", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -3671,17 +3344,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_6engine_14DatabaseEngine_4close(struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
-  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2]))
   __Pyx_RefNannySetupContext("close", 0);
-  __Pyx_TraceStartFunc("close (wrapper)", __pyx_f[0], 23, 0, 0, 0, __PYX_ERR(0, 23, __pyx_L1_error));
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_5kycli_4core_6engine_14DatabaseEngine_close(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_5kycli_4core_6engine_14DatabaseEngine_close(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3690,22 +3360,15 @@ static PyObject *__pyx_pf_5kycli_4core_6engine_14DatabaseEngine_4close(struct __
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_TraceException(__pyx_lineno, 0, 0);
-  #if CYTHON_USE_SYS_MONITORING
-  __Pyx_TraceExceptionUnwind(0, 0);
-  #else
-  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 23, __pyx_L1_error));
-  #endif
   __Pyx_AddTraceback("kycli.core.engine.DatabaseEngine.close", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "kycli/core/engine.pyx":28
+/* "kycli/core/engine.pyx":43
  *             self._db = NULL
  * 
  *     cdef int _execute_raw(self, str sql) except -1:             # <<<<<<<<<<<<<<
@@ -3716,76 +3379,119 @@ static PyObject *__pyx_pf_5kycli_4core_6engine_14DatabaseEngine_4close(struct __
 static int __pyx_f_5kycli_4core_6engine_14DatabaseEngine__execute_raw(struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine *__pyx_v_self, PyObject *__pyx_v_sql) {
   PyObject *__pyx_v_sql_bytes = 0;
   char *__pyx_v_errmsg;
+  int __pyx_v_attempt;
+  int __pyx_v_rc;
   PyObject *__pyx_v_msg = NULL;
   int __pyx_r;
-  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   char const *__pyx_t_2;
   int __pyx_t_3;
   Py_ssize_t __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
-  PyObject *__pyx_t_6 = NULL;
-  PyObject *__pyx_t_7 = NULL;
-  size_t __pyx_t_8;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  size_t __pyx_t_10;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3]))
   __Pyx_RefNannySetupContext("_execute_raw", 0);
-  __Pyx_TraceStartFunc("_execute_raw", __pyx_f[0], 28, 0, 0, 0, __PYX_ERR(0, 28, __pyx_L1_error));
 
-  /* "kycli/core/engine.pyx":29
+  /* "kycli/core/engine.pyx":44
  * 
  *     cdef int _execute_raw(self, str sql) except -1:
  *         cdef bytes sql_bytes = sql.encode('utf-8')             # <<<<<<<<<<<<<<
  *         cdef char* errmsg = NULL
- *         if sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg) != SQLITE_OK:
+ *         cdef int attempt = 0
 */
-  __Pyx_TraceLine(29,3,0,__PYX_ERR(0, 29, __pyx_L1_error))
   if (unlikely(__pyx_v_sql == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "encode");
-    __PYX_ERR(0, 29, __pyx_L1_error)
+    __PYX_ERR(0, 44, __pyx_L1_error)
   }
-  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sql_bytes = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/core/engine.pyx":30
+  /* "kycli/core/engine.pyx":45
  *     cdef int _execute_raw(self, str sql) except -1:
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         cdef char* errmsg = NULL             # <<<<<<<<<<<<<<
- *         if sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg) != SQLITE_OK:
- *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
+ *         cdef int attempt = 0
+ *         cdef int rc
 */
-  __Pyx_TraceLine(30,8,0,__PYX_ERR(0, 30, __pyx_L1_error))
   __pyx_v_errmsg = NULL;
 
-  /* "kycli/core/engine.pyx":31
+  /* "kycli/core/engine.pyx":46
  *         cdef bytes sql_bytes = sql.encode('utf-8')
  *         cdef char* errmsg = NULL
- *         if sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg) != SQLITE_OK:             # <<<<<<<<<<<<<<
- *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
- *             raise RuntimeError(f"SQLite error: {msg}")
+ *         cdef int attempt = 0             # <<<<<<<<<<<<<<
+ *         cdef int rc
+ *         while True:
 */
-  __Pyx_TraceLine(31,14,0,__PYX_ERR(0, 31, __pyx_L1_error))
-  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
-  __pyx_t_3 = (sqlite3_exec(__pyx_v_self->_db, __pyx_t_2, NULL, NULL, (&__pyx_v_errmsg)) != SQLITE_OK);
-  if (unlikely(__pyx_t_3)) {
+  __pyx_v_attempt = 0;
 
-    /* "kycli/core/engine.pyx":32
- *         cdef char* errmsg = NULL
- *         if sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg) != SQLITE_OK:
- *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"             # <<<<<<<<<<<<<<
- *             raise RuntimeError(f"SQLite error: {msg}")
- *         return 0
+  /* "kycli/core/engine.pyx":48
+ *         cdef int attempt = 0
+ *         cdef int rc
+ *         while True:             # <<<<<<<<<<<<<<
+ *             rc = sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg)
+ *             if rc == SQLITE_OK:
 */
-    __Pyx_TraceLine(32,26,0,__PYX_ERR(0, 32, __pyx_L1_error))
+  while (1) {
+
+    /* "kycli/core/engine.pyx":49
+ *         cdef int rc
+ *         while True:
+ *             rc = sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg)             # <<<<<<<<<<<<<<
+ *             if rc == SQLITE_OK:
+ *                 return 0
+*/
+    __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 49, __pyx_L1_error)
+    __pyx_v_rc = sqlite3_exec(__pyx_v_self->_db, __pyx_t_2, NULL, NULL, (&__pyx_v_errmsg));
+
+    /* "kycli/core/engine.pyx":50
+ *         while True:
+ *             rc = sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg)
+ *             if rc == SQLITE_OK:             # <<<<<<<<<<<<<<
+ *                 return 0
+ *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
+*/
+    __pyx_t_3 = (__pyx_v_rc == SQLITE_OK);
+    if (__pyx_t_3) {
+
+      /* "kycli/core/engine.pyx":51
+ *             rc = sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg)
+ *             if rc == SQLITE_OK:
+ *                 return 0             # <<<<<<<<<<<<<<
+ *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(msg):
+*/
+      __pyx_r = 0;
+      goto __pyx_L0;
+
+      /* "kycli/core/engine.pyx":50
+ *         while True:
+ *             rc = sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg)
+ *             if rc == SQLITE_OK:             # <<<<<<<<<<<<<<
+ *                 return 0
+ *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
+*/
+    }
+
+    /* "kycli/core/engine.pyx":52
+ *             if rc == SQLITE_OK:
+ *                 return 0
+ *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"             # <<<<<<<<<<<<<<
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(msg):
+ *                 raise RuntimeError(f"SQLite error: {msg}")
+*/
     __pyx_t_3 = (__pyx_v_errmsg != 0);
     if (__pyx_t_3) {
-      __pyx_t_4 = __Pyx_ssize_strlen(__pyx_v_errmsg); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 32, __pyx_L1_error)
-      __pyx_t_5 = __Pyx_decode_c_string(__pyx_v_errmsg, 0, __pyx_t_4, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_ssize_strlen(__pyx_v_errmsg); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 52, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_decode_c_string(__pyx_v_errmsg, 0, __pyx_t_4, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __pyx_t_1 = __pyx_t_5;
       __pyx_t_5 = 0;
@@ -3793,58 +3499,87 @@ static int __pyx_f_5kycli_4core_6engine_14DatabaseEngine__execute_raw(struct __p
       __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_Unknown_error);
       __pyx_t_1 = __pyx_mstate_global->__pyx_kp_u_Unknown_error;
     }
-    __pyx_v_msg = __pyx_t_1;
+    __Pyx_XDECREF_SET(__pyx_v_msg, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "kycli/core/engine.pyx":33
- *         if sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg) != SQLITE_OK:
+    /* "kycli/core/engine.pyx":53
+ *                 return 0
  *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
- *             raise RuntimeError(f"SQLite error: {msg}")             # <<<<<<<<<<<<<<
- *         return 0
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(msg):             # <<<<<<<<<<<<<<
+ *                 raise RuntimeError(f"SQLite error: {msg}")
+ *             _retry_sleep(attempt)
+*/
+    __pyx_t_6 = (__pyx_v_attempt >= (__pyx_v_5kycli_4core_6engine__RETRY_ATTEMPTS - 1));
+    if (!__pyx_t_6) {
+    } else {
+      __pyx_t_3 = __pyx_t_6;
+      goto __pyx_L7_bool_binop_done;
+    }
+    __pyx_t_1 = __pyx_v_msg;
+    __Pyx_INCREF(__pyx_t_1);
+    if (!(likely(PyUnicode_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_1))) __PYX_ERR(0, 53, __pyx_L1_error)
+    __pyx_t_6 = __pyx_f_5kycli_4core_6engine__is_retryable_error(((PyObject*)__pyx_t_1)); if (unlikely(__pyx_t_6 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 53, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_7 = (!__pyx_t_6);
+    __pyx_t_3 = __pyx_t_7;
+    __pyx_L7_bool_binop_done:;
+    if (unlikely(__pyx_t_3)) {
+
+      /* "kycli/core/engine.pyx":54
+ *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(msg):
+ *                 raise RuntimeError(f"SQLite error: {msg}")             # <<<<<<<<<<<<<<
+ *             _retry_sleep(attempt)
+ *             attempt += 1
+*/
+      __pyx_t_5 = NULL;
+      __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_v_msg, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 54, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_9 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_SQLite_error, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 54, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_10 = 1;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_t_9};
+        __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (__pyx_t_10*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __PYX_ERR(0, 54, __pyx_L1_error)
+
+      /* "kycli/core/engine.pyx":53
+ *                 return 0
+ *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(msg):             # <<<<<<<<<<<<<<
+ *                 raise RuntimeError(f"SQLite error: {msg}")
+ *             _retry_sleep(attempt)
+*/
+    }
+
+    /* "kycli/core/engine.pyx":55
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(msg):
+ *                 raise RuntimeError(f"SQLite error: {msg}")
+ *             _retry_sleep(attempt)             # <<<<<<<<<<<<<<
+ *             attempt += 1
  * 
 */
-    __Pyx_TraceLine(33,30,0,__PYX_ERR(0, 33, __pyx_L1_error))
-    __pyx_t_5 = NULL;
-    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_msg, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 33, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_SQLite_error, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 33, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_8 = 1;
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_t_7};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_8, (2-__pyx_t_8) | (__pyx_t_8*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-    }
-    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 33, __pyx_L1_error)
+    __pyx_f_5kycli_4core_6engine__retry_sleep(__pyx_v_attempt); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
 
-    /* "kycli/core/engine.pyx":31
- *         cdef bytes sql_bytes = sql.encode('utf-8')
- *         cdef char* errmsg = NULL
- *         if sqlite3_exec(self._db, sql_bytes, NULL, NULL, &errmsg) != SQLITE_OK:             # <<<<<<<<<<<<<<
- *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
- *             raise RuntimeError(f"SQLite error: {msg}")
-*/
-  }
-
-  /* "kycli/core/engine.pyx":34
- *             msg = errmsg.decode('utf-8') if errmsg else "Unknown error"
- *             raise RuntimeError(f"SQLite error: {msg}")
- *         return 0             # <<<<<<<<<<<<<<
+    /* "kycli/core/engine.pyx":56
+ *                 raise RuntimeError(f"SQLite error: {msg}")
+ *             _retry_sleep(attempt)
+ *             attempt += 1             # <<<<<<<<<<<<<<
  * 
  *     cdef _bind_and_execute(self, str sql, list params):
 */
-  __Pyx_TraceLine(34,34,0,__PYX_ERR(0, 34, __pyx_L1_error))
-  __pyx_r = 0;
-  __Pyx_TraceReturnCValue(__pyx_r, __Pyx_PyLong_From_int, 34, 0, __PYX_ERR(0, 34, __pyx_L1_error));
-  goto __pyx_L0;
+    __pyx_v_attempt = (__pyx_v_attempt + 1);
+  }
 
-  /* "kycli/core/engine.pyx":28
+  /* "kycli/core/engine.pyx":43
  *             self._db = NULL
  * 
  *     cdef int _execute_raw(self, str sql) except -1:             # <<<<<<<<<<<<<<
@@ -3853,29 +3588,24 @@ static int __pyx_f_5kycli_4core_6engine_14DatabaseEngine__execute_raw(struct __p
 */
 
   /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_TraceException(__pyx_lineno, 0, 0);
-  #if CYTHON_USE_SYS_MONITORING
-  __Pyx_TraceExceptionUnwind(0, 0);
-  #else
-  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 28, __pyx_L1_error));
-  #endif
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
   __Pyx_AddTraceback("kycli.core.engine.DatabaseEngine._execute_raw", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_sql_bytes);
   __Pyx_XDECREF(__pyx_v_msg);
-  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "kycli/core/engine.pyx":36
- *         return 0
+/* "kycli/core/engine.pyx":58
+ *             attempt += 1
  * 
  *     cdef _bind_and_execute(self, str sql, list params):             # <<<<<<<<<<<<<<
  *         cdef sqlite3_stmt* stmt = NULL
@@ -3886,307 +3616,479 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine__bind_and_execute
   sqlite3_stmt *__pyx_v_stmt;
   PyObject *__pyx_v_sql_bytes = 0;
   PyObject *__pyx_v_p_bytes = 0;
+  int __pyx_v_attempt;
+  int __pyx_v_rc;
+  char const *__pyx_v_err_ptr;
+  PyObject *__pyx_v_err = 0;
   PyObject *__pyx_v_i = NULL;
   PyObject *__pyx_v_p = NULL;
-  char const *__pyx_v_err;
   PyObject *__pyx_r = NULL;
-  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   char const *__pyx_t_2;
   int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  Py_ssize_t __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
-  PyObject *__pyx_t_6 = NULL;
-  size_t __pyx_t_7;
-  Py_ssize_t __pyx_t_8;
-  int __pyx_t_9;
-  char const *__pyx_t_10;
-  Py_ssize_t __pyx_t_11;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  size_t __pyx_t_10;
+  int __pyx_t_11;
+  char const *__pyx_t_12;
+  Py_ssize_t __pyx_t_13;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4]))
   __Pyx_RefNannySetupContext("_bind_and_execute", 0);
-  __Pyx_TraceStartFunc("_bind_and_execute", __pyx_f[0], 36, 0, 0, 0, __PYX_ERR(0, 36, __pyx_L1_error));
 
-  /* "kycli/core/engine.pyx":37
+  /* "kycli/core/engine.pyx":59
  * 
  *     cdef _bind_and_execute(self, str sql, list params):
  *         cdef sqlite3_stmt* stmt = NULL             # <<<<<<<<<<<<<<
  *         cdef bytes sql_bytes = sql.encode('utf-8')
- *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
+ *         cdef bytes p_bytes
 */
-  __Pyx_TraceLine(37,2,0,__PYX_ERR(0, 37, __pyx_L1_error))
   __pyx_v_stmt = NULL;
 
-  /* "kycli/core/engine.pyx":38
+  /* "kycli/core/engine.pyx":60
  *     cdef _bind_and_execute(self, str sql, list params):
  *         cdef sqlite3_stmt* stmt = NULL
  *         cdef bytes sql_bytes = sql.encode('utf-8')             # <<<<<<<<<<<<<<
- *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
- *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")
+ *         cdef bytes p_bytes
+ *         cdef int attempt = 0
 */
-  __Pyx_TraceLine(38,4,0,__PYX_ERR(0, 38, __pyx_L1_error))
   if (unlikely(__pyx_v_sql == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "encode");
-    __PYX_ERR(0, 38, __pyx_L1_error)
+    __PYX_ERR(0, 60, __pyx_L1_error)
   }
-  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sql_bytes = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/core/engine.pyx":39
- *         cdef sqlite3_stmt* stmt = NULL
+  /* "kycli/core/engine.pyx":62
  *         cdef bytes sql_bytes = sql.encode('utf-8')
- *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
- *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")
- * 
-*/
-  __Pyx_TraceLine(39,13,0,__PYX_ERR(0, 39, __pyx_L1_error))
-  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L1_error)
-  __pyx_t_3 = (sqlite3_prepare_v2(__pyx_v_self->_db, __pyx_t_2, -1, (&__pyx_v_stmt), NULL) != SQLITE_OK);
-  if (unlikely(__pyx_t_3)) {
-
-    /* "kycli/core/engine.pyx":40
- *         cdef bytes sql_bytes = sql.encode('utf-8')
- *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
- *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")             # <<<<<<<<<<<<<<
- * 
  *         cdef bytes p_bytes
+ *         cdef int attempt = 0             # <<<<<<<<<<<<<<
+ *         cdef int rc
+ *         cdef const char* err_ptr
 */
-    __Pyx_TraceLine(40,22,0,__PYX_ERR(0, 40, __pyx_L1_error))
-    __pyx_t_4 = NULL;
-    __pyx_t_5 = __Pyx_PyBytes_FromString(sqlite3_errmsg(__pyx_v_self->_db)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 40, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 40, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Prepare_error, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 40, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_7 = 1;
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_t_5};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-    }
-    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_v_attempt = 0;
 
-    /* "kycli/core/engine.pyx":39
- *         cdef sqlite3_stmt* stmt = NULL
- *         cdef bytes sql_bytes = sql.encode('utf-8')
- *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
- *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")
- * 
+  /* "kycli/core/engine.pyx":66
+ *         cdef const char* err_ptr
+ *         cdef str err
+ *         while True:             # <<<<<<<<<<<<<<
+ *             if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
+ *                 err_ptr = sqlite3_errmsg(self._db)
 */
-  }
+  while (1) {
 
-  /* "kycli/core/engine.pyx":43
- * 
- *         cdef bytes p_bytes
- *         for i, p in enumerate(params):             # <<<<<<<<<<<<<<
- *             if p is None:
- *                 sqlite3_bind_null(stmt, i + 1)
+    /* "kycli/core/engine.pyx":67
+ *         cdef str err
+ *         while True:
+ *             if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
 */
-  __Pyx_TraceLine(43,29,0,__PYX_ERR(0, 43, __pyx_L1_error))
-  __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
-  __pyx_t_1 = __pyx_mstate_global->__pyx_int_0;
-  __pyx_t_5 = __pyx_v_params; __Pyx_INCREF(__pyx_t_5);
-  __pyx_t_8 = 0;
-  for (;;) {
-    {
-      Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_5);
-      #if !CYTHON_ASSUME_SAFE_SIZE
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 43, __pyx_L1_error)
-      #endif
-      if (__pyx_t_8 >= __pyx_temp) break;
-    }
-    __pyx_t_4 = __Pyx_PyList_GetItemRefFast(__pyx_t_5, __pyx_t_8, __Pyx_ReferenceSharing_OwnStrongReference);
-    ++__pyx_t_8;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_XDECREF_SET(__pyx_v_p, __pyx_t_4);
-    __pyx_t_4 = 0;
-    __Pyx_TraceLine(43,29,0,__PYX_ERR(0, 43, __pyx_L1_error))
-    __Pyx_INCREF(__pyx_t_1);
-    __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
-    __pyx_t_4 = __Pyx_PyLong_AddObjC(__pyx_t_1, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1);
-    __pyx_t_1 = __pyx_t_4;
-    __pyx_t_4 = 0;
-
-    /* "kycli/core/engine.pyx":44
- *         cdef bytes p_bytes
- *         for i, p in enumerate(params):
- *             if p is None:             # <<<<<<<<<<<<<<
- *                 sqlite3_bind_null(stmt, i + 1)
- *             else:
-*/
-    __Pyx_TraceLine(44,38,0,__PYX_ERR(0, 44, __pyx_L1_error))
-    __pyx_t_3 = (__pyx_v_p == Py_None);
+    __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_3 = (sqlite3_prepare_v2(__pyx_v_self->_db, __pyx_t_2, -1, (&__pyx_v_stmt), NULL) != SQLITE_OK);
     if (__pyx_t_3) {
 
-      /* "kycli/core/engine.pyx":45
- *         for i, p in enumerate(params):
- *             if p is None:
- *                 sqlite3_bind_null(stmt, i + 1)             # <<<<<<<<<<<<<<
- *             else:
- *                 p_bytes = str(p).encode('utf-8')
+      /* "kycli/core/engine.pyx":68
+ *         while True:
+ *             if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
+ *                 err_ptr = sqlite3_errmsg(self._db)             # <<<<<<<<<<<<<<
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
 */
-      __Pyx_TraceLine(45,43,0,__PYX_ERR(0, 45, __pyx_L1_error))
-      __pyx_t_4 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_t_4); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      (void)(sqlite3_bind_null(__pyx_v_stmt, __pyx_t_9));
+      __pyx_v_err_ptr = sqlite3_errmsg(__pyx_v_self->_db);
 
-      /* "kycli/core/engine.pyx":44
- *         cdef bytes p_bytes
- *         for i, p in enumerate(params):
- *             if p is None:             # <<<<<<<<<<<<<<
- *                 sqlite3_bind_null(stmt, i + 1)
- *             else:
+      /* "kycli/core/engine.pyx":69
+ *             if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"             # <<<<<<<<<<<<<<
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                     raise RuntimeError(f"Prepare error: {err}")
 */
-      goto __pyx_L6;
+      __pyx_t_3 = (__pyx_v_err_ptr != NULL);
+      if (__pyx_t_3) {
+        __pyx_t_4 = __Pyx_ssize_strlen(__pyx_v_err_ptr); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 69, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_decode_c_string(__pyx_v_err_ptr, 0, __pyx_t_4, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_1 = __pyx_t_5;
+        __pyx_t_5 = 0;
+      } else {
+        __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_Unknown_error);
+        __pyx_t_1 = __pyx_mstate_global->__pyx_kp_u_Unknown_error;
+      }
+      __Pyx_XDECREF_SET(__pyx_v_err, ((PyObject*)__pyx_t_1));
+      __pyx_t_1 = 0;
+
+      /* "kycli/core/engine.pyx":70
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):             # <<<<<<<<<<<<<<
+ *                     raise RuntimeError(f"Prepare error: {err}")
+ *                 _retry_sleep(attempt)
+*/
+      __pyx_t_6 = (__pyx_v_attempt >= (__pyx_v_5kycli_4core_6engine__RETRY_ATTEMPTS - 1));
+      if (!__pyx_t_6) {
+      } else {
+        __pyx_t_3 = __pyx_t_6;
+        goto __pyx_L7_bool_binop_done;
+      }
+      __pyx_t_6 = __pyx_f_5kycli_4core_6engine__is_retryable_error(__pyx_v_err); if (unlikely(__pyx_t_6 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L1_error)
+      __pyx_t_7 = (!__pyx_t_6);
+      __pyx_t_3 = __pyx_t_7;
+      __pyx_L7_bool_binop_done:;
+      if (unlikely(__pyx_t_3)) {
+
+        /* "kycli/core/engine.pyx":71
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                     raise RuntimeError(f"Prepare error: {err}")             # <<<<<<<<<<<<<<
+ *                 _retry_sleep(attempt)
+ *                 attempt += 1
+*/
+        __pyx_t_5 = NULL;
+        __pyx_t_8 = __Pyx_PyUnicode_Unicode(__pyx_v_err); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 71, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_9 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Prepare_error, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 71, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __pyx_t_10 = 1;
+        {
+          PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_t_9};
+          __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (__pyx_t_10*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+          __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_1);
+        }
+        __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __PYX_ERR(0, 71, __pyx_L1_error)
+
+        /* "kycli/core/engine.pyx":70
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):             # <<<<<<<<<<<<<<
+ *                     raise RuntimeError(f"Prepare error: {err}")
+ *                 _retry_sleep(attempt)
+*/
+      }
+
+      /* "kycli/core/engine.pyx":72
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                     raise RuntimeError(f"Prepare error: {err}")
+ *                 _retry_sleep(attempt)             # <<<<<<<<<<<<<<
+ *                 attempt += 1
+ *                 continue
+*/
+      __pyx_f_5kycli_4core_6engine__retry_sleep(__pyx_v_attempt); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 72, __pyx_L1_error)
+
+      /* "kycli/core/engine.pyx":73
+ *                     raise RuntimeError(f"Prepare error: {err}")
+ *                 _retry_sleep(attempt)
+ *                 attempt += 1             # <<<<<<<<<<<<<<
+ *                 continue
+ * 
+*/
+      __pyx_v_attempt = (__pyx_v_attempt + 1);
+
+      /* "kycli/core/engine.pyx":74
+ *                 _retry_sleep(attempt)
+ *                 attempt += 1
+ *                 continue             # <<<<<<<<<<<<<<
+ * 
+ *             for i, p in enumerate(params):
+*/
+      goto __pyx_L3_continue;
+
+      /* "kycli/core/engine.pyx":67
+ *         cdef str err
+ *         while True:
+ *             if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+*/
     }
 
-    /* "kycli/core/engine.pyx":47
- *                 sqlite3_bind_null(stmt, i + 1)
- *             else:
- *                 p_bytes = str(p).encode('utf-8')             # <<<<<<<<<<<<<<
- *                 sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
+    /* "kycli/core/engine.pyx":76
+ *                 continue
  * 
+ *             for i, p in enumerate(params):             # <<<<<<<<<<<<<<
+ *                 if p is None:
+ *                     sqlite3_bind_null(stmt, i + 1)
 */
-    __Pyx_TraceLine(47,45,0,__PYX_ERR(0, 47, __pyx_L1_error))
-    /*else*/ {
-      __pyx_t_4 = __Pyx_PyObject_Unicode(__pyx_v_p); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_6 = PyUnicode_AsUTF8String(((PyObject*)__pyx_t_4)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 47, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_XDECREF_SET(__pyx_v_p_bytes, ((PyObject*)__pyx_t_6));
-      __pyx_t_6 = 0;
+    __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
+    __pyx_t_1 = __pyx_mstate_global->__pyx_int_0;
+    __pyx_t_9 = __pyx_v_params; __Pyx_INCREF(__pyx_t_9);
+    __pyx_t_4 = 0;
+    for (;;) {
+      {
+        Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_9);
+        #if !CYTHON_ASSUME_SAFE_SIZE
+        if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 76, __pyx_L1_error)
+        #endif
+        if (__pyx_t_4 >= __pyx_temp) break;
+      }
+      __pyx_t_5 = __Pyx_PyList_GetItemRefFast(__pyx_t_9, __pyx_t_4, __Pyx_ReferenceSharing_OwnStrongReference);
+      ++__pyx_t_4;
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 76, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_XDECREF_SET(__pyx_v_p, __pyx_t_5);
+      __pyx_t_5 = 0;
+      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
+      __pyx_t_5 = __Pyx_PyLong_AddObjC(__pyx_t_1, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 76, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_1);
+      __pyx_t_1 = __pyx_t_5;
+      __pyx_t_5 = 0;
 
-      /* "kycli/core/engine.pyx":48
- *             else:
- *                 p_bytes = str(p).encode('utf-8')
- *                 sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)             # <<<<<<<<<<<<<<
+      /* "kycli/core/engine.pyx":77
  * 
- *         if sqlite3_step(stmt) != SQLITE_DONE:
+ *             for i, p in enumerate(params):
+ *                 if p is None:             # <<<<<<<<<<<<<<
+ *                     sqlite3_bind_null(stmt, i + 1)
+ *                 else:
 */
-      __Pyx_TraceLine(48,56,0,__PYX_ERR(0, 48, __pyx_L1_error))
-      __pyx_t_6 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 48, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_10 = __Pyx_PyBytes_AsString(__pyx_v_p_bytes); if (unlikely((!__pyx_t_10) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L1_error)
-      __pyx_t_11 = __Pyx_PyBytes_GET_SIZE(__pyx_v_p_bytes); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 48, __pyx_L1_error)
-      (void)(sqlite3_bind_text(__pyx_v_stmt, __pyx_t_9, __pyx_t_10, __pyx_t_11, SQLITE_TRANSIENT));
+      __pyx_t_3 = (__pyx_v_p == Py_None);
+      if (__pyx_t_3) {
+
+        /* "kycli/core/engine.pyx":78
+ *             for i, p in enumerate(params):
+ *                 if p is None:
+ *                     sqlite3_bind_null(stmt, i + 1)             # <<<<<<<<<<<<<<
+ *                 else:
+ *                     p_bytes = str(p).encode('utf-8')
+*/
+        __pyx_t_5 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 78, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_11 = __Pyx_PyLong_As_int(__pyx_t_5); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 78, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        (void)(sqlite3_bind_null(__pyx_v_stmt, __pyx_t_11));
+
+        /* "kycli/core/engine.pyx":77
+ * 
+ *             for i, p in enumerate(params):
+ *                 if p is None:             # <<<<<<<<<<<<<<
+ *                     sqlite3_bind_null(stmt, i + 1)
+ *                 else:
+*/
+        goto __pyx_L11;
+      }
+
+      /* "kycli/core/engine.pyx":80
+ *                     sqlite3_bind_null(stmt, i + 1)
+ *                 else:
+ *                     p_bytes = str(p).encode('utf-8')             # <<<<<<<<<<<<<<
+ *                     sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
+ * 
+*/
+      /*else*/ {
+        __pyx_t_5 = __Pyx_PyObject_Unicode(__pyx_v_p); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 80, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_8 = PyUnicode_AsUTF8String(((PyObject*)__pyx_t_5)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 80, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_XDECREF_SET(__pyx_v_p_bytes, ((PyObject*)__pyx_t_8));
+        __pyx_t_8 = 0;
+
+        /* "kycli/core/engine.pyx":81
+ *                 else:
+ *                     p_bytes = str(p).encode('utf-8')
+ *                     sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)             # <<<<<<<<<<<<<<
+ * 
+ *             rc = sqlite3_step(stmt)
+*/
+        __pyx_t_8 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 81, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_11 = __Pyx_PyLong_As_int(__pyx_t_8); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 81, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __pyx_t_12 = __Pyx_PyBytes_AsString(__pyx_v_p_bytes); if (unlikely((!__pyx_t_12) && PyErr_Occurred())) __PYX_ERR(0, 81, __pyx_L1_error)
+        __pyx_t_13 = __Pyx_PyBytes_GET_SIZE(__pyx_v_p_bytes); if (unlikely(__pyx_t_13 == ((Py_ssize_t)-1))) __PYX_ERR(0, 81, __pyx_L1_error)
+        (void)(sqlite3_bind_text(__pyx_v_stmt, __pyx_t_11, __pyx_t_12, __pyx_t_13, SQLITE_TRANSIENT));
+      }
+      __pyx_L11:;
+
+      /* "kycli/core/engine.pyx":76
+ *                 continue
+ * 
+ *             for i, p in enumerate(params):             # <<<<<<<<<<<<<<
+ *                 if p is None:
+ *                     sqlite3_bind_null(stmt, i + 1)
+*/
     }
-    __pyx_L6:;
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "kycli/core/engine.pyx":43
+    /* "kycli/core/engine.pyx":83
+ *                     sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
  * 
- *         cdef bytes p_bytes
- *         for i, p in enumerate(params):             # <<<<<<<<<<<<<<
- *             if p is None:
- *                 sqlite3_bind_null(stmt, i + 1)
+ *             rc = sqlite3_step(stmt)             # <<<<<<<<<<<<<<
+ *             if rc == SQLITE_DONE:
+ *                 sqlite3_finalize(stmt)
 */
-    __Pyx_TraceLine(43,29,0,__PYX_ERR(0, 43, __pyx_L1_error))
-  }
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_v_rc = sqlite3_step(__pyx_v_stmt);
 
-  /* "kycli/core/engine.pyx":50
- *                 sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
+    /* "kycli/core/engine.pyx":84
  * 
- *         if sqlite3_step(stmt) != SQLITE_DONE:             # <<<<<<<<<<<<<<
- *             err = sqlite3_errmsg(self._db)
+ *             rc = sqlite3_step(stmt)
+ *             if rc == SQLITE_DONE:             # <<<<<<<<<<<<<<
+ *                 sqlite3_finalize(stmt)
+ *                 return
+*/
+    __pyx_t_3 = (__pyx_v_rc == SQLITE_DONE);
+    if (__pyx_t_3) {
+
+      /* "kycli/core/engine.pyx":85
+ *             rc = sqlite3_step(stmt)
+ *             if rc == SQLITE_DONE:
+ *                 sqlite3_finalize(stmt)             # <<<<<<<<<<<<<<
+ *                 return
+ * 
+*/
+      (void)(sqlite3_finalize(__pyx_v_stmt));
+
+      /* "kycli/core/engine.pyx":86
+ *             if rc == SQLITE_DONE:
+ *                 sqlite3_finalize(stmt)
+ *                 return             # <<<<<<<<<<<<<<
+ * 
+ *             err_ptr = sqlite3_errmsg(self._db)
+*/
+      __Pyx_XDECREF(__pyx_r);
+      __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+      goto __pyx_L0;
+
+      /* "kycli/core/engine.pyx":84
+ * 
+ *             rc = sqlite3_step(stmt)
+ *             if rc == SQLITE_DONE:             # <<<<<<<<<<<<<<
+ *                 sqlite3_finalize(stmt)
+ *                 return
+*/
+    }
+
+    /* "kycli/core/engine.pyx":88
+ *                 return
+ * 
+ *             err_ptr = sqlite3_errmsg(self._db)             # <<<<<<<<<<<<<<
+ *             err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
  *             sqlite3_finalize(stmt)
 */
-  __Pyx_TraceLine(50,67,0,__PYX_ERR(0, 50, __pyx_L1_error))
-  __pyx_t_3 = (sqlite3_step(__pyx_v_stmt) != SQLITE_DONE);
-  if (unlikely(__pyx_t_3)) {
+    __pyx_v_err_ptr = sqlite3_errmsg(__pyx_v_self->_db);
 
-    /* "kycli/core/engine.pyx":51
+    /* "kycli/core/engine.pyx":89
  * 
- *         if sqlite3_step(stmt) != SQLITE_DONE:
- *             err = sqlite3_errmsg(self._db)             # <<<<<<<<<<<<<<
+ *             err_ptr = sqlite3_errmsg(self._db)
+ *             err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"             # <<<<<<<<<<<<<<
  *             sqlite3_finalize(stmt)
- *             raise RuntimeError(f"Step error: {err}")
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
 */
-    __Pyx_TraceLine(51,71,0,__PYX_ERR(0, 51, __pyx_L1_error))
-    __pyx_v_err = sqlite3_errmsg(__pyx_v_self->_db);
+    __pyx_t_3 = (__pyx_v_err_ptr != NULL);
+    if (__pyx_t_3) {
+      __pyx_t_4 = __Pyx_ssize_strlen(__pyx_v_err_ptr); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 89, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_decode_c_string(__pyx_v_err_ptr, 0, __pyx_t_4, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 89, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_1 = __pyx_t_9;
+      __pyx_t_9 = 0;
+    } else {
+      __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_Unknown_error);
+      __pyx_t_1 = __pyx_mstate_global->__pyx_kp_u_Unknown_error;
+    }
+    __Pyx_XDECREF_SET(__pyx_v_err, ((PyObject*)__pyx_t_1));
+    __pyx_t_1 = 0;
 
-    /* "kycli/core/engine.pyx":52
- *         if sqlite3_step(stmt) != SQLITE_DONE:
- *             err = sqlite3_errmsg(self._db)
+    /* "kycli/core/engine.pyx":90
+ *             err_ptr = sqlite3_errmsg(self._db)
+ *             err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
  *             sqlite3_finalize(stmt)             # <<<<<<<<<<<<<<
- *             raise RuntimeError(f"Step error: {err}")
- * 
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                 raise RuntimeError(f"Step error: {err}")
 */
-    __Pyx_TraceLine(52,75,0,__PYX_ERR(0, 52, __pyx_L1_error))
     (void)(sqlite3_finalize(__pyx_v_stmt));
 
-    /* "kycli/core/engine.pyx":53
- *             err = sqlite3_errmsg(self._db)
+    /* "kycli/core/engine.pyx":91
+ *             err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
  *             sqlite3_finalize(stmt)
- *             raise RuntimeError(f"Step error: {err}")             # <<<<<<<<<<<<<<
- * 
- *         sqlite3_finalize(stmt)
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):             # <<<<<<<<<<<<<<
+ *                 raise RuntimeError(f"Step error: {err}")
+ *             _retry_sleep(attempt)
 */
-    __Pyx_TraceLine(53,79,0,__PYX_ERR(0, 53, __pyx_L1_error))
-    __pyx_t_5 = NULL;
-    __pyx_t_6 = __Pyx_PyBytes_FromString(__pyx_v_err); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 53, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_6, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Step_error, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 53, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_7 = 1;
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_t_6};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_7 = (__pyx_v_attempt >= (__pyx_v_5kycli_4core_6engine__RETRY_ATTEMPTS - 1));
+    if (!__pyx_t_7) {
+    } else {
+      __pyx_t_3 = __pyx_t_7;
+      goto __pyx_L15_bool_binop_done;
     }
-    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 53, __pyx_L1_error)
+    __pyx_t_7 = __pyx_f_5kycli_4core_6engine__is_retryable_error(__pyx_v_err); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 91, __pyx_L1_error)
+    __pyx_t_6 = (!__pyx_t_7);
+    __pyx_t_3 = __pyx_t_6;
+    __pyx_L15_bool_binop_done:;
+    if (unlikely(__pyx_t_3)) {
 
-    /* "kycli/core/engine.pyx":50
- *                 sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
- * 
- *         if sqlite3_step(stmt) != SQLITE_DONE:             # <<<<<<<<<<<<<<
- *             err = sqlite3_errmsg(self._db)
+      /* "kycli/core/engine.pyx":92
  *             sqlite3_finalize(stmt)
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                 raise RuntimeError(f"Step error: {err}")             # <<<<<<<<<<<<<<
+ *             _retry_sleep(attempt)
+ *             attempt += 1
 */
-  }
+      __pyx_t_9 = NULL;
+      __pyx_t_8 = __Pyx_PyUnicode_Unicode(__pyx_v_err); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 92, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Step_error, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 92, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_10 = 1;
+      {
+        PyObject *__pyx_callargs[2] = {__pyx_t_9, __pyx_t_5};
+        __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (__pyx_t_10*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+        __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+      }
+      __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __PYX_ERR(0, 92, __pyx_L1_error)
 
-  /* "kycli/core/engine.pyx":55
- *             raise RuntimeError(f"Step error: {err}")
+      /* "kycli/core/engine.pyx":91
+ *             err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *             sqlite3_finalize(stmt)
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):             # <<<<<<<<<<<<<<
+ *                 raise RuntimeError(f"Step error: {err}")
+ *             _retry_sleep(attempt)
+*/
+    }
+
+    /* "kycli/core/engine.pyx":93
+ *             if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                 raise RuntimeError(f"Step error: {err}")
+ *             _retry_sleep(attempt)             # <<<<<<<<<<<<<<
+ *             attempt += 1
  * 
- *         sqlite3_finalize(stmt)             # <<<<<<<<<<<<<<
+*/
+    __pyx_f_5kycli_4core_6engine__retry_sleep(__pyx_v_attempt); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 93, __pyx_L1_error)
+
+    /* "kycli/core/engine.pyx":94
+ *                 raise RuntimeError(f"Step error: {err}")
+ *             _retry_sleep(attempt)
+ *             attempt += 1             # <<<<<<<<<<<<<<
  * 
  *     cdef list _bind_and_fetch(self, str sql, list params):
 */
-  __Pyx_TraceLine(55,84,0,__PYX_ERR(0, 55, __pyx_L1_error))
-  (void)(sqlite3_finalize(__pyx_v_stmt));
+    __pyx_v_attempt = (__pyx_v_attempt + 1);
+    __pyx_L3_continue:;
+  }
 
-  /* "kycli/core/engine.pyx":36
- *         return 0
+  /* "kycli/core/engine.pyx":58
+ *             attempt += 1
  * 
  *     cdef _bind_and_execute(self, str sql, list params):             # <<<<<<<<<<<<<<
  *         cdef sqlite3_stmt* stmt = NULL
@@ -4195,34 +4097,27 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine__bind_and_execute
 
   /* function exit code */
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  __Pyx_TraceReturnValue(__pyx_r, 0, 0, __PYX_ERR(0, 36, __pyx_L1_error));
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_TraceException(__pyx_lineno, 0, 0);
-  #if CYTHON_USE_SYS_MONITORING
-  __Pyx_TraceExceptionUnwind(0, 0);
-  #else
-  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 36, __pyx_L1_error));
-  #endif
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
   __Pyx_AddTraceback("kycli.core.engine.DatabaseEngine._bind_and_execute", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_sql_bytes);
   __Pyx_XDECREF(__pyx_v_p_bytes);
+  __Pyx_XDECREF(__pyx_v_err);
   __Pyx_XDECREF(__pyx_v_i);
   __Pyx_XDECREF(__pyx_v_p);
   __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "kycli/core/engine.pyx":57
- *         sqlite3_finalize(stmt)
+/* "kycli/core/engine.pyx":96
+ *             attempt += 1
  * 
  *     cdef list _bind_and_fetch(self, str sql, list params):             # <<<<<<<<<<<<<<
  *         cdef sqlite3_stmt* stmt = NULL
@@ -4233,425 +4128,680 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine__bind_and_fetch(s
   sqlite3_stmt *__pyx_v_stmt;
   PyObject *__pyx_v_sql_bytes = 0;
   PyObject *__pyx_v_p_bytes = 0;
-  PyObject *__pyx_v_i = NULL;
-  PyObject *__pyx_v_p = NULL;
+  int __pyx_v_attempt;
+  int __pyx_v_rc;
+  char const *__pyx_v_err_ptr;
+  PyObject *__pyx_v_err = 0;
   PyObject *__pyx_v_rows = 0;
   int __pyx_v_col_count;
   PyObject *__pyx_v_row = 0;
   unsigned char const *__pyx_v_text;
+  PyObject *__pyx_v_i = NULL;
+  PyObject *__pyx_v_p = NULL;
   PyObject *__pyx_r = NULL;
-  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   char const *__pyx_t_2;
   int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  Py_ssize_t __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
-  PyObject *__pyx_t_6 = NULL;
-  size_t __pyx_t_7;
-  Py_ssize_t __pyx_t_8;
-  int __pyx_t_9;
-  char const *__pyx_t_10;
-  Py_ssize_t __pyx_t_11;
-  PyObject *(*__pyx_t_12)(PyObject *);
-  int __pyx_t_13;
-  char *__pyx_t_14;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  size_t __pyx_t_10;
+  int __pyx_t_11;
+  char const *__pyx_t_12;
+  Py_ssize_t __pyx_t_13;
+  PyObject *(*__pyx_t_14)(PyObject *);
+  int __pyx_t_15;
+  char *__pyx_t_16;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5]))
   __Pyx_RefNannySetupContext("_bind_and_fetch", 0);
-  __Pyx_TraceStartFunc("_bind_and_fetch", __pyx_f[0], 57, 0, 0, 0, __PYX_ERR(0, 57, __pyx_L1_error));
 
-  /* "kycli/core/engine.pyx":58
+  /* "kycli/core/engine.pyx":97
  * 
  *     cdef list _bind_and_fetch(self, str sql, list params):
  *         cdef sqlite3_stmt* stmt = NULL             # <<<<<<<<<<<<<<
  *         cdef bytes sql_bytes = sql.encode('utf-8')
- *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
+ *         cdef bytes p_bytes
 */
-  __Pyx_TraceLine(58,2,0,__PYX_ERR(0, 58, __pyx_L1_error))
   __pyx_v_stmt = NULL;
 
-  /* "kycli/core/engine.pyx":59
+  /* "kycli/core/engine.pyx":98
  *     cdef list _bind_and_fetch(self, str sql, list params):
  *         cdef sqlite3_stmt* stmt = NULL
  *         cdef bytes sql_bytes = sql.encode('utf-8')             # <<<<<<<<<<<<<<
- *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
- *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")
+ *         cdef bytes p_bytes
+ *         cdef int attempt = 0
 */
-  __Pyx_TraceLine(59,4,0,__PYX_ERR(0, 59, __pyx_L1_error))
   if (unlikely(__pyx_v_sql == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "encode");
-    __PYX_ERR(0, 59, __pyx_L1_error)
+    __PYX_ERR(0, 98, __pyx_L1_error)
   }
-  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_sql); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sql_bytes = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "kycli/core/engine.pyx":60
- *         cdef sqlite3_stmt* stmt = NULL
+  /* "kycli/core/engine.pyx":100
  *         cdef bytes sql_bytes = sql.encode('utf-8')
- *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
- *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")
- * 
-*/
-  __Pyx_TraceLine(60,13,0,__PYX_ERR(0, 60, __pyx_L1_error))
-  __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L1_error)
-  __pyx_t_3 = (sqlite3_prepare_v2(__pyx_v_self->_db, __pyx_t_2, -1, (&__pyx_v_stmt), NULL) != SQLITE_OK);
-  if (unlikely(__pyx_t_3)) {
-
-    /* "kycli/core/engine.pyx":61
- *         cdef bytes sql_bytes = sql.encode('utf-8')
- *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
- *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")             # <<<<<<<<<<<<<<
- * 
  *         cdef bytes p_bytes
+ *         cdef int attempt = 0             # <<<<<<<<<<<<<<
+ *         cdef int rc
+ *         cdef const char* err_ptr
 */
-    __Pyx_TraceLine(61,22,0,__PYX_ERR(0, 61, __pyx_L1_error))
-    __pyx_t_4 = NULL;
-    __pyx_t_5 = __Pyx_PyBytes_FromString(sqlite3_errmsg(__pyx_v_self->_db)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_mstate_global->__pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 61, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Prepare_error, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_7 = 1;
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_t_5};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-    }
-    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_v_attempt = 0;
 
-    /* "kycli/core/engine.pyx":60
- *         cdef sqlite3_stmt* stmt = NULL
- *         cdef bytes sql_bytes = sql.encode('utf-8')
- *         if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
- *             raise RuntimeError(f"Prepare error: {sqlite3_errmsg(self._db)}")
- * 
-*/
-  }
-
-  /* "kycli/core/engine.pyx":64
- * 
- *         cdef bytes p_bytes
- *         for i, p in enumerate(params):             # <<<<<<<<<<<<<<
- *             if p is None:
- *                 sqlite3_bind_null(stmt, i + 1)
-*/
-  __Pyx_TraceLine(64,29,0,__PYX_ERR(0, 64, __pyx_L1_error))
-  __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
-  __pyx_t_1 = __pyx_mstate_global->__pyx_int_0;
-  __pyx_t_5 = __pyx_v_params; __Pyx_INCREF(__pyx_t_5);
-  __pyx_t_8 = 0;
-  for (;;) {
-    {
-      Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_5);
-      #if !CYTHON_ASSUME_SAFE_SIZE
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 64, __pyx_L1_error)
-      #endif
-      if (__pyx_t_8 >= __pyx_temp) break;
-    }
-    __pyx_t_4 = __Pyx_PyList_GetItemRefFast(__pyx_t_5, __pyx_t_8, __Pyx_ReferenceSharing_OwnStrongReference);
-    ++__pyx_t_8;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 64, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_XDECREF_SET(__pyx_v_p, __pyx_t_4);
-    __pyx_t_4 = 0;
-    __Pyx_TraceLine(64,29,0,__PYX_ERR(0, 64, __pyx_L1_error))
-    __Pyx_INCREF(__pyx_t_1);
-    __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
-    __pyx_t_4 = __Pyx_PyLong_AddObjC(__pyx_t_1, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 64, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1);
-    __pyx_t_1 = __pyx_t_4;
-    __pyx_t_4 = 0;
-
-    /* "kycli/core/engine.pyx":65
- *         cdef bytes p_bytes
- *         for i, p in enumerate(params):
- *             if p is None:             # <<<<<<<<<<<<<<
- *                 sqlite3_bind_null(stmt, i + 1)
- *             else:
-*/
-    __Pyx_TraceLine(65,38,0,__PYX_ERR(0, 65, __pyx_L1_error))
-    __pyx_t_3 = (__pyx_v_p == Py_None);
-    if (__pyx_t_3) {
-
-      /* "kycli/core/engine.pyx":66
- *         for i, p in enumerate(params):
- *             if p is None:
- *                 sqlite3_bind_null(stmt, i + 1)             # <<<<<<<<<<<<<<
- *             else:
- *                 p_bytes = str(p).encode('utf-8')
-*/
-      __Pyx_TraceLine(66,43,0,__PYX_ERR(0, 66, __pyx_L1_error))
-      __pyx_t_4 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_t_4); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 66, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      (void)(sqlite3_bind_null(__pyx_v_stmt, __pyx_t_9));
-
-      /* "kycli/core/engine.pyx":65
- *         cdef bytes p_bytes
- *         for i, p in enumerate(params):
- *             if p is None:             # <<<<<<<<<<<<<<
- *                 sqlite3_bind_null(stmt, i + 1)
- *             else:
-*/
-      goto __pyx_L6;
-    }
-
-    /* "kycli/core/engine.pyx":68
- *                 sqlite3_bind_null(stmt, i + 1)
- *             else:
- *                 p_bytes = str(p).encode('utf-8')             # <<<<<<<<<<<<<<
- *                 sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
- * 
-*/
-    __Pyx_TraceLine(68,45,0,__PYX_ERR(0, 68, __pyx_L1_error))
-    /*else*/ {
-      __pyx_t_4 = __Pyx_PyObject_Unicode(__pyx_v_p); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 68, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_6 = PyUnicode_AsUTF8String(((PyObject*)__pyx_t_4)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 68, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_XDECREF_SET(__pyx_v_p_bytes, ((PyObject*)__pyx_t_6));
-      __pyx_t_6 = 0;
-
-      /* "kycli/core/engine.pyx":69
- *             else:
- *                 p_bytes = str(p).encode('utf-8')
- *                 sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)             # <<<<<<<<<<<<<<
- * 
- *         cdef list rows = []
-*/
-      __Pyx_TraceLine(69,56,0,__PYX_ERR(0, 69, __pyx_L1_error))
-      __pyx_t_6 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 69, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_10 = __Pyx_PyBytes_AsString(__pyx_v_p_bytes); if (unlikely((!__pyx_t_10) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L1_error)
-      __pyx_t_11 = __Pyx_PyBytes_GET_SIZE(__pyx_v_p_bytes); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 69, __pyx_L1_error)
-      (void)(sqlite3_bind_text(__pyx_v_stmt, __pyx_t_9, __pyx_t_10, __pyx_t_11, SQLITE_TRANSIENT));
-    }
-    __pyx_L6:;
-
-    /* "kycli/core/engine.pyx":64
- * 
- *         cdef bytes p_bytes
- *         for i, p in enumerate(params):             # <<<<<<<<<<<<<<
- *             if p is None:
- *                 sqlite3_bind_null(stmt, i + 1)
-*/
-    __Pyx_TraceLine(64,29,0,__PYX_ERR(0, 64, __pyx_L1_error))
-  }
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "kycli/core/engine.pyx":71
- *                 sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
- * 
- *         cdef list rows = []             # <<<<<<<<<<<<<<
- *         cdef int col_count
- *         cdef list row
-*/
-  __Pyx_TraceLine(71,64,0,__PYX_ERR(0, 71, __pyx_L1_error))
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_rows = ((PyObject*)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "kycli/core/engine.pyx":76
+  /* "kycli/core/engine.pyx":109
  *         cdef const unsigned char* text
  * 
- *         while sqlite3_step(stmt) == SQLITE_ROW:             # <<<<<<<<<<<<<<
- *             col_count = sqlite3_column_count(stmt)
- *             row = []
+ *         while True:             # <<<<<<<<<<<<<<
+ *             if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
+ *                 err_ptr = sqlite3_errmsg(self._db)
 */
-  __Pyx_TraceLine(76,65,0,__PYX_ERR(0, 76, __pyx_L1_error))
   while (1) {
-    __pyx_t_3 = (sqlite3_step(__pyx_v_stmt) == SQLITE_ROW);
-    if (!__pyx_t_3) break;
 
-    /* "kycli/core/engine.pyx":77
+    /* "kycli/core/engine.pyx":110
  * 
- *         while sqlite3_step(stmt) == SQLITE_ROW:
- *             col_count = sqlite3_column_count(stmt)             # <<<<<<<<<<<<<<
- *             row = []
- *             for i in range(col_count):
+ *         while True:
+ *             if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
 */
-    __Pyx_TraceLine(77,73,0,__PYX_ERR(0, 77, __pyx_L1_error))
-    __pyx_v_col_count = sqlite3_column_count(__pyx_v_stmt);
+    __pyx_t_2 = __Pyx_PyBytes_AsString(__pyx_v_sql_bytes); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_3 = (sqlite3_prepare_v2(__pyx_v_self->_db, __pyx_t_2, -1, (&__pyx_v_stmt), NULL) != SQLITE_OK);
+    if (__pyx_t_3) {
 
-    /* "kycli/core/engine.pyx":78
- *         while sqlite3_step(stmt) == SQLITE_ROW:
- *             col_count = sqlite3_column_count(stmt)
- *             row = []             # <<<<<<<<<<<<<<
- *             for i in range(col_count):
- *                 text = sqlite3_column_text(stmt, i)
+      /* "kycli/core/engine.pyx":111
+ *         while True:
+ *             if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
+ *                 err_ptr = sqlite3_errmsg(self._db)             # <<<<<<<<<<<<<<
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
 */
-    __Pyx_TraceLine(78,76,0,__PYX_ERR(0, 78, __pyx_L1_error))
-    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_XDECREF_SET(__pyx_v_row, ((PyObject*)__pyx_t_1));
-    __pyx_t_1 = 0;
+      __pyx_v_err_ptr = sqlite3_errmsg(__pyx_v_self->_db);
 
-    /* "kycli/core/engine.pyx":79
- *             col_count = sqlite3_column_count(stmt)
- *             row = []
- *             for i in range(col_count):             # <<<<<<<<<<<<<<
- *                 text = sqlite3_column_text(stmt, i)
- *                 if text == NULL:
+      /* "kycli/core/engine.pyx":112
+ *             if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"             # <<<<<<<<<<<<<<
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                     raise RuntimeError(f"Prepare error: {err}")
 */
-    __Pyx_TraceLine(79,80,0,__PYX_ERR(0, 79, __pyx_L1_error))
-    __pyx_t_5 = NULL;
-    __pyx_t_6 = __Pyx_PyLong_From_int(__pyx_v_col_count); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 79, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = 1;
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_t_6};
-      __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(&PyRange_Type), __pyx_callargs+__pyx_t_7, (2-__pyx_t_7) | (__pyx_t_7*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_3 = (__pyx_v_err_ptr != NULL);
+      if (__pyx_t_3) {
+        __pyx_t_4 = __Pyx_ssize_strlen(__pyx_v_err_ptr); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 112, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_decode_c_string(__pyx_v_err_ptr, 0, __pyx_t_4, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 112, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_1 = __pyx_t_5;
+        __pyx_t_5 = 0;
+      } else {
+        __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_Unknown_error);
+        __pyx_t_1 = __pyx_mstate_global->__pyx_kp_u_Unknown_error;
+      }
+      __Pyx_XDECREF_SET(__pyx_v_err, ((PyObject*)__pyx_t_1));
+      __pyx_t_1 = 0;
+
+      /* "kycli/core/engine.pyx":113
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):             # <<<<<<<<<<<<<<
+ *                     raise RuntimeError(f"Prepare error: {err}")
+ *                 _retry_sleep(attempt)
+*/
+      __pyx_t_6 = (__pyx_v_attempt >= (__pyx_v_5kycli_4core_6engine__RETRY_ATTEMPTS - 1));
+      if (!__pyx_t_6) {
+      } else {
+        __pyx_t_3 = __pyx_t_6;
+        goto __pyx_L7_bool_binop_done;
+      }
+      __pyx_t_6 = __pyx_f_5kycli_4core_6engine__is_retryable_error(__pyx_v_err); if (unlikely(__pyx_t_6 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 113, __pyx_L1_error)
+      __pyx_t_7 = (!__pyx_t_6);
+      __pyx_t_3 = __pyx_t_7;
+      __pyx_L7_bool_binop_done:;
+      if (unlikely(__pyx_t_3)) {
+
+        /* "kycli/core/engine.pyx":114
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                     raise RuntimeError(f"Prepare error: {err}")             # <<<<<<<<<<<<<<
+ *                 _retry_sleep(attempt)
+ *                 attempt += 1
+*/
+        __pyx_t_5 = NULL;
+        __pyx_t_8 = __Pyx_PyUnicode_Unicode(__pyx_v_err); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 114, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_9 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Prepare_error, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 114, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __pyx_t_10 = 1;
+        {
+          PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_t_9};
+          __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (__pyx_t_10*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+          __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_1);
+        }
+        __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __PYX_ERR(0, 114, __pyx_L1_error)
+
+        /* "kycli/core/engine.pyx":113
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):             # <<<<<<<<<<<<<<
+ *                     raise RuntimeError(f"Prepare error: {err}")
+ *                 _retry_sleep(attempt)
+*/
+      }
+
+      /* "kycli/core/engine.pyx":115
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                     raise RuntimeError(f"Prepare error: {err}")
+ *                 _retry_sleep(attempt)             # <<<<<<<<<<<<<<
+ *                 attempt += 1
+ *                 continue
+*/
+      __pyx_f_5kycli_4core_6engine__retry_sleep(__pyx_v_attempt); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L1_error)
+
+      /* "kycli/core/engine.pyx":116
+ *                     raise RuntimeError(f"Prepare error: {err}")
+ *                 _retry_sleep(attempt)
+ *                 attempt += 1             # <<<<<<<<<<<<<<
+ *                 continue
+ * 
+*/
+      __pyx_v_attempt = (__pyx_v_attempt + 1);
+
+      /* "kycli/core/engine.pyx":117
+ *                 _retry_sleep(attempt)
+ *                 attempt += 1
+ *                 continue             # <<<<<<<<<<<<<<
+ * 
+ *             for i, p in enumerate(params):
+*/
+      goto __pyx_L3_continue;
+
+      /* "kycli/core/engine.pyx":110
+ * 
+ *         while True:
+ *             if sqlite3_prepare_v2(self._db, sql_bytes, -1, &stmt, NULL) != SQLITE_OK:             # <<<<<<<<<<<<<<
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+*/
     }
-    __pyx_t_6 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 79, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_12 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_6); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 79, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "kycli/core/engine.pyx":119
+ *                 continue
+ * 
+ *             for i, p in enumerate(params):             # <<<<<<<<<<<<<<
+ *                 if p is None:
+ *                     sqlite3_bind_null(stmt, i + 1)
+*/
+    __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
+    __pyx_t_1 = __pyx_mstate_global->__pyx_int_0;
+    __pyx_t_9 = __pyx_v_params; __Pyx_INCREF(__pyx_t_9);
+    __pyx_t_4 = 0;
     for (;;) {
       {
-        __pyx_t_1 = __pyx_t_12(__pyx_t_6);
-        if (unlikely(!__pyx_t_1)) {
-          PyObject* exc_type = PyErr_Occurred();
-          if (exc_type) {
-            if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 79, __pyx_L1_error)
-            PyErr_Clear();
-          }
-          break;
-        }
+        Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_9);
+        #if !CYTHON_ASSUME_SAFE_SIZE
+        if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 119, __pyx_L1_error)
+        #endif
+        if (__pyx_t_4 >= __pyx_temp) break;
       }
-      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_5 = __Pyx_PyList_GetItemRefFast(__pyx_t_9, __pyx_t_4, __Pyx_ReferenceSharing_OwnStrongReference);
+      ++__pyx_t_4;
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 119, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_XDECREF_SET(__pyx_v_p, __pyx_t_5);
+      __pyx_t_5 = 0;
+      __Pyx_INCREF(__pyx_t_1);
       __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
-      __pyx_t_1 = 0;
-      __Pyx_TraceLine(79,77,0,__PYX_ERR(0, 79, __pyx_L1_error))
+      __pyx_t_5 = __Pyx_PyLong_AddObjC(__pyx_t_1, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 119, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_1);
+      __pyx_t_1 = __pyx_t_5;
+      __pyx_t_5 = 0;
 
-      /* "kycli/core/engine.pyx":80
- *             row = []
- *             for i in range(col_count):
- *                 text = sqlite3_column_text(stmt, i)             # <<<<<<<<<<<<<<
- *                 if text == NULL:
- *                     row.append(None)
-*/
-      __Pyx_TraceLine(80,86,0,__PYX_ERR(0, 80, __pyx_L1_error))
-      __pyx_t_9 = __Pyx_PyLong_As_int(__pyx_v_i); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 80, __pyx_L1_error)
-      __pyx_v_text = sqlite3_column_text(__pyx_v_stmt, __pyx_t_9);
-
-      /* "kycli/core/engine.pyx":81
- *             for i in range(col_count):
- *                 text = sqlite3_column_text(stmt, i)
- *                 if text == NULL:             # <<<<<<<<<<<<<<
- *                     row.append(None)
+      /* "kycli/core/engine.pyx":120
+ * 
+ *             for i, p in enumerate(params):
+ *                 if p is None:             # <<<<<<<<<<<<<<
+ *                     sqlite3_bind_null(stmt, i + 1)
  *                 else:
 */
-      __Pyx_TraceLine(81,89,0,__PYX_ERR(0, 81, __pyx_L1_error))
-      __pyx_t_3 = (__pyx_v_text == NULL);
+      __pyx_t_3 = (__pyx_v_p == Py_None);
       if (__pyx_t_3) {
 
-        /* "kycli/core/engine.pyx":82
- *                 text = sqlite3_column_text(stmt, i)
- *                 if text == NULL:
- *                     row.append(None)             # <<<<<<<<<<<<<<
+        /* "kycli/core/engine.pyx":121
+ *             for i, p in enumerate(params):
+ *                 if p is None:
+ *                     sqlite3_bind_null(stmt, i + 1)             # <<<<<<<<<<<<<<
  *                 else:
- *                     row.append((<char*>text).decode('utf-8'))
+ *                     p_bytes = str(p).encode('utf-8')
 */
-        __Pyx_TraceLine(82,93,0,__PYX_ERR(0, 82, __pyx_L1_error))
-        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_row, Py_None); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 82, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 121, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_11 = __Pyx_PyLong_As_int(__pyx_t_5); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 121, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        (void)(sqlite3_bind_null(__pyx_v_stmt, __pyx_t_11));
 
-        /* "kycli/core/engine.pyx":81
- *             for i in range(col_count):
- *                 text = sqlite3_column_text(stmt, i)
- *                 if text == NULL:             # <<<<<<<<<<<<<<
- *                     row.append(None)
+        /* "kycli/core/engine.pyx":120
+ * 
+ *             for i, p in enumerate(params):
+ *                 if p is None:             # <<<<<<<<<<<<<<
+ *                     sqlite3_bind_null(stmt, i + 1)
  *                 else:
 */
-        goto __pyx_L12;
+        goto __pyx_L11;
       }
 
-      /* "kycli/core/engine.pyx":84
- *                     row.append(None)
+      /* "kycli/core/engine.pyx":123
+ *                     sqlite3_bind_null(stmt, i + 1)
  *                 else:
- *                     row.append((<char*>text).decode('utf-8'))             # <<<<<<<<<<<<<<
- *             rows.append(row)
+ *                     p_bytes = str(p).encode('utf-8')             # <<<<<<<<<<<<<<
+ *                     sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
  * 
 */
-      __Pyx_TraceLine(84,97,0,__PYX_ERR(0, 84, __pyx_L1_error))
       /*else*/ {
-        __pyx_t_14 = ((char *)__pyx_v_text);
-        __pyx_t_8 = __Pyx_ssize_strlen(__pyx_t_14); if (unlikely(__pyx_t_8 == ((Py_ssize_t)-1))) __PYX_ERR(0, 84, __pyx_L1_error)
-        __pyx_t_1 = __Pyx_decode_c_string(__pyx_t_14, 0, __pyx_t_8, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_row, __pyx_t_1); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 84, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      }
-      __pyx_L12:;
+        __pyx_t_5 = __Pyx_PyObject_Unicode(__pyx_v_p); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 123, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_8 = PyUnicode_AsUTF8String(((PyObject*)__pyx_t_5)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_XDECREF_SET(__pyx_v_p_bytes, ((PyObject*)__pyx_t_8));
+        __pyx_t_8 = 0;
 
-      /* "kycli/core/engine.pyx":79
- *             col_count = sqlite3_column_count(stmt)
- *             row = []
- *             for i in range(col_count):             # <<<<<<<<<<<<<<
- *                 text = sqlite3_column_text(stmt, i)
- *                 if text == NULL:
-*/
-      __Pyx_TraceLine(79,77,0,__PYX_ERR(0, 79, __pyx_L1_error))
-    }
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-
-    /* "kycli/core/engine.pyx":85
+        /* "kycli/core/engine.pyx":124
  *                 else:
- *                     row.append((<char*>text).decode('utf-8'))
- *             rows.append(row)             # <<<<<<<<<<<<<<
+ *                     p_bytes = str(p).encode('utf-8')
+ *                     sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)             # <<<<<<<<<<<<<<
  * 
- *         sqlite3_finalize(stmt)
+ *             rows = []
 */
-    __Pyx_TraceLine(85,105,0,__PYX_ERR(0, 85, __pyx_L1_error))
-    __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_rows, __pyx_v_row); if (unlikely(__pyx_t_13 == ((int)-1))) __PYX_ERR(0, 85, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyLong_AddObjC(__pyx_v_i, __pyx_mstate_global->__pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 124, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_11 = __Pyx_PyLong_As_int(__pyx_t_8); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 124, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __pyx_t_12 = __Pyx_PyBytes_AsString(__pyx_v_p_bytes); if (unlikely((!__pyx_t_12) && PyErr_Occurred())) __PYX_ERR(0, 124, __pyx_L1_error)
+        __pyx_t_13 = __Pyx_PyBytes_GET_SIZE(__pyx_v_p_bytes); if (unlikely(__pyx_t_13 == ((Py_ssize_t)-1))) __PYX_ERR(0, 124, __pyx_L1_error)
+        (void)(sqlite3_bind_text(__pyx_v_stmt, __pyx_t_11, __pyx_t_12, __pyx_t_13, SQLITE_TRANSIENT));
+      }
+      __pyx_L11:;
+
+      /* "kycli/core/engine.pyx":119
+ *                 continue
+ * 
+ *             for i, p in enumerate(params):             # <<<<<<<<<<<<<<
+ *                 if p is None:
+ *                     sqlite3_bind_null(stmt, i + 1)
+*/
+    }
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "kycli/core/engine.pyx":126
+ *                     sqlite3_bind_text(stmt, i + 1, p_bytes, len(p_bytes), SQLITE_TRANSIENT)
+ * 
+ *             rows = []             # <<<<<<<<<<<<<<
+ *             while True:
+ *                 rc = sqlite3_step(stmt)
+*/
+    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_XDECREF_SET(__pyx_v_rows, ((PyObject*)__pyx_t_1));
+    __pyx_t_1 = 0;
+
+    /* "kycli/core/engine.pyx":127
+ * 
+ *             rows = []
+ *             while True:             # <<<<<<<<<<<<<<
+ *                 rc = sqlite3_step(stmt)
+ *                 if rc == SQLITE_ROW:
+*/
+    while (1) {
+
+      /* "kycli/core/engine.pyx":128
+ *             rows = []
+ *             while True:
+ *                 rc = sqlite3_step(stmt)             # <<<<<<<<<<<<<<
+ *                 if rc == SQLITE_ROW:
+ *                     col_count = sqlite3_column_count(stmt)
+*/
+      __pyx_v_rc = sqlite3_step(__pyx_v_stmt);
+
+      /* "kycli/core/engine.pyx":129
+ *             while True:
+ *                 rc = sqlite3_step(stmt)
+ *                 if rc == SQLITE_ROW:             # <<<<<<<<<<<<<<
+ *                     col_count = sqlite3_column_count(stmt)
+ *                     row = []
+*/
+      __pyx_t_3 = (__pyx_v_rc == SQLITE_ROW);
+      if (__pyx_t_3) {
+
+        /* "kycli/core/engine.pyx":130
+ *                 rc = sqlite3_step(stmt)
+ *                 if rc == SQLITE_ROW:
+ *                     col_count = sqlite3_column_count(stmt)             # <<<<<<<<<<<<<<
+ *                     row = []
+ *                     for i in range(col_count):
+*/
+        __pyx_v_col_count = sqlite3_column_count(__pyx_v_stmt);
+
+        /* "kycli/core/engine.pyx":131
+ *                 if rc == SQLITE_ROW:
+ *                     col_count = sqlite3_column_count(stmt)
+ *                     row = []             # <<<<<<<<<<<<<<
+ *                     for i in range(col_count):
+ *                         text = sqlite3_column_text(stmt, i)
+*/
+        __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __Pyx_XDECREF_SET(__pyx_v_row, ((PyObject*)__pyx_t_1));
+        __pyx_t_1 = 0;
+
+        /* "kycli/core/engine.pyx":132
+ *                     col_count = sqlite3_column_count(stmt)
+ *                     row = []
+ *                     for i in range(col_count):             # <<<<<<<<<<<<<<
+ *                         text = sqlite3_column_text(stmt, i)
+ *                         if text == NULL:
+*/
+        __pyx_t_9 = NULL;
+        __pyx_t_8 = __Pyx_PyLong_From_int(__pyx_v_col_count); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 132, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_10 = 1;
+        {
+          PyObject *__pyx_callargs[2] = {__pyx_t_9, __pyx_t_8};
+          __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(&PyRange_Type), __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (__pyx_t_10*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_1);
+        }
+        __pyx_t_8 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 132, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_14 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_8); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 132, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        for (;;) {
+          {
+            __pyx_t_1 = __pyx_t_14(__pyx_t_8);
+            if (unlikely(!__pyx_t_1)) {
+              PyObject* exc_type = PyErr_Occurred();
+              if (exc_type) {
+                if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 132, __pyx_L1_error)
+                PyErr_Clear();
+              }
+              break;
+            }
+          }
+          __Pyx_GOTREF(__pyx_t_1);
+          __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
+          __pyx_t_1 = 0;
+
+          /* "kycli/core/engine.pyx":133
+ *                     row = []
+ *                     for i in range(col_count):
+ *                         text = sqlite3_column_text(stmt, i)             # <<<<<<<<<<<<<<
+ *                         if text == NULL:
+ *                             row.append(None)
+*/
+          __pyx_t_11 = __Pyx_PyLong_As_int(__pyx_v_i); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 133, __pyx_L1_error)
+          __pyx_v_text = sqlite3_column_text(__pyx_v_stmt, __pyx_t_11);
+
+          /* "kycli/core/engine.pyx":134
+ *                     for i in range(col_count):
+ *                         text = sqlite3_column_text(stmt, i)
+ *                         if text == NULL:             # <<<<<<<<<<<<<<
+ *                             row.append(None)
+ *                         else:
+*/
+          __pyx_t_3 = (__pyx_v_text == NULL);
+          if (__pyx_t_3) {
+
+            /* "kycli/core/engine.pyx":135
+ *                         text = sqlite3_column_text(stmt, i)
+ *                         if text == NULL:
+ *                             row.append(None)             # <<<<<<<<<<<<<<
+ *                         else:
+ *                             row.append((<char*>text).decode('utf-8'))
+*/
+            __pyx_t_15 = __Pyx_PyList_Append(__pyx_v_row, Py_None); if (unlikely(__pyx_t_15 == ((int)-1))) __PYX_ERR(0, 135, __pyx_L1_error)
+
+            /* "kycli/core/engine.pyx":134
+ *                     for i in range(col_count):
+ *                         text = sqlite3_column_text(stmt, i)
+ *                         if text == NULL:             # <<<<<<<<<<<<<<
+ *                             row.append(None)
+ *                         else:
+*/
+            goto __pyx_L18;
+          }
+
+          /* "kycli/core/engine.pyx":137
+ *                             row.append(None)
+ *                         else:
+ *                             row.append((<char*>text).decode('utf-8'))             # <<<<<<<<<<<<<<
+ *                     rows.append(row)
+ *                     continue
+*/
+          /*else*/ {
+            __pyx_t_16 = ((char *)__pyx_v_text);
+            __pyx_t_4 = __Pyx_ssize_strlen(__pyx_t_16); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 137, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_decode_c_string(__pyx_t_16, 0, __pyx_t_4, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_1);
+            __pyx_t_15 = __Pyx_PyList_Append(__pyx_v_row, __pyx_t_1); if (unlikely(__pyx_t_15 == ((int)-1))) __PYX_ERR(0, 137, __pyx_L1_error)
+            __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+          }
+          __pyx_L18:;
+
+          /* "kycli/core/engine.pyx":132
+ *                     col_count = sqlite3_column_count(stmt)
+ *                     row = []
+ *                     for i in range(col_count):             # <<<<<<<<<<<<<<
+ *                         text = sqlite3_column_text(stmt, i)
+ *                         if text == NULL:
+*/
+        }
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+
+        /* "kycli/core/engine.pyx":138
+ *                         else:
+ *                             row.append((<char*>text).decode('utf-8'))
+ *                     rows.append(row)             # <<<<<<<<<<<<<<
+ *                     continue
+ * 
+*/
+        __pyx_t_15 = __Pyx_PyList_Append(__pyx_v_rows, __pyx_v_row); if (unlikely(__pyx_t_15 == ((int)-1))) __PYX_ERR(0, 138, __pyx_L1_error)
+
+        /* "kycli/core/engine.pyx":139
+ *                             row.append((<char*>text).decode('utf-8'))
+ *                     rows.append(row)
+ *                     continue             # <<<<<<<<<<<<<<
+ * 
+ *                 if rc == SQLITE_DONE:
+*/
+        goto __pyx_L13_continue;
+
+        /* "kycli/core/engine.pyx":129
+ *             while True:
+ *                 rc = sqlite3_step(stmt)
+ *                 if rc == SQLITE_ROW:             # <<<<<<<<<<<<<<
+ *                     col_count = sqlite3_column_count(stmt)
+ *                     row = []
+*/
+      }
+
+      /* "kycli/core/engine.pyx":141
+ *                     continue
+ * 
+ *                 if rc == SQLITE_DONE:             # <<<<<<<<<<<<<<
+ *                     sqlite3_finalize(stmt)
+ *                     return rows
+*/
+      __pyx_t_3 = (__pyx_v_rc == SQLITE_DONE);
+      if (__pyx_t_3) {
+
+        /* "kycli/core/engine.pyx":142
+ * 
+ *                 if rc == SQLITE_DONE:
+ *                     sqlite3_finalize(stmt)             # <<<<<<<<<<<<<<
+ *                     return rows
+ * 
+*/
+        (void)(sqlite3_finalize(__pyx_v_stmt));
+
+        /* "kycli/core/engine.pyx":143
+ *                 if rc == SQLITE_DONE:
+ *                     sqlite3_finalize(stmt)
+ *                     return rows             # <<<<<<<<<<<<<<
+ * 
+ *                 err_ptr = sqlite3_errmsg(self._db)
+*/
+        __Pyx_XDECREF(__pyx_r);
+        __Pyx_INCREF(__pyx_v_rows);
+        __pyx_r = __pyx_v_rows;
+        goto __pyx_L0;
+
+        /* "kycli/core/engine.pyx":141
+ *                     continue
+ * 
+ *                 if rc == SQLITE_DONE:             # <<<<<<<<<<<<<<
+ *                     sqlite3_finalize(stmt)
+ *                     return rows
+*/
+      }
+
+      /* "kycli/core/engine.pyx":145
+ *                     return rows
+ * 
+ *                 err_ptr = sqlite3_errmsg(self._db)             # <<<<<<<<<<<<<<
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 sqlite3_finalize(stmt)
+*/
+      __pyx_v_err_ptr = sqlite3_errmsg(__pyx_v_self->_db);
+
+      /* "kycli/core/engine.pyx":146
+ * 
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"             # <<<<<<<<<<<<<<
+ *                 sqlite3_finalize(stmt)
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+*/
+      __pyx_t_3 = (__pyx_v_err_ptr != NULL);
+      if (__pyx_t_3) {
+        __pyx_t_4 = __Pyx_ssize_strlen(__pyx_v_err_ptr); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 146, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_decode_c_string(__pyx_v_err_ptr, 0, __pyx_t_4, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __pyx_t_8 = __pyx_t_1;
+        __pyx_t_1 = 0;
+      } else {
+        __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_Unknown_error);
+        __pyx_t_8 = __pyx_mstate_global->__pyx_kp_u_Unknown_error;
+      }
+      __Pyx_XDECREF_SET(__pyx_v_err, ((PyObject*)__pyx_t_8));
+      __pyx_t_8 = 0;
+
+      /* "kycli/core/engine.pyx":147
+ *                 err_ptr = sqlite3_errmsg(self._db)
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 sqlite3_finalize(stmt)             # <<<<<<<<<<<<<<
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                     raise RuntimeError(f"Step error: {err}")
+*/
+      (void)(sqlite3_finalize(__pyx_v_stmt));
+
+      /* "kycli/core/engine.pyx":148
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 sqlite3_finalize(stmt)
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):             # <<<<<<<<<<<<<<
+ *                     raise RuntimeError(f"Step error: {err}")
+ *                 _retry_sleep(attempt)
+*/
+      __pyx_t_7 = (__pyx_v_attempt >= (__pyx_v_5kycli_4core_6engine__RETRY_ATTEMPTS - 1));
+      if (!__pyx_t_7) {
+      } else {
+        __pyx_t_3 = __pyx_t_7;
+        goto __pyx_L22_bool_binop_done;
+      }
+      __pyx_t_7 = __pyx_f_5kycli_4core_6engine__is_retryable_error(__pyx_v_err); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 148, __pyx_L1_error)
+      __pyx_t_6 = (!__pyx_t_7);
+      __pyx_t_3 = __pyx_t_6;
+      __pyx_L22_bool_binop_done:;
+      if (unlikely(__pyx_t_3)) {
+
+        /* "kycli/core/engine.pyx":149
+ *                 sqlite3_finalize(stmt)
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                     raise RuntimeError(f"Step error: {err}")             # <<<<<<<<<<<<<<
+ *                 _retry_sleep(attempt)
+ *                 attempt += 1
+*/
+        __pyx_t_1 = NULL;
+        __pyx_t_9 = __Pyx_PyUnicode_Unicode(__pyx_v_err); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 149, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_mstate_global->__pyx_kp_u_Step_error, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 149, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __pyx_t_10 = 1;
+        {
+          PyObject *__pyx_callargs[2] = {__pyx_t_1, __pyx_t_5};
+          __pyx_t_8 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_RuntimeError)), __pyx_callargs+__pyx_t_10, (2-__pyx_t_10) | (__pyx_t_10*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+          __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 149, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_8);
+        }
+        __Pyx_Raise(__pyx_t_8, 0, 0, 0);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __PYX_ERR(0, 149, __pyx_L1_error)
+
+        /* "kycli/core/engine.pyx":148
+ *                 err = err_ptr.decode('utf-8') if err_ptr != NULL else "Unknown error"
+ *                 sqlite3_finalize(stmt)
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):             # <<<<<<<<<<<<<<
+ *                     raise RuntimeError(f"Step error: {err}")
+ *                 _retry_sleep(attempt)
+*/
+      }
+
+      /* "kycli/core/engine.pyx":150
+ *                 if attempt >= _RETRY_ATTEMPTS - 1 or not _is_retryable_error(err):
+ *                     raise RuntimeError(f"Step error: {err}")
+ *                 _retry_sleep(attempt)             # <<<<<<<<<<<<<<
+ *                 attempt += 1
+ *                 break
+*/
+      __pyx_f_5kycli_4core_6engine__retry_sleep(__pyx_v_attempt); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L1_error)
+
+      /* "kycli/core/engine.pyx":151
+ *                     raise RuntimeError(f"Step error: {err}")
+ *                 _retry_sleep(attempt)
+ *                 attempt += 1             # <<<<<<<<<<<<<<
+ *                 break
+*/
+      __pyx_v_attempt = (__pyx_v_attempt + 1);
+
+      /* "kycli/core/engine.pyx":152
+ *                 _retry_sleep(attempt)
+ *                 attempt += 1
+ *                 break             # <<<<<<<<<<<<<<
+*/
+      goto __pyx_L14_break;
+      __pyx_L13_continue:;
+    }
+    __pyx_L14_break:;
+    __pyx_L3_continue:;
   }
 
-  /* "kycli/core/engine.pyx":87
- *             rows.append(row)
- * 
- *         sqlite3_finalize(stmt)             # <<<<<<<<<<<<<<
- *         return rows
-*/
-  __Pyx_TraceLine(87,108,0,__PYX_ERR(0, 87, __pyx_L1_error))
-  (void)(sqlite3_finalize(__pyx_v_stmt));
-
-  /* "kycli/core/engine.pyx":88
- * 
- *         sqlite3_finalize(stmt)
- *         return rows             # <<<<<<<<<<<<<<
-*/
-  __Pyx_TraceLine(88,110,0,__PYX_ERR(0, 88, __pyx_L1_error))
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rows);
-  __pyx_r = __pyx_v_rows;
-  __Pyx_TraceReturnValue(__pyx_r, 110, 0, __PYX_ERR(0, 88, __pyx_L1_error));
-  goto __pyx_L0;
-
-  /* "kycli/core/engine.pyx":57
- *         sqlite3_finalize(stmt)
+  /* "kycli/core/engine.pyx":96
+ *             attempt += 1
  * 
  *     cdef list _bind_and_fetch(self, str sql, list params):             # <<<<<<<<<<<<<<
  *         cdef sqlite3_stmt* stmt = NULL
@@ -4659,28 +4809,24 @@ static PyObject *__pyx_f_5kycli_4core_6engine_14DatabaseEngine__bind_and_fetch(s
 */
 
   /* function exit code */
+  __pyx_r = ((PyObject*)Py_None); __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_TraceException(__pyx_lineno, 0, 0);
-  #if CYTHON_USE_SYS_MONITORING
-  __Pyx_TraceExceptionUnwind(0, 0);
-  #else
-  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(0, 57, __pyx_L1_error));
-  #endif
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
   __Pyx_AddTraceback("kycli.core.engine.DatabaseEngine._bind_and_fetch", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_sql_bytes);
   __Pyx_XDECREF(__pyx_v_p_bytes);
-  __Pyx_XDECREF(__pyx_v_i);
-  __Pyx_XDECREF(__pyx_v_p);
+  __Pyx_XDECREF(__pyx_v_err);
   __Pyx_XDECREF(__pyx_v_rows);
   __Pyx_XDECREF(__pyx_v_row);
+  __Pyx_XDECREF(__pyx_v_i);
+  __Pyx_XDECREF(__pyx_v_p);
   __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -4735,14 +4881,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_6engine_14DatabaseEngine_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
-  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6]))
   __Pyx_RefNannySetupContext("__reduce_cython__", 0);
-  __Pyx_TraceStartFunc("__reduce_cython__", __pyx_f[1], 1, 0, 0, 0, __PYX_ERR(1, 1, __pyx_L1_error));
 
   /* "(tree fragment)":2
  * def __reduce_cython__(self):
@@ -4750,7 +4893,6 @@ static PyObject *__pyx_pf_5kycli_4core_6engine_14DatabaseEngine_6__reduce_cython
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError, "self._db cannot be converted to a Python object for pickling"
 */
-  __Pyx_TraceLine(2,2,0,__PYX_ERR(1, 2, __pyx_L1_error))
   __Pyx_Raise(((PyObject *)(((PyTypeObject*)PyExc_TypeError))), __pyx_mstate_global->__pyx_kp_u_self__db_cannot_be_converted_to, 0, 0);
   __PYX_ERR(1, 2, __pyx_L1_error)
 
@@ -4762,16 +4904,9 @@ static PyObject *__pyx_pf_5kycli_4core_6engine_14DatabaseEngine_6__reduce_cython
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_TraceException(__pyx_lineno, 0, 0);
-  #if CYTHON_USE_SYS_MONITORING
-  __Pyx_TraceExceptionUnwind(0, 0);
-  #else
-  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(1, 1, __pyx_L1_error));
-  #endif
   __Pyx_AddTraceback("kycli.core.engine.DatabaseEngine.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -4870,21 +5005,17 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_5kycli_4core_6engine_14DatabaseEngine_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
-  __Pyx_TraceDeclarationsFunc
   __Pyx_RefNannyDeclarations
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7]))
   __Pyx_RefNannySetupContext("__setstate_cython__", 0);
-  __Pyx_TraceStartFunc("__setstate_cython__", __pyx_f[1], 3, 0, 0, 0, __PYX_ERR(1, 3, __pyx_L1_error));
 
   /* "(tree fragment)":4
  *     raise TypeError, "self._db cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  *     raise TypeError, "self._db cannot be converted to a Python object for pickling"             # <<<<<<<<<<<<<<
 */
-  __Pyx_TraceLine(4,2,0,__PYX_ERR(1, 4, __pyx_L1_error))
   __Pyx_Raise(((PyObject *)(((PyTypeObject*)PyExc_TypeError))), __pyx_mstate_global->__pyx_kp_u_self__db_cannot_be_converted_to, 0, 0);
   __PYX_ERR(1, 4, __pyx_L1_error)
 
@@ -4897,16 +5028,9 @@ static PyObject *__pyx_pf_5kycli_4core_6engine_14DatabaseEngine_8__setstate_cyth
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_TraceException(__pyx_lineno, 0, 0);
-  #if CYTHON_USE_SYS_MONITORING
-  __Pyx_TraceExceptionUnwind(0, 0);
-  #else
-  __Pyx_TraceReturnValue(NULL, 0, 0, __PYX_ERR(1, 3, __pyx_L1_error));
-  #endif
   __Pyx_AddTraceback("kycli.core.engine.DatabaseEngine.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_PyMonitoring_ExitScope(0);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -5110,15 +5234,15 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __pyx_vtable_5kycli_4core_6engine_DatabaseEngine._bind_and_fetch = (PyObject *(*)(struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine *, PyObject *, PyObject *))__pyx_f_5kycli_4core_6engine_14DatabaseEngine__bind_and_fetch;
   __pyx_vtable_5kycli_4core_6engine_DatabaseEngine.close = (PyObject *(*)(struct __pyx_obj_5kycli_4core_6engine_DatabaseEngine *, int __pyx_skip_dispatch))__pyx_f_5kycli_4core_6engine_14DatabaseEngine_close;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5kycli_4core_6engine_DatabaseEngine_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine)) __PYX_ERR(0, 5, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5kycli_4core_6engine_DatabaseEngine_spec, __pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5kycli_4core_6engine_DatabaseEngine_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine)) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5kycli_4core_6engine_DatabaseEngine_spec, __pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 20, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine = &__pyx_type_5kycli_4core_6engine_DatabaseEngine;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 5, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 20, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine);
@@ -5128,10 +5252,10 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine, __pyx_vtabptr_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 5, __pyx_L1_error)
-  if (__Pyx_MergeVtables(__pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 5, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_DatabaseEngine, (PyObject *) __pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 5, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject *) __pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 5, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine, __pyx_vtabptr_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_DatabaseEngine, (PyObject *) __pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_mstate->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine) < (0)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5344,7 +5468,6 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_engine(PyObject *__pyx_pyinit_modu
   int pystate_addmodule_run = 0;
   #endif
   __pyx_mstatetype *__pyx_mstate = NULL;
-  __Pyx_TraceDeclarationsFunc
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
@@ -5432,76 +5555,72 @@ __Pyx_RefNannySetupContext("PyInit_engine", 0);
   (void)__Pyx_modinit_variable_import_code(__pyx_mstate);
   (void)__Pyx_modinit_function_import_code(__pyx_mstate);
   /*--- Execution code ---*/
-  __Pyx_TraceStartFunc("PyInit_engine", __pyx_f[0], 1, 1, 0, 0, __PYX_ERR(0, 1, __pyx_L1_error));
 
   /* "kycli/core/engine.pyx":3
  * # cython: language_level=3
  * from .sqlite_defs cimport *
  * import os             # <<<<<<<<<<<<<<
+ * import time
  * 
- * cdef class DatabaseEngine:
 */
-  __Pyx_TraceLine(3,4,0,__PYX_ERR(0, 3, __pyx_L1_error))
   __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_os, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
   __pyx_t_2 = __pyx_t_1;
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_os, __pyx_t_2) < (0)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "kycli/core/engine.pyx":23
+  /* "kycli/core/engine.pyx":4
+ * from .sqlite_defs cimport *
+ * import os
+ * import time             # <<<<<<<<<<<<<<
+ * 
+ * cdef int _RETRY_ATTEMPTS = 3
+*/
+  __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_time, 0, 0, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __pyx_t_2 = __pyx_t_1;
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_time, __pyx_t_2) < (0)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "kycli/core/engine.pyx":6
+ * import time
+ * 
+ * cdef int _RETRY_ATTEMPTS = 3             # <<<<<<<<<<<<<<
+ * cdef int _RETRY_BASE_MS = 25
+ * 
+*/
+  __pyx_v_5kycli_4core_6engine__RETRY_ATTEMPTS = 3;
+
+  /* "kycli/core/engine.pyx":7
+ * 
+ * cdef int _RETRY_ATTEMPTS = 3
+ * cdef int _RETRY_BASE_MS = 25             # <<<<<<<<<<<<<<
+ * 
+ * cdef bint _is_retryable_error(str msg):
+*/
+  __pyx_v_5kycli_4core_6engine__RETRY_BASE_MS = 25;
+
+  /* "kycli/core/engine.pyx":38
  *             self._db = NULL
  * 
  *     cpdef close(self):             # <<<<<<<<<<<<<<
  *         if self._db:
  *             sqlite3_close(self._db)
 */
-  __Pyx_TraceLine(23,8,0,__PYX_ERR(0, 23, __pyx_L1_error))
-
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_6engine_14DatabaseEngine_5close, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_DatabaseEngine_close, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_engine, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_6engine_14DatabaseEngine_5close, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_DatabaseEngine_close, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_engine, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine, __pyx_mstate_global->__pyx_n_u_close, __pyx_t_2) < (0)) __PYX_ERR(0, 23, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_5kycli_4core_6engine_DatabaseEngine, __pyx_mstate_global->__pyx_n_u_close, __pyx_t_2) < (0)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "kycli/core/engine.pyx":28
- *             self._db = NULL
- * 
- *     cdef int _execute_raw(self, str sql) except -1:             # <<<<<<<<<<<<<<
- *         cdef bytes sql_bytes = sql.encode('utf-8')
- *         cdef char* errmsg = NULL
-*/
-  __Pyx_TraceLine(28,9,0,__PYX_ERR(0, 28, __pyx_L1_error))
-
-
-  /* "kycli/core/engine.pyx":36
- *         return 0
- * 
- *     cdef _bind_and_execute(self, str sql, list params):             # <<<<<<<<<<<<<<
- *         cdef sqlite3_stmt* stmt = NULL
- *         cdef bytes sql_bytes = sql.encode('utf-8')
-*/
-  __Pyx_TraceLine(36,10,0,__PYX_ERR(0, 36, __pyx_L1_error))
-
-
-  /* "kycli/core/engine.pyx":57
- *         sqlite3_finalize(stmt)
- * 
- *     cdef list _bind_and_fetch(self, str sql, list params):             # <<<<<<<<<<<<<<
- *         cdef sqlite3_stmt* stmt = NULL
- *         cdef bytes sql_bytes = sql.encode('utf-8')
-*/
-  __Pyx_TraceLine(57,11,0,__PYX_ERR(0, 57, __pyx_L1_error))
-
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._db cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
 */
-  __Pyx_TraceLine(1,0,0,__PYX_ERR(1, 1, __pyx_L1_error))
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_6engine_14DatabaseEngine_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_DatabaseEngine___reduce_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_engine, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_6engine_14DatabaseEngine_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_DatabaseEngine___reduce_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_engine, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
@@ -5515,8 +5634,7 @@ __Pyx_RefNannySetupContext("PyInit_engine", 0);
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._db cannot be converted to a Python object for pickling"
 */
-  __Pyx_TraceLine(3,3,0,__PYX_ERR(1, 3, __pyx_L1_error))
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_6engine_14DatabaseEngine_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_DatabaseEngine___setstate_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_engine, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5kycli_4core_6engine_14DatabaseEngine_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_DatabaseEngine___setstate_cython, NULL, __pyx_mstate_global->__pyx_n_u_kycli_core_engine, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
@@ -5529,21 +5647,16 @@ __Pyx_RefNannySetupContext("PyInit_engine", 0);
  * from .sqlite_defs cimport *
  * import os
 */
-  __Pyx_TraceLine(1,1,0,__PYX_ERR(0, 1, __pyx_L1_error))
   __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_test, __pyx_t_2) < (0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_TraceReturnValue(Py_None, 1, 0, __PYX_ERR(0, 1, __pyx_L1_error));
-  __Pyx_PyMonitoring_ExitScope(0);
 
   /*--- Wrapped vars code ---*/
 
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_TraceException(__pyx_lineno, 0, 0);
-  __Pyx_TraceExceptionUnwind(1, 0);
   if (__pyx_m) {
     if (__pyx_mstate->__pyx_d && stringtab_initialized) {
       __Pyx_AddTraceback("init kycli.core.engine", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -5575,7 +5688,7 @@ __Pyx_RefNannySetupContext("PyInit_engine", 0);
 
 static int __Pyx_InitCachedBuiltins(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 76, __pyx_L1_error)
 
   /* Cached unbound methods */
   __pyx_mstate->__pyx_umethod_PyDict_Type_items.type = (PyObject*)&PyDict_Type;
@@ -5584,6 +5697,8 @@ static int __Pyx_InitCachedBuiltins(__pyx_mstatetype *__pyx_mstate) {
   __pyx_mstate->__pyx_umethod_PyDict_Type_pop.method_name = &__pyx_mstate->__pyx_n_u_pop;
   __pyx_mstate->__pyx_umethod_PyDict_Type_values.type = (PyObject*)&PyDict_Type;
   __pyx_mstate->__pyx_umethod_PyDict_Type_values.method_name = &__pyx_mstate->__pyx_n_u_values;
+  __pyx_mstate->__pyx_umethod_PyUnicode_Type__lower.type = (PyObject*)(&PyUnicode_Type);
+  __pyx_mstate->__pyx_umethod_PyUnicode_Type__lower.method_name = &__pyx_mstate->__pyx_n_u_lower;
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -5602,34 +5717,42 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 8; } index[] = {{1},{25},{179},{24},{23},{25},{24},{15},{14},{12},{13},{8},{7},{6},{2},{9},{21},{60},{14},{14},{32},{34},{20},{20},{18},{17},{15},{18},{5},{10},{3},{7},{11},{9},{12},{8},{12},{8},{13},{5},{17},{8},{10},{8},{2},{6},{10},{3},{11},{14},{12},{10},{17},{13},{4},{12},{10},{12},{19},{3},{8},{6},{80},{25},{97},{190},{253},{9}};
-    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1109 bytes) */
-const char* const cstring = "BZh91AY&SYS>:\273\000\000\255\177\377\377\376\375\367\375\337\347W\257\267\377\240\277\377\377\361@@@@@@@@@@@@@\000@\000P\003\276;\232\313e\263E\302\302RJ\001\352\031=5\007\251\214\2402\000d\000\032\000\000\003\0206\246C#F\324\311\246\203H@&I\372S\364Q\215C\020\320\000\003@h\000\000h\0004h\323F\200\000\323D\320SM4L\211\350\232zj4\r\006\201\241\240\320\000\000\000\000\000h\321\246\201\300\0004\0004\001\240\000\003F \000h\000\000\000\000h\000\224A\023jbjz\n=O\024x\240\036\220mA\240d\320\000\000\003C\324\000i\241\352<\247\251\022C\272\201\266~\177f\332\345\312=AXg\316\334\306m\010\330\206\214\200FhT\005ED\254\021\327\201hG\200(T\251)\270\007\026\310\212\242\203\0221#\010\322m\016\241\352\310\200\275@\371 \310M\200\215\223\022\n\321\214\272J<\032\231?[\\\376\246\326F$9\361\367\366=\266\251\371\324a\253\t\231k|\232ooY\337\371\0210\366\247\005\220\225y\030\223\010\031\230\310A\032\310\036\\\246B\340,'\032k\014\202\253@\344\344\377\3440C*\225\030a%\032\264G\r \372Sw\201\305\374\207\304\"\215\035\370\036:\362\232u\351\204\364\227\t`\243\010\375\364\200\246\005S\307\212\272z\014Iu#\313\346\315\372\007\021\217+s\215\234S\340xB\266 \252\331\313\003\213\017\367\005\235\356J\340;\361\221M,-\215mLy\266\271\237\250\240I\022\017\025\210\025\006#\201c6\322\240t\2103\370pC\2066j\200j\253\020\t\177\3046\"\343L\354\251\302jB\327\355\264\306\204kUA&\2503\222\252D\245\006\345j(\211\010M\272\326\330-\202\210\220\254\350\336\251u\341W/\357\261\004\216E\273\2026zC\304\014\241\013P\n\300(\203\241\222;\010\226\"1\024\303\232\203b\031$,\002\025\231\000\326\210\034\332\251i\356&\220#\254\261\032\254\205\223\031gw\232V}\350e2\n\r\r+s\270 _z\032\315\313\353y\304\302B\320\262w\3443s\253H\022\277\325\271\211\335\004\256\214n\316\312K\022]V\006\251Cb\207l#t\324\340Qv\364V\205B\021Lv\341L8r\245Cv\275\240\261\002Y\343.\270\276\267\225%MM\326[%q\363\256\2510\357\013\021'B\342\252\242+D\231\320\327\261-\330B\2016\270l\355;\031yIp\353G\302K0\307Cl\206Wk\365+\207\303`P0'=\305\326\013\034\365\217\026\353#""\255\347\020\007{\226\026j\t\004\250\301T\247M\310\265@AD\276@\322KD\250\330q\223\023J\357Mr\222\222\271\214.xH^\301\230\370\340\003\211\024\220\232t\276\265\377\267x.\200\264\323LM\255U\252\3709\\\343|\313w\rD1c8\332\306\350/\000J7,)\204\342af\325\240\233K\034\213\372T\023\316\302\005\005H+\025,\260(\231\200\315\270\202cF\307\230\270\300Xr\364&\265B\322-a\2103\327(\367\323&MLe\254k.\335y\004\337\262\t\300E]2\n\034\014\325\277\032\254W\242\221\001\202WhB.\226\344Ce\007:\256(\2150\206\233\333\014<\007$\242\227\014\022\323\033*E\204\212\235%\024U\237y\302\030\031\2063\026\306\000+\025!\214\266\322PvWPL;\021Ju8\324?:\323\014\364\002jD\036\2338\311I$\222\346\242\212J\235\314\023\326SR\"\254\222(\0137=_\007\237\t\366Q%qSBX\362\212\352+\020\265]Er\347&\204(\001\2376\033\303A\272j$\270\371\024\032d\037\021\004\357J\265-\321\340e\266\0023\372\317\243\3379\340\345=\"quU\307\006\375\253X0Z\0239\005\305\351A\214A\\\304g*\037\354g\230\307\240\240\374M\310\265\33166/\005\314%\026\020d\034\324b\264x\305e\364x\207\213\263\266L\004B\310)a\022\025\377\342\356H\247\n\022\ng\307W`";
-    PyObject *data = __Pyx_DecompressString(cstring, 1109, 2);
+    const struct { const unsigned int length: 8; } index[] = {{1},{25},{4},{179},{24},{23},{25},{24},{15},{14},{12},{13},{8},{7},{6},{2},{9},{21},{60},{14},{14},{32},{34},{20},{20},{18},{4},{18},{5},{7},{9},{8},{12},{13},{5},{17},{6},{5},{8},{10},{8},{2},{3},{11},{14},{12},{10},{17},{13},{4},{12},{10},{12},{19},{5},{8},{4},{6},{25},{9}};
+    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (584 bytes) */
+const char* const cstring = "(\265/\375`\273\002\365\021\000&fq/`o:0\014\3030\214\0346Z\370kDdJ\352\235\211DF\250\221$e\311\237\002H\204\270I\216\375~\036\217\230[\242p\230\377!\330(\002^\000h\000`\000\314k!\177=y?\357\213\312\376l\273\234\261\253\354l\244\344KU\237\354\376\2718e\247\323\327}=6EO\177\266#\013\263\361JK\204\245a\203\261I\206\373\314\301\367\254\336\376\202;\271\267-\335%\367\347+\213\374\365\371\334o\315rkRb}M\353WK^\252\363\233\263\275\330\026\025\001\373\246\345\256\3557kk\213K\232A\014B\355\277\343\360\370H\t\330\020n.\\\324\302\215\010\247#\203\221\271,\354w\245B\373\031N\207\346\342\261\271\341\207q\345\034\230\220\313\266\016\351[\014c\217<<<X \032.k\342\\\367\303\026KLF\003\303\331H\353oed\177\256\310=[\350Z.x\330Q\325+\267\373\365\035lM\313\026|e\247\313\036'_v\037\0336\223\332\255\316r~\264\032}\346.F\325Fu\275\037\373\365\376\353\252L\227\305\266PU\302\270\240X\006c;|\237\360\260{ \346\250\204\335\311\2517\271\036\256\210\233\345N\311rj*u\336\372\250\242\244e\347\341uX\330\314\301=V\201\232;\346\341\r\036)\014(\004\001+\000'$)\002)\007\006+KEA\005A%\301`\205\004\305\202R0\260\2029\361\215o\2116\344^\365}_\225\332}\256\377\342\352l{\325\321\352[\221dZ/\322QE\251RMy\253nh\361\276\250\252\354VH\025nI\277\266 \326O\222<\264\357\324\235\252GU\225q\354(\334P\\\224N\r\0240  \002\342\230\262=O$1\204Y\027\240|.F\200m \262\200\025\346\205D\207\266A\322\203\274\001\273oU\033\344\233e0G\260\036\356\203\274\274\201\250\307\004\261oh\304\\\345\316\300-i\375\017\240\202\305\014L\034-xT\306\207\270\331e\274\200\365v\300\231\217!\363\343\341\327}m\3108,q\230\233\214\206\373\341\226E\231\027\330\323\220V,h.\016\024\3443";
+    PyObject *data = __Pyx_DecompressString(cstring, 584, 3);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (971 bytes) */
-const char* const cstring = "x\332\315R1o\333F\024\216\032\327vb\025\266\352\240v\213\2669%A\\4\211l\003\256Q\030q\nBq\202\024\226#\271M\213N\207#\371$1\246\356H\336\321\226:\024\0355r\274\221#G\215\0345z\364\310\321?!?\241\217\224\254:H\263\227\200\304\307{\367\336\367\275\357{?\325E\350\332\204\013E\204\007\234\330L1\223I\330#GB\001Q]\246H}\240\272\202\023G\022\033\\\307\204\200)p\007D\252\300\261\024\004\371%N\232\007\315';?\356\020\306m\022\300[\260\224$24-\227I\t\222\21061C\307U\016'j\340\201\254\221Wm2\020!\341\0006Q\202xx\357z\201\352\"\033\t*\017\310\006\343\310\220)Gp\212\345\016\357l\020\333\t\020\3049\205\274\372\005s%\324\232\307\306\313\206A,fu\201J\347O\330\177\262\273\263\265\2655=\177+\302\2003\227\366\204\r\373\277\033\207\323c9\340V7\020\\\204r\377\350\365qc\226P\320\363\250T\"\200\375\306A\343\365\361\037\315\000<\026\000\201 \020\301\036\371\245u\350\250\177\277\024xW\361\033~\302\305\031\237|2\333\246\310\036lG2\323\005\340\371\177\307r\344$\262O\006\226\353lZ\010\263\t\274\343p\250y\203\276\004\267]\243\266\211\303\344\243\023\023\210%\370)\004j\"\027#\315\211+\302\314\265&m\021\020\317\261N\\\324\346i\356\014\357H\034\327\202g\317\247\216\036\024\275\337\377\252Q\032\200\035Z@\255\242\033\245\037\344\321\002\211\312\177\364\206\345\n\t\2246\007}\374=\307\205\240G\320W\307\320f\271\256\216\250\341`\"D\337AR\323\3416\305\005\241\320\007+\304\236\263\2036(\253\2132p\240\016Z\0340\013Lf\235L\232\347;I=\246\272\250\207mN\"j\003s]aQ\n<\354\025+9\353\032\2603J\333!\307$\245\235+\376\3708\334Q\371K\322\031)4\260'\013\007r\242P\2338@i\217!\017|pWB\267(\346\254\207o!q\003XO\026$\314\201\002\351\t\217Rt\214Na\362\360T\345\316\346U~\310\334I\345Lj\372\201\350\263\003\350\347\202\273\355B\366)\"F6\252\031\272\352\232\031\364?\214\221\276K)\022\302{\247\314\rA^\314m\217*\331\342]-\343\215\244\222T\263\305\257\265\221-.\r\237F\276\236\323/\342G\311o\243\335\264\222~7\276?ne\345\317\243\207zA\373q99LK\371\347c\315.\356n&\376\250\224-.\017\375\277\213\342\235\241\237\225\277\324\025\375@""\263\254\274\022-DE\242<<\322\210@\342\205\370,a\211\177\205S\216\215\370\327\344\213D\216\252\263\226{i5}v^9\177p\316\336\315\337\270\365\331\260\201\355\252y\217\217\0049\300\275\270\372\336,K\027K\337\350\226\266\343\207IyT\037\371\351|\332\036\327\307\376\014ekT\032}\233\372\343\271\2611A\251\017\303\350\025\226 \355\345a\020\255FF\266R\215+\330\340\223\344^b\\\256|\245\357c\332\304\021\374\244t=WO\006\351\315t;\375y\314.\247s\315k+\256\344X\265\270\024\337\211Q>\024W\267\246\350\372\257\244\225\340\335u]\322\225\377\025{t\356\335\355\033\267\226\207\256\256\352\335x56\262\362\372\305\372\343\304H\n\362\325\334\323O\2437\230\335\316V\326.\326\276O\252\311.\356\321\312j\364\203\276\211\207w\326\2423\234\320\277,\202\034/L^\216\266G\306t\033ti:\367diJ\331\334\355\341\243\250\365\017cOzn";
-    PyObject *data = __Pyx_DecompressString(cstring, 971, 1);
+    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (675 bytes) */
+const char* const cstring = "BZh91AY&SY\355\374\010p\000\0005\177\342d\334` D\213\305W\257\247\372\240\277\377\377\360@@@@\000@@\002#\202\215;\206\246\223\004\323I\224z\236\246\t\351\r\r\0035\001\220\365\036\243&\233SM\265B)\352O\3254\361M2=@h4\320\031\000\r\0004\001\241\220jSmMC\324\3654\320\000h\304\000\000\000\000\311\220\006\232 \"\237\246\246\024\312x\247\251\220=C\322zC@\006\215\032\0326\2430\003k\355%0\342'\226\215\232\257b\325\240\346F%U\223\325\260\354\305\000\326\206\022\354\256\006%\326%;\224\030\022\326 \353\013\216m<\317\252\226\264\314-r\234\034\247\312)\2473\211*\230\322\0348\207\305@V\006\223\344\317:\372\206z\027y *\200\010\203\252\002<\036\304\345\262\270\224\216\234\025\215P\244\363\365^\007P\333\004\256i\004\016\340\250\006\321\202\200:\331\200%\033\274\273\216\021\3624\335(7#\300y\231#\261\373\233y\000<\3335\026\006\315 \215i\245\326/\361\333\372\373Y;-\237\252\266\2408\014\243\217\350\013\306b\206+\016\210\016?b\014\005z=n\001\263\342\242\221\001\341\303\235c,\006\344\327\375\265\177;\026\262\0040\032(\302\371=\251L\236\034\210\332+\204\006\254\270\221\304\257\371i\255\357\000\232\215\216\232)*\244\227\332\275\263/\272k>8\0016\034\274K\002\026\021\002\315\304\344\266\355\324)\020\235\362\3158\034\021\007F\314(\003\t\010o\345\277\272q\274.)\301\276\312\211D\324@\006)^\376W\300l\267\004\022r\2314f\3557I]\315Xe\235\245\004\314\371\\\341Q$y\220p'\273\006a\026\217\"\276\212\216sb\360\363\2478X($\022\242\374#)\362\213&\202f\362\203zZJ\360\200\306\006\311_%\311'\033\265\205\330\021\325\323E\245\256\220\001\002\004\020\0142\241\306|Un\022\000\312\245\"\221er\227 PAi\254\234\014r\207\005Q\257K&\211XE7\314KN LZ\202\303\n\250\213\202\343D\021\034\327BB\214\005\307\023\340\224\322\332\007\220e\300\213\214 c\250\265\315[\235\004\033Y\004]\231^\r-e\222YR\301\000\275 c\251\200HA\224\210\200\352\000\212G\344\013@&\332\347Mf\310\311!\024\251\211\002D\221\211\2701\210\315%\321\310\235\360\013\031\256L\313?k\332\377\353m{\364\321\037\370\273\222)\302\204\207o\340C\200";
+    PyObject *data = __Pyx_DecompressString(cstring, 675, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (1642 bytes) */
-const char* const bytes = "?Could not open database: Note that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.PRAGMA cache_size=-64000PRAGMA journal_mode=WALPRAGMA synchronous=NORMALPRAGMA temp_store=MEMORYPrepare error: SQLite error: Step error: Unknown erroradd_notedisableenablegcisenabledkycli/core/engine.pyxself._db cannot be converted to a Python object for pickling<stringsource>DatabaseEngineDatabaseEngine.__reduce_cython__DatabaseEngine.__setstate_cython__DatabaseEngine.close__Pyx_PyDict_NextRefasyncio.coroutines_bind_and_execute_bind_and_fetchcline_in_tracebackclose_data_path_dbdb_path__dealloc__enumerate_execute_raw__func____getstate____init___is_coroutineitemskycli.core.engine__main____module____name__osparamspath_bytespop__pyx_state__pyx_vtable____qualname____reduce____reduce_cython____reduce_ex__self__set_name__setdefault__setstate____setstate_cython__sql__test__values\320\0041\260\021\330\010\037\230s\240'\250\021\250!\330\010\034\230A\330\010\013\210<\220q\230\004\230F\240+\250V\2606\270\021\270(\300#\300Q\330\014\022\220&\230\007\230q\240\014\250L\270\001\330\014\022\220,\230a\320\037/\250q\260\001\330\010\017\210q\200A\330\010\013\2104\210q\330\014\031\230\021\230$\230a\330\014\020\220\007\220q\200A\330\010\014\210N\230!\330\010 \240\007\240w\250a\250q\330\010\013\210<\220q\230\014\240A\240T\250\026\250s\260!\330\014\022\220,\230a\320\037:\270!\270>\310\021\310$\310a\360\006\000\t\r\210M\230\021\230!\330\010\014\210M\230\021\230!\330\010\014\210M\230\021\230!\330\010\014\210M\230\021\230!\200A\330\010\"\240!\330\010\037\230s\240'\250\021\250!\330\010\013\320\013\035\230Q\230d\240&\250\014\260C\260q\270\006\270f\300C\300q\330\014\022\220,\230a\320\0370\260\001\260\036\270q\300\004\300A\360\006\000\t\r\210C\210u\220I\230Q\230a\330\014\017\210r\220\023\220A\330\020!\240\021\240&\250\002\250\"\250A\340\020\032\230#\230Q\230b\240\007\240q\250\001\330\020!\240""\021\240&\250\002\250\"\250C\250y\270\003\2701\270J\300a\340\010\013\210<\220q\230\006\230c\240\021\330\014\022\220.\240\001\240\024\240Q\330\014\034\230A\230Q\330\014\022\220,\230a\230~\250Q\250a\340\010\030\230\001\230\021\200A\330\010\"\240!\330\010\037\230s\240'\250\021\250!\330\010\013\320\013\035\230Q\230d\240&\250\014\260C\260q\270\006\270f\300C\300q\330\014\022\220,\230a\320\0370\260\001\260\036\270q\300\004\300A\360\006\000\t\r\210C\210u\220I\230Q\230a\330\014\017\210r\220\023\220A\330\020!\240\021\240&\250\002\250\"\250A\340\020\032\230#\230Q\230b\240\007\240q\250\001\330\020!\240\021\240&\250\002\250\"\250C\250y\270\003\2701\270J\300a\340\010\031\230\021\360\n\000\t\017\210l\230!\2306\240\023\240A\330\014\030\320\030,\250A\250Q\330\014\022\220!\330\014\020\220\005\220U\230!\2301\330\020\027\320\027*\250!\2506\260\021\330\020\023\2205\230\003\2301\330\024\027\220w\230a\230q\340\024\027\220w\230b\240\007\240u\250G\2601\260A\330\014\020\220\007\220q\230\001\340\010\030\230\001\230\021\330\010\017\210q\200\001\330\004\n\210+\220Q";
+    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (577 bytes) */
+const char* const cstring = "x\332u\222Mo\0231\020\206\205\204\004\202\036\340\310m\016H=\240\246=D\010U\004\024\265\005!5i\032\204\020\247\221\327\236$n\034{\353\261\323,\247\036{\354\261?-?\207q\222\006Pa\245\335\035\333\363\371\274\376x\024\2623\340C\202P\223\007\243\222\252\024\323!\364\203\247~H\004i\242\022\0345i\022<X\006C\316V\024U\"\327\000\247hu\242X\234<\014N\006{\355wmP\336@\244\013\322\211\201s\245\235b&\2060\202*[\227\254\207\324\324\304-\3702\202&d\360D\006R\200Z\374\376\014H\023\351\210)\025\003v\225\227.U\262\301\243\204[?\336\005c\243\024\261s*\321\237\224cj\r\206\335\317\275.h\245'\204l\177Rg\357m\373\340\340`\263\177\021r\364\312\341,\030\352|\357\236n\266\271\361z\022\203\017\231;\375\263ao{\220hV#\247\020\251\323;\351\235\r\177\014\"\325*\022P\214!\036\302\327\363S\233~\257\022\325\367\3667?\365\341\312\257\227\312\030\224\356\311XV\225#\362\345;\326\226\327\226\2316\332\331}-e\366\311\217\255\247V\335,\230\334\250\205\246\222a\312\350P\021\350\340\347\024\323\032\227\202\301Z\225P\025\3260\n\021j\253\247N\330\274/\312\3701\313\270\232>\034oT=Y\345\376{\325B\214d\262&\324\253l\210\017\316E\002\026\362\377\365\320.0!\016\232\205\274\307r!\260O\2134\244\221*\\mh\311`!\213\356\304U\3462\252'\264\"cT\232*\245\247\253\004\246\302Z\025\311\363lu\275\020G\331k\224g|_\037\3212n\223\t\370\031\257\310\225\002\324Z\223sAO\311\270pE\021q\246\244\214<\"wv%\036\275\232\311?p\035jD\201\214\233\314\305\234\247\"F\361\272\314\312\255=\267t\360\001\247\355\006-\n#7Z\221\332T\020\313\010\200\354\322\037\374\360\037,Y\256\203\264\222\210\3053\331\031\315\225\313\304\327\335\345\323\3477\355\233\313\345\316\253\273\227w\257\357\324r\347\305\355\223\333\313\353G\313\307\317n\336\334\236\377\002J\030l!";
+    PyObject *data = __Pyx_DecompressString(cstring, 577, 1);
+    if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
+    const char* const bytes = __Pyx_PyBytes_AsString(data);
+    #if !CYTHON_ASSUME_SAFE_MACROS
+    if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
+    #endif
+    #else /* compression: none (955 bytes) */
+const char* const bytes = "?Could not open database: NoneNote that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.PRAGMA cache_size=-64000PRAGMA journal_mode=WALPRAGMA synchronous=NORMALPRAGMA temp_store=MEMORYPrepare error: SQLite error: Step error: Unknown erroradd_notedisableenablegcisenabledkycli/core/engine.pyxself._db cannot be converted to a Python object for pickling<stringsource>DatabaseEngineDatabaseEngine.__reduce_cython__DatabaseEngine.__setstate_cython__DatabaseEngine.close__Pyx_PyDict_NextRefasyncio.coroutinesbusycline_in_tracebackclosedb_pathenumerate__func____getstate___is_coroutineitemskycli.core.enginelockedlower__main____module____name__ospop__pyx_state__pyx_vtable____qualname____reduce____reduce_cython____reduce_ex__self__set_name__setdefault__setstate____setstate_cython__sleep__test__timevalues\200A\330\010\013\2104\210q\330\014\031\230\021\230$\230a\330\014\020\220\007\220q\200\001\330\004\n\210+\220Q";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
     PyObject **stringtab = __pyx_mstate->__pyx_string_tab;
     Py_ssize_t pos = 0;
-    for (int i = 0; i < 62; i++) {
+    for (int i = 0; i < 58; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyUnicode_DecodeUTF8(bytes + pos, bytes_length, NULL);
-      if (likely(string) && i >= 19) PyUnicode_InternInPlace(&string);
+      if (likely(string) && i >= 20) PyUnicode_InternInPlace(&string);
       if (unlikely(!string)) {
         Py_XDECREF(data);
         __PYX_ERR(0, 1, __pyx_L1_error)
@@ -5637,7 +5760,7 @@ const char* const bytes = "?Could not open database: Note that Cython is deliber
       stringtab[i] = string;
       pos += bytes_length;
     }
-    for (int i = 62; i < 68; i++) {
+    for (int i = 58; i < 60; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyBytes_FromStringAndSize(bytes + pos, bytes_length);
       stringtab[i] = string;
@@ -5648,15 +5771,15 @@ const char* const bytes = "?Could not open database: Note that Cython is deliber
       }
     }
     Py_XDECREF(data);
-    for (Py_ssize_t i = 0; i < 68; i++) {
+    for (Py_ssize_t i = 0; i < 60; i++) {
       if (unlikely(PyObject_Hash(stringtab[i]) == -1)) {
         __PYX_ERR(0, 1, __pyx_L1_error)
       }
     }
     #if CYTHON_IMMORTAL_CONSTANTS
     {
-      PyObject **table = stringtab + 62;
-      for (Py_ssize_t i=0; i<6; ++i) {
+      PyObject **table = stringtab + 58;
+      for (Py_ssize_t i=0; i<2; ++i) {
         #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
         #if PY_VERSION_HEX < 0x030E0000
         if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -5709,7 +5832,7 @@ typedef struct {
     unsigned int argcount : 2;
     unsigned int num_posonly_args : 1;
     unsigned int num_kwonly_args : 1;
-    unsigned int nlocals : 3;
+    unsigned int nlocals : 2;
     unsigned int flags : 10;
     unsigned int first_line : 6;
 } __Pyx_PyCode_New_function_description;
@@ -5728,44 +5851,19 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   PyObject* tuple_dedup_map = PyDict_New();
   if (unlikely(!tuple_dedup_map)) return -1;
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 6};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_db_path, __pyx_mstate->__pyx_n_u_path_bytes};
-    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_engine_pyx, __pyx_mstate->__pyx_n_u_init, __pyx_mstate->__pyx_kp_b_iso88591_A_N_waq_q_AT_s_a_a_M_M_M_M, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
-  }
-  {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 18};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 38};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self};
-    __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_engine_pyx, __pyx_mstate->__pyx_n_u_dealloc, __pyx_mstate->__pyx_kp_b_iso88591_A_4q_a_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
-  }
-  {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 23};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self};
-    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_engine_pyx, __pyx_mstate->__pyx_n_u_close, __pyx_mstate->__pyx_kp_b_iso88591_A_4q_a_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
-  }
-  {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 28};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_sql, __pyx_mstate->__pyx_n_u_db, __pyx_mstate->__pyx_n_u_data_path};
-    __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_engine_pyx, __pyx_mstate->__pyx_n_u_execute_raw, __pyx_mstate->__pyx_kp_b_iso88591_1_s_A_q_F_V6_Q_q_L_a_q_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
-  }
-  {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 36};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_sql, __pyx_mstate->__pyx_n_u_params, __pyx_mstate->__pyx_n_u_db, __pyx_mstate->__pyx_n_u_data_path};
-    __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_engine_pyx, __pyx_mstate->__pyx_n_u_bind_and_execute, __pyx_mstate->__pyx_kp_b_iso88591_A_s_Qd_Cq_fCq_a_0_q_A_CuIQa_r_A, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
-  }
-  {
-    const __Pyx_PyCode_New_function_description descr = {3, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 57};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_sql, __pyx_mstate->__pyx_n_u_params, __pyx_mstate->__pyx_n_u_db, __pyx_mstate->__pyx_n_u_data_path};
-    __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_engine_pyx, __pyx_mstate->__pyx_n_u_bind_and_fetch, __pyx_mstate->__pyx_kp_b_iso88591_A_s_Qd_Cq_fCq_a_0_q_A_CuIQa_r_A_2, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_kycli_core_engine_pyx, __pyx_mstate->__pyx_n_u_close, __pyx_mstate->__pyx_kp_b_iso88591_A_4q_a_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 1};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self};
-    __pyx_mstate_global->__pyx_codeobj_tab[6] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_reduce_cython, __pyx_mstate->__pyx_kp_b_iso88591_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[6])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_reduce_cython, __pyx_mstate->__pyx_kp_b_iso88591_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 3};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_pyx_state};
-    __pyx_mstate_global->__pyx_codeobj_tab[7] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_setstate_cython, __pyx_mstate->__pyx_kp_b_iso88591_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[7])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_stringsource, __pyx_mstate->__pyx_n_u_setstate_cython, __pyx_mstate->__pyx_kp_b_iso88591_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
   }
   Py_DECREF(tuple_dedup_map);
   return 0;
@@ -5992,245 +6090,6 @@ static PyObject *__Pyx_GetBuiltinName(PyObject *name) {
     }
     return result;
 }
-
-/* TupleAndListFromArray (used by fastcall) */
-#if !CYTHON_COMPILING_IN_CPYTHON && CYTHON_METH_FASTCALL
-static CYTHON_INLINE PyObject *
-__Pyx_PyTuple_FromArray(PyObject *const *src, Py_ssize_t n)
-{
-    PyObject *res;
-    Py_ssize_t i;
-    if (n <= 0) {
-        return __Pyx_NewRef(__pyx_mstate_global->__pyx_empty_tuple);
-    }
-    res = PyTuple_New(n);
-    if (unlikely(res == NULL)) return NULL;
-    for (i = 0; i < n; i++) {
-        if (unlikely(__Pyx_PyTuple_SET_ITEM(res, i, src[i]) < (0))) {
-            Py_DECREF(res);
-            return NULL;
-        }
-        Py_INCREF(src[i]);
-    }
-    return res;
-}
-#elif CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE void __Pyx_copy_object_array(PyObject *const *CYTHON_RESTRICT src, PyObject** CYTHON_RESTRICT dest, Py_ssize_t length) {
-    PyObject *v;
-    Py_ssize_t i;
-    for (i = 0; i < length; i++) {
-        v = dest[i] = src[i];
-        Py_INCREF(v);
-    }
-}
-static CYTHON_INLINE PyObject *
-__Pyx_PyTuple_FromArray(PyObject *const *src, Py_ssize_t n)
-{
-    PyObject *res;
-    if (n <= 0) {
-        return __Pyx_NewRef(__pyx_mstate_global->__pyx_empty_tuple);
-    }
-    res = PyTuple_New(n);
-    if (unlikely(res == NULL)) return NULL;
-    __Pyx_copy_object_array(src, ((PyTupleObject*)res)->ob_item, n);
-    return res;
-}
-static CYTHON_INLINE PyObject *
-__Pyx_PyList_FromArray(PyObject *const *src, Py_ssize_t n)
-{
-    PyObject *res;
-    if (n <= 0) {
-        return PyList_New(0);
-    }
-    res = PyList_New(n);
-    if (unlikely(res == NULL)) return NULL;
-    __Pyx_copy_object_array(src, ((PyListObject*)res)->ob_item, n);
-    return res;
-}
-#endif
-
-/* BytesEquals (used by UnicodeEquals) */
-static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals) {
-#if CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_LIMITED_API || CYTHON_COMPILING_IN_GRAAL ||\
-        !(CYTHON_ASSUME_SAFE_SIZE && CYTHON_ASSUME_SAFE_MACROS)
-    return PyObject_RichCompareBool(s1, s2, equals);
-#else
-    if (s1 == s2) {
-        return (equals == Py_EQ);
-    } else if (PyBytes_CheckExact(s1) & PyBytes_CheckExact(s2)) {
-        const char *ps1, *ps2;
-        Py_ssize_t length = PyBytes_GET_SIZE(s1);
-        if (length != PyBytes_GET_SIZE(s2))
-            return (equals == Py_NE);
-        ps1 = PyBytes_AS_STRING(s1);
-        ps2 = PyBytes_AS_STRING(s2);
-        if (ps1[0] != ps2[0]) {
-            return (equals == Py_NE);
-        } else if (length == 1) {
-            return (equals == Py_EQ);
-        } else {
-            int result;
-#if CYTHON_USE_UNICODE_INTERNALS && (PY_VERSION_HEX < 0x030B0000)
-            Py_hash_t hash1, hash2;
-            hash1 = ((PyBytesObject*)s1)->ob_shash;
-            hash2 = ((PyBytesObject*)s2)->ob_shash;
-            if (hash1 != hash2 && hash1 != -1 && hash2 != -1) {
-                return (equals == Py_NE);
-            }
-#endif
-            result = memcmp(ps1, ps2, (size_t)length);
-            return (equals == Py_EQ) ? (result == 0) : (result != 0);
-        }
-    } else if ((s1 == Py_None) & PyBytes_CheckExact(s2)) {
-        return (equals == Py_NE);
-    } else if ((s2 == Py_None) & PyBytes_CheckExact(s1)) {
-        return (equals == Py_NE);
-    } else {
-        int result;
-        PyObject* py_result = PyObject_RichCompare(s1, s2, equals);
-        if (!py_result)
-            return -1;
-        result = __Pyx_PyObject_IsTrue(py_result);
-        Py_DECREF(py_result);
-        return result;
-    }
-#endif
-}
-
-/* UnicodeEquals (used by fastcall) */
-static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals) {
-#if CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_LIMITED_API || CYTHON_COMPILING_IN_GRAAL
-    return PyObject_RichCompareBool(s1, s2, equals);
-#else
-    int s1_is_unicode, s2_is_unicode;
-    if (s1 == s2) {
-        goto return_eq;
-    }
-    s1_is_unicode = PyUnicode_CheckExact(s1);
-    s2_is_unicode = PyUnicode_CheckExact(s2);
-    if (s1_is_unicode & s2_is_unicode) {
-        Py_ssize_t length, length2;
-        int kind;
-        void *data1, *data2;
-        #if !CYTHON_COMPILING_IN_LIMITED_API
-        if (unlikely(__Pyx_PyUnicode_READY(s1) < 0) || unlikely(__Pyx_PyUnicode_READY(s2) < 0))
-            return -1;
-        #endif
-        length = __Pyx_PyUnicode_GET_LENGTH(s1);
-        #if !CYTHON_ASSUME_SAFE_SIZE
-        if (unlikely(length < 0)) return -1;
-        #endif
-        length2 = __Pyx_PyUnicode_GET_LENGTH(s2);
-        #if !CYTHON_ASSUME_SAFE_SIZE
-        if (unlikely(length2 < 0)) return -1;
-        #endif
-        if (length != length2) {
-            goto return_ne;
-        }
-#if CYTHON_USE_UNICODE_INTERNALS
-        {
-            Py_hash_t hash1, hash2;
-            hash1 = ((PyASCIIObject*)s1)->hash;
-            hash2 = ((PyASCIIObject*)s2)->hash;
-            if (hash1 != hash2 && hash1 != -1 && hash2 != -1) {
-                goto return_ne;
-            }
-        }
-#endif
-        kind = __Pyx_PyUnicode_KIND(s1);
-        if (kind != __Pyx_PyUnicode_KIND(s2)) {
-            goto return_ne;
-        }
-        data1 = __Pyx_PyUnicode_DATA(s1);
-        data2 = __Pyx_PyUnicode_DATA(s2);
-        if (__Pyx_PyUnicode_READ(kind, data1, 0) != __Pyx_PyUnicode_READ(kind, data2, 0)) {
-            goto return_ne;
-        } else if (length == 1) {
-            goto return_eq;
-        } else {
-            int result = memcmp(data1, data2, (size_t)(length * kind));
-            return (equals == Py_EQ) ? (result == 0) : (result != 0);
-        }
-    } else if ((s1 == Py_None) & s2_is_unicode) {
-        goto return_ne;
-    } else if ((s2 == Py_None) & s1_is_unicode) {
-        goto return_ne;
-    } else {
-        int result;
-        PyObject* py_result = PyObject_RichCompare(s1, s2, equals);
-        if (!py_result)
-            return -1;
-        result = __Pyx_PyObject_IsTrue(py_result);
-        Py_DECREF(py_result);
-        return result;
-    }
-return_eq:
-    return (equals == Py_EQ);
-return_ne:
-    return (equals == Py_NE);
-#endif
-}
-
-/* fastcall */
-#if CYTHON_METH_FASTCALL
-static CYTHON_INLINE PyObject * __Pyx_GetKwValue_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues, PyObject *s)
-{
-    Py_ssize_t i, n = __Pyx_PyTuple_GET_SIZE(kwnames);
-    #if !CYTHON_ASSUME_SAFE_SIZE
-    if (unlikely(n == -1)) return NULL;
-    #endif
-    for (i = 0; i < n; i++)
-    {
-        PyObject *namei = __Pyx_PyTuple_GET_ITEM(kwnames, i);
-        #if !CYTHON_ASSUME_SAFE_MACROS
-        if (unlikely(!namei)) return NULL;
-        #endif
-        if (s == namei) return kwvalues[i];
-    }
-    for (i = 0; i < n; i++)
-    {
-        PyObject *namei = __Pyx_PyTuple_GET_ITEM(kwnames, i);
-        #if !CYTHON_ASSUME_SAFE_MACROS
-        if (unlikely(!namei)) return NULL;
-        #endif
-        int eq = __Pyx_PyUnicode_Equals(s, namei, Py_EQ);
-        if (unlikely(eq != 0)) {
-            if (unlikely(eq < 0)) return NULL;
-            return kwvalues[i];
-        }
-    }
-    return NULL;
-}
-#if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030d0000 || CYTHON_COMPILING_IN_LIMITED_API
-CYTHON_UNUSED static PyObject *__Pyx_KwargsAsDict_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues) {
-    Py_ssize_t i, nkwargs;
-    PyObject *dict;
-#if !CYTHON_ASSUME_SAFE_SIZE
-    nkwargs = PyTuple_Size(kwnames);
-    if (unlikely(nkwargs < 0)) return NULL;
-#else
-    nkwargs = PyTuple_GET_SIZE(kwnames);
-#endif
-    dict = PyDict_New();
-    if (unlikely(!dict))
-        return NULL;
-    for (i=0; i<nkwargs; i++) {
-#if !CYTHON_ASSUME_SAFE_MACROS
-        PyObject *key = PyTuple_GetItem(kwnames, i);
-        if (!key) goto bad;
-#else
-        PyObject *key = PyTuple_GET_ITEM(kwnames, i);
-#endif
-        if (unlikely(PyDict_SetItem(dict, key, kwvalues[i]) < 0))
-            goto bad;
-    }
-    return dict;
-bad:
-    Py_DECREF(dict);
-    return NULL;
-}
-#endif
-#endif
 
 /* PyObjectCall (used by PyObjectFastCall) */
 #if CYTHON_COMPILING_IN_CPYTHON
@@ -6480,6 +6339,307 @@ static PyObject* __Pyx__CallUnboundCMethod0(__Pyx_CachedCFunction* cfunc, PyObje
     result = __Pyx_PyObject_CallOneArg(cfunc->method, self);
     return result;
 }
+
+/* PyDictVersioning (used by GetModuleGlobalName) */
+#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj) {
+    PyObject *dict = Py_TYPE(obj)->tp_dict;
+    return likely(dict) ? __PYX_GET_DICT_VERSION(dict) : 0;
+}
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj) {
+    PyObject **dictptr = NULL;
+    Py_ssize_t offset = Py_TYPE(obj)->tp_dictoffset;
+    if (offset) {
+#if CYTHON_COMPILING_IN_CPYTHON
+        dictptr = (likely(offset > 0)) ? (PyObject **) ((char *)obj + offset) : _PyObject_GetDictPtr(obj);
+#else
+        dictptr = _PyObject_GetDictPtr(obj);
+#endif
+    }
+    return (dictptr && *dictptr) ? __PYX_GET_DICT_VERSION(*dictptr) : 0;
+}
+static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version) {
+    PyObject *dict = Py_TYPE(obj)->tp_dict;
+    if (unlikely(!dict) || unlikely(tp_dict_version != __PYX_GET_DICT_VERSION(dict)))
+        return 0;
+    return obj_dict_version == __Pyx_get_object_dict_version(obj);
+}
+#endif
+
+/* GetModuleGlobalName */
+#if CYTHON_USE_DICT_VERSIONS
+static PyObject *__Pyx__GetModuleGlobalName(PyObject *name, PY_UINT64_T *dict_version, PyObject **dict_cached_value)
+#else
+static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name)
+#endif
+{
+    PyObject *result;
+#if CYTHON_COMPILING_IN_LIMITED_API
+    if (unlikely(!__pyx_m)) {
+        if (!PyErr_Occurred())
+            PyErr_SetNone(PyExc_NameError);
+        return NULL;
+    }
+    result = PyObject_GetAttr(__pyx_m, name);
+    if (likely(result)) {
+        return result;
+    }
+    PyErr_Clear();
+#elif CYTHON_AVOID_BORROWED_REFS || CYTHON_AVOID_THREAD_UNSAFE_BORROWED_REFS
+    if (unlikely(__Pyx_PyDict_GetItemRef(__pyx_mstate_global->__pyx_d, name, &result) == -1)) PyErr_Clear();
+    __PYX_UPDATE_DICT_CACHE(__pyx_mstate_global->__pyx_d, result, *dict_cached_value, *dict_version)
+    if (likely(result)) {
+        return result;
+    }
+#else
+    result = _PyDict_GetItem_KnownHash(__pyx_mstate_global->__pyx_d, name, ((PyASCIIObject *) name)->hash);
+    __PYX_UPDATE_DICT_CACHE(__pyx_mstate_global->__pyx_d, result, *dict_cached_value, *dict_version)
+    if (likely(result)) {
+        return __Pyx_NewRef(result);
+    }
+    PyErr_Clear();
+#endif
+    return __Pyx_GetBuiltinName(name);
+}
+
+/* TupleAndListFromArray (used by fastcall) */
+#if !CYTHON_COMPILING_IN_CPYTHON && CYTHON_METH_FASTCALL
+static CYTHON_INLINE PyObject *
+__Pyx_PyTuple_FromArray(PyObject *const *src, Py_ssize_t n)
+{
+    PyObject *res;
+    Py_ssize_t i;
+    if (n <= 0) {
+        return __Pyx_NewRef(__pyx_mstate_global->__pyx_empty_tuple);
+    }
+    res = PyTuple_New(n);
+    if (unlikely(res == NULL)) return NULL;
+    for (i = 0; i < n; i++) {
+        if (unlikely(__Pyx_PyTuple_SET_ITEM(res, i, src[i]) < (0))) {
+            Py_DECREF(res);
+            return NULL;
+        }
+        Py_INCREF(src[i]);
+    }
+    return res;
+}
+#elif CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE void __Pyx_copy_object_array(PyObject *const *CYTHON_RESTRICT src, PyObject** CYTHON_RESTRICT dest, Py_ssize_t length) {
+    PyObject *v;
+    Py_ssize_t i;
+    for (i = 0; i < length; i++) {
+        v = dest[i] = src[i];
+        Py_INCREF(v);
+    }
+}
+static CYTHON_INLINE PyObject *
+__Pyx_PyTuple_FromArray(PyObject *const *src, Py_ssize_t n)
+{
+    PyObject *res;
+    if (n <= 0) {
+        return __Pyx_NewRef(__pyx_mstate_global->__pyx_empty_tuple);
+    }
+    res = PyTuple_New(n);
+    if (unlikely(res == NULL)) return NULL;
+    __Pyx_copy_object_array(src, ((PyTupleObject*)res)->ob_item, n);
+    return res;
+}
+static CYTHON_INLINE PyObject *
+__Pyx_PyList_FromArray(PyObject *const *src, Py_ssize_t n)
+{
+    PyObject *res;
+    if (n <= 0) {
+        return PyList_New(0);
+    }
+    res = PyList_New(n);
+    if (unlikely(res == NULL)) return NULL;
+    __Pyx_copy_object_array(src, ((PyListObject*)res)->ob_item, n);
+    return res;
+}
+#endif
+
+/* BytesEquals (used by UnicodeEquals) */
+static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals) {
+#if CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_LIMITED_API || CYTHON_COMPILING_IN_GRAAL ||\
+        !(CYTHON_ASSUME_SAFE_SIZE && CYTHON_ASSUME_SAFE_MACROS)
+    return PyObject_RichCompareBool(s1, s2, equals);
+#else
+    if (s1 == s2) {
+        return (equals == Py_EQ);
+    } else if (PyBytes_CheckExact(s1) & PyBytes_CheckExact(s2)) {
+        const char *ps1, *ps2;
+        Py_ssize_t length = PyBytes_GET_SIZE(s1);
+        if (length != PyBytes_GET_SIZE(s2))
+            return (equals == Py_NE);
+        ps1 = PyBytes_AS_STRING(s1);
+        ps2 = PyBytes_AS_STRING(s2);
+        if (ps1[0] != ps2[0]) {
+            return (equals == Py_NE);
+        } else if (length == 1) {
+            return (equals == Py_EQ);
+        } else {
+            int result;
+#if CYTHON_USE_UNICODE_INTERNALS && (PY_VERSION_HEX < 0x030B0000)
+            Py_hash_t hash1, hash2;
+            hash1 = ((PyBytesObject*)s1)->ob_shash;
+            hash2 = ((PyBytesObject*)s2)->ob_shash;
+            if (hash1 != hash2 && hash1 != -1 && hash2 != -1) {
+                return (equals == Py_NE);
+            }
+#endif
+            result = memcmp(ps1, ps2, (size_t)length);
+            return (equals == Py_EQ) ? (result == 0) : (result != 0);
+        }
+    } else if ((s1 == Py_None) & PyBytes_CheckExact(s2)) {
+        return (equals == Py_NE);
+    } else if ((s2 == Py_None) & PyBytes_CheckExact(s1)) {
+        return (equals == Py_NE);
+    } else {
+        int result;
+        PyObject* py_result = PyObject_RichCompare(s1, s2, equals);
+        if (!py_result)
+            return -1;
+        result = __Pyx_PyObject_IsTrue(py_result);
+        Py_DECREF(py_result);
+        return result;
+    }
+#endif
+}
+
+/* UnicodeEquals (used by fastcall) */
+static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals) {
+#if CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_LIMITED_API || CYTHON_COMPILING_IN_GRAAL
+    return PyObject_RichCompareBool(s1, s2, equals);
+#else
+    int s1_is_unicode, s2_is_unicode;
+    if (s1 == s2) {
+        goto return_eq;
+    }
+    s1_is_unicode = PyUnicode_CheckExact(s1);
+    s2_is_unicode = PyUnicode_CheckExact(s2);
+    if (s1_is_unicode & s2_is_unicode) {
+        Py_ssize_t length, length2;
+        int kind;
+        void *data1, *data2;
+        #if !CYTHON_COMPILING_IN_LIMITED_API
+        if (unlikely(__Pyx_PyUnicode_READY(s1) < 0) || unlikely(__Pyx_PyUnicode_READY(s2) < 0))
+            return -1;
+        #endif
+        length = __Pyx_PyUnicode_GET_LENGTH(s1);
+        #if !CYTHON_ASSUME_SAFE_SIZE
+        if (unlikely(length < 0)) return -1;
+        #endif
+        length2 = __Pyx_PyUnicode_GET_LENGTH(s2);
+        #if !CYTHON_ASSUME_SAFE_SIZE
+        if (unlikely(length2 < 0)) return -1;
+        #endif
+        if (length != length2) {
+            goto return_ne;
+        }
+#if CYTHON_USE_UNICODE_INTERNALS
+        {
+            Py_hash_t hash1, hash2;
+            hash1 = ((PyASCIIObject*)s1)->hash;
+            hash2 = ((PyASCIIObject*)s2)->hash;
+            if (hash1 != hash2 && hash1 != -1 && hash2 != -1) {
+                goto return_ne;
+            }
+        }
+#endif
+        kind = __Pyx_PyUnicode_KIND(s1);
+        if (kind != __Pyx_PyUnicode_KIND(s2)) {
+            goto return_ne;
+        }
+        data1 = __Pyx_PyUnicode_DATA(s1);
+        data2 = __Pyx_PyUnicode_DATA(s2);
+        if (__Pyx_PyUnicode_READ(kind, data1, 0) != __Pyx_PyUnicode_READ(kind, data2, 0)) {
+            goto return_ne;
+        } else if (length == 1) {
+            goto return_eq;
+        } else {
+            int result = memcmp(data1, data2, (size_t)(length * kind));
+            return (equals == Py_EQ) ? (result == 0) : (result != 0);
+        }
+    } else if ((s1 == Py_None) & s2_is_unicode) {
+        goto return_ne;
+    } else if ((s2 == Py_None) & s1_is_unicode) {
+        goto return_ne;
+    } else {
+        int result;
+        PyObject* py_result = PyObject_RichCompare(s1, s2, equals);
+        if (!py_result)
+            return -1;
+        result = __Pyx_PyObject_IsTrue(py_result);
+        Py_DECREF(py_result);
+        return result;
+    }
+return_eq:
+    return (equals == Py_EQ);
+return_ne:
+    return (equals == Py_NE);
+#endif
+}
+
+/* fastcall */
+#if CYTHON_METH_FASTCALL
+static CYTHON_INLINE PyObject * __Pyx_GetKwValue_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues, PyObject *s)
+{
+    Py_ssize_t i, n = __Pyx_PyTuple_GET_SIZE(kwnames);
+    #if !CYTHON_ASSUME_SAFE_SIZE
+    if (unlikely(n == -1)) return NULL;
+    #endif
+    for (i = 0; i < n; i++)
+    {
+        PyObject *namei = __Pyx_PyTuple_GET_ITEM(kwnames, i);
+        #if !CYTHON_ASSUME_SAFE_MACROS
+        if (unlikely(!namei)) return NULL;
+        #endif
+        if (s == namei) return kwvalues[i];
+    }
+    for (i = 0; i < n; i++)
+    {
+        PyObject *namei = __Pyx_PyTuple_GET_ITEM(kwnames, i);
+        #if !CYTHON_ASSUME_SAFE_MACROS
+        if (unlikely(!namei)) return NULL;
+        #endif
+        int eq = __Pyx_PyUnicode_Equals(s, namei, Py_EQ);
+        if (unlikely(eq != 0)) {
+            if (unlikely(eq < 0)) return NULL;
+            return kwvalues[i];
+        }
+    }
+    return NULL;
+}
+#if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030d0000 || CYTHON_COMPILING_IN_LIMITED_API
+CYTHON_UNUSED static PyObject *__Pyx_KwargsAsDict_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues) {
+    Py_ssize_t i, nkwargs;
+    PyObject *dict;
+#if !CYTHON_ASSUME_SAFE_SIZE
+    nkwargs = PyTuple_Size(kwnames);
+    if (unlikely(nkwargs < 0)) return NULL;
+#else
+    nkwargs = PyTuple_GET_SIZE(kwnames);
+#endif
+    dict = PyDict_New();
+    if (unlikely(!dict))
+        return NULL;
+    for (i=0; i<nkwargs; i++) {
+#if !CYTHON_ASSUME_SAFE_MACROS
+        PyObject *key = PyTuple_GetItem(kwnames, i);
+        if (!key) goto bad;
+#else
+        PyObject *key = PyTuple_GET_ITEM(kwnames, i);
+#endif
+        if (unlikely(PyDict_SetItem(dict, key, kwvalues[i]) < 0))
+            goto bad;
+    }
+    return dict;
+bad:
+    Py_DECREF(dict);
+    return NULL;
+}
+#endif
+#endif
 
 /* py_dict_items (used by OwnedDictNext) */
 static CYTHON_INLINE PyObject* __Pyx_PyDict_Items(PyObject* d) {
@@ -7070,124 +7230,6 @@ static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *nam
     return 0;
 }
 
-/* Profile */
-#if CYTHON_PROFILE || CYTHON_TRACE
-#if CYTHON_TRACE && !CYTHON_USE_SYS_MONITORING
-static int __Pyx_call_line_trace_func(PyThreadState *tstate, PyFrameObject *frame, int line) {
-    int ret;
-    PyObject *type, *value, *traceback;
-    __Pyx_ErrFetchInState(tstate, &type, &value, &traceback);
-    __Pyx_PyFrame_SetLineNumber(frame, line);
-    __Pyx_EnterTracing(tstate);
-    ret = tstate->c_tracefunc(tstate->c_traceobj, frame, PyTrace_LINE, NULL);
-    __Pyx_LeaveTracing(tstate);
-    if (likely(!ret)) {
-        __Pyx_ErrRestoreInState(tstate, type, value, traceback);
-    } else {
-        Py_XDECREF(type);
-        Py_XDECREF(value);
-        Py_XDECREF(traceback);
-    }
-    return ret;
-}
-#endif
-CYTHON_UNUSED static PyCodeObject *__Pyx_createFrameCodeObject(const char *funcname, const char *srcfile, int firstlineno) {
-    PyCodeObject *py_code = PyCode_NewEmpty(srcfile, funcname, firstlineno);
-    if (likely(py_code)) {
-        py_code->co_flags |= CO_OPTIMIZED | CO_NEWLOCALS;
-    }
-    return py_code;
-}
-#if CYTHON_USE_SYS_MONITORING
-CYTHON_UNUSED static int __Pyx__TraceStartFunc(PyMonitoringState *state_array, PyObject *code_obj, int offset, int skip_event) {
-    int ret;
-    __pyx_monitoring_version_type version = 0;
-    ret = PyMonitoring_EnterScope(state_array, &version, __Pyx_MonitoringEventTypes, __Pyx_MonitoringEventTypes_CyFunc_count);
-    if (unlikely(ret == -1)) return -1;
-    return skip_event ? 0 : PyMonitoring_FirePyStartEvent(&state_array[__Pyx_Monitoring_PY_START], code_obj, offset);
-}
-CYTHON_UNUSED static int __Pyx__TraceStartGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset) {
-    int ret;
-    ret = PyMonitoring_EnterScope(state_array, version, __Pyx_MonitoringEventTypes, __Pyx_MonitoringEventTypes_CyGen_count);
-    if (unlikely(ret == -1)) return -1;
-    return PyMonitoring_FirePyStartEvent(&state_array[__Pyx_Monitoring_PY_START], code_obj, offset);
-}
-CYTHON_UNUSED static int __Pyx__TraceResumeGen(PyMonitoringState *state_array, __pyx_monitoring_version_type *version, PyObject *code_obj, int offset) {
-    int ret;
-    ret = PyMonitoring_EnterScope(state_array, version, __Pyx_MonitoringEventTypes, __Pyx_MonitoringEventTypes_CyGen_count);
-    if (unlikely(ret == -1)) return -1;
-    return PyMonitoring_FirePyResumeEvent(&state_array[__Pyx_Monitoring_PY_RESUME], code_obj, offset);
-}
-CYTHON_UNUSED static void __Pyx__TraceException(PyMonitoringState *monitoring_state, PyObject *code_obj, int offset, int reraised) {
-    if (reraised) {
-        (void) PyMonitoring_FireReraiseEvent(monitoring_state, code_obj, offset);
-    } else {
-        (void) PyMonitoring_FireRaiseEvent(monitoring_state, code_obj, offset);
-    }
-}
-#if CYTHON_TRACE
-CYTHON_UNUSED static int __Pyx__TraceLine(PyMonitoringState *monitoring_state, PyObject *code_obj, int line, int offset) {
-    int ret;
-    PyObject *exc = PyErr_GetRaisedException();
-    ret = PyMonitoring_FireLineEvent(monitoring_state, code_obj, offset, line);
-    if (exc) PyErr_SetRaisedException(exc);
-    return ret;
-}
-#endif
-#else
-static int __Pyx_TraceSetupAndCall(PyCodeObject** code,
-                                   PyFrameObject** frame,
-                                   PyThreadState* tstate,
-                                   const char *funcname,
-                                   const char *srcfile,
-                                   int firstlineno,
-                                   int skip_event) {
-    if (*frame == NULL || !CYTHON_PROFILE_REUSE_FRAME) {
-        int needs_new_code_obj = (*code == NULL);
-        if (needs_new_code_obj) {
-            *code = __Pyx_createFrameCodeObject(funcname, srcfile, firstlineno);
-            if (*code == NULL) return 0;
-        }
-        *frame = PyFrame_New(
-            tstate,                          /*PyThreadState *tstate*/
-            *code,                           /*PyCodeObject *code*/
-            __pyx_mstate_global->__pyx_d,    /*PyObject *globals*/
-            0                                /*PyObject *locals*/
-        );
-        if (needs_new_code_obj && !CYTHON_PROFILE_REUSE_CODEOBJ)
-            Py_CLEAR(*code); // otherwise the reference is owned externally
-        if (*frame == NULL) return 0;
-        if (CYTHON_TRACE && (*frame)->f_trace == NULL) {
-            Py_INCREF(Py_None);
-            (*frame)->f_trace = Py_None;
-        }
-    }
-    if (!skip_event) {
-        PyObject *type, *value, *traceback;
-        int retval = 1;
-        __Pyx_PyFrame_SetLineNumber(*frame, firstlineno);
-        __Pyx_EnterTracing(tstate);
-        __Pyx_ErrFetchInState(tstate, &type, &value, &traceback);
-        #if CYTHON_TRACE
-        if (tstate->c_tracefunc)
-            retval = tstate->c_tracefunc(tstate->c_traceobj, *frame, PyTrace_CALL, NULL) == 0;
-        if (retval && tstate->c_profilefunc)
-        #endif
-            retval = tstate->c_profilefunc(tstate->c_profileobj, *frame, PyTrace_CALL, NULL) == 0;
-        __Pyx_LeaveTracing(tstate);
-        if (unlikely(!retval)) {
-            Py_XDECREF(type);
-            Py_XDECREF(value);
-            Py_XDECREF(traceback);
-            return -1;
-        }
-        __Pyx_ErrRestoreInState(tstate, type, value, traceback);
-    }
-    return __Pyx_IsTracing(tstate, 0, 0);
-}
-#endif
-#endif
-
 /* RaiseException */
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause) {
     PyObject* owned_instance = NULL;
@@ -7296,68 +7338,6 @@ bad:
     return;
 }
 
-/* WriteUnraisableException */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-    else state = (PyGILState_STATE)0;
-    CYTHON_UNUSED_VAR(clineno);
-    CYTHON_UNUSED_VAR(lineno);
-    CYTHON_UNUSED_VAR(filename);
-    CYTHON_MAYBE_UNUSED_VAR(nogil);
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(0);
-    }
-    ctx = PyUnicode_FromString(name);
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-    if (nogil)
-        PyGILState_Release(state);
-}
-
-/* PyDictVersioning */
-#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj) {
-    PyObject *dict = Py_TYPE(obj)->tp_dict;
-    return likely(dict) ? __PYX_GET_DICT_VERSION(dict) : 0;
-}
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj) {
-    PyObject **dictptr = NULL;
-    Py_ssize_t offset = Py_TYPE(obj)->tp_dictoffset;
-    if (offset) {
-#if CYTHON_COMPILING_IN_CPYTHON
-        dictptr = (likely(offset > 0)) ? (PyObject **) ((char *)obj + offset) : _PyObject_GetDictPtr(obj);
-#else
-        dictptr = _PyObject_GetDictPtr(obj);
-#endif
-    }
-    return (dictptr && *dictptr) ? __PYX_GET_DICT_VERSION(*dictptr) : 0;
-}
-static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version) {
-    PyObject *dict = Py_TYPE(obj)->tp_dict;
-    if (unlikely(!dict) || unlikely(tp_dict_version != __PYX_GET_DICT_VERSION(dict)))
-        return 0;
-    return obj_dict_version == __Pyx_get_object_dict_version(obj);
-}
-#endif
-
 /* RejectKeywords */
 static void __Pyx_RejectKeywords(const char* function_name, PyObject *kwds) {
     PyObject *key = NULL;
@@ -7416,6 +7396,24 @@ static CYTHON_INLINE PyObject* __Pyx_decode_c_string(
     } else {
         return PyUnicode_Decode(cstring, length, encoding, errors);
     }
+}
+
+/* RaiseUnexpectedTypeError */
+static int
+__Pyx_RaiseUnexpectedTypeError(const char *expected, PyObject *obj)
+{
+    __Pyx_TypeName obj_type_name = __Pyx_PyType_GetFullyQualifiedName(Py_TYPE(obj));
+    PyErr_Format(PyExc_TypeError, "Expected %s, got " __Pyx_FMT_TYPENAME,
+                 expected, obj_type_name);
+    __Pyx_DECREF_TypeName(obj_type_name);
+    return 0;
+}
+
+/* PyUnicode_Unicode */
+static CYTHON_INLINE PyObject* __Pyx_PyUnicode_Unicode(PyObject *obj) {
+    if (unlikely(obj == Py_None))
+        obj = __pyx_mstate_global->__pyx_kp_u_None;
+    return __Pyx_NewRef(obj);
 }
 
 /* PyLongBinop */
@@ -10079,107 +10077,6 @@ bad:
         return (target_type) value;\
     }
 
-/* PyObjectVectorCallKwBuilder (used by CIntToPy) */
-#if CYTHON_VECTORCALL
-static int __Pyx_VectorcallBuilder_AddArg(PyObject *key, PyObject *value, PyObject *builder, PyObject **args, int n) {
-    (void)__Pyx_PyObject_FastCallDict;
-    if (__Pyx_PyTuple_SET_ITEM(builder, n, key) != (0)) return -1;
-    Py_INCREF(key);
-    args[n] = value;
-    return 0;
-}
-CYTHON_UNUSED static int __Pyx_VectorcallBuilder_AddArg_Check(PyObject *key, PyObject *value, PyObject *builder, PyObject **args, int n) {
-    (void)__Pyx_VectorcallBuilder_AddArgStr;
-    if (unlikely(!PyUnicode_Check(key))) {
-        PyErr_SetString(PyExc_TypeError, "keywords must be strings");
-        return -1;
-    }
-    return __Pyx_VectorcallBuilder_AddArg(key, value, builder, args, n);
-}
-static int __Pyx_VectorcallBuilder_AddArgStr(const char *key, PyObject *value, PyObject *builder, PyObject **args, int n) {
-    PyObject *pyKey = PyUnicode_FromString(key);
-    if (!pyKey) return -1;
-    return __Pyx_VectorcallBuilder_AddArg(pyKey, value, builder, args, n);
-}
-#else // CYTHON_VECTORCALL
-CYTHON_UNUSED static int __Pyx_VectorcallBuilder_AddArg_Check(PyObject *key, PyObject *value, PyObject *builder, CYTHON_UNUSED PyObject **args, CYTHON_UNUSED int n) {
-    if (unlikely(!PyUnicode_Check(key))) {
-        PyErr_SetString(PyExc_TypeError, "keywords must be strings");
-        return -1;
-    }
-    return PyDict_SetItem(builder, key, value);
-}
-#endif
-
-/* CIntToPy */
-static CYTHON_INLINE PyObject* __Pyx_PyLong_From_int(int value) {
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
-    const int neg_one = (int) -1, const_zero = (int) 0;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic pop
-#endif
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(int) < sizeof(long)) {
-            return PyLong_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-#if !CYTHON_COMPILING_IN_PYPY
-        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-#endif
-        }
-    } else {
-        if (sizeof(int) <= sizeof(long)) {
-            return PyLong_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-        }
-    }
-    {
-        unsigned char *bytes = (unsigned char *)&value;
-#if !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX >= 0x030d00A4
-        if (is_unsigned) {
-            return PyLong_FromUnsignedNativeBytes(bytes, sizeof(value), -1);
-        } else {
-            return PyLong_FromNativeBytes(bytes, sizeof(value), -1);
-        }
-#elif !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030d0000
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        return _PyLong_FromByteArray(bytes, sizeof(int),
-                                     little, !is_unsigned);
-#else
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        PyObject *from_bytes, *result = NULL, *kwds = NULL;
-        PyObject *py_bytes = NULL, *order_str = NULL;
-        from_bytes = PyObject_GetAttrString((PyObject*)&PyLong_Type, "from_bytes");
-        if (!from_bytes) return NULL;
-        py_bytes = PyBytes_FromStringAndSize((char*)bytes, sizeof(int));
-        if (!py_bytes) goto limited_bad;
-        order_str = PyUnicode_FromString(little ? "little" : "big");
-        if (!order_str) goto limited_bad;
-        {
-            PyObject *args[3+(CYTHON_VECTORCALL ? 1 : 0)] = { NULL, py_bytes, order_str };
-            if (!is_unsigned) {
-                kwds = __Pyx_MakeVectorcallBuilderKwds(1);
-                if (!kwds) goto limited_bad;
-                if (__Pyx_VectorcallBuilder_AddArgStr("signed", __Pyx_NewRef(Py_True), kwds, args+3, 0) < 0) goto limited_bad;
-            }
-            result = __Pyx_Object_Vectorcall_CallFromBuilder(from_bytes, args+1, 2 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET, kwds);
-        }
-        limited_bad:
-        Py_XDECREF(kwds);
-        Py_XDECREF(order_str);
-        Py_XDECREF(py_bytes);
-        Py_XDECREF(from_bytes);
-        return result;
-#endif
-    }
-}
-
 /* CIntFromPy */
 static CYTHON_INLINE int __Pyx_PyLong_As_int(PyObject *x) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
@@ -10428,6 +10325,107 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to int");
     return (int) -1;
+}
+
+/* PyObjectVectorCallKwBuilder (used by CIntToPy) */
+#if CYTHON_VECTORCALL
+static int __Pyx_VectorcallBuilder_AddArg(PyObject *key, PyObject *value, PyObject *builder, PyObject **args, int n) {
+    (void)__Pyx_PyObject_FastCallDict;
+    if (__Pyx_PyTuple_SET_ITEM(builder, n, key) != (0)) return -1;
+    Py_INCREF(key);
+    args[n] = value;
+    return 0;
+}
+CYTHON_UNUSED static int __Pyx_VectorcallBuilder_AddArg_Check(PyObject *key, PyObject *value, PyObject *builder, PyObject **args, int n) {
+    (void)__Pyx_VectorcallBuilder_AddArgStr;
+    if (unlikely(!PyUnicode_Check(key))) {
+        PyErr_SetString(PyExc_TypeError, "keywords must be strings");
+        return -1;
+    }
+    return __Pyx_VectorcallBuilder_AddArg(key, value, builder, args, n);
+}
+static int __Pyx_VectorcallBuilder_AddArgStr(const char *key, PyObject *value, PyObject *builder, PyObject **args, int n) {
+    PyObject *pyKey = PyUnicode_FromString(key);
+    if (!pyKey) return -1;
+    return __Pyx_VectorcallBuilder_AddArg(pyKey, value, builder, args, n);
+}
+#else // CYTHON_VECTORCALL
+CYTHON_UNUSED static int __Pyx_VectorcallBuilder_AddArg_Check(PyObject *key, PyObject *value, PyObject *builder, CYTHON_UNUSED PyObject **args, CYTHON_UNUSED int n) {
+    if (unlikely(!PyUnicode_Check(key))) {
+        PyErr_SetString(PyExc_TypeError, "keywords must be strings");
+        return -1;
+    }
+    return PyDict_SetItem(builder, key, value);
+}
+#endif
+
+/* CIntToPy */
+static CYTHON_INLINE PyObject* __Pyx_PyLong_From_int(int value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const int neg_one = (int) -1, const_zero = (int) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyLong_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#if !CYTHON_COMPILING_IN_PYPY
+        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyLong_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+        }
+    }
+    {
+        unsigned char *bytes = (unsigned char *)&value;
+#if !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX >= 0x030d00A4
+        if (is_unsigned) {
+            return PyLong_FromUnsignedNativeBytes(bytes, sizeof(value), -1);
+        } else {
+            return PyLong_FromNativeBytes(bytes, sizeof(value), -1);
+        }
+#elif !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030d0000
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+#else
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        PyObject *from_bytes, *result = NULL, *kwds = NULL;
+        PyObject *py_bytes = NULL, *order_str = NULL;
+        from_bytes = PyObject_GetAttrString((PyObject*)&PyLong_Type, "from_bytes");
+        if (!from_bytes) return NULL;
+        py_bytes = PyBytes_FromStringAndSize((char*)bytes, sizeof(int));
+        if (!py_bytes) goto limited_bad;
+        order_str = PyUnicode_FromString(little ? "little" : "big");
+        if (!order_str) goto limited_bad;
+        {
+            PyObject *args[3+(CYTHON_VECTORCALL ? 1 : 0)] = { NULL, py_bytes, order_str };
+            if (!is_unsigned) {
+                kwds = __Pyx_MakeVectorcallBuilderKwds(1);
+                if (!kwds) goto limited_bad;
+                if (__Pyx_VectorcallBuilder_AddArgStr("signed", __Pyx_NewRef(Py_True), kwds, args+3, 0) < 0) goto limited_bad;
+            }
+            result = __Pyx_Object_Vectorcall_CallFromBuilder(from_bytes, args+1, 2 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET, kwds);
+        }
+        limited_bad:
+        Py_XDECREF(kwds);
+        Py_XDECREF(order_str);
+        Py_XDECREF(py_bytes);
+        Py_XDECREF(from_bytes);
+        return result;
+#endif
+    }
 }
 
 /* FormatTypeName */

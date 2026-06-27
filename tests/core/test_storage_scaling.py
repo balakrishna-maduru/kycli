@@ -130,10 +130,10 @@ def test_save_error_rollback(tmp_path):
 def test_compact_error(tmp_path):
     db = str(tmp_path / "test_compact_err.db")
     with Kycore(db) as kv:
-        # Closing DB to cause error on compact
-        import sqlite3
+        # Closing the instance should make subsequent write operations fail
+        # fast and clearly, rather than silently reconnecting.
         kv.__exit__(None, None, None)
-        with pytest.raises(RuntimeError, match="Compaction failed"):
+        with pytest.raises(RuntimeError, match="Kycore instance is closed"):
             kv.compact()
 
 def test_save_many_error_rollback(tmp_path):

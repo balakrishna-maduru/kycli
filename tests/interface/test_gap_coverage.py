@@ -81,10 +81,11 @@ def test_tui_gaps(tmp_path):
     from kycli import Kycore
     
     with patch("kycli.tui.Kycore") as mock_kv_cls:
+        mock_kv_cls.return_value.get_type.return_value = "kv"
         shell = KycliShell()
         shell.app = MagicMock()
         mock_buf = MagicMock()
-        
+
         # 1. kyg --limit parser
         mock_buf.text = "kyg -s q --limit 10"  # limit is int
         shell.handle_command(mock_buf)

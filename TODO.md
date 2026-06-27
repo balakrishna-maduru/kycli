@@ -37,10 +37,16 @@ This list tracks the progress of implementing high-performance and robust enhanc
 - [x] **100% Code Coverage Maintenance**
 ## Phase 6: Maintenance & Refinement ⚙️
 - [x] **Modular Refactoring** (Core engines split)
-- [ ] **Lock Management**: Retry with exponential backoff for "Database is locked" in multi-process scenarios.
-- [ ] **Activity Logs**: Background logging via Python `logging` module.
-- [ ] **Atomic Rename Exports**: Write-to-temp-then-rename for export safety.
-- [ ] **Compression**: Optional MsgPack/Zstd for large values.
+- [x] **Lock Management**: Cross-process `flock` mutual exclusion + reload-on-write around every mutating operation, with atomic temp-file+rename persistence (no more lost updates or file corruption from concurrent `kycli` processes sharing a workspace).
+- [x] **Activity Logs**: Background logging via Python `logging` module (`kycli/logging_utils.py`, writes to `~/.kycli/kycli.log`).
+- [x] **Atomic Rename Exports**: Write-to-temp-then-rename for export safety (`kye`/`kyaudit export`, and now the internal workspace persistence itself).
+- [x] **Compression**: Transparent zlib compression for values above a size threshold (workspace-configurable).
+
+## Phase 7: Community & Branding 🤝
+- [x] **Community Guidelines** (COC, Contributing, Security)
+- [x] **Issue Templates**
+- [x] **Official Branding/Logo**
+- [x] **GitHub Repository Cleanup**
 
 ## Phase 8: Roadmap (Planned Features) 🧭
 - [ ] **Batch Queue Ops**: `kypush --file` and `kypop --n 100` for throughput.
@@ -56,11 +62,6 @@ This list tracks the progress of implementing high-performance and robust enhanc
 - [ ] **Metrics Endpoint**: Optional local HTTP for queue depth + ops/sec.
 - [ ] **Namespace/Prefix Views**: `kyws view <prefix>` for large stores.
 - [ ] **Backup/Restore**: `kybackup` with encryption and versioned snapshots.
-## Phase 7: Community & Branding 🤝
-- [x] **Community Guidelines** (COC, Contributing, Security)
-- [x] **Issue Templates**
-- [x] **Official Branding/Logo**
-- [x] **GitHub Repository Cleanup**
 
 ---
 *Optimized for Performance by Antigravity*

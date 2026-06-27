@@ -162,7 +162,9 @@ def test_cli_json_save_and_get(clean_home_db, capsys):
 
 def test_cli_help(clean_home_db, capsys):
     with patch("sys.argv", ["kyh"]): main()
-    assert "Available commands" in capsys.readouterr().out
+    out = capsys.readouterr().out
+    assert "Available commands" in out
+    assert "kyv" in out
 
 def test_cli_validation_v_error(clean_home_db, capsys):
     with patch("sys.argv", ["kys", " ", "val"]): main()
@@ -447,6 +449,23 @@ def test_cli_restore_at(clean_home_db, capsys):
     capsys.readouterr()
     
     with patch("sys.argv", ["kyrt", "k", "--at", ts]): main()
+    output = capsys.readouterr().out
+    assert "overwritten" in output
+    with patch("sys.argv", ["kyg", "k"]): main()
+    assert "v1" in capsys.readouterr().out
+
+def test_cli_restore_with_at_flag(clean_home_db, capsys):
+    """kyr (not just kyrt) must honor --at <timestamp>, per docs/RECOVERY.md."""
+    import time
+    from datetime import datetime, timezone
+    with patch("sys.argv", ["kys", "k", "v1"]): main()
+    time.sleep(1.5)
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    time.sleep(1.5)
+    with patch("sys.argv", ["kys", "k", "v2"]): main()
+    capsys.readouterr()
+
+    with patch("sys.argv", ["kyr", "k", "--at", ts]): main()
     output = capsys.readouterr().out
     assert "overwritten" in output
 

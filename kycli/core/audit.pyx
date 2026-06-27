@@ -4,6 +4,14 @@ from .security cimport SecurityManager
 from .query cimport QueryEngine
 import json
 import os
+import base64
+import zlib
+
+
+cdef str _decode_storage_value(str val):
+    if val.startswith("cmp:zlib:"):
+        return zlib.decompress(base64.b64decode(val[9:].encode('ascii'))).decode('utf-8')
+    return val
 
 cdef class AuditManager:
     def __init__(self, DatabaseEngine engine, SecurityManager security, QueryEngine query):
@@ -23,7 +31,7 @@ cdef class AuditManager:
         cdef list results = self._engine._bind_and_fetch(sql, params)
         cdef list final = []
         for row in results:
-            final.append((row[0], self._security.decrypt(row[1]), row[2]))
+            final.append((row[0], _decode_storage_value(self._security.decrypt(row[1])), row[2]))
         return final
 
     cpdef restore(self, str key, timestamp=None):
@@ -58,7 +66,7 @@ cdef class AuditManager:
             if not _results:
                 return f"No historical version found for key '{k}'"
             
-            val = self._security.decrypt(_results[0][0])
+            val = _decode_storage_value(self._security.decrypt(_results[0][0]))
             try:
                 val = json.loads(val)
             except:

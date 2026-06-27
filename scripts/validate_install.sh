@@ -17,7 +17,31 @@ RED="${ESC}[0;31m"
 NC="${ESC}[0m"
 
 # Helper
-PYTHON_CMD=${PYTHON_EXECUTABLE:-"$(pwd)/.venv/bin/python"}
+resolve_python() {
+    if [[ -n "${PYTHON_EXECUTABLE:-}" && -x "${PYTHON_EXECUTABLE}" ]]; then
+        echo "${PYTHON_EXECUTABLE}"
+        return 0
+    fi
+    if command -v python3 >/dev/null 2>&1; then
+        command -v python3
+        return 0
+    fi
+    if command -v python >/dev/null 2>&1; then
+        command -v python
+        return 0
+    fi
+    if [[ -x "$(pwd)/.venv/bin/python" ]]; then
+        echo "$(pwd)/.venv/bin/python"
+        return 0
+    fi
+    return 1
+}
+
+PYTHON_CMD=$(resolve_python)
+if [[ -z "$PYTHON_CMD" ]]; then
+    echo "❌ Python executable not found. Set PYTHON_EXECUTABLE or create .venv/bin/python."
+    exit 1
+fi
 KY_CLI="$PYTHON_CMD -m kycli.cli"
 
 # Column Widths
@@ -180,6 +204,15 @@ $KY_CLI kys p1 "v" --ttl 3600 > /dev/null
 run_cmd "$KY_CLI kyrt \"$ts\""
 check_test "kyrt" "Recovery to timestamp" $last_status "restored" "$last_output"
 
+# kyr --at (restore a key to a specific historical version; audit timestamps are UTC)
+$KY_CLI kys at_key "v1" --ttl 3600 > /dev/null
+sleep 1.2
+at_ts=$(date -u "+%Y-%m-%d %H:%M:%S")
+sleep 1.2
+$KY_CLI kys at_key "v2" --ttl 3600 > /dev/null
+run_cmd "$KY_CLI kyr at_key --at \"$at_ts\""
+check_test "kyr --at" "Restore key version at a UTC timestamp" $last_status "overwritten" "$last_output"
+
 # Meta
 run_cmd "$KY_CLI kyh"
 check_test "kyh" "Help command" $last_status "Available" "$last_output"
@@ -210,7 +243,7 @@ LEGACY_DB="$HOME/.kycli/data/default.db"
 mkdir -p "$(dirname "$LEGACY_DB")"
 rm -f "$LEGACY_DB" # Ensure fresh file for SQLite
 # Create legacy SQLite DB
-python3 -c "import sqlite3; conn=sqlite3.connect('$LEGACY_DB'); conn.execute('CREATE TABLE kvstore (key TEXT PRIMARY KEY, value TEXT, expires_at DATETIME)'); conn.execute('INSERT INTO kvstore (key, value) VALUES (\"mig1\", \"val1\")'); conn.commit(); conn.close()"
+"$PYTHON_CMD" -c "import sqlite3; conn=sqlite3.connect('$LEGACY_DB'); conn.execute('CREATE TABLE kvstore (key TEXT PRIMARY KEY, value TEXT, expires_at DATETIME)'); conn.execute('INSERT INTO kvstore (key, value) VALUES (\"mig1\", \"val1\")'); conn.commit(); conn.close()"
 
 run_cmd "$KY_CLI kyg mig1 --key \"migpass\""
 check_test "migration" "Auto-migration from legacy SQLite" $last_status "val1" "$last_output"
@@ -330,7 +363,7 @@ check_test "KYCLI_DB_PATH" "File override" $last_status "Saved" "$last_output"
 unset KYCLI_DB_PATH
 
 # --- SECTION 6: Queues and Stacks ---
-export HOME="$BASE_TEST_DIR/queues"
+export HOME="$BASE_TEST_DIR/queues_fifo"
 mkdir -p "$HOME"
 
 # 1. Queue (FIFO)
@@ -350,6 +383,8 @@ run_cmd "$KY_CLI kycount"
 check_test "kycount" "Count remaining items" $last_status "1" "$last_output"
 
 # 2. Stack (LIFO)
+export HOME="$BASE_TEST_DIR/queues_stack"
+mkdir -p "$HOME"
 $KY_CLI kyws create s_lifo --type stack > /dev/null
 $KY_CLI kyuse s_lifo > /dev/null
 $KY_CLI kypush bottom > /dev/null
@@ -359,6 +394,8 @@ run_cmd "$KY_CLI kypop"
 check_test "kypop (Stack)" "Pop top (LIFO)" $last_status "top" "$last_output"
 
 # 3. Priority Queue
+export HOME="$BASE_TEST_DIR/queues_priority"
+mkdir -p "$HOME"
 $KY_CLI kyws create pq_prio --type priority_queue > /dev/null
 $KY_CLI kyuse pq_prio > /dev/null
 $KY_CLI kypush low --priority 1 > /dev/null
@@ -369,6 +406,11 @@ run_cmd "$KY_CLI kypop"
 check_test "kypop (Priority)" "Pop highest priority" $last_status "high" "$last_output"
 
 # 4. Clear
+export HOME="$BASE_TEST_DIR/queues_clear"
+mkdir -p "$HOME"
+$KY_CLI kyws create q_clear --type queue > /dev/null
+$KY_CLI kyuse q_clear > /dev/null
+$KY_CLI kypush to_clear > /dev/null
 run_cmd "echo \"y\" | $KY_CLI kyclear"
 check_test "kyclear" "Clear workspace" $last_status "cleared" "$last_output"
 run_cmd "$KY_CLI kycount"
@@ -378,6 +420,101 @@ check_test "kycount" "Verify empty after clear" $last_status "0" "$last_output"
 # Trying to use kykys on a queue
 run_cmd "$KY_CLI kys key val"
 check_test "kys (Negative)" "Block KV command on Queue" $last_status "not supported" "$last_output" 1
+
+# --- SECTION 7: Roadmap Features ---
+export HOME="$BASE_TEST_DIR/roadmap_profiles"
+mkdir -p "$HOME"
+
+run_cmd "$KY_CLI kyprofile save qa"
+check_test "kyprofile" "Save active profile" $last_status "Saved profile" "$last_output"
+
+run_cmd "$KY_CLI kyprofile list"
+check_test "kyprofile" "List saved profiles" $last_status "qa" "$last_output"
+
+run_cmd "$KY_CLI kyprofile use qa"
+check_test "kyprofile" "Activate saved profile" $last_status "Active profile set" "$last_output"
+
+export HOME="$BASE_TEST_DIR/roadmap_features"
+mkdir -p "$HOME"
+
+run_cmd "$KY_CLI kyttl set 60"
+check_test "kyttl" "Set workspace TTL policy" $last_status "Default TTL set to 60" "$last_output"
+
+run_cmd "$KY_CLI kyttl get"
+check_test "kyttl" "Read workspace TTL policy" $last_status "60" "$last_output"
+
+run_cmd "$KY_CLI kyacl readonly on"
+check_test "kyacl" "Enable read-only mode" $last_status "Read-only enabled" "$last_output"
+
+run_cmd "$KY_CLI kys readonly_key blocked"
+check_test "kyacl" "Read-only blocks writes" $last_status "read-only" "$last_output" 1
+
+run_cmd "$KY_CLI kyacl readonly off"
+check_test "kyacl" "Disable read-only mode" $last_status "Read-only disabled" "$last_output"
+
+run_cmd "$KY_CLI kyacl key set gatepass"
+check_test "kyacl" "Set workspace access key" $last_status "Access key set" "$last_output"
+
+unset KYCLI_ACCESS_KEY
+run_cmd "$KY_CLI kys protected locked"
+check_test "kyacl" "Access key blocks writes" $last_status "access key required" "$last_output" 1
+
+export KYCLI_ACCESS_KEY="gatepass"
+run_cmd "$KY_CLI kys protected unlocked"
+check_test "kyacl" "Access key allows writes" $last_status "Saved|Updated" "$last_output"
+unset KYCLI_ACCESS_KEY
+
+TASK_FILE="$BASE_TEST_DIR/roadmap/tasks.txt"
+mkdir -p "$(dirname "$TASK_FILE")"
+printf "jobA\njobB\n" > "$TASK_FILE"
+
+$KY_CLI kyws create lease_jobs --type queue > /dev/null
+$KY_CLI kyuse lease_jobs > /dev/null
+run_cmd "$KY_CLI kypush --file $TASK_FILE"
+check_test "kypush --file" "Bulk queue push from file" $last_status "Pushed 2 queued items" "$last_output"
+
+run_cmd "$KY_CLI kypop --n 2 --json"
+check_test "kypop --n" "Batch pop queue items" $last_status "jobA|jobB" "$last_output"
+
+run_cmd "$KY_CLI kypush delayed_job --delay 1s"
+check_test "kypush --delay" "Push delayed queue item" $last_status "pushed" "$last_output"
+
+run_cmd "$KY_CLI kypop"
+check_test "kypop" "Delayed item hidden before visibility" $last_status "None" "$last_output"
+
+sleep 2
+run_cmd "$KY_CLI kypop --lease 1s --json"
+check_test "kypop --lease" "Lease queue item with receipt" $last_status "receipt_id|delayed_job" "$last_output"
+
+receipt_id=$(printf '%s' "$last_output" | "$PYTHON_CMD" -c 'import json,sys; print(json.loads(sys.stdin.read()).get("receipt_id",""))')
+run_cmd "$KY_CLI kynack $receipt_id --delay 1s"
+check_test "kynack" "Requeue leased item with delay" $last_status "nacked" "$last_output"
+
+sleep 2
+run_cmd "$KY_CLI kypop --lease 1s --json"
+check_test "kypop --lease" "Lease requeued item again" $last_status "receipt_id|delayed_job" "$last_output"
+
+receipt_id=$(printf '%s' "$last_output" | "$PYTHON_CMD" -c 'import json,sys; print(json.loads(sys.stdin.read()).get("receipt_id",""))')
+run_cmd "$KY_CLI kyack $receipt_id"
+check_test "kyack" "Acknowledge leased item" $last_status "acked" "$last_output"
+
+$KY_CLI kyuse default > /dev/null
+run_cmd "$KY_CLI kyws view pro --json"
+check_test "kyws view" "View namespace prefix" $last_status "protected" "$last_output"
+
+run_cmd "$KY_CLI kystats --json"
+check_test "kystats" "Output workspace stats as JSON" $last_status "workspace_type|db_size_bytes" "$last_output"
+
+AUDIT_FILE="$BASE_TEST_DIR/roadmap/audit.json"
+run_cmd "$KY_CLI kyaudit export $AUDIT_FILE json"
+check_test "kyaudit" "Export audit log" $last_status "Exported" "$last_output"
+
+BACKUP_FILE="$BASE_TEST_DIR/roadmap/snapshot.db"
+run_cmd "$KY_CLI kybackup $BACKUP_FILE"
+check_test "kybackup" "Create encrypted snapshot backup" $last_status "Backup created" "$last_output"
+
+run_cmd "$KY_CLI kymetrics 8876"
+check_test "kymetrics" "Start local metrics endpoint" $last_status "Metrics endpoint started" "$last_output"
 
 # Bottom Line
 printf "|-%-${W_ID}s-|-%-${W_CMD}s-|-%-${W_DESC}s-|-%-${W_STAT}s-|\n" "$(printf '%0.s-' $(seq 1 $W_ID))" "$(printf '%0.s-' $(seq 1 $W_CMD))" "$(printf '%0.s-' $(seq 1 $W_DESC))" "$(printf '%0.s-' $(seq 1 $W_STAT))" | sed 's/ /-/g'

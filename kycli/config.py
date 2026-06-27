@@ -1,12 +1,13 @@
 import os
 import json
 import shutil
+import copy
 
 try:
-    import tomllib as toml  # Python 3.11+
+    import tomllib as toml  # type: ignore[assignment]
 except ImportError:
     try:
-        import tomli as toml
+        import tomli as toml  # type: ignore[assignment]
     except ImportError:
         toml = None
 
@@ -16,7 +17,10 @@ CONFIG_PATH = os.path.join(KYCLI_DIR, "config.json")
 
 DEFAULT_CONFIG = {
     "active_workspace": "default",
+    "active_profile": None,
+    "profiles": {},
     "export_format": "csv",
+    "log_level": "INFO",
     "theme": {
         "key": "cyan",
         "value": "green",
@@ -62,7 +66,7 @@ def save_config(updates):
 
 def load_raw_config():
     """Load config from disk without dynamic processing."""
-    config = DEFAULT_CONFIG.copy()
+    config = copy.deepcopy(DEFAULT_CONFIG)
     
     # Check ~/.kycli/config.json (New standard)
     if os.path.exists(CONFIG_PATH):
@@ -87,11 +91,25 @@ def load_raw_config():
             
     return config
 
+def _apply_active_profile(config):
+    active_profile = config.get("active_profile")
+    profiles = config.get("profiles") or {}
+    if not active_profile:
+        return config
+    profile_data = profiles.get(active_profile)
+    if not isinstance(profile_data, dict):
+        return config
+
+    merged = copy.deepcopy(config)
+    for key, value in profile_data.items():
+        merged[key] = value
+    return merged
+
 def load_config():
     ensure_dirs()
     migrate_legacy_db()
     
-    config = load_raw_config()
+    config = _apply_active_profile(load_raw_config())
 
     # Environment variables override config
     env_db_path = os.environ.get("KYCLI_DB_PATH")
@@ -120,6 +138,26 @@ def load_config():
     config["db_path"] = os.path.join(effective_data_dir, f"{safe_ws}.db")
 
     return config
+
+def save_profile(name, profile_data):
+    if not name or not str(name).strip():
+        raise ValueError("Profile name is required")
+    current = load_raw_config()
+    profiles = current.get("profiles") or {}
+    profiles[str(name).strip()] = dict(profile_data or {})
+    save_config({"profiles": profiles})
+
+def use_profile(name):
+    current = load_raw_config()
+    profiles = current.get("profiles") or {}
+    if name not in profiles:
+        raise ValueError(f"Unknown profile: {name}")
+    save_config({"active_profile": name})
+
+def list_profiles():
+    current = load_raw_config()
+    profiles = current.get("profiles") or {}
+    return sorted(profiles.keys())
 
 def get_workspaces():
     """Return list of available workspaces."""

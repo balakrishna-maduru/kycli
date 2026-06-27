@@ -3,15 +3,68 @@ import os
 import sqlite3
 import shutil
 import json
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from datetime import datetime, timezone
 from kycli import Kycore
-from kycli.config import load_config, save_config, get_workspaces
+from kycli.config import load_config, save_config, get_workspaces, save_profile, use_profile, list_profiles
+from kycli.logging_utils import get_logger
+from kycli.utils import coerce_value, try_parse_json
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 from rich.text import Text
 
 console = Console()
+logger = get_logger("kycli.cli")
+
+
+def _parse_at_flag(args):
+    """Split restore args into (key_or_timestamp_part, at_timestamp_or_None).
+
+    Shared by `kyr <key> --at <timestamp>` and `kyrt <key.path> --at <timestamp>`.
+    """
+    if "--at" in args:
+        idx = args.index("--at")
+        key_part = " ".join(args[:idx])
+        ts_part = " ".join(args[idx + 1:])
+        return key_part, ts_part
+    return " ".join(args), None
+
+
+def _render_value(value, as_json=False, pretty=False):
+    if as_json:
+        return json.dumps(value, indent=2, default=str)
+    if pretty and isinstance(value, dict):
+        return json.dumps(value, indent=2, default=str)
+    if pretty and isinstance(value, list):
+        return "\n".join(str(item) for item in value)
+    if isinstance(value, (dict, list)):
+        return json.dumps(value, indent=2)
+    return str(value)
+
+
+def _start_metrics_server(kv, port):
+    class MetricsHandler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            if self.path != "/":
+                self.send_response(404)
+                self.end_headers()
+                return
+            payload = json.dumps(kv.get_stats()).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(payload)))
+            self.end_headers()
+            self.wfile.write(payload)
+
+        def log_message(self, format, *args):
+            return
+
+    server = HTTPServer(("127.0.0.1", int(port)), MetricsHandler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    return server
 
 def get_help_text():
     return """
@@ -36,9 +89,14 @@ Available commands:
   kyrem <key> <val>                        - Remove value from a list
 
     🧱 Queue & Stack Operations:
-    kypush <val> [--priority N]      - Push item to queue/stack
+        kypush <val> [--priority N]      - Push item to queue/stack
+        kypush --file <path>             - Bulk push newline-delimited items
     kypeek                           - Peek next item
-    kypop                            - Pop next item
+        kypop                            - Pop next item
+        kypop --n <count>                - Pop multiple items
+        kypop --lease <ttl>              - Lease item instead of deleting
+        kyack <receipt_id>               - Acknowledge leased queue item
+        kynack <receipt_id>              - Requeue leased queue item
     kycount                          - Count remaining items
     kyclear                          - Clear queue/stack
 
@@ -52,11 +110,22 @@ Available commands:
   🛠️  Advanced & Recovery:
   kye <file> [format]              - Export data
   kyi <file>                       - Import data
+    kyaudit export <file> [format]   - Export audit log
+    kystats                          - Show workspace statistics
+    kybackup <file>                  - Create encrypted snapshot backup
   kyc <key> [args...]              - Execute stored command
-  kyr <key>[.path]                 - Restore a deleted key
+  kyv [-h|key]                     - View audit history
+  kyr <key>[.path] [--at <ts>]     - Restore a deleted key (or version at a timestamp)
   kyrt <timestamp>                 - Point-in-Time Recovery
   kyco [days]                      - Compact DB
     kyrotate --new-key <k>           - Rotate encryption master key
+
+    ⚙️ Profiles & Policies:
+    kyprofile list|use|save <name>   - Manage config profiles
+    kyttl set|get [ttl]              - Default TTL policy for workspace
+    kyacl readonly|key ...           - Workspace access controls
+    kyws view <prefix>               - View keys by namespace prefix
+    kymetrics [port]                 - Start local metrics endpoint
 
   🔐 Security:
   Set `KYCLI_MASTER_KEY` env variable or use `--key "pass"` flag.
@@ -207,6 +276,14 @@ def main():
         backup = False
         batch = 500
         priority = None
+        delay = None
+        lease = None
+        json_output = False
+        pretty_output = False
+        access_key = os.environ.get("KYCLI_ACCESS_KEY")
+        pop_count = 1
+        since = None
+        until = None
         new_args = []
         skip_next = False
         for i, arg in enumerate(args):
@@ -243,17 +320,41 @@ def main():
                     skip_next = True
                 except:
                     new_args.append(arg)
+            elif arg == "--delay" and i + 1 < len(args):
+                delay = args[i+1]
+                skip_next = True
+            elif arg == "--lease" and i + 1 < len(args):
+                lease = args[i+1]
+                skip_next = True
+            elif arg == "--n" and i + 1 < len(args):
+                pop_count = int(args[i+1])
+                skip_next = True
+            elif arg == "--access-key" and i + 1 < len(args):
+                access_key = args[i+1]
+                skip_next = True
+            elif arg == "--since" and i + 1 < len(args):
+                since = args[i+1]
+                skip_next = True
+            elif arg == "--until" and i + 1 < len(args):
+                until = args[i+1]
+                skip_next = True
             elif arg == "--keys-only":
                 keys_only = True
             elif arg == "--dry-run":
                 dry_run = True
             elif arg == "--backup":
                 backup = True
+            elif arg == "--json":
+                json_output = True
+            elif arg == "--pretty":
+                pretty_output = True
             elif arg in ["-s", "--search", "-f", "--find"]:
                 search_mode = True
             else:
                 new_args.append(arg)
         args = new_args
+        if access_key:
+            os.environ["KYCLI_ACCESS_KEY"] = access_key
 
         # Auto-migrate legacy SQLite DBs before any Kycore access
         _maybe_migrate_legacy_sqlite(db_path, master_key=master_key)
@@ -280,6 +381,34 @@ def main():
             print(f"Switched to workspace: {target}")
             return
 
+        if cmd in ["kyprofile"]:
+            if not args:
+                print("Usage: kyprofile list|use|save <name>")
+                return
+            subcmd = args[0]
+            if subcmd == "list":
+                for name in list_profiles():
+                    print(name)
+                return
+            if len(args) < 2:
+                print("Usage: kyprofile list|use|save <name>")
+                return
+            profile_name = args[1]
+            if subcmd == "use":
+                use_profile(profile_name)
+                print(f"✅ Active profile set to '{profile_name}'.")
+                return
+            if subcmd == "save":
+                raw_config = load_config()
+                save_profile(profile_name, {
+                    "active_workspace": raw_config.get("active_workspace", "default"),
+                    "export_format": raw_config.get("export_format", "csv"),
+                })
+                print(f"✅ Saved profile '{profile_name}'.")
+                return
+            print("Usage: kyprofile list|use|save <name>")
+            return
+
         if cmd in ["kyrotate", "rotate"]:
             if not new_key:
                 print("Usage: kyrotate --new-key <key> [--old-key <key>] [--dry-run] [--backup] [--batch N]")
@@ -301,6 +430,14 @@ def main():
         if cmd in ["kyws", "workspaces"]:
             if "--current" in args or "-c" in args:
                 print(active_ws)
+                return
+
+            if args and args[0] == "view":
+                if len(args) < 2:
+                    print("Usage: kyws view <prefix>")
+                    return
+                with Kycore(db_path=db_path, master_key=master_key) as kv:
+                    print(_render_value(kv.view_prefix(args[1], limit=limit), as_json=True if json_output else False, pretty=pretty_output))
                 return
 
             if args and args[0] == "create":
@@ -441,7 +578,52 @@ fi
             return
 
         with Kycore(db_path=db_path, master_key=master_key) as kv:
+            logger.info("command=%s workspace=%s", cmd, active_ws)
             # Move command needs special handling (inter-db)
+            if cmd in ["kyttl"]:
+                if not args:
+                    print("Usage: kyttl set|get [ttl]")
+                    return
+                if args[0] == "get":
+                    print(kv.get_default_ttl())
+                    return
+                if args[0] == "set" and len(args) > 1:
+                    value = kv.set_default_ttl(args[1])
+                    print(f"✅ Default TTL set to {value}")
+                    return
+                print("Usage: kyttl set|get [ttl]")
+                return
+
+            if cmd in ["kyacl"]:
+                if not args:
+                    print("Usage: kyacl readonly on|off|status OR kyacl key set|get|clear [value]")
+                    return
+                if args[0] == "readonly":
+                    if len(args) < 2 or args[1] == "status":
+                        print("on" if kv.get_read_only() else "off")
+                        return
+                    enabled = args[1].lower() == "on"
+                    kv.set_read_only(enabled)
+                    print(f"✅ Read-only {'enabled' if enabled else 'disabled'}.")
+                    return
+                if args[0] == "key":
+                    if len(args) < 2:
+                        print("Usage: kyacl key set|get|clear [value]")
+                        return
+                    if args[1] == "get":
+                        print(kv.get_access_key() or "")
+                        return
+                    if args[1] == "clear":
+                        kv.set_access_key(None)
+                        print("✅ Access key cleared.")
+                        return
+                    if args[1] == "set" and len(args) > 2:
+                        kv.set_access_key(args[2])
+                        print("✅ Access key set.")
+                        return
+                print("Usage: kyacl readonly on|off|status OR kyacl key set|get|clear [value]")
+                return
+
             if cmd in ["kymv", "mv", "move"]:
                 if len(args) < 2:
                     print("Usage: kymv <key> <target_workspace>")
@@ -493,15 +675,8 @@ fi
                 
                 key = args[0]
                 val = " ".join(args[1:]) # Handle values with spaces if passed via kycli save
-                
-                if val.isdigit(): val = int(val)
-                elif val.lower() == "true": val = True
-                elif val.lower() == "false": val = False
-                elif val.startswith("[") or val.startswith("{"):
-                    import json
-                    try: val = json.loads(val)
-                    except: pass 
-                
+                val = coerce_value(val, json_mode="startswith")
+
                 # Check for existing key confirmation
                 if key in kv and not ttl: # Don't confirm if TTL is explicitly set (assumes override intent)
                     if sys.stdin.isatty():
@@ -523,13 +698,7 @@ fi
                     return
                 val = " ".join(args[1:])
                 # Try to parse as JSON/Int/Bool
-                if val.isdigit(): val = int(val)
-                elif val.lower() == "true": val = True
-                elif val.lower() == "false": val = False
-                else:
-                    import json
-                    try: val = json.loads(val)
-                    except: pass
+                val = coerce_value(val, json_mode="always")
                     
                 status = kv.patch(args[0], val, ttl=ttl)
                 if status.startswith("Error"):
@@ -540,14 +709,30 @@ fi
             elif cmd in ["kypush", "push"]:
                 wtype = kv.get_type()
                 if wtype != "kv":
+                    if args and args[0] == "--file":
+                        if len(args) < 2:
+                            print("Usage: kypush --file <path>")
+                            return
+                        file_path = args[1]
+                        if not os.path.exists(file_path):
+                            print(f"❌ Error: File not found: {file_path}")
+                            return
+                        pushed = 0
+                        with open(file_path, "r") as handle:
+                            for line in handle:
+                                item = line.rstrip("\n")
+                                if item:
+                                    kv.push(try_parse_json(item), priority=priority, ttl=delay)
+                                    pushed += 1
+                        print(f"✅ Pushed {pushed} queued items.")
+                        return
                     value_args = [a for a in args if a != "--unique"]
                     if len(value_args) < 1:
                         print("Usage: kypush <value> [--priority N]")
                         return
                     val = " ".join(value_args)
-                    try: val = json.loads(val)
-                    except: pass
-                    print(kv.push(val, priority=priority))
+                    val = try_parse_json(val)
+                    print(kv.push(val, priority=priority, ttl=delay))
                 else:
                     if len(args) < 2:
                         print("Usage: kypush <key> <value> [--unique]")
@@ -555,15 +740,26 @@ fi
                     unique = "--unique" in args
                     val = args[1]
                     # Try to parse as JSON
-                    try: val = json.loads(val)
-                    except: pass
+                    val = try_parse_json(val)
                     print(kv.push(args[0], val, unique=unique))
 
             elif cmd in ["kypeek", "peek"]:
                 print(kv.peek())
 
             elif cmd in ["kypop", "pop"]:
-                print(kv.pop())
+                print(_render_value(kv.pop(count=pop_count, lease=lease), as_json=json_output, pretty=pretty_output))
+
+            elif cmd in ["kyack"]:
+                if not args:
+                    print("Usage: kyack <receipt_id>")
+                    return
+                print(kv.ack(args[0]))
+
+            elif cmd in ["kynack"]:
+                if not args:
+                    print("Usage: kynack <receipt_id> [--delay <ttl>]")
+                    return
+                print(kv.nack(args[0], delay=delay))
 
             elif cmd in ["kycount", "count"]:
                 print(kv.count())
@@ -580,8 +776,7 @@ fi
                     print("Usage: kyrem <key> <value>")
                     return
                 val = args[1]
-                try: val = json.loads(val)
-                except: pass
+                val = try_parse_json(val)
                 
                 status = kv.remove(args[0], val, ttl=ttl)
                 print(f"➖ Result: {status}")
@@ -598,17 +793,12 @@ fi
                         if keys_only:
                             print(f"🔍 Found {len(result)} keys: {', '.join(result)}")
                         else:
-                            import json
-                            print(json.dumps(result, indent=2))
+                            print(_render_value(result, as_json=json_output, pretty=pretty_output))
                     else:
                         print("No matches found.")
                 else:
                     result = kv.getkey(args[0])
-                    if isinstance(result, (dict, list)):
-                        import json
-                        print(json.dumps(result, indent=2))
-                    else:
-                        print(result)
+                    print(_render_value(result, as_json=json_output, pretty=pretty_output))
     
             
             elif cmd in ["kyfo", "optimize"]:
@@ -616,12 +806,23 @@ fi
                 print("⚡ Search index optimized.")
     
             elif cmd in ["kyv", "history"]:
+                if args and args[0] == "export":
+                    if len(args) < 2:
+                        print("Usage: kyv export <file> [format]")
+                        return
+                    fmt = args[2] if len(args) > 2 else "json"
+                    count = kv.export_audit(args[1], fmt=fmt, since=since, until=until)
+                    print(f"📤 Exported {count} audit rows.")
+                    return
                 target = args[0] if len(args) > 0 else "-h"
                 history = kv.get_history(target)
                 
                 if not history:
                     print(f"No history found.")
                 elif target == "-h":
+                    if json_output:
+                        print(_render_value([{"key": item[0], "value": item[1], "timestamp": item[2]} for item in history], as_json=True))
+                        return
                     print(f"📜 Full Audit History [{active_ws}]:")
                     print(f"{'Timestamp':<21} | {'Key':<15} | {'Value'}")
                     print("-" * 55)
@@ -648,18 +849,17 @@ fi
     
             elif cmd in ["kyr", "restore"]:
                 if len(args) < 1:
-                    print("Usage: kyr <key>[.path]")
+                    print("Usage: kyr <key>[.path] [--at <timestamp>]")
                     return
-                print(kv.restore(args[0]))
-    
+                key_part, ts_part = _parse_at_flag(args)
+                print(kv.restore(key_part, timestamp=ts_part))
+
             elif cmd in ["kyrt", "restore-to"]:
                 if not args:
                     print("Usage: kyrt <timestamp> OR kyrt <key.path> --at <timestamp>")
                     return
                 elif "--at" in args:
-                    idx = args.index("--at")
-                    key_part = " ".join(args[:idx])
-                    ts_part = " ".join(args[idx+1:])
+                    key_part, ts_part = _parse_at_flag(args)
                     result = kv.restore(key_part, timestamp=ts_part)
                 else:
                     ts = " ".join(args)
@@ -673,9 +873,38 @@ fi
                 pattern = args[0] if args else None
                 keys = kv.listkeys(pattern)
                 if keys:
-                    print(f"🔑 Keys [{active_ws}]: {', '.join(keys)}")
+                    print(_render_value(keys if json_output else f"🔑 Keys [{active_ws}]: {', '.join(keys)}", as_json=json_output, pretty=pretty_output))
                 else:
                     print(f"No keys found in workspace '{active_ws}'.")
+
+            elif cmd in ["kystats"]:
+                print(_render_value(kv.get_stats(), as_json=True if json_output or pretty_output else False, pretty=pretty_output))
+
+            elif cmd in ["kybackup"]:
+                if not args:
+                    print("Usage: kybackup <file> OR kybackup restore <file>")
+                    return
+                if args[0] == "restore":
+                    if len(args) < 2:
+                        print("Usage: kybackup restore <file>")
+                        return
+                    kv.restore_backup(args[1])
+                    print(f"✅ Backup restored from {args[1]}")
+                else:
+                    print(f"✅ Backup created: {kv.backup(args[0])}")
+
+            elif cmd in ["kymetrics"]:
+                port = args[0] if args else "8765"
+                _start_metrics_server(kv, port)
+                print(f"✅ Metrics endpoint started on http://127.0.0.1:{port}")
+
+            elif cmd in ["kyaudit"]:
+                if not args or args[0] != "export" or len(args) < 2:
+                    print("Usage: kyaudit export <file> [format]")
+                    return
+                fmt = args[2] if len(args) > 2 else "json"
+                count = kv.export_audit(args[1], fmt=fmt, since=since, until=until)
+                print(f"📤 Exported {count} audit rows.")
     
             elif cmd in ["kyh", "help", "--help", "-h"]:
                 print_help()
@@ -729,8 +958,10 @@ fi
                 print_help()
 
     except ValueError as e:
+        logger.warning("validation_error=%s", e)
         print(f"⚠️ Validation Error: {e}")
     except Exception as e:
+        logger.exception("unexpected_error")
         print(f"🔥 Unexpected Error: {e}")
         # import traceback
         # traceback.print_exc()

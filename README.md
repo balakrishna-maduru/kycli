@@ -36,6 +36,16 @@ Install the latest version from PyPI:
 pip install kycli
 ```
 
+### Validate The Install
+
+Run the end-to-end command matrix from the repo root:
+
+```bash
+bash scripts/validate_install.sh
+```
+
+The validator auto-resolves a usable Python executable, prefers the active `python3` runtime, and runs stateful sections in isolated home directories so queue, profile, and policy checks do not interfere with each other.
+
 ---
 
 ## 💻 CLI Command Reference
@@ -60,7 +70,6 @@ pip install kycli
 | **`kyd`** | Delete Key | `kyd host` |
 | **`kypush`**| Push to List | `kypush logs "error"` |
 | **`kyrem`** | Remove from List | `kyrem tags "old"` |
-| **`kyrem`** | Remove from List | `kyrem tags "old"` |
 ### 🧱 Queues & Stacks Operations
 | Command | Description | Example |
 | :--- | :--- | :--- |
@@ -70,6 +79,8 @@ pip install kycli
 | **`kycount`** | Count items | `kycount` |
 | **`kyclear`** | Clear implementation | `kyclear` |
 | **`kyws`** | Create Typed WS | `kyws create q --type queue` |
+| **`kyack`** | Ack leased item | `kyack <receipt_id>` |
+| **`kynack`** | Requeue leased item | `kynack <receipt_id> --delay 30s` |
 
 ### 🔍 Search & Utility
 | Command | Description | Example |
@@ -90,6 +101,13 @@ pip install kycli
 | **`kyc`** | Execute Command | `kyc hello` |
 | **`kyco`** | Compact DB | `kyco 7` |
 | **`kyrotate`** | Rotate Master Key | `kyrotate --new-key "newpass" --old-key "oldpass" --backup` |
+| **`kyttl`** | Workspace TTL policy | `kyttl set 1h` |
+| **`kyprofile`** | Manage profiles | `kyprofile save dev` |
+| **`kyacl`** | Workspace ACL/policy | `kyacl readonly on` |
+| **`kyaudit`** | Export audit history | `kyaudit export audit.json json` |
+| **`kystats`** | Show workspace stats | `kystats --json` |
+| **`kybackup`** | Create/restore backup | `kybackup snapshot.db` |
+| **`kymetrics`** | Local metrics endpoint | `kymetrics 8765` |
 
 ---
 
@@ -127,30 +145,80 @@ kydrop temp_test
 ```
 
 
-## 🧭 Roadmap (Planned Features)
+## 🧭 Advanced Features
 
-### High-Value Additions
-- **Batch Queue Ops**: `kypush --file` and `kypop --n 100` for throughput.
-- **Delayed Jobs**: `kypush --delay 30s` with scheduled dequeue.
-- **Visibility Timeout**: `kypop --lease 30s` + `kyack`/`kynack` for retry flows.
-- **Workspace TTL Policies**: Default TTL per workspace + `kyttl set/get`.
+### Queue Reliability
+- **Batch Queue Ops**: `kypush --file` and `kypop --n 100` for throughput-oriented flows.
+- **Delayed Jobs**: `kypush --delay 30s` schedules visibility in queue workspaces.
+- **Visibility Timeout**: `kypop --lease 30s` with `kyack` and `kynack` supports retry flows.
+- **Workspace TTL Policies**: `kyttl set/get` applies default TTL behavior per workspace.
 
 ### Usability & DX
-- **Interactive CLI Prompts**: Fuzzy key search + history in non-TUI mode.
-- **Config Profiles**: `kyprofile use prod` to switch db path, master key, defaults.
-- **Output Formatting**: `--json` everywhere; `--pretty` for tables.
+- **Config Profiles**: `kyprofile use prod` switches saved CLI defaults.
+- **Output Formatting**: `--json` and `--pretty` are available on structured read paths.
+- **Interactive TUI**: `kyshell` provides an interactive terminal workflow on top of the same engine.
 
 ### Security & Compliance
-- **Key ACLs / Scopes**: Read-only mode, write lock, per-workspace access key.
-- **Audit Export**: `kyaudit export` with time filters.
+- **Workspace ACLs**: `kyacl readonly on|off|status` supports write protection.
+- **Workspace Access Keys**: `kyacl key set|get|clear` gates writes with `KYCLI_ACCESS_KEY`.
+- **Audit Export**: `kyaudit export` supports JSON or CSV output with optional time filters.
 
 ### Observability
-- **Stats Command**: `kystats` for size, counts, TTL expirations, queue depth.
-- **Metrics Endpoint**: Optional local HTTP for queue depth + ops/sec.
+- **Stats Command**: `kystats` exposes workspace type, counts, TTL usage, archive size, and DB size.
+- **Metrics Endpoint**: `kymetrics` starts a local HTTP endpoint on `127.0.0.1`.
 
 ### Data Management
-- **Namespace/Prefix Views**: `kyws view <prefix>` for large stores.
-- **Backup/Restore**: `kybackup` with encryption and versioned snapshots.
+- **Namespace/Prefix Views**: `kyws view <prefix>` filters large keyspaces.
+- **Backup/Restore**: `kybackup` creates and restores encrypted snapshots.
+
+### Queue Reliability
+```bash
+# Push from a file
+kypush --file tasks.txt
+
+# Delay visibility for 30 seconds
+kypush "email:user_123" --delay 30s
+
+# Lease one item for 30 seconds
+kypop --lease 30s --json
+
+# Acknowledge or requeue
+kyack <receipt_id>
+kynack <receipt_id> --delay 15s
+```
+
+### Workspace Policies
+```bash
+# Set a default TTL for all new values in this workspace
+kyttl set 1h
+kyttl get
+
+# Enable read-only mode
+kyacl readonly on
+
+# Protect a workspace with an access key
+kyacl key set my-secret
+KYCLI_ACCESS_KEY=my-secret kys protected value
+```
+
+### Profiles, Stats, and Backups
+```bash
+kyprofile save dev
+kyprofile list
+kyprofile use dev
+
+kystats --json
+kyaudit export audit.json json --since "2026-01-01 00:00:00"
+kybackup snapshot.db
+kybackup restore snapshot.db
+kymetrics 8765
+```
+
+### Maintenance & Reliability
+- **Lock Management**: Retry with exponential backoff for "Database is locked" in multi-process scenarios.
+- **Activity Logs**: Background logging via Python `logging` module.
+- **Atomic Rename Exports**: Write-to-temp-then-rename for export safety.
+- **Compression**: Optional large-value compression for storage efficiency.
 ### `kyh` — The Help Center
 Shows the available commands and basic usage instructions.
 ```bash
@@ -224,10 +292,13 @@ kyg logs[0:5]
 ```
 
 #### Atomic Patching (Partial Updates):
-Instead of rewriting a large JSON object, you can update just one field.
+Instead of rewriting a large JSON object, you can update just one field. Use
+`kypatch` (not `kys`) for this — `kys` always treats dots in a key as a literal
+flat key name (e.g. for namespacing, like `kys ns.alpha 1`), while `kypatch`
+treats them as a path into the nested object.
 ```bash
 # Update just the 'age' field inside the 'user' object
-kys user.profile.age 25
+kypatch user.profile.age 25
 ```
 
 ### 📦 Collection Operations (Lists & Sets)
@@ -600,8 +671,9 @@ async def fetch_config(key: str, db: Kycore = Depends(get_db)):
 
 ## 🏗 Architecture & Internal Safety
 
-- **SQLite Engine**: Running in `WAL` (Write-Ahead Logging) mode for concurrent reads/writes.
-- **Atomic Operations**: Exports use a "temp-file then rename" strategy to prevent corruption.
+- **Encrypted Single-File Storage**: Each workspace is a single AES-GCM-encrypted file. `kycli` decrypts it into an in-memory SQLite engine on open and re-serializes the whole workspace back to disk on every write.
+- **Atomic Writes**: Every persist (workspace file, exports, audit export) uses a "temp-file then rename" strategy — a concurrent reader always sees a complete file, never a partial/corrupted one.
+- **Cross-Process Write Safety**: Writes from independent `kycli` processes sharing one workspace file are serialized via an OS-level advisory lock (`flock`, POSIX). A process reloads the latest on-disk state immediately before mutating it, so sibling processes' writes are never silently overwritten. *(Windows: atomic writes still prevent corruption, but cross-process mutual exclusion requires POSIX `flock` and is not yet supported.)*
 - **Data Integrity**: Keys are automatically lowercased and stripped to prevent duplicate-but-slightly-different keys.
 - **Auto-Purge Policy**: Deleted keys are moved to an **Archive** table and automatically purged after **15 days** to keep the database size optimized.
 - **Embedded C**: Core operations are written in Cython, binding directly to native library pointers.

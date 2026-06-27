@@ -10,6 +10,7 @@ from prompt_toolkit.widgets import Frame, TextArea
 from prompt_toolkit.key_binding import KeyBindings
 from prompt_toolkit.styles import Style
 from prompt_toolkit.formatted_text import ANSI, HTML
+from prompt_toolkit.completion import Completer, Completion
 from rich.console import Console
 from rich.table import Table
 from io import StringIO
@@ -17,7 +18,44 @@ import json
 
 from kycli import Kycore
 from kycli.config import load_config, save_config, get_workspaces
-from kycli.cli import get_help_text
+from kycli.cli import get_help_text, _start_metrics_server
+from kycli.logging_utils import get_logger
+from kycli.utils import coerce_value, try_parse_json
+
+logger = get_logger("kycli.tui")
+
+COMMAND_NAMES = [
+    "kyuse", "kyws", "kymv", "kydrop", "kys", "kyg", "kypatch", "kyl", "kyd",
+    "kypush", "kyrem", "kypeek", "kypop", "kyack", "kynack", "kycount", "kyclear",
+    "kyfo", "kyshell", "kyh", "kye", "kyi", "kyc", "kyv", "kyr", "kyrt", "kyco",
+    "kyrotate", "kyttl", "kyacl", "kyprofile", "kystats", "kybackup", "kymetrics",
+    "kyaudit", "exit", "quit",
+]
+
+WORKSPACE_ARG_COMMANDS = {"kyuse", "kydrop"}
+
+
+class KycliCompleter(Completer):
+    """Tab-completion for command names, and workspace names as the second
+    token of `kyuse`/`kydrop`."""
+
+    def get_completions(self, document, complete_event):
+        text = document.text_before_cursor
+        words = text.split(" ")
+        if len(words) <= 1:
+            word = words[0] if words else ""
+            for cmd in COMMAND_NAMES:
+                if cmd.startswith(word):
+                    yield Completion(cmd, start_position=-len(word))
+        elif len(words) == 2 and words[0] in WORKSPACE_ARG_COMMANDS:
+            word = words[1]
+            try:
+                for ws in get_workspaces():
+                    if ws.startswith(word):
+                        yield Completion(ws, start_position=-len(word))
+            except Exception:
+                return
+
 
 class KycliShell:
     def __init__(self, db_path=None):
@@ -36,11 +74,13 @@ class KycliShell:
             style="class:input-field",
             multiline=False,
             wrap_lines=True,
+            completer=KycliCompleter(),
+            complete_while_typing=True,
         )
 
         # Set up command handling
         self.input_field.accept_handler = self.handle_command
-        
+
         # Styles
         self.style = Style.from_dict({
             "frame.border": "#4444ff",
@@ -75,6 +115,9 @@ class KycliShell:
                         '<style color="cyan">kyrt &lt;ts&gt;</style>    : PIT Recovery\n'
                         '<style color="cyan">kyco [d]</style>     : Compact DB\n'
                         '<style color="cyan">kyc &lt;k&gt; [a]</style>  : Execute Script\n'
+                        '<style color="cyan">kypush/kypop</style>   : Queue/Stack ops\n'
+                        '<style color="cyan">kyttl/kyacl</style>    : TTL/ACL policy\n'
+                        '<style color="cyan">kystats/kybackup</style> : Stats/Backup\n'
                         '<style color="cyan">kyh</style>         : Full Help\n'
                         '<style color="red">exit/quit</style>   : Quit Shell\n\n'
                         '<b><style color="yellow">SECURITY</style></b>\n'
@@ -105,20 +148,6 @@ class KycliShell:
         self.update_history()
         self.update_status()
     
-    # ... (skipping update_status and update_history methods, they are fine) ...
-
-    # We need to find the handle_command method to edit the output assignment
-    # Since replace_file_content replaces a block, let's target the style definition first,
-    # then subsequent calls for handle_command.
-    
-    # WAIT, I can't put comments like this in ReplacementContent. 
-    # I should split this into two calls or one large call if contiguous.
-    # Lines 44-106 are contiguous block for Style and Init.
-    # Lines 421 is far away.
-    
-    # Let's do the Style fix first.
-            
-
 
     def update_status(self):
         ws = self.config.get("active_workspace", "default")
@@ -181,6 +210,7 @@ class KycliShell:
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             try:
+                logger.info("command=%s workspace=%s", cmd, self.config.get("active_workspace", "default"))
                 # Workspace Commands
                 if cmd in ["kyuse", "use"]:
                     if not args:
@@ -235,13 +265,159 @@ class KycliShell:
                                 result = f"Error: {e}"
 
                 elif cmd in ["kyws", "workspaces"]:
-                    wss = get_workspaces()
-                    ws = self.config.get("active_workspace", "default")
-                    lines = ["📂 Workspaces:"]
-                    for ws_item in wss:
-                        marker = "✨ " if ws_item == ws else "   "
-                        lines.append(f"{marker}{ws_item}")
-                    result = "\n".join(lines)
+                    if args and args[0] == "view":
+                        if len(args) < 2:
+                            result = "Usage: kyws view <prefix>"
+                        else:
+                            result = json.dumps(self.kv.view_prefix(args[1]), indent=2)
+                    elif args and args[0] == "create":
+                        if len(args) < 2:
+                            result = "Usage: kyws create <workspace> --type <queue|stack|priority_queue>"
+                        else:
+                            target = args[1]
+                            wtype = "kv"
+                            if "--type" in args:
+                                idx = args.index("--type")
+                                if idx + 1 < len(args):
+                                    wtype = args[idx + 1]
+                            from kycli.config import DATA_DIR
+                            target_db = os.path.join(DATA_DIR, f"{target}.db")
+                            try:
+                                with Kycore(db_path=target_db) as target_kv:
+                                    target_kv.set_type(wtype)
+                                result = f"✅ Workspace '{target}' created with type '{wtype}'."
+                            except Exception as e:
+                                result = f"❌ Failed to create workspace: {e}"
+                    else:
+                        wss = get_workspaces()
+                        ws = self.config.get("active_workspace", "default")
+                        lines = ["📂 Workspaces:"]
+                        for ws_item in wss:
+                            marker = "✨ " if ws_item == ws else "   "
+                            lines.append(f"{marker}{ws_item}")
+                        result = "\n".join(lines)
+
+                elif cmd in ["kymv", "mv", "move"]:
+                    if len(args) < 2:
+                        result = "Usage: kymv <key> <target_workspace>"
+                    else:
+                        key, target_ws = args[0], args[1]
+                        ws = self.config.get("active_workspace", "default")
+                        if target_ws == ws:
+                            result = "⚠️ Source and target workspaces are the same."
+                        else:
+                            val = self.kv.getkey(key)
+                            if val == "Key not found":
+                                result = f"❌ Key '{key}' not found in '{ws}'."
+                            else:
+                                from kycli.config import DATA_DIR
+                                target_db = os.path.join(DATA_DIR, f"{target_ws}.db")
+                                with Kycore(db_path=target_db) as target_kv:
+                                    target_kv.save(key, val)
+                                self.kv.delete(key)
+                                result = f"✅ Moved '{key}' to '{target_ws}'."
+
+                elif cmd in ["kyttl"]:
+                    if not args:
+                        result = "Usage: kyttl set|get [ttl]"
+                    elif args[0] == "get":
+                        result = str(self.kv.get_default_ttl())
+                    elif args[0] == "set" and len(args) > 1:
+                        result = f"✅ Default TTL set to {self.kv.set_default_ttl(args[1])}"
+                    else:
+                        result = "Usage: kyttl set|get [ttl]"
+
+                elif cmd in ["kyacl"]:
+                    if not args:
+                        result = "Usage: kyacl readonly on|off|status OR kyacl key set|get|clear [value]"
+                    elif args[0] == "readonly":
+                        if len(args) < 2 or args[1] == "status":
+                            result = "on" if self.kv.get_read_only() else "off"
+                        else:
+                            enabled = args[1].lower() == "on"
+                            self.kv.set_read_only(enabled)
+                            result = f"✅ Read-only {'enabled' if enabled else 'disabled'}."
+                    elif args[0] == "key" and len(args) > 1:
+                        if args[1] == "get":
+                            result = self.kv.get_access_key() or ""
+                        elif args[1] == "clear":
+                            self.kv.set_access_key(None)
+                            result = "✅ Access key cleared."
+                        elif args[1] == "set" and len(args) > 2:
+                            self.kv.set_access_key(args[2])
+                            result = "✅ Access key set."
+                        else:
+                            result = "Usage: kyacl key set|get|clear [value]"
+                    else:
+                        result = "Usage: kyacl readonly on|off|status OR kyacl key set|get|clear [value]"
+
+                elif cmd in ["kyprofile"]:
+                    from kycli.config import save_profile, use_profile, list_profiles, load_config as _load_config
+                    if not args:
+                        result = "Usage: kyprofile list|use|save <name>"
+                    elif args[0] == "list":
+                        result = "\n".join(list_profiles())
+                    elif len(args) < 2:
+                        result = "Usage: kyprofile list|use|save <name>"
+                    elif args[0] == "use":
+                        use_profile(args[1])
+                        result = f"✅ Active profile set to '{args[1]}'."
+                    elif args[0] == "save":
+                        raw_config = _load_config()
+                        save_profile(args[1], {
+                            "active_workspace": raw_config.get("active_workspace", "default"),
+                            "export_format": raw_config.get("export_format", "csv"),
+                        })
+                        result = f"✅ Saved profile '{args[1]}'."
+                    else:
+                        result = "Usage: kyprofile list|use|save <name>"
+
+                elif cmd in ["kyrotate", "rotate"]:
+                    new_key = None
+                    old_key = None
+                    dry_run = "--dry-run" in args
+                    backup_flag = "--backup" in args
+                    if "--new-key" in args:
+                        idx = args.index("--new-key")
+                        if idx + 1 < len(args):
+                            new_key = args[idx + 1]
+                    if "--old-key" in args:
+                        idx = args.index("--old-key")
+                        if idx + 1 < len(args):
+                            old_key = args[idx + 1]
+                    if not new_key:
+                        result = "Usage: kyrotate --new-key <key> [--old-key <key>] [--dry-run] [--backup]"
+                    else:
+                        count = self.kv.rotate_master_key(new_key, old_key=old_key, dry_run=dry_run, backup=backup_flag)
+                        result = f"🧪 Dry run: {count} values would be re-encrypted." if dry_run else f"✅ Rotation complete. Re-encrypted {count} values."
+
+                elif cmd in ["kystats"]:
+                    result = json.dumps(self.kv.get_stats(), indent=2)
+
+                elif cmd in ["kybackup"]:
+                    if not args:
+                        result = "Usage: kybackup <file> OR kybackup restore <file>"
+                    elif args[0] == "restore":
+                        if len(args) < 2:
+                            result = "Usage: kybackup restore <file>"
+                        else:
+                            self.kv.restore_backup(args[1])
+                            result = f"✅ Backup restored from {args[1]}"
+                    else:
+                        result = f"✅ Backup created: {self.kv.backup(args[0])}"
+
+                elif cmd in ["kymetrics"]:
+                    port = args[0] if args else "8765"
+                    _start_metrics_server(self.kv, port)
+                    result = f"✅ Metrics endpoint started on http://127.0.0.1:{port}"
+
+                elif cmd in ["kyaudit"]:
+                    if not args or args[0] != "export" or len(args) < 2:
+                        result = "Usage: kyaudit export <file> [format]"
+                    else:
+                        fmt = args[2] if len(args) > 2 else "json"
+                        count = self.kv.export_audit(args[1], fmt=fmt)
+                        result = f"📤 Exported {count} audit rows."
                 
                 elif cmd in ["kys", "save"]:
                     if len(args) < 2: 
@@ -265,12 +441,7 @@ class KycliShell:
                                 val_parts.append(a)
                         
                         val = " ".join(val_parts)
-                        if val.isdigit(): val = int(val)
-                        elif val.lower() == "true": val = True
-                        elif val.lower() == "false": val = False
-                        elif val.startswith("[") or val.startswith("{"):
-                            try: val = json.loads(val)
-                            except: pass
+                        val = coerce_value(val, json_mode="startswith")
                         
                         kv_to_use = self.kv
                         master_key = key_val
@@ -357,27 +528,99 @@ class KycliShell:
                             result = f"No history for {args[0]}"
 
                 elif cmd in ["kyr", "restore"]:
-                    if not args: result = "Usage: kyr <key>[.path]"
+                    if not args:
+                        result = "Usage: kyr <key>[.path] [--at <timestamp>]"
+                    elif "--at" in args:
+                        idx = args.index("--at")
+                        key_part = " ".join(args[:idx])
+                        ts_part = " ".join(args[idx + 1:])
+                        result = self.kv.restore(key_part, timestamp=ts_part)
                     else:
                         result = self.kv.restore(args[0])
 
                 elif cmd in ["kypush", "push"]:
-                    if len(args) < 2: 
+                    wtype = self.kv.get_type()
+                    if wtype != "kv":
+                        priority = None
+                        delay = None
+                        value_args = []
+                        skip = False
+                        for i, a in enumerate(args):
+                            if skip:
+                                skip = False
+                                continue
+                            if a == "--priority" and i + 1 < len(args):
+                                try: priority = int(args[i + 1])
+                                except ValueError: pass
+                                skip = True
+                            elif a == "--delay" and i + 1 < len(args):
+                                delay = args[i + 1]
+                                skip = True
+                            else:
+                                value_args.append(a)
+                        if not value_args:
+                            result = "Usage: kypush <value> [--priority N] [--delay <ttl>]"
+                        else:
+                            val = try_parse_json(" ".join(value_args))
+                            result = self.kv.push(val, priority=priority, ttl=delay)
+                    elif len(args) < 2:
                         result = "Usage: kypush <key> <value> [--unique]"
                     else:
                         unique = "--unique" in args
                         val = args[1]
-                        try: val = json.loads(val)
-                        except: pass
+                        val = try_parse_json(val)
                         result = self.kv.push(args[0], val, unique=unique)
+
+                elif cmd in ["kypeek", "peek"]:
+                    result = str(self.kv.peek())
+
+                elif cmd in ["kypop", "pop"]:
+                    lease = None
+                    count = 1
+                    skip = False
+                    for i, a in enumerate(args):
+                        if skip:
+                            skip = False
+                            continue
+                        if a == "--lease" and i + 1 < len(args):
+                            lease = args[i + 1]
+                            skip = True
+                        elif a == "--n" and i + 1 < len(args):
+                            try: count = int(args[i + 1])
+                            except ValueError: pass
+                            skip = True
+                    result = str(self.kv.pop(count=count, lease=lease))
+
+                elif cmd in ["kyack"]:
+                    if not args: result = "Usage: kyack <receipt_id>"
+                    else: result = self.kv.ack(args[0])
+
+                elif cmd in ["kynack"]:
+                    if not args:
+                        result = "Usage: kynack <receipt_id> [--delay <ttl>]"
+                    else:
+                        delay = None
+                        if "--delay" in args:
+                            idx = args.index("--delay")
+                            if idx + 1 < len(args):
+                                delay = args[idx + 1]
+                        result = self.kv.nack(args[0], delay=delay)
+
+                elif cmd in ["kycount", "count"]:
+                    result = str(self.kv.count())
+
+                elif cmd in ["kyclear", "clear"]:
+                    if "--confirm" not in args:
+                        result = "⚠️  This clears the current queue/stack. Re-run with --confirm."
+                    else:
+                        result = self.kv.clear()
 
                 elif cmd in ["kyrem", "remove"]:
                     if not args: 
                         result = "Usage: kyrem <key> <value>"
                     else:
                         val = args[1]
-                        try: val = json.loads(val)
-                        except: pass
+                        val = try_parse_json(val)
                         result = self.kv.remove(args[0], val)
 
                 elif cmd in ["kye", "export"]:
@@ -434,6 +677,7 @@ class KycliShell:
                     result = f"Unknown command: {cmd}. Type 'kyh' for help."
 
             except Exception as e:
+                logger.exception("tui_command_failed")
                 result = f"Error: {e}"
             
             # Combine warnings and result
@@ -444,7 +688,7 @@ class KycliShell:
                     warn_msgs.append(f"⚠️ {msg}")
                 result = "\n".join(warn_msgs) + ("\n" + result if result else "")
 
-        self.output_area.text = ANSI(result)
+        self.output_area.text = result
         buffer.text = ""
         self.update_history()
 
