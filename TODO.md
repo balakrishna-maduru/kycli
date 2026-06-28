@@ -63,5 +63,18 @@ This list tracks the progress of implementing high-performance and robust enhanc
 - [ ] **Namespace/Prefix Views**: `kyws view <prefix>` for large stores.
 - [ ] **Backup/Restore**: `kybackup` with encryption and versioned snapshots.
 
+## Phase 9: User Roles & Permissions (RBAC) — Next Release 🔐
+Full design + phased implementation plan: [docs/ROLES_PERMISSIONS.md](docs/ROLES_PERMISSIONS.md).
+Named principals + fixed roles (`owner`/`admin`/`writer`/`reader`) bound at
+the **workspace level**, with optional **key-level** allow/deny overrides.
+Fully opt-in via `kyacl enable` — existing `kyacl readonly`/`kyacl key`
+behavior is unaffected until then.
+- [ ] **Phase A**: `principals` / `workspace_roles` / `key_acl` schema + token hashing.
+- [ ] **Phase B**: policy engine (`_ensure_allowed`) wired into every read/write path.
+- [ ] **Phase C**: `kyacl user/role/whoami` CLI surface + `--token`/`KYCLI_TOKEN`.
+- [ ] **Phase D**: audit logging for grants/revokes/denials, `kystats` summary.
+- [ ] **Phase E**: docs, migration test (`access_key` → bootstrapped `owner`), regression test.
+- [ ] **Phase F** (stretch, later release): custom roles, principal groups, default key policies.
+
 ---
 *Optimized for Performance by Antigravity*
