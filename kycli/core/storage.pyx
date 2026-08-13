@@ -368,6 +368,14 @@ cdef class Kycore:
                 raise ValueError("Compressed value is corrupted")
         return val_str
 
+    def _sql_text_literal(self, value):
+        if value is None:
+            return "NULL"
+        text = str(value)
+        if "\x00" in text:
+            raise ValueError("NUL bytes are not supported in persisted text fields")
+        return "'" + text.replace("'", "''") + "'"
+
     def _persist(self):
         # Dump DB to SQL
         cdef list sql_stmts = ["BEGIN TRANSACTION;"]
@@ -404,7 +412,7 @@ cdef class Kycore:
         for r in rows:
             p_id, name, token_hash, disabled, created_at = r[0], r[1], r[2], r[3], r[4]
             sql_stmts.append(
-                f"INSERT INTO principals (id, name, token_hash, disabled, created_at) VALUES ({p_id}, '{name.replace('\'', '\'\'')}', '{token_hash.replace('\'', '\'\'')}', {int(disabled or 0)}, '{created_at}');"
+                f"INSERT INTO principals (id, name, token_hash, disabled, created_at) VALUES ({p_id}, {self._sql_text_literal(name)}, {self._sql_text_literal(token_hash)}, {int(disabled or 0)}, {self._sql_text_literal(created_at)});"
             )
 
         # Dump RBAC Workspace Roles
@@ -413,17 +421,17 @@ cdef class Kycore:
             principal_id, role, granted_by, granted_at = r[0], r[1], r[2], r[3]
             granted_by_val = "NULL" if granted_by is None else str(int(granted_by))
             sql_stmts.append(
-                f"INSERT OR REPLACE INTO workspace_roles (principal_id, role, granted_by, granted_at) VALUES ({int(principal_id)}, '{role.replace('\'', '\'\'')}', {granted_by_val}, '{granted_at}');"
+                f"INSERT OR REPLACE INTO workspace_roles (principal_id, role, granted_by, granted_at) VALUES ({int(principal_id)}, {self._sql_text_literal(role)}, {granted_by_val}, {self._sql_text_literal(granted_at)});"
             )
 
         # Dump RBAC Key ACLs
         rows = self._engine._bind_and_fetch("SELECT id, principal_id, key_pattern, allow_verbs, deny_verbs, priority, created_at FROM key_acl ORDER BY id", [])
         for r in rows:
             acl_id, principal_id, pattern, allow_v, deny_v, priority, created_at = r[0], r[1], r[2], r[3], r[4], r[5], r[6]
-            allow_val = f"'{allow_v.replace('\'', '\'\'')}'" if allow_v else "NULL"
-            deny_val = f"'{deny_v.replace('\'', '\'\'')}'" if deny_v else "NULL"
+            allow_val = self._sql_text_literal(allow_v)
+            deny_val = self._sql_text_literal(deny_v)
             sql_stmts.append(
-                f"INSERT INTO key_acl (id, principal_id, key_pattern, allow_verbs, deny_verbs, priority, created_at) VALUES ({int(acl_id)}, {int(principal_id)}, '{pattern.replace('\'', '\'\'')}', {allow_val}, {deny_val}, {int(priority or 0)}, '{created_at}');"
+                f"INSERT INTO key_acl (id, principal_id, key_pattern, allow_verbs, deny_verbs, priority, created_at) VALUES ({int(acl_id)}, {int(principal_id)}, {self._sql_text_literal(pattern)}, {allow_val}, {deny_val}, {int(priority or 0)}, {self._sql_text_literal(created_at)});"
             )
 
         # Dump Queue Items
@@ -581,8 +589,8 @@ cdef class Kycore:
 
     def _permission_map(self):
         return {
-            "owner": {"read", "write", "delete", "manage_acl", "manage_workspace", "admin"},
-            "admin": {"read", "write", "delete", "manage_acl", "manage_workspace"},
+            "owner": {"read", "write", "delete", "manage_acl", "manage_readonly", "manage_workspace", "admin"},
+            "admin": {"read", "write", "delete", "manage_acl", "manage_readonly", "manage_workspace"},
             "writer": {"read", "write", "delete"},
             "reader": {"read"},
         }
@@ -744,7 +752,7 @@ cdef class Kycore:
 
     def _ensure_allowed(self, str verb, key=None, access_key=None, token=None):
         readonly = self._get_workspace_setting("readonly", "0")
-        if verb not in ("read", "manage_acl") and readonly == "1":
+        if verb not in ("read", "manage_readonly") and readonly == "1":
             raise PermissionError("Workspace is read-only")
         if not self._rbac_enabled():
             if verb == "read":
@@ -996,7 +1004,7 @@ cdef class Kycore:
 
     def set_read_only(self, enabled, token=None):
         with self._exclusive():
-            self._ensure_allowed("manage_acl", token=token)
+            self._ensure_allowed("manage_readonly", token=token)
             self._set_workspace_setting_locked("readonly", "1" if enabled else "0")
             self._audit_event_locked("_rbac.readonly", {"enabled": bool(enabled)})
             return enabled
@@ -1284,7 +1292,7 @@ cdef class Kycore:
         self._ensure_allowed("read", token=token)
         data = {}
         # Use iteration to fetch all active keys
-        for k in self:
+        for k in self.iter_keys(token=token):
             data[k] = self.getkey(k, token=token)
             
         base_dir = os.path.dirname(file_path) or "."
@@ -1460,7 +1468,7 @@ cdef class Kycore:
         for i in range(len(k), 0, -1):
             if k[i-1] in ('.', '['):
                 prefix, path = k[:i-1], k[i-1:]
-                if prefix in self:
+                if self.contains(prefix, token=token):
                     found = True
                     break
         if not found and ('.' in k or '[' in k):
@@ -1659,15 +1667,15 @@ cdef class Kycore:
             lock.release()
         return self._real_db_path
 
-    def rotate_master_key(self, str new_key, str old_key=None, bint dry_run=False, bint backup=False, int batch=500, bint verify=True):
+    def rotate_master_key(self, str new_key, str old_key=None, bint dry_run=False, bint backup=False, int batch=500, bint verify=True, token=None, access_key=None):
         if not new_key or not str(new_key).strip():
             raise ValueError("New master key is required")
 
         if dry_run:
-            self._ensure_allowed("admin")
+            self._ensure_allowed("admin", token=token, access_key=access_key)
             return self._rotate_master_key_locked(new_key, old_key, dry_run, backup, batch, verify)
         with self._exclusive():
-            self._ensure_allowed("admin")
+            self._ensure_allowed("admin", token=token, access_key=access_key)
             return self._rotate_master_key_locked(new_key, old_key, dry_run, backup, batch, verify)
 
     def _rotate_master_key_locked(self, str new_key, str old_key, bint dry_run, bint backup, int batch, bint verify):
@@ -1772,17 +1780,24 @@ cdef class Kycore:
 
         return rotated
 
-    def __contains__(self, str key):
+    def contains(self, str key, token=None):
         self._ensure_kv("kyg")
-        self._ensure_allowed("read", key=key)
+        self._ensure_allowed("read", key=key, token=token)
         res = self._engine._bind_and_fetch("SELECT 1 FROM kvstore WHERE key = ? AND (expires_at IS NULL OR expires_at > datetime('now'))", [key.lower().strip()])
         return len(res) > 0
 
-    def __iter__(self):
+    def iter_keys(self, token=None):
         self._ensure_kv("kyl")
-        self._ensure_allowed("read")
+        self._ensure_allowed("read", token=token)
         res = self._engine._bind_and_fetch("SELECT key FROM kvstore WHERE (expires_at IS NULL OR expires_at > datetime('now'))", [])
-        for row in res: yield row[0]
+        for row in res:
+            yield row[0]
+
+    def __contains__(self, str key):
+        return self.contains(key)
+
+    def __iter__(self):
+        return self.iter_keys()
 
     def __len__(self):
         if self._get_type() != "kv":

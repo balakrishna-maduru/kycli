@@ -479,7 +479,7 @@ def main():
 
             try:
                 with Kycore(db_path=db_path, master_key=old_key) as kv:
-                    count = kv.rotate_master_key(new_key, old_key=old_key, dry_run=dry_run, backup=backup, batch=batch, verify=True)
+                    count = kv.rotate_master_key(new_key, old_key=old_key, dry_run=dry_run, backup=backup, batch=batch, verify=True, token=token, access_key=access_key)
                 if dry_run:
                     print(f"🧪 Dry run complete. {count} values would be re-encrypted.")
                 else:
