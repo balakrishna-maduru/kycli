@@ -44,6 +44,13 @@ def _render_value(value, as_json=False, pretty=False):
     return str(value)
 
 
+def _emit_output(value, *, json_output=False, pretty_output=False, default_text=None):
+    if json_output or pretty_output:
+        print(_render_value(value, as_json=json_output, pretty=pretty_output))
+    else:
+        print(default_text if default_text is not None else _render_value(value))
+
+
 def _start_metrics_server(kv, port):
     class MetricsHandler(BaseHTTPRequestHandler):
         def do_GET(self):
@@ -123,12 +130,15 @@ Available commands:
     ⚙️ Profiles & Policies:
     kyprofile list|use|save <name>   - Manage config profiles
     kyttl set|get [ttl]              - Default TTL policy for workspace
-    kyacl readonly|key ...           - Workspace access controls
+    kyacl enable|disable|status      - RBAC controls
+    kyacl user|role|whoami ...       - Principal and role management
+    kyacl readonly|key ...           - Legacy workspace access controls
     kyws view <prefix>               - View keys by namespace prefix
     kymetrics [port]                 - Start local metrics endpoint
 
   🔐 Security:
   Set `KYCLI_MASTER_KEY` env variable or use `--key "pass"` flag.
+  Set `KYCLI_TOKEN` env variable or use `--token "<token>"` for RBAC-enabled workspaces.
 """
 
 def print_help():
@@ -249,6 +259,8 @@ def main():
     config = load_config()
     db_path = config.get("db_path")
     active_ws = config.get("active_workspace", "default")
+    original_access_key = os.environ.get("KYCLI_ACCESS_KEY")
+    original_token = os.environ.get("KYCLI_TOKEN")
     
     try:
         args = sys.argv[1:]
@@ -281,16 +293,23 @@ def main():
         json_output = False
         pretty_output = False
         access_key = os.environ.get("KYCLI_ACCESS_KEY")
+        token = os.environ.get("KYCLI_TOKEN")
+        access_key_from_flag = False
+        token_from_flag = False
         pop_count = 1
         since = None
         until = None
+        key_pattern = None
+        allow_verbs = None
+        deny_verbs = None
+        acl_priority = 0
         new_args = []
         skip_next = False
         for i, arg in enumerate(args):
             if skip_next:
                 skip_next = False
                 continue
-            if arg == "--key" and i + 1 < len(args):
+            if arg == "--key" and i + 1 < len(args) and cmd != "kyacl":
                 master_key = args[i+1]
                 skip_next = True
             elif arg == "--old-key" and i + 1 < len(args):
@@ -331,6 +350,11 @@ def main():
                 skip_next = True
             elif arg == "--access-key" and i + 1 < len(args):
                 access_key = args[i+1]
+                access_key_from_flag = True
+                skip_next = True
+            elif arg == "--token" and i + 1 < len(args):
+                token = args[i+1]
+                token_from_flag = True
                 skip_next = True
             elif arg == "--since" and i + 1 < len(args):
                 since = args[i+1]
@@ -338,6 +362,24 @@ def main():
             elif arg == "--until" and i + 1 < len(args):
                 until = args[i+1]
                 skip_next = True
+            elif arg == "--key-pattern" and i + 1 < len(args):
+                key_pattern = args[i+1]
+                skip_next = True
+            elif arg == "--key" and i + 1 < len(args) and cmd == "kyacl":
+                key_pattern = args[i+1]
+                skip_next = True
+            elif arg == "--allow" and i + 1 < len(args):
+                allow_verbs = args[i+1]
+                skip_next = True
+            elif arg == "--deny" and i + 1 < len(args):
+                deny_verbs = args[i+1]
+                skip_next = True
+            elif arg == "--priority" and i + 1 < len(args) and cmd == "kyacl":
+                try:
+                    acl_priority = int(args[i+1])
+                    skip_next = True
+                except Exception:
+                    new_args.append(arg)
             elif arg == "--keys-only":
                 keys_only = True
             elif arg == "--dry-run":
@@ -353,15 +395,19 @@ def main():
             else:
                 new_args.append(arg)
         args = new_args
+        if access_key_from_flag and not token_from_flag:
+            token = access_key
         if access_key:
             os.environ["KYCLI_ACCESS_KEY"] = access_key
+        if token:
+            os.environ["KYCLI_TOKEN"] = token
 
         # Auto-migrate legacy SQLite DBs before any Kycore access
         _maybe_migrate_legacy_sqlite(db_path, master_key=master_key)
 
         if cmd in ["kyuse", "use"]:
             if not args:
-                print(f"Current workspace: {active_ws}")
+                _emit_output({"workspace": active_ws}, json_output=json_output, pretty_output=pretty_output, default_text=f"Current workspace: {active_ws}")
                 print("Usage: kyuse <workspace_name>")
                 return
             target = args[0]
@@ -378,7 +424,12 @@ def main():
             except: 
                 pass # Already exists or will be created normally
             
-            print(f"Switched to workspace: {target}")
+            _emit_output(
+                {"status": "ok", "workspace": target},
+                json_output=json_output,
+                pretty_output=pretty_output,
+                default_text=f"Switched to workspace: {target}",
+            )
             return
 
         if cmd in ["kyprofile"]:
@@ -387,8 +438,8 @@ def main():
                 return
             subcmd = args[0]
             if subcmd == "list":
-                for name in list_profiles():
-                    print(name)
+                profiles = list_profiles()
+                _emit_output(profiles, json_output=json_output, pretty_output=pretty_output, default_text="\n".join(profiles))
                 return
             if len(args) < 2:
                 print("Usage: kyprofile list|use|save <name>")
@@ -396,7 +447,12 @@ def main():
             profile_name = args[1]
             if subcmd == "use":
                 use_profile(profile_name)
-                print(f"✅ Active profile set to '{profile_name}'.")
+                _emit_output(
+                    {"status": "ok", "active_profile": profile_name},
+                    json_output=json_output,
+                    pretty_output=pretty_output,
+                    default_text=f"✅ Active profile set to '{profile_name}'.",
+                )
                 return
             if subcmd == "save":
                 raw_config = load_config()
@@ -404,7 +460,12 @@ def main():
                     "active_workspace": raw_config.get("active_workspace", "default"),
                     "export_format": raw_config.get("export_format", "csv"),
                 })
-                print(f"✅ Saved profile '{profile_name}'.")
+                _emit_output(
+                    {"status": "ok", "profile": profile_name},
+                    json_output=json_output,
+                    pretty_output=pretty_output,
+                    default_text=f"✅ Saved profile '{profile_name}'.",
+                )
                 return
             print("Usage: kyprofile list|use|save <name>")
             return
@@ -429,7 +490,7 @@ def main():
 
         if cmd in ["kyws", "workspaces"]:
             if "--current" in args or "-c" in args:
-                print(active_ws)
+                _emit_output({"workspace": active_ws}, json_output=json_output, pretty_output=pretty_output, default_text=active_ws)
                 return
 
             if args and args[0] == "view":
@@ -437,7 +498,7 @@ def main():
                     print("Usage: kyws view <prefix>")
                     return
                 with Kycore(db_path=db_path, master_key=master_key) as kv:
-                    print(_render_value(kv.view_prefix(args[1], limit=limit), as_json=True if json_output else False, pretty=pretty_output))
+                    _emit_output(kv.view_prefix(args[1], limit=limit), json_output=json_output, pretty_output=pretty_output)
                 return
 
             if args and args[0] == "create":
@@ -460,7 +521,12 @@ def main():
                 try:
                     with Kycore(db_path=target_db, master_key=master_key) as target_kv:
                         target_kv.set_type(wtype)
-                    print(f"✅ Workspace '{target}' created with type '{wtype}'.")
+                    _emit_output(
+                        {"status": "ok", "workspace": target, "workspace_type": wtype},
+                        json_output=json_output,
+                        pretty_output=pretty_output,
+                        default_text=f"✅ Workspace '{target}' created with type '{wtype}'.",
+                    )
                 except Exception as e:
                     print(f"❌ Failed to create workspace: {e}")
                 return
@@ -471,10 +537,17 @@ def main():
                 print("Running 'kyws' to list workspaces:")
             
             wss = get_workspaces()
-            print("Workspaces:")
-            for ws in wss:
-                marker = "* " if ws == active_ws else "  "
-                print(f"{marker}{ws}")
+            if json_output or pretty_output:
+                _emit_output(
+                    [{"name": ws, "active": ws == active_ws} for ws in wss],
+                    json_output=json_output,
+                    pretty_output=pretty_output,
+                )
+            else:
+                print("Workspaces:")
+                for ws in wss:
+                    marker = "* " if ws == active_ws else "  "
+                    print(f"{marker}{ws}")
             return
 
         if cmd in ["kyshell", "shell"]:
@@ -585,43 +658,172 @@ fi
                     print("Usage: kyttl set|get [ttl]")
                     return
                 if args[0] == "get":
-                    print(kv.get_default_ttl())
+                    _emit_output(
+                        {"default_ttl": kv.get_default_ttl()},
+                        json_output=json_output,
+                        pretty_output=pretty_output,
+                        default_text=str(kv.get_default_ttl()),
+                    )
                     return
                 if args[0] == "set" and len(args) > 1:
                     value = kv.set_default_ttl(args[1])
-                    print(f"✅ Default TTL set to {value}")
+                    _emit_output(
+                        {"status": "ok", "default_ttl": value},
+                        json_output=json_output,
+                        pretty_output=pretty_output,
+                        default_text=f"✅ Default TTL set to {value}",
+                    )
                     return
                 print("Usage: kyttl set|get [ttl]")
                 return
 
             if cmd in ["kyacl"]:
                 if not args:
-                    print("Usage: kyacl readonly on|off|status OR kyacl key set|get|clear [value]")
+                    print("Usage: kyacl enable|disable|status | readonly on|off|status | key set|get|clear [value] | user add|list|disable|rotate-token | role grant|revoke|list | whoami")
+                    return
+                if args[0] == "enable":
+                    status = kv.enable_rbac(token=token, access_key=access_key)
+                    _emit_output(status, json_output=json_output, pretty_output=pretty_output, default_text="✅ RBAC enabled.")
+                    return
+                if args[0] == "disable":
+                    status = kv.disable_rbac(token=token, access_key=access_key)
+                    _emit_output(status, json_output=json_output, pretty_output=pretty_output, default_text="✅ RBAC disabled.")
+                    return
+                if args[0] == "status":
+                    _emit_output(kv.get_rbac_status(token=token), json_output=json_output, pretty_output=pretty_output)
+                    return
+                if args[0] == "whoami":
+                    _emit_output(kv.whoami(token=token), json_output=json_output, pretty_output=pretty_output)
+                    return
+                if args[0] == "user":
+                    if len(args) < 2:
+                        print("Usage: kyacl user add|list|disable|rotate-token ...")
+                        return
+                    subcmd = args[1]
+                    if subcmd == "list":
+                        _emit_output(kv.list_principals(token=token), json_output=json_output, pretty_output=pretty_output)
+                        return
+                    if len(args) < 3:
+                        print("Usage: kyacl user add|disable|rotate-token <name> [--role <role>]")
+                        return
+                    principal_name = args[2]
+                    if subcmd == "add":
+                        role_name = None
+                        if "--role" in args:
+                            idx = args.index("--role")
+                            if idx + 1 < len(args):
+                                role_name = args[idx + 1]
+                        new_token = kv.create_principal(principal_name, role=role_name, token=token, access_key=access_key)
+                        _emit_output(
+                            {"status": "ok", "principal": principal_name, "role": role_name, "token": new_token},
+                            json_output=json_output,
+                            pretty_output=pretty_output,
+                            default_text=f"✅ Principal '{principal_name}' created. Token: {new_token}",
+                        )
+                        return
+                    if subcmd == "disable":
+                        kv.disable_principal(principal_name, token=token, access_key=access_key)
+                        _emit_output(
+                            {"status": "ok", "principal": principal_name, "disabled": True},
+                            json_output=json_output,
+                            pretty_output=pretty_output,
+                            default_text=f"✅ Principal '{principal_name}' disabled.",
+                        )
+                        return
+                    if subcmd == "rotate-token":
+                        new_token = kv.rotate_principal_token(principal_name, token=token, access_key=access_key)
+                        _emit_output(
+                            {"status": "ok", "principal": principal_name, "token": new_token},
+                            json_output=json_output,
+                            pretty_output=pretty_output,
+                            default_text=f"✅ Principal '{principal_name}' token rotated. New token: {new_token}",
+                        )
+                        return
+                    print("Usage: kyacl user add|list|disable|rotate-token ...")
+                    return
+                if args[0] == "role":
+                    if len(args) < 2:
+                        print("Usage: kyacl role grant|revoke|list ...")
+                        return
+                    subcmd = args[1]
+                    if subcmd == "list":
+                        target_name = args[2] if len(args) > 2 else None
+                        _emit_output(kv.list_roles(target_name, token=token), json_output=json_output, pretty_output=pretty_output)
+                        return
+                    if len(args) < 3:
+                        print("Usage: kyacl role grant|revoke <name> [role]")
+                        return
+                    principal_name = args[2]
+                    if subcmd == "grant":
+                        if len(args) < 4:
+                            print("Usage: kyacl role grant <name> <owner|admin|writer|reader> [--key <pattern>] [--allow verbs] [--deny verbs] [--priority N]")
+                            return
+                        granted_role = kv.grant_role(
+                            principal_name,
+                            args[3],
+                            key_pattern=key_pattern,
+                            allow=allow_verbs,
+                            deny=deny_verbs,
+                            priority=acl_priority,
+                            token=token,
+                            access_key=access_key,
+                        )
+                        _emit_output(
+                            {
+                                "status": "ok",
+                                "principal": principal_name,
+                                "role": granted_role,
+                                "key_pattern": key_pattern,
+                                "allow": allow_verbs,
+                                "deny": deny_verbs,
+                                "priority": acl_priority,
+                            },
+                            json_output=json_output,
+                            pretty_output=pretty_output,
+                            default_text=f"✅ Granted role '{granted_role}' to '{principal_name}'.",
+                        )
+                        return
+                    if subcmd == "revoke":
+                        kv.revoke_role(principal_name, token=token, access_key=access_key)
+                        _emit_output(
+                            {"status": "ok", "principal": principal_name, "revoked": True},
+                            json_output=json_output,
+                            pretty_output=pretty_output,
+                            default_text=f"✅ Revoked role(s) for '{principal_name}'.",
+                        )
+                        return
+                    print("Usage: kyacl role grant|revoke|list ...")
                     return
                 if args[0] == "readonly":
                     if len(args) < 2 or args[1] == "status":
-                        print("on" if kv.get_read_only() else "off")
+                        state = "on" if kv.get_read_only() else "off"
+                        _emit_output({"readonly": state == "on"}, json_output=json_output, pretty_output=pretty_output, default_text=state)
                         return
                     enabled = args[1].lower() == "on"
-                    kv.set_read_only(enabled)
-                    print(f"✅ Read-only {'enabled' if enabled else 'disabled'}.")
+                    kv.set_read_only(enabled, token=token)
+                    _emit_output(
+                        {"status": "ok", "readonly": enabled},
+                        json_output=json_output,
+                        pretty_output=pretty_output,
+                        default_text=f"✅ Read-only {'enabled' if enabled else 'disabled'}.",
+                    )
                     return
                 if args[0] == "key":
                     if len(args) < 2:
                         print("Usage: kyacl key set|get|clear [value]")
                         return
                     if args[1] == "get":
-                        print(kv.get_access_key() or "")
+                        _emit_output({"access_key": kv.get_access_key() or ""}, json_output=json_output, pretty_output=pretty_output, default_text=kv.get_access_key() or "")
                         return
                     if args[1] == "clear":
-                        kv.set_access_key(None)
-                        print("✅ Access key cleared.")
+                        kv.set_access_key(None, token=token)
+                        _emit_output({"status": "ok", "access_key_configured": False}, json_output=json_output, pretty_output=pretty_output, default_text="✅ Access key cleared.")
                         return
                     if args[1] == "set" and len(args) > 2:
-                        kv.set_access_key(args[2])
-                        print("✅ Access key set.")
+                        kv.set_access_key(args[2], token=token)
+                        _emit_output({"status": "ok", "access_key_configured": True}, json_output=json_output, pretty_output=pretty_output, default_text="✅ Access key set.")
                         return
-                print("Usage: kyacl readonly on|off|status OR kyacl key set|get|clear [value]")
+                print("Usage: kyacl enable|disable|status | readonly on|off|status | key set|get|clear [value] | user add|list|disable|rotate-token | role grant|revoke|list | whoami")
                 return
 
             if cmd in ["kymv", "mv", "move"]:
@@ -744,25 +946,27 @@ fi
                     print(kv.push(args[0], val, unique=unique))
 
             elif cmd in ["kypeek", "peek"]:
-                print(kv.peek())
+                _emit_output(kv.peek(token=token), json_output=json_output, pretty_output=pretty_output)
 
             elif cmd in ["kypop", "pop"]:
-                print(_render_value(kv.pop(count=pop_count, lease=lease), as_json=json_output, pretty=pretty_output))
+                _emit_output(kv.pop(count=pop_count, lease=lease, token=token), json_output=json_output, pretty_output=pretty_output)
 
             elif cmd in ["kyack"]:
                 if not args:
                     print("Usage: kyack <receipt_id>")
                     return
-                print(kv.ack(args[0]))
+                result = kv.ack(args[0], token=token)
+                _emit_output({"status": result, "receipt_id": args[0]}, json_output=json_output, pretty_output=pretty_output, default_text=result)
 
             elif cmd in ["kynack"]:
                 if not args:
                     print("Usage: kynack <receipt_id> [--delay <ttl>]")
                     return
-                print(kv.nack(args[0], delay=delay))
+                result = kv.nack(args[0], delay=delay, token=token)
+                _emit_output({"status": result, "receipt_id": args[0], "delay": delay}, json_output=json_output, pretty_output=pretty_output, default_text=result)
 
             elif cmd in ["kycount", "count"]:
-                print(kv.count())
+                _emit_output({"count": kv.count()}, json_output=json_output, pretty_output=pretty_output, default_text=str(kv.count()))
 
             elif cmd in ["kyclear", "clear"]:
                 confirm = input("⚠️  This will clear the current queue/stack. Continue? (y/N): ")
@@ -788,7 +992,7 @@ fi
                 
                 if search_mode:
                     query = " ".join(args)
-                    result = kv.search(query, limit=limit, keys_only=keys_only)
+                    result = kv.search(query, limit=limit, keys_only=keys_only, token=token)
                     if result:
                         if keys_only:
                             print(f"🔍 Found {len(result)} keys: {', '.join(result)}")
@@ -797,8 +1001,8 @@ fi
                     else:
                         print("No matches found.")
                 else:
-                    result = kv.getkey(args[0])
-                    print(_render_value(result, as_json=json_output, pretty=pretty_output))
+                    result = kv.getkey(args[0], token=token)
+                    _emit_output(result, json_output=json_output, pretty_output=pretty_output)
     
             
             elif cmd in ["kyfo", "optimize"]:
@@ -811,17 +1015,17 @@ fi
                         print("Usage: kyv export <file> [format]")
                         return
                     fmt = args[2] if len(args) > 2 else "json"
-                    count = kv.export_audit(args[1], fmt=fmt, since=since, until=until)
-                    print(f"📤 Exported {count} audit rows.")
+                    count = kv.export_audit(args[1], fmt=fmt, since=since, until=until, token=token)
+                    _emit_output({"status": "ok", "rows_exported": count, "file": args[1], "format": fmt}, json_output=json_output, pretty_output=pretty_output, default_text=f"📤 Exported {count} audit rows.")
                     return
                 target = args[0] if len(args) > 0 else "-h"
-                history = kv.get_history(target)
+                history = kv.get_history(target, token=token)
                 
                 if not history:
                     print(f"No history found.")
                 elif target == "-h":
                     if json_output:
-                        print(_render_value([{"key": item[0], "value": item[1], "timestamp": item[2]} for item in history], as_json=True))
+                        _emit_output([{"key": item[0], "value": item[1], "timestamp": item[2]} for item in history], json_output=True, pretty_output=pretty_output)
                         return
                     print(f"📜 Full Audit History [{active_ws}]:")
                     print(f"{'Timestamp':<21} | {'Key':<15} | {'Value'}")
@@ -844,7 +1048,7 @@ fi
                     print("❌ Confirmation failed. Aborted.")
                     return
                 
-                print(kv.delete(key))
+                print(kv.delete(key, token=token))
                 print(f"💡 Tip: If this was accidental, use 'kyr {key}' to restore it.")
     
             elif cmd in ["kyr", "restore"]:
@@ -871,14 +1075,17 @@ fi
                 print(kv.compact(retention))
             elif cmd in ["kyl", "listkeys"]:
                 pattern = args[0] if args else None
-                keys = kv.listkeys(pattern)
+                keys = kv.listkeys(pattern, token=token)
                 if keys:
-                    print(_render_value(keys if json_output else f"🔑 Keys [{active_ws}]: {', '.join(keys)}", as_json=json_output, pretty=pretty_output))
+                    if json_output or pretty_output:
+                        _emit_output(keys, json_output=json_output, pretty_output=pretty_output)
+                    else:
+                        print(f"🔑 Keys [{active_ws}]: {', '.join(keys)}")
                 else:
                     print(f"No keys found in workspace '{active_ws}'.")
 
             elif cmd in ["kystats"]:
-                print(_render_value(kv.get_stats(), as_json=True if json_output or pretty_output else False, pretty=pretty_output))
+                _emit_output(kv.get_stats(), json_output=True if json_output else False, pretty_output=pretty_output, default_text=_render_value(kv.get_stats()))
 
             elif cmd in ["kybackup"]:
                 if not args:
@@ -889,22 +1096,23 @@ fi
                         print("Usage: kybackup restore <file>")
                         return
                     kv.restore_backup(args[1])
-                    print(f"✅ Backup restored from {args[1]}")
+                    _emit_output({"status": "ok", "restored_from": args[1]}, json_output=json_output, pretty_output=pretty_output, default_text=f"✅ Backup restored from {args[1]}")
                 else:
-                    print(f"✅ Backup created: {kv.backup(args[0])}")
+                    created = kv.backup(args[0])
+                    _emit_output({"status": "ok", "backup_path": created}, json_output=json_output, pretty_output=pretty_output, default_text=f"✅ Backup created: {created}")
 
             elif cmd in ["kymetrics"]:
                 port = args[0] if args else "8765"
                 _start_metrics_server(kv, port)
-                print(f"✅ Metrics endpoint started on http://127.0.0.1:{port}")
+                _emit_output({"status": "ok", "url": f"http://127.0.0.1:{port}"}, json_output=json_output, pretty_output=pretty_output, default_text=f"✅ Metrics endpoint started on http://127.0.0.1:{port}")
 
             elif cmd in ["kyaudit"]:
                 if not args or args[0] != "export" or len(args) < 2:
                     print("Usage: kyaudit export <file> [format]")
                     return
                 fmt = args[2] if len(args) > 2 else "json"
-                count = kv.export_audit(args[1], fmt=fmt, since=since, until=until)
-                print(f"📤 Exported {count} audit rows.")
+                count = kv.export_audit(args[1], fmt=fmt, since=since, until=until, token=token)
+                _emit_output({"status": "ok", "rows_exported": count, "file": args[1], "format": fmt}, json_output=json_output, pretty_output=pretty_output, default_text=f"📤 Exported {count} audit rows.")
     
             elif cmd in ["kyh", "help", "--help", "-h"]:
                 print_help()
@@ -915,8 +1123,8 @@ fi
                     return
                 export_path = args[0]
                 export_format = args[1] if len(args) > 1 else config.get("export_format", "csv")
-                kv.export_data(export_path, export_format.lower())
-                print(f"📤 Exported data to {export_path} as {export_format.upper()}")
+                kv.export_data(export_path, export_format.lower(), token=token)
+                _emit_output({"status": "ok", "file": export_path, "format": export_format.lower()}, json_output=json_output, pretty_output=pretty_output, default_text=f"📤 Exported data to {export_path} as {export_format.upper()}")
     
             elif cmd in ["kyi", "import"]:
                 if len(args) != 1:
@@ -926,8 +1134,8 @@ fi
                 if not os.path.exists(import_path):
                     print(f"❌ Error: File not found: {import_path}")
                     return
-                kv.import_data(import_path)
-                print(f"📥 Imported data into '{active_ws}'")
+                kv.import_data(import_path, token=token)
+                _emit_output({"status": "ok", "workspace": active_ws, "file": import_path}, json_output=json_output, pretty_output=pretty_output, default_text=f"📥 Imported data into '{active_ws}'")
     
             elif cmd in ["kyc", "execute"]:
                 if not args:
@@ -957,6 +1165,9 @@ fi
                     print(f"❌ Invalid command: {cmd}")
                 print_help()
 
+    except PermissionError as e:
+        logger.warning("permission_error=%s", e)
+        print(f"❌ Permission denied: {e}")
     except ValueError as e:
         logger.warning("validation_error=%s", e)
         print(f"⚠️ Validation Error: {e}")
@@ -966,6 +1177,15 @@ fi
         # import traceback
         # traceback.print_exc()
         sys.exit(1)
+    finally:
+        if original_access_key is None:
+            os.environ.pop("KYCLI_ACCESS_KEY", None)
+        else:
+            os.environ["KYCLI_ACCESS_KEY"] = original_access_key
+        if original_token is None:
+            os.environ.pop("KYCLI_TOKEN", None)
+        else:
+            os.environ["KYCLI_TOKEN"] = original_token
 
 if __name__ == "__main__":
     main()

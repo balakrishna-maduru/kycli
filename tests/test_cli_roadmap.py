@@ -98,3 +98,83 @@ def test_cli_audit_export_backup_and_prefix_view(clean_home_db, tmp_path, capsys
         main()
     out = capsys.readouterr().out
     assert "Backup created" in out
+
+
+def test_cli_output_consistency_and_rbac_flow(clean_home_db, tmp_path, capsys):
+    backup_file = tmp_path / "rbac_snapshot.db"
+    audit_file = tmp_path / "rbac_audit.json"
+
+    with patch("sys.argv", ["kyws", "create", "rbacq", "--type", "queue"]):
+        main()
+    capsys.readouterr()
+    with patch("sys.argv", ["kyuse", "rbacq"]):
+        main()
+    capsys.readouterr()
+    with patch("sys.argv", ["kypush", "job1"]):
+        main()
+    capsys.readouterr()
+
+    with patch("sys.argv", ["kypeek", "--json"]):
+        main()
+    assert json.loads(capsys.readouterr().out) == "job1"
+
+    with patch("sys.argv", ["kycount", "--json"]):
+        main()
+    assert json.loads(capsys.readouterr().out)["count"] == 1
+
+    with patch("sys.argv", ["kypop", "--lease", "1s", "--json"]):
+        main()
+    leased = json.loads(capsys.readouterr().out)
+    assert leased["value"] == "job1"
+
+    with patch("sys.argv", ["kynack", leased["receipt_id"], "--json"]):
+        main()
+    assert json.loads(capsys.readouterr().out)["status"] == "nacked"
+
+    with patch("sys.argv", ["kyuse", "default"]):
+        main()
+    capsys.readouterr()
+
+    with patch("sys.argv", ["kybackup", str(backup_file), "--json"]):
+        main()
+    assert json.loads(capsys.readouterr().out)["backup_path"].startswith(str(backup_file))
+
+    with patch("sys.argv", ["kyaudit", "export", str(audit_file), "json", "--json"]):
+        main()
+    assert json.loads(capsys.readouterr().out)["file"] == str(audit_file)
+
+    with patch("sys.argv", ["kyacl", "key", "set", "legacy"]):
+        main()
+    capsys.readouterr()
+
+    with patch("sys.argv", ["kyacl", "enable", "--access-key", "legacy", "--json"]):
+        main()
+    assert json.loads(capsys.readouterr().out)["rbac_enabled"] is True
+
+    with patch("sys.argv", ["kyacl", "user", "add", "alice", "--role", "writer", "--access-key", "legacy", "--json"]):
+        main()
+    alice = json.loads(capsys.readouterr().out)
+    assert alice["principal"] == "alice"
+    alice_token = alice["token"]
+
+    with patch("sys.argv", ["kyacl", "whoami", "--token", alice_token, "--json"]):
+        main()
+    whoami = json.loads(capsys.readouterr().out)
+    assert whoami["principal"] == "alice"
+    assert whoami["role"] == "writer"
+
+    with patch("sys.argv", ["kys", "public.item", "value", "--token", alice_token]):
+        main()
+    assert "Saved: public.item" in capsys.readouterr().out or "Updated: public.item" in capsys.readouterr().out
+
+    with patch("sys.argv", ["kyacl", "role", "grant", "alice", "writer", "--key", r"secret\..*", "--deny", "read", "--access-key", "legacy", "--json"]):
+        main()
+    assert json.loads(capsys.readouterr().out)["deny"] == "read"
+
+    with patch("sys.argv", ["kys", "secret.one", "hidden", "--access-key", "legacy"]):
+        main()
+    capsys.readouterr()
+
+    with patch("sys.argv", ["kyg", "secret.one", "--token", alice_token]):
+        main()
+    assert "Permission denied" in capsys.readouterr().out

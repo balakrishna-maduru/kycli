@@ -1,12 +1,26 @@
 # cython: language_level=3
 import os
 import base64
+import secrets
 try:
     from cryptography.hazmat.primitives import hashes
     from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
     from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 except ImportError:
     AESGCM = None
+
+cdef bytes _MASTER_KEY_SALT = b'kycli_vault_salt'
+cdef bytes _TOKEN_SALT = b'kycli_token_salt'
+
+
+cdef bytes _derive_key_bytes(str secret, bytes salt):
+    cdef object kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=salt,
+        iterations=100000,
+    )
+    return kdf.derive(secret.encode('utf-8'))
 
 cdef class SecurityManager:
     def __init__(self, str master_key=None):
@@ -15,15 +29,8 @@ cdef class SecurityManager:
         if master_key:
             if AESGCM is None:
                 raise ImportError("cryptography library is required for encryption. Install it with 'pip install cryptography'.")
-            
-            salt = b'kycli_vault_salt' 
-            kdf = PBKDF2HMAC(
-                algorithm=hashes.SHA256(),
-                length=32,
-                salt=salt,
-                iterations=100000,
-            )
-            key = kdf.derive(master_key.encode('utf-8'))
+
+            key = _derive_key_bytes(master_key, _MASTER_KEY_SALT)
             self._aesgcm = AESGCM(key)
 
     cpdef str encrypt(self, str plaintext):
@@ -71,3 +78,19 @@ cdef class SecurityManager:
             return self._aesgcm.decrypt(nonce, ciphertext, None)
         except Exception:
              raise ValueError("Decryption failed: Incorrect master key or corrupted data")
+
+    cpdef str hash_token(self, str token):
+        if token is None:
+            raise ValueError("Token is required")
+        return base64.b64encode(_derive_key_bytes(token, _TOKEN_SALT)).decode('ascii')
+
+    cpdef bint verify_token(self, str token, str expected_hash):
+        if not token or not expected_hash:
+            return False
+        try:
+            return secrets.compare_digest(self.hash_token(token), expected_hash)
+        except Exception:
+            return False
+
+    cpdef str generate_token(self):
+        return secrets.token_urlsafe(24)

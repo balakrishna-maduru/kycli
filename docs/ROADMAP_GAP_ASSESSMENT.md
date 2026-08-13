@@ -2,7 +2,7 @@
 
 ## Summary
 
-Most of the Phase 8 roadmap items in `TODO.md` are already implemented in the codebase, but the checklist has not been updated to reflect that work.
+Phase 8 is now reconciled with the shipped feature set, and the core RBAC work described for Phase 9 has been implemented. The main remaining roadmap gap is the non-TUI fuzzy/history prompt idea, which is now formally deferred in favor of `kyshell`.
 
 ## Implemented roadmap items
 
@@ -19,14 +19,11 @@ The following planned items are already present in the current repository:
 - **Namespace/Prefix Views**: `kyws view <prefix>` is implemented in `kycli/cli.py` and backed by `view_prefix` in `kycli/core/storage.pyx`.
 - **Backup/Restore**: `kybackup` create/restore is implemented in `kycli/cli.py` and `kycli/core/storage.pyx`.
 - **Current ACL baseline**: workspace-wide read-only mode and shared access-key gating exist today under `kyacl readonly` and `kyacl key`.
+- **RBAC**: `kyacl enable|disable|status`, principals, roles, `--token` / `KYCLI_TOKEN`, key-level allow/deny rules, and RBAC-aware stats/audit hooks are implemented in `kycli/cli.py`, `kycli/core/storage.pyx`, and `kycli/core/security.pyx`.
 
 ## Remaining gaps
 
-### 1. TODO roadmap status is stale
-
-`TODO.md` still marks most Phase 8 items as incomplete even though the features already exist and have roadmap coverage tests.
-
-### 2. Interactive non-TUI prompts are still a gap
+### 1. Interactive non-TUI prompts are still a gap
 
 The roadmap item says:
 
@@ -42,73 +39,36 @@ Gap:
 - No fuzzy key search in the normal CLI path.
 - No reusable command history for non-TUI commands.
 
-### 3. Output formatting is only partially complete
+### 2. Future RBAC stretch work remains
 
-The roadmap item says:
+The core RBAC phases are implemented, but the stretch items remain future work:
 
-- **Output Formatting**: `--json` everywhere; `--pretty` for tables
-
-Current state:
-
-- Structured rendering exists for commands like `kyg`, `kyl`, `kypop`, `kystats`, and prefix view.
-
-Gap:
-
-- Formatting is not consistent across the full command surface.
-- Several commands still print plain strings or ad hoc text only, including `kypeek`, `kycount`, `kyack`, `kynack`, backup success messages, and audit export success messages.
-
-### 4. ACL/RBAC roadmap remains unimplemented
-
-Phase 9 in `TODO.md` is still open, and `docs/ROLES_PERMISSIONS.md` explicitly says the RBAC work is **design only — not yet implemented**.
-
-Current state:
-
-- Implemented: workspace-wide `readonly` and one shared `access_key`.
-- Missing: principals, roles, per-key allow/deny rules, `--token` / `KYCLI_TOKEN`, `kyacl user`, `kyacl role`, `kyacl whoami`, and RBAC-aware audit/stats.
+- custom roles
+- principal groups
+- workspace-wide default key policies independent of a principal
 
 ## Recommended plan
 
-### Priority 1: Reconcile roadmap tracking
+### Priority 1: Keep roadmap tracking current
 
-1. Update `TODO.md` so implemented Phase 8 items are checked off.
-2. Keep only the real open gaps unchecked.
-3. Add one short note pointing readers to the RBAC design doc for Phase 9.
+1. Keep `TODO.md` aligned with shipped behavior as roadmap items land.
+2. Keep deferred items explicitly marked as deferred rather than silently open.
+3. Keep `docs/ROLES_PERMISSIONS.md` aligned with the shipped RBAC surface.
 
-### Priority 2: Finish the remaining Phase 8 usability gaps
+### Priority 2: Revisit the deferred interactive CLI idea only if needed
 
-1. Standardize response rendering so every read-style and status-style command can emit `--json`.
-2. Define a consistent `--pretty` table format for multi-row outputs.
-3. Add non-TUI interactive enhancements only where they fit the existing CLI model:
-   - history-backed prompts for optional interactive flows
-   - fuzzy key/workspace selection for commands that currently require exact names
-4. Add regression coverage for all newly structured outputs.
+1. Reassess whether one-shot CLI commands truly benefit from prompt-toolkit flows.
+2. If yes, limit the scope to opt-in selectors so scripts stay unaffected.
+3. Otherwise, keep `kyshell` as the interactive path and leave the roadmap item deferred.
 
-### Priority 3: Implement RBAC in phases
+### Priority 3: Extend RBAC only with clearly scoped follow-ups
 
-1. **Storage foundation**
-   - add `principals`, `workspace_roles`, `key_acl`
-   - add `rbac_enabled` workspace metadata
-   - hash tokens instead of storing plaintext
-2. **Policy engine**
-   - generalize write checks into verb-based authorization
-   - enforce permissions on both reads and writes
-   - preserve current readonly/access-key behavior when RBAC is disabled
-3. **CLI surface**
-   - add `kyacl enable|disable|status`
-   - add `kyacl user ...`
-   - add `kyacl role ...`
-   - add `kyacl whoami`
-   - add `--token` and `KYCLI_TOKEN`
-4. **Audit and observability**
-   - log grants, revokes, enable/disable events, and denials
-   - surface RBAC state in `kystats`
-5. **Docs and migration**
-   - document opt-in migration from shared access-key mode
-   - add compatibility tests for legacy workspaces
+1. Add custom roles only if the fixed role model proves insufficient.
+2. Add principal groups only if there is a real multi-user management need.
+3. Add default key policies only if repeated per-principal ACL rules become a maintenance issue.
 
 ## Recommended execution order
 
-1. Refresh roadmap tracking in `TODO.md`.
-2. Close the Phase 8 formatting gap.
-3. Decide whether non-TUI fuzzy/history is still a desired feature or should be formally deferred in favor of `kyshell`.
-4. Start RBAC Phase A only after the Phase 8 tracking/documentation is accurate.
+1. Keep roadmap tracking current.
+2. Revisit the deferred non-TUI prompt feature only if user demand justifies it.
+3. Treat RBAC follow-ups as separate enhancements rather than unfinished baseline work.

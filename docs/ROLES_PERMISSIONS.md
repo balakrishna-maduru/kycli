@@ -1,9 +1,10 @@
 # 🔐 User Roles & Permissions (RBAC)
 
-> **Status: Design only — not yet implemented.** Target release: **v0.5.0**.
-> Nothing in this document changes current behavior. `kyacl readonly` and
-> `kyacl key` keep working exactly as they do today, and every workspace is
-> unaffected until it is explicitly opted in via `kyacl enable`.
+> **Status: Core RBAC flow implemented.** `kyacl enable`, principals, roles,
+> token-based auth, key-level overrides, and RBAC stats/audit integration are
+> now available. Legacy `kyacl readonly` and `kyacl key` behavior still works,
+> and every workspace remains unaffected until it is explicitly opted in via
+> `kyacl enable`.
 
 ## 1. Problem
 
