@@ -2,29 +2,29 @@
 
 ## Summary
 
-Most of the Phase 8 roadmap items in `/home/runner/work/kycli/kycli/TODO.md` are already implemented in the codebase, but the checklist has not been updated to reflect that work.
+Most of the Phase 8 roadmap items in `TODO.md` are already implemented in the codebase, but the checklist has not been updated to reflect that work.
 
 ## Implemented roadmap items
 
 The following planned items are already present in the current repository:
 
-- **Batch Queue Ops**: `kypush --file` and `kypop --n` are implemented in `/home/runner/work/kycli/kycli/kycli/cli.py` and covered by `/home/runner/work/kycli/kycli/tests/test_cli_roadmap.py`.
-- **Delayed Jobs**: queue delay support exists through `kypush --delay` and the queue availability logic in `/home/runner/work/kycli/kycli/kycli/core/storage.pyx`.
-- **Visibility Timeout / Ack / Nack**: `kypop --lease`, `kyack`, and `kynack` are implemented in `/home/runner/work/kycli/kycli/kycli/cli.py` and `/home/runner/work/kycli/kycli/kycli/core/storage.pyx`.
-- **Workspace TTL Policies**: `kyttl set|get` is implemented in `/home/runner/work/kycli/kycli/kycli/cli.py` and `/home/runner/work/kycli/kycli/kycli/core/storage.pyx`.
-- **Config Profiles**: `kyprofile list|use|save` is implemented in `/home/runner/work/kycli/kycli/kycli/cli.py`.
-- **Audit Export**: `kyaudit export` with `since` / `until` support is implemented in `/home/runner/work/kycli/kycli/kycli/cli.py` and `/home/runner/work/kycli/kycli/kycli/core/storage.pyx`.
-- **Stats Command**: `kystats` is implemented in `/home/runner/work/kycli/kycli/kycli/cli.py` and `/home/runner/work/kycli/kycli/kycli/core/storage.pyx`.
-- **Metrics Endpoint**: `kymetrics` is implemented in `/home/runner/work/kycli/kycli/kycli/cli.py`.
-- **Namespace/Prefix Views**: `kyws view <prefix>` is implemented in `/home/runner/work/kycli/kycli/kycli/cli.py` and backed by `view_prefix` in `/home/runner/work/kycli/kycli/kycli/core/storage.pyx`.
-- **Backup/Restore**: `kybackup` create/restore is implemented in `/home/runner/work/kycli/kycli/kycli/cli.py` and `/home/runner/work/kycli/kycli/kycli/core/storage.pyx`.
+- **Batch Queue Ops**: `kypush --file` and `kypop --n` are implemented in `kycli/cli.py` and covered by `tests/test_cli_roadmap.py`.
+- **Delayed Jobs**: queue delay support exists through `kypush --delay` and the queue availability logic in `kycli/core/storage.pyx`.
+- **Visibility Timeout / Ack / Nack**: `kypop --lease`, `kyack`, and `kynack` are implemented in `kycli/cli.py` and `kycli/core/storage.pyx`.
+- **Workspace TTL Policies**: `kyttl set|get` is implemented in `kycli/cli.py` and `kycli/core/storage.pyx`.
+- **Config Profiles**: `kyprofile list|use|save` is implemented in `kycli/cli.py`.
+- **Audit Export**: `kyaudit export` with `since` / `until` support is implemented in `kycli/cli.py` and `kycli/core/storage.pyx`.
+- **Stats Command**: `kystats` is implemented in `kycli/cli.py` and `kycli/core/storage.pyx`.
+- **Metrics Endpoint**: `kymetrics` is implemented in `kycli/cli.py`.
+- **Namespace/Prefix Views**: `kyws view <prefix>` is implemented in `kycli/cli.py` and backed by `view_prefix` in `kycli/core/storage.pyx`.
+- **Backup/Restore**: `kybackup` create/restore is implemented in `kycli/cli.py` and `kycli/core/storage.pyx`.
 - **Current ACL baseline**: workspace-wide read-only mode and shared access-key gating exist today under `kyacl readonly` and `kyacl key`.
 
 ## Remaining gaps
 
 ### 1. TODO roadmap status is stale
 
-`/home/runner/work/kycli/kycli/TODO.md` still marks most Phase 8 items as incomplete even though the features already exist and have roadmap coverage tests.
+`TODO.md` still marks most Phase 8 items as incomplete even though the features already exist and have roadmap coverage tests.
 
 ### 2. Interactive non-TUI prompts are still a gap
 
@@ -34,8 +34,8 @@ The roadmap item says:
 
 Current state:
 
-- `/home/runner/work/kycli/kycli/kycli/tui.py` has prompt-toolkit completions for the TUI shell.
-- `/home/runner/work/kycli/kycli/kycli/cli.py` remains a standard one-shot CLI and only uses basic `input()` confirmations.
+- `kycli/tui.py` has prompt-toolkit completions for the TUI shell.
+- `kycli/cli.py` remains a standard one-shot CLI and only uses basic `input()` confirmations.
 
 Gap:
 
@@ -59,7 +59,7 @@ Gap:
 
 ### 4. ACL/RBAC roadmap remains unimplemented
 
-Phase 9 in `/home/runner/work/kycli/kycli/TODO.md` is still open, and `/home/runner/work/kycli/kycli/docs/ROLES_PERMISSIONS.md` explicitly says the RBAC work is **design only — not yet implemented**.
+Phase 9 in `TODO.md` is still open, and `docs/ROLES_PERMISSIONS.md` explicitly says the RBAC work is **design only — not yet implemented**.
 
 Current state:
 
