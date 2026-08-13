@@ -1,6 +1,7 @@
 # cython: language_level=3
 import os
 import base64
+import hashlib
 import secrets
 try:
     from cryptography.hazmat.primitives import hashes
@@ -82,7 +83,7 @@ cdef class SecurityManager:
     cpdef str hash_token(self, str token):
         if token is None:
             raise ValueError("Token is required")
-        return base64.b64encode(_derive_key_bytes(token, _TOKEN_SALT)).decode('ascii')
+        return hashlib.sha256(_TOKEN_SALT + token.encode('utf-8')).hexdigest()
 
     cpdef bint verify_token(self, str token, str expected_hash):
         if not token or not expected_hash:

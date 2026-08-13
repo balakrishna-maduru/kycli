@@ -165,7 +165,8 @@ def test_cli_output_consistency_and_rbac_flow(clean_home_db, tmp_path, capsys):
 
     with patch("sys.argv", ["kys", "public.item", "value", "--token", alice_token]):
         main()
-    assert "Saved: public.item" in capsys.readouterr().out or "Updated: public.item" in capsys.readouterr().out
+    out = capsys.readouterr().out
+    assert "Saved: public.item" in out or "Updated: public.item" in out
 
     with patch("sys.argv", ["kyacl", "role", "grant", "alice", "writer", "--key", r"secret\..*", "--deny", "read", "--access-key", "legacy", "--json"]):
         main()

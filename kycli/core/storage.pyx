@@ -1205,7 +1205,6 @@ cdef class Kycore:
         if not items: return 0
         with self._exclusive():
             self._ensure_kv("kys")
-            self._ensure_allowed("write", token=token)
             ttl_eff = ttl
             if ttl_eff is None:
                 ttl_eff = self.get_default_ttl()
@@ -1216,6 +1215,7 @@ cdef class Kycore:
                 self._engine._execute_raw("BEGIN TRANSACTION")
                 for key, val in items:
                     k = key.lower().strip()
+                    self._ensure_allowed("write", key=k, token=token)
                     if self._schema and isinstance(val, dict): val = self._schema(**val).model_dump()
                     storage_payload, _ = self._encode_storage_value(val)
                     st_val = self._security.encrypt(storage_payload)
