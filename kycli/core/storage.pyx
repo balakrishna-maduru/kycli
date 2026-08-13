@@ -22,11 +22,13 @@ import base64
 import zlib
 import struct
 from collections import OrderedDict
+from kycli.logging_utils import get_logger
 
 cdef object _MISSING = object()
 _RBAC_BOOTSTRAP_PRINCIPAL = "__legacy_owner__"
 _RBAC_ANONYMOUS_PRINCIPAL = "anonymous"
 _RBAC_ROLES = ("owner", "admin", "writer", "reader")
+logger = get_logger("kycli.rbac")
 
 try:
     from pydantic import BaseModel, ValidationError
@@ -103,6 +105,7 @@ cdef class Kycore:
     cdef object _queue_lock
     cdef object _last_sync_fingerprint
     cdef bint _closed
+    cdef int _lock_depth
 
     def __init__(self, db_path=None, schema=None, master_key=None, cache_size=1000):
         if db_path is None:
@@ -128,6 +131,7 @@ cdef class Kycore:
         self._dirty_keys = set()
         self._queue_lock = threading.RLock()
         self._closed = False
+        self._lock_depth = 0
 
         self._initialize_schema()
 
@@ -187,11 +191,13 @@ cdef class Kycore:
         lock = _ProcessLock(self._lock_path)
         lock.acquire()
         try:
+            self._lock_depth += 1
             self._reload_locked()
             yield
             self._persist()
             self._last_sync_fingerprint = self._file_fingerprint()
         finally:
+            self._lock_depth -= 1
             lock.release()
 
     def _initialize_schema(self):
@@ -723,6 +729,19 @@ cdef class Kycore:
             },
         )
 
+    def _log_permission_denied(self, str verb, key=None, principal=None):
+        logger.warning(
+            "rbac_denied principal=%s verb=%s key=%s",
+            principal["name"] if principal else None,
+            verb,
+            key,
+        )
+        if self._lock_depth > 0:
+            self._log_permission_denied_locked(verb, key=key, principal=principal)
+            return
+        with self._exclusive():
+            self._log_permission_denied_locked(verb, key=key, principal=principal)
+
     def _ensure_allowed(self, str verb, key=None, access_key=None, token=None):
         readonly = self._get_workspace_setting("readonly", "0")
         if verb not in ("read", "manage_acl") and readonly == "1":
@@ -737,7 +756,7 @@ cdef class Kycore:
             return
         principal = self._resolve_principal(token, access_key=access_key)
         if not self._principal_has_permission(principal, verb, key=key):
-            self._log_permission_denied_locked(verb, key=key, principal=principal)
+            self._log_permission_denied(verb, key=key, principal=principal)
             raise PermissionError("permission denied")
 
     def _require_principal_row(self, str name):
@@ -779,10 +798,10 @@ cdef class Kycore:
                 return self.get_rbac_status()
             principal_count = self._engine._bind_and_fetch("SELECT COUNT(*) FROM principals", [])
             principal_total = int(principal_count[0][0]) if principal_count else 0
-            access_key = self._get_workspace_setting("access_key", None)
-            if access_key:
+            stored_access_key = self._get_workspace_setting("access_key", None)
+            if stored_access_key:
                 existing = self._get_principal_row(_RBAC_BOOTSTRAP_PRINCIPAL)
-                token_hash = self._security.hash_token(access_key)
+                token_hash = self._security.hash_token(stored_access_key)
                 if existing is None:
                     self._engine._bind_and_execute(
                         "INSERT INTO principals (name, token_hash, disabled) VALUES (?, ?, 0)",
@@ -965,15 +984,11 @@ cdef class Kycore:
             return False
 
     def set_default_ttl(self, ttl, token=None):
-        if self._rbac_enabled():
-            with self._exclusive():
-                self._ensure_allowed("manage_workspace", token=token)
-                parsed = self._parse_ttl(ttl) if ttl is not None else None
-                self._set_workspace_setting_locked("default_ttl", parsed)
-                return parsed
-        parsed = self._parse_ttl(ttl) if ttl is not None else None
-        self._set_workspace_setting("default_ttl", parsed)
-        return parsed
+        with self._exclusive():
+            self._ensure_allowed("manage_workspace", token=token)
+            parsed = self._parse_ttl(ttl) if ttl is not None else None
+            self._set_workspace_setting_locked("default_ttl", parsed)
+            return parsed
 
     def get_default_ttl(self):
         value = self._get_workspace_setting("default_ttl", None)
